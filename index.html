@@ -2,238 +2,177 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TitanCore Holdings — Analytics Dashboard</title>
-
   <style>
     :root{
-      --bg:#070707;
-      --panel:#101011;
-      --panel2:#141416;
-      --gold:#d4af37;
-      --gold2:#b88a17;
-      --green:#00c853;
-      --text:#f4f4f4;
-      --muted:#b7b7b7;
-      --border:rgba(212,175,55,.35);
-      --shadow: 0 14px 30px rgba(0,0,0,.55);
+      --bg:#070809;
+      --panel:rgba(212,175,55,.08);
+      --panel2:rgba(0,200,83,.08);
+      --gold:#D4AF37;
+      --green:#00C853;
+      --text:#F2F2F2;
+      --muted:#B8B8B8;
+      --stroke:rgba(212,175,55,.35);
+      --stroke2:rgba(0,200,83,.35);
+      --shadow:0 14px 40px rgba(0,0,0,.55);
       --radius:18px;
     }
     *{box-sizing:border-box}
     body{
       margin:0;
-      font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
+      background: radial-gradient(1200px 600px at 20% 0%, rgba(0,200,83,.10), transparent 60%),
+                  radial-gradient(900px 500px at 80% 20%, rgba(212,175,55,.12), transparent 55%),
+                  var(--bg);
       color:var(--text);
-      background:
-        radial-gradient(1200px 600px at 15% 0%, rgba(0,200,83,.10), transparent 55%),
-        radial-gradient(1000px 600px at 90% 10%, rgba(212,175,55,.12), transparent 55%),
-        var(--bg);
     }
-
-    /* TOP BAR (filters like the screenshot) */
-    header{
-      position:sticky; top:0; z-index:10;
-      background: rgba(7,7,7,.80);
-      backdrop-filter: blur(10px);
-      border-bottom:1px solid var(--border);
-    }
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:1080px;margin:0 auto;padding:22px 16px 40px}
     .top{
-      max-width:1200px;
-      margin:0 auto;
-      padding:14px 16px;
-      display:flex; gap:12px;
-      align-items:center; justify-content:space-between;
+      display:flex;align-items:center;justify-content:space-between;gap:14px;
+      padding:16px 16px 10px;
     }
-    .brand{
-      display:flex; align-items:center; gap:12px;
-      min-width: 250px;
-    }
+    .brand{display:flex;align-items:center;gap:12px;min-width:240px}
     .logo{
-      width:44px;height:44px;border-radius:14px;
-      display:grid;place-items:center;
-      border:1px solid var(--border);
-      color:var(--gold);
-      background: linear-gradient(180deg, rgba(212,175,55,.10), rgba(0,0,0,.20));
-      font-weight:900;
-      box-shadow: 0 0 0 3px rgba(212,175,55,.06);
+      width:56px;height:56px;border-radius:16px;
+      border:1.5px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(212,175,55,.18), rgba(0,200,83,.10));
+      display:flex;align-items:center;justify-content:center;
+      box-shadow: var(--shadow);
+      font-weight:800;color:var(--gold);
+      letter-spacing:.5px;
     }
-    .brand h1{margin:0;font-size:16px;line-height:1.1}
-    .brand p{margin:4px 0 0;color:var(--muted);font-size:12px}
+    .brand h1{margin:0;font-size:22px;letter-spacing:.3px}
+    .brand p{margin:2px 0 0;color:var(--muted);font-size:12px}
 
     .filters{
-      display:flex; gap:10px; flex-wrap:wrap;
-      justify-content:center;
-      flex:1;
+      display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;
     }
-    .filter{
-      display:flex; gap:8px; align-items:center;
-      padding:10px 12px;
+    .select{
+      background:rgba(0,0,0,.35);
+      border:1.3px solid var(--stroke);
       border-radius:14px;
-      border:1px solid rgba(212,175,55,.22);
-      background: rgba(16,16,17,.60);
-      font-size:12px;
+      padding:10px 12px;
       color:var(--text);
-    }
-    .filter label{color:var(--muted)}
-    .filter select{
-      background:transparent;
-      border:none;
-      color:var(--text);
+      min-width:150px;
       outline:none;
-      font-size:12px;
-    }
-
-    .clock{
-      min-width:210px;
-      padding:10px 12px;
-      border-radius:14px;
-      border:1px solid var(--border);
-      background: rgba(16,16,17,.60);
       box-shadow: var(--shadow);
-      text-align:right;
-      line-height:1.15;
     }
-    .clock .small{font-size:11px;color:var(--muted)}
-    .clock .date{font-size:12px;color:var(--gold);margin-top:4px}
-    .clock .time{font-size:16px;color:var(--green);font-weight:800;margin-top:2px}
+    .select:focus{border-color:var(--green)}
 
-    /* LAYOUT like the screenshot: left charts, center charts, right KPI column */
-    .wrap{max-width:1200px;margin:0 auto;padding:18px 16px 40px}
     .grid{
       display:grid;
-      grid-template-columns: 320px 1fr 270px;
+      grid-template-columns: 1fr;
       gap:14px;
-      align-items:start;
+      margin-top:8px;
     }
-    @media (max-width: 1100px){
-      .grid{grid-template-columns: 1fr}
-      .clock{display:none}
-    }
-
     .card{
-      border-radius:var(--radius);
-      border:1px solid rgba(212,175,55,.22);
-      background: linear-gradient(180deg, rgba(20,20,22,.70), rgba(10,10,10,.55));
+      border:1.3px solid var(--stroke);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(212,175,55,.06), rgba(0,0,0,.25));
       box-shadow: var(--shadow);
       overflow:hidden;
     }
-    .card .head{
-      padding:14px 14px 10px;
-      border-bottom:1px solid rgba(212,175,55,.16);
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-end;
-      gap:10px;
+    .cardHead{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:14px 16px;
+      border-bottom:1px solid rgba(212,175,55,.18);
+      background: rgba(0,0,0,.18);
     }
-    .card .head h2{
-      margin:0;
-      font-size:12px;
-      letter-spacing:.7px;
-      text-transform:uppercase;
+    .cardHead .title{
+      font-weight:800;
+      letter-spacing:.12em;
       color:var(--gold);
+      font-size:14px;
+      text-transform:uppercase;
     }
-    .card .head span{font-size:11px;color:var(--muted)}
-    .pad{padding:14px}
-
-    /* KPI column on the RIGHT like the screenshot tiles */
+    .cardHead .sub{color:var(--muted);font-size:12px}
+    .cardBody{padding:16px}
+    .row2{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:14px;
+    }
+    .kpis{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:12px;
+    }
     .kpi{
-      padding:12px 12px;
+      border:1.2px solid rgba(212,175,55,.22);
       border-radius:16px;
-      border:1px solid rgba(212,175,55,.22);
-      background: rgba(10,10,10,.45);
-      margin:12px 14px 0;
+      background: rgba(0,0,0,.30);
+      padding:14px 14px;
     }
-    .kpi:first-of-type{margin-top:14px}
-    .kpi .label{font-size:11px;color:var(--muted)}
-    .kpi .value{font-size:22px;font-weight:900;margin-top:6px}
-    .kpi .sub{
-      margin-top:6px;
-      font-size:11px;
-      color:var(--muted);
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-    }
-    .chip{
-      display:inline-block;
-      padding:7px 10px;
-      border-radius:999px;
-      border:1px solid rgba(0,200,83,.55);
-      color:var(--green);
-      background: rgba(0,200,83,.08);
-      font-size:12px;
-      font-weight:700;
-      margin:12px 14px 14px;
-      text-align:center;
-    }
+    .kpi .label{color:var(--muted);font-size:12px;letter-spacing:.12em;text-transform:uppercase}
+    .kpi .value{font-size:34px;font-weight:900;margin:6px 0 2px}
+    .kpi .meta{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:12px}
+    .delta.up{color:var(--green);font-weight:800}
+    .delta.down{color:#ff5a5a;font-weight:800}
 
-    /* Simple “charts” using bars and SVG lines */
-    .bars{display:grid;gap:10px}
-    .barrow{display:grid;grid-template-columns: 1fr 64px;gap:10px;align-items:center}
-    .barlabel{font-size:11px;color:var(--muted)}
+    .bars .item{margin:10px 0}
+    .bars .name{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin-bottom:6px}
     .bar{
-      height:10px;border-radius:999px;
-      border:1px solid rgba(212,175,55,.18);
-      background: rgba(255,255,255,.06);
+      height:12px;border-radius:999px;
+      background: rgba(255,255,255,.08);
+      border:1px solid rgba(212,175,55,.16);
       overflow:hidden;
     }
     .fill{
       height:100%;
-      background: linear-gradient(90deg, rgba(212,175,55,.95), rgba(0,200,83,.75));
       width:60%;
-    }
-    .num{font-size:11px;color:var(--text);text-align:right}
-
-    .two{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:14px;
-    }
-    @media (max-width: 900px){ .two{grid-template-columns:1fr} }
-
-    svg{width:100%;height:220px;display:block}
-    .axis{stroke: rgba(212,175,55,.18); stroke-width:1}
-    .lineA{fill:none;stroke: var(--gold); stroke-width:4}
-    .lineB{fill:none;stroke: var(--green); stroke-width:4; opacity:.95}
-
-    .donutwrap{
-      display:flex; gap:14px; align-items:center; justify-content:space-between;
-      flex-wrap:wrap;
-    }
-    .legend{display:grid;gap:10px;min-width:180px}
-    .leg{
-      display:flex; align-items:center; gap:10px;
-      font-size:12px; color:var(--muted);
-    }
-    .dot{width:10px;height:10px;border-radius:3px;border:1px solid rgba(212,175,55,.25)}
-    .dot.g{background: rgba(0,200,83,.70)}
-    .dot.y{background: rgba(212,175,55,.85)}
-    .dot.d{background: rgba(255,255,255,.25)}
-    .dot.o{background: rgba(212,175,55,.35)}
-
-    /* Click feel */
-    .click{
-      cursor:pointer;
-      transition:.12s ease;
-    }
-    .click:hover{
-      transform: translateY(-2px);
-      border-color: rgba(0,200,83,.60);
-      box-shadow: 0 0 0 3px rgba(0,200,83,.18), var(--shadow);
+      background: linear-gradient(90deg, var(--gold), var(--green));
+      border-radius:999px;
     }
 
-    footer{
-      margin-top:16px;
-      text-align:center;
+    .chartBox{
+      height:220px;
+      border:1.2px solid rgba(212,175,55,.18);
+      border-radius:16px;
+      background: rgba(0,0,0,.25);
+      display:flex;align-items:center;justify-content:center;
       color:var(--muted);
-      font-size:11px;
+      position:relative;
+      overflow:hidden;
     }
-    a{color:inherit}
+    .spark{
+      position:absolute;inset:0;
+      opacity:.9;
+    }
+    .spark path{
+      fill:none;stroke-width:3;
+      stroke-linecap:round;stroke-linejoin:round;
+    }
+
+    .nav{
+      display:flex;gap:10px;flex-wrap:wrap;
+      padding:14px 16px 0;
+    }
+    .pill{
+      padding:10px 14px;
+      border-radius:14px;
+      border:1.2px solid rgba(212,175,55,.25);
+      background: rgba(0,0,0,.30);
+      color:var(--text);
+      font-size:13px;
+    }
+    .pill.active{
+      border-color: rgba(0,200,83,.55);
+      box-shadow: 0 0 0 2px rgba(0,200,83,.12) inset;
+      color: var(--green);
+      font-weight:800;
+    }
+
+    @media (max-width:900px){
+      .row2{grid-template-columns:1fr}
+      .brand{min-width:unset}
+      .filters{justify-content:flex-start}
+    }
   </style>
 </head>
-
 <body>
-  <header>
+  <div class="wrap">
     <div class="top">
       <div class="brand">
         <div class="logo">TC</div>
@@ -244,246 +183,125 @@
       </div>
 
       <div class="filters">
-        <div class="filter">
-          <label>Segment</label>
-          <select>
-            <option>All</option>
-            <option>Enterprise</option>
-            <option>Government</option>
-            <option>SMB</option>
-          </select>
+        <select class="select" id="segment">
+          <option>Segment</option>
+          <option>Global</option>
+          <option>United States</option>
+          <option>Europe</option>
+          <option>Asia</option>
+        </select>
+        <select class="select" id="year">
+          <option>Year</option>
+          <option>2025</option>
+          <option>2024</option>
+          <option>2023</option>
+        </select>
+        <select class="select" id="month">
+          <option>Month</option>
+          <option>Jan</option><option>Feb</option><option>Mar</option><option>Apr</option>
+          <option>May</option><option>Jun</option><option>Jul</option><option>Aug</option>
+          <option>Sep</option><option>Oct</option><option>Nov</option><option>Dec</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="nav">
+      <a class="pill active" href="#sales">Sales</a>
+      <a class="pill" href="#finance">Finance</a>
+      <a class="pill" href="#operations">Operations</a>
+      <a class="pill" href="#security">Security</a>
+      <a class="pill" href="#reports">Reports</a>
+    </div>
+
+    <div class="grid" id="sales">
+      <div class="card">
+        <div class="cardHead">
+          <div class="title">Revenue by Country</div>
+          <div class="sub">Top markets</div>
         </div>
-        <div class="filter">
-          <label>Year</label>
-          <select>
-            <option>2025</option>
-            <option>2024</option>
-            <option>2023</option>
-          </select>
-        </div>
-        <div class="filter">
-          <label>Month</label>
-          <select>
-            <option>All</option>
-            <option>Jan</option><option>Feb</option><option>Mar</option><option>Apr</option>
-            <option>May</option><option>Jun</option><option>Jul</option><option>Aug</option>
-            <option>Sep</option><option>Oct</option><option>Nov</option><option>Dec</option>
-          </select>
+        <div class="cardBody bars">
+          <div class="item">
+            <div class="name"><span>United States</span><span>$9.2M</span></div>
+            <div class="bar"><div class="fill" style="width:92%"></div></div>
+          </div>
+          <div class="item">
+            <div class="name"><span>UK</span><span>$6.8M</span></div>
+            <div class="bar"><div class="fill" style="width:68%"></div></div>
+          </div>
+          <div class="item">
+            <div class="name"><span>Japan</span><span>$5.5M</span></div>
+            <div class="bar"><div class="fill" style="width:55%"></div></div>
+          </div>
+          <div class="item">
+            <div class="name"><span>Germany</span><span>$4.6M</span></div>
+            <div class="bar"><div class="fill" style="width:46%"></div></div>
+          </div>
+          <div class="item">
+            <div class="name"><span>Canada</span><span>$3.8M</span></div>
+            <div class="bar"><div class="fill" style="width:38%"></div></div>
+          </div>
         </div>
       </div>
 
-      <div class="clock">
-        <div class="small">SYSTEM TIME</div>
-        <div class="date" id="date"></div>
-        <div class="time" id="time"></div>
+      <div class="row2">
+        <div class="card">
+          <div class="cardHead">
+            <div class="title">Revenue Actual vs Budget</div>
+            <div class="sub">Monthly trend</div>
+          </div>
+          <div class="cardBody">
+            <div class="chartBox">
+              <svg class="spark" viewBox="0 0 1000 280" preserveAspectRatio="none">
+                <path d="M0,180 C120,60 240,240 360,140 C480,40 600,260 720,160 C840,60 920,140 1000,110"
+                      style="stroke: var(--gold);"></path>
+                <path d="M0,120 C120,220 240,80 360,170 C480,260 600,60 720,150 C840,240 920,180 1000,130"
+                      style="stroke: var(--green);"></path>
+              </svg>
+              <div>Chart placeholder (we will connect real data next)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="kpis">
+          <div class="kpi">
+            <div class="label">Total Revenue</div>
+            <div class="value">$19,539,372</div>
+            <div class="meta"><span>Compare to budget</span><span class="delta up">+9.7%</span></div>
+          </div>
+          <div class="kpi">
+            <div class="label">Total Profit</div>
+            <div class="value">$6,350,296</div>
+            <div class="meta"><span>Compare to budget</span><span class="delta up">+8.5%</span></div>
+          </div>
+          <div class="kpi">
+            <div class="label">Profit %</div>
+            <div class="value">32.50%</div>
+            <div class="meta"><span>Compare to budget</span><span class="delta up">+3.0%</span></div>
+          </div>
+          <div class="kpi">
+            <div class="label">Total Units Sold</div>
+            <div class="value">98,002</div>
+            <div class="meta"><span>Compare to budget</span><span class="delta down">-3.1%</span></div>
+          </div>
+        </div>
       </div>
     </div>
-  </header>
-
-  <main class="wrap">
-    <div class="grid">
-
-      <!-- LEFT COLUMN (like screenshot: multiple small charts stacked) -->
-      <section class="card click" onclick="alert('Revenue by Country (placeholder)')">
-        <div class="head">
-          <h2>Revenue by Country</h2>
-          <span>Top markets</span>
-        </div>
-        <div class="pad bars">
-          <div class="barrow">
-            <div>
-              <div class="barlabel">United States</div>
-              <div class="bar"><div class="fill" style="width:92%"></div></div>
-            </div>
-            <div class="num">$9.2M</div>
-          </div>
-          <div class="barrow">
-            <div>
-              <div class="barlabel">UK</div>
-              <div class="bar"><div class="fill" style="width:68%"></div></div>
-            </div>
-            <div class="num">$6.8M</div>
-          </div>
-          <div class="barrow">
-            <div>
-              <div class="barlabel">Japan</div>
-              <div class="bar"><div class="fill" style="width:55%"></div></div>
-            </div>
-            <div class="num">$5.5M</div>
-          </div>
-          <div class="barrow">
-            <div>
-              <div class="barlabel">Germany</div>
-              <div class="bar"><div class="fill" style="width:46%"></div></div>
-            </div>
-            <div class="num">$4.6M</div>
-          </div>
-          <div class="barrow">
-            <div>
-              <div class="barlabel">Canada</div>
-              <div class="bar"><div class="fill" style="width:38%"></div></div>
-            </div>
-            <div class="num">$3.8M</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- CENTER COLUMN (big line chart + donut chart like screenshot) -->
-      <section class="card">
-        <div class="head">
-          <h2>Revenue Actual vs Budget</h2>
-          <span>Monthly trend</span>
-        </div>
-        <div class="pad">
-          <svg viewBox="0 0 900 220" aria-label="Line chart">
-            <!-- grid -->
-            <line class="axis" x1="40" y1="20" x2="40" y2="200"/>
-            <line class="axis" x1="40" y1="200" x2="880" y2="200"/>
-            <line class="axis" x1="40" y1="150" x2="880" y2="150"/>
-            <line class="axis" x1="40" y1="100" x2="880" y2="100"/>
-            <line class="axis" x1="40" y1="50"  x2="880" y2="50"/>
-
-            <!-- Budget (gold) -->
-            <path class="lineA" d="M40,120 C120,40 200,60 280,90 C360,120 440,180 520,150 C600,120 680,70 760,85 C820,95 850,110 880,130" />
-            <!-- Actual (green) -->
-            <path class="lineB" d="M40,140 C120,170 200,130 280,110 C360,95 440,60 520,95 C600,130 680,160 760,135 C820,120 850,105 880,90" />
-          </svg>
-
-          <div class="two" style="margin-top:14px;">
-            <div class="card" style="box-shadow:none">
-              <div class="head">
-                <h2>Units Sold by Products</h2>
-                <span>Top sellers</span>
-              </div>
-              <div class="pad bars">
-                <div class="barrow">
-                  <div>
-                    <div class="barlabel">Road Racer</div>
-                    <div class="bar"><div class="fill" style="width:88%"></div></div>
-                  </div>
-                  <div class="num">88k</div>
-                </div>
-                <div class="barrow">
-                  <div>
-                    <div class="barlabel">City Cruiser</div>
-                    <div class="bar"><div class="fill" style="width:70%"></div></div>
-                  </div>
-                  <div class="num">70k</div>
-                </div>
-                <div class="barrow">
-                  <div>
-                    <div class="barlabel">X-Terrain</div>
-                    <div class="bar"><div class="fill" style="width:55%"></div></div>
-                  </div>
-                  <div class="num">55k</div>
-                </div>
-                <div class="barrow">
-                  <div>
-                    <div class="barlabel">Trail Master</div>
-                    <div class="bar"><div class="fill" style="width:43%"></div></div>
-                  </div>
-                  <div class="num">43k</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="card" style="box-shadow:none">
-              <div class="head">
-                <h2>Profit by Products</h2>
-                <span>Mix</span>
-              </div>
-              <div class="pad donutwrap">
-                <!-- Donut SVG -->
-                <svg viewBox="0 0 220 220" style="max-width:220px;height:220px">
-                  <!-- background ring -->
-                  <circle cx="110" cy="110" r="72" stroke="rgba(255,255,255,.12)" stroke-width="28" fill="none"></circle>
-
-                  <!-- segments (stroke-dasharray) -->
-                  <!-- Total circumference ≈ 452 -->
-                  <circle cx="110" cy="110" r="72" stroke="rgba(0,200,83,.78)" stroke-width="28" fill="none"
-                          stroke-dasharray="170 452" stroke-dashoffset="0" stroke-linecap="round"
-                          transform="rotate(-90 110 110)"></circle>
-
-                  <circle cx="110" cy="110" r="72" stroke="rgba(212,175,55,.90)" stroke-width="28" fill="none"
-                          stroke-dasharray="130 452" stroke-dashoffset="-175" stroke-linecap="round"
-                          transform="rotate(-90 110 110)"></circle>
-
-                  <circle cx="110" cy="110" r="72" stroke="rgba(212,175,55,.40)" stroke-width="28" fill="none"
-                          stroke-dasharray="90 452" stroke-dashoffset="-310" stroke-linecap="round"
-                          transform="rotate(-90 110 110)"></circle>
-
-                  <text x="110" y="105" text-anchor="middle" fill="var(--text)" font-size="18" font-weight="900">$6.95M</text>
-                  <text x="110" y="128" text-anchor="middle" fill="var(--muted)" font-size="11">Total Profit</text>
-                </svg>
-
-                <div class="legend">
-                  <div class="leg"><span class="dot g"></span> City Cruiser (37%)</div>
-                  <div class="leg"><span class="dot y"></span> Road Racer (29%)</div>
-                  <div class="leg"><span class="dot o"></span> X-Terrain (20%)</div>
-                  <div class="leg"><span class="dot d"></span> Other (14%)</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- RIGHT KPI COLUMN (like screenshot tiles) -->
-      <aside class="card">
-        <div class="head">
-          <h2>Sales Dashboard</h2>
-          <span>KPIs</span>
-        </div>
-
-        <div class="kpi click" onclick="alert('Total Revenue (placeholder)')">
-          <div class="label">TOTAL REVENUE</div>
-          <div class="value">$19,539,372</div>
-          <div class="sub"><span>Compare to budget</span><strong style="color:var(--green)">+9.7%</strong></div>
-        </div>
-
-        <div class="kpi click" onclick="alert('Total Profit (placeholder)')">
-          <div class="label">TOTAL PROFIT</div>
-          <div class="value">$6,350,296</div>
-          <div class="sub"><span>Compare to budget</span><strong style="color:var(--green)">+8.5%</strong></div>
-        </div>
-
-        <div class="kpi click" onclick="alert('Profit % (placeholder)')">
-          <div class="label">PROFIT %</div>
-          <div class="value">32.50%</div>
-          <div class="sub"><span>Compare to budget</span><strong style="color:var(--green)">+3.0%</strong></div>
-        </div>
-
-        <div class="kpi click" onclick="alert('Total Units (placeholder)')">
-          <div class="label">TOTAL UNITS SOLD</div>
-          <div class="value">98,002</div>
-          <div class="sub"><span>Compare to budget</span><strong style="color:#ff5252">-3.1%</strong></div>
-        </div>
-
-        <div class="chip">Status: LIVE</div>
-      </aside>
-
-    </div>
-
-    <footer>
-      TitanCore Holdings • Analytics Dashboard (static demo layout) • Black / Gold / Green
-    </footer>
-  </main>
+  </div>
 
   <script>
-    function tick(){
-      const d = new Date();
-      const date = d.toLocaleDateString(undefined, { weekday:"short", year:"numeric", month:"short", day:"numeric" });
-      const time = d.toLocaleTimeString(undefined, { hour:"2-digit", minute:"2-digit", second:"2-digit" });
-      const dateEl = document.getElementById("date");
-      const timeEl = document.getElementById("time");
-      if(dateEl) dateEl.textContent = date;
-      if(timeEl) timeEl.textContent = time;
+    // Simple demo behavior (filters update the title line)
+    const seg = document.getElementById('segment');
+    const yr  = document.getElementById('year');
+    const mo  = document.getElementById('month');
+
+    function setTitle(){
+      const s = seg.value === 'Segment' ? 'All Segments' : seg.value;
+      const y = yr.value  === 'Year' ? 'All Years' : yr.value;
+      const m = mo.value  === 'Month' ? 'All Months' : mo.value;
+      document.title = `TitanCore Holdings — Analytics Dashboard (${s} • ${y} • ${m})`;
     }
-    tick();
-    setInterval(tick, 1000);
+    [seg, yr, mo].forEach(el => el.addEventListener('change', setTitle));
+    setTitle();
   </script>
 </body>
 </html>
-
-   
