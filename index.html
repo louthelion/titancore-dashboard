@@ -3,597 +3,600 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TitanCore Holdings — Executive Dashboard</title>
+  <title>TitanCore Holdings — CEO Command Center</title>
 
   <style>
     :root{
       --bg:#070809;
-      --panel: rgba(212,175,55,0.08);
-      --panel2: rgba(0,200,83,0.08);
+      --panel:#0b0d10;
+      --panel2:#0a0c0f;
       --gold:#D4AF37;
-      --gold2:#B8901F;
+      --gold2:#b8901f;
       --green:#00C853;
-      --text:#F2F2F2;
-      --muted:#B7B7B7;
-      --border: rgba(212,175,55,0.35);
-      --shadow: 0 18px 40px rgba(0,0,0,.55);
-      --radius: 18px;
+      --red:#ff5a5a;
+      --amber:#f6c343;
+      --text:#F3F3F3;
+      --muted:#B9B9B9;
+      --border: rgba(212,175,55,.35);
+      --border2: rgba(212,175,55,.22);
+      --glow: 0 18px 55px rgba(0,0,0,.6);
+      --r:18px;
     }
 
     *{ box-sizing:border-box; }
     html,body{ height:100%; }
     body{
       margin:0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-      background:
-        radial-gradient(900px 500px at 15% 20%, rgba(0,200,83,.10), transparent 55%),
-        radial-gradient(900px 500px at 85% 10%, rgba(212,175,55,.10), transparent 55%),
-        radial-gradient(900px 500px at 85% 90%, rgba(0,200,83,.08), transparent 55%),
-        var(--bg);
       color:var(--text);
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+      background:
+        radial-gradient(900px 520px at 15% 18%, rgba(0,200,83,.10), transparent 58%),
+        radial-gradient(900px 520px at 85% 12%, rgba(212,175,55,.10), transparent 58%),
+        radial-gradient(900px 520px at 85% 88%, rgba(0,200,83,.08), transparent 58%),
+        var(--bg);
     }
 
-    a{ color:inherit; text-decoration:none; }
     .wrap{
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 18px 14px 80px;
+      max-width:1200px;
+      margin:0 auto;
+      padding:18px 14px 80px;
     }
 
-    /* TOP BAR */
-    .topbar{
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: linear-gradient(180deg, rgba(7,8,9,.92), rgba(7,8,9,.72));
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(212,175,55,0.18);
+    /* Top header bar (like your screenshot) */
+    .top{
+      border:1px solid var(--border2);
+      border-radius: var(--r);
+      background: rgba(255,255,255,.02);
+      box-shadow: var(--glow);
+      overflow:hidden;
     }
-    .topbar-inner{
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 14px 14px;
+    .top-inner{
       display:flex;
       align-items:center;
       gap:14px;
+      padding:14px;
+      border-bottom: 1px solid rgba(212,175,55,.16);
+      background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.12));
     }
     .logo{
       width:46px;height:46px;
       border-radius:14px;
       border:1px solid rgba(212,175,55,.45);
-      background: linear-gradient(180deg, rgba(212,175,55,.14), rgba(0,200,83,.08));
-      display:grid;
-      place-items:center;
-      box-shadow: var(--shadow);
+      background: rgba(212,175,55,.08);
+      display:grid; place-items:center;
+      font-weight:900;
+      color:var(--gold);
       flex:0 0 auto;
     }
-    .logo span{
-      font-weight:800;
-      letter-spacing:.5px;
-      color: var(--gold);
-    }
-    .titleblock{ flex:1 1 auto; min-width:0; }
-    .titleblock h1{
+    .titles{ flex:1 1 auto; min-width:0; }
+    .titles h1{
       margin:0;
-      font-size: 18px;
-      letter-spacing: .4px;
+      font-size:16px;
+      letter-spacing:.4px;
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
     }
-    .titleblock .sub{
+    .titles .sub{
       margin-top:4px;
-      color: var(--muted);
-      font-size: 13px;
+      font-size:12px;
+      color:var(--muted);
     }
 
+    /* Time is TOP RIGHT (not left). If you don’t want time at all, hide it. */
     .timebox{
       flex:0 0 auto;
-      border: 1px solid rgba(212,175,55,.35);
-      border-radius: 14px;
-      padding: 10px 12px;
-      background: rgba(212,175,55,0.06);
-      box-shadow: var(--shadow);
       text-align:right;
-      min-width: 170px;
+      border-left: 1px solid rgba(212,175,55,.14);
+      padding-left: 14px;
     }
-    .timebox .label{ color: var(--muted); font-size: 11px; letter-spacing:.6px; }
-    .timebox .date{ color: var(--gold); font-weight:700; font-size: 13px; margin-top:4px; }
-    .timebox .time{ color: var(--green); font-weight:900; font-size: 18px; margin-top:2px; }
+    .timebox .date{
+      color:var(--gold);
+      font-weight:800;
+      font-size:12px;
+      letter-spacing:.4px;
+    }
+    .timebox .time{
+      color:var(--green);
+      font-weight:900;
+      font-size:18px;
+      margin-top:4px;
+    }
 
-    /* SECTION LAYOUT */
+    /* Section block */
+    .section{
+      padding:14px;
+    }
     .grid{
       display:grid;
       grid-template-columns: 1fr;
-      gap: 16px;
-      margin-top: 18px;
+      gap:14px;
     }
 
-    .section{
-      border: 1px solid rgba(212,175,55,.22);
-      background: rgba(255,255,255,0.02);
-      border-radius: var(--radius);
-      padding: 14px;
-      box-shadow: var(--shadow);
-    }
-    .section-head{
-      display:flex;
-      align-items:baseline;
-      justify-content:space-between;
-      gap:10px;
-      margin-bottom: 12px;
-    }
-    .section-title{
-      margin:0;
-      font-size: 15px;
-      letter-spacing: .8px;
-      color: var(--gold);
-      text-transform: uppercase;
-    }
-    .section-note{
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    /* CARDS */
-    .cards{
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 12px;
-    }
-    .card{
-      border-radius: 16px;
-      border: 1px solid rgba(212,175,55,.24);
-      background: linear-gradient(180deg, rgba(212,175,55,.06), rgba(0,0,0,.12));
-      padding: 14px;
-      box-shadow: var(--shadow);
-      position:relative;
+    .panel{
+      border:1px solid var(--border2);
+      border-radius: var(--r);
+      background: rgba(255,255,255,.02);
+      box-shadow: var(--glow);
       overflow:hidden;
     }
-    .card::before{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      background: radial-gradient(500px 180px at 10% 0%, rgba(0,200,83,.10), transparent 60%),
-                  radial-gradient(500px 180px at 90% 0%, rgba(212,175,55,.10), transparent 60%);
-      pointer-events:none;
+    .panel-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:baseline;
+      gap:10px;
+      padding:12px 14px;
+      border-bottom:1px solid rgba(212,175,55,.14);
     }
-    .card > *{ position:relative; }
+    .panel-title{
+      margin:0;
+      font-size:13px;
+      letter-spacing:.9px;
+      text-transform:uppercase;
+      color:var(--gold);
+    }
+    .panel-note{
+      font-size:12px;
+      color:var(--muted);
+    }
+    .panel-body{
+      padding:14px;
+    }
 
-    .kpi-label{
-      color: var(--muted);
-      font-size: 12px;
-      letter-spacing:.5px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
+    /* KPI row */
+    .kpis{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:12px;
+    }
+    .kpi{
+      grid-column: span 12;
+      border:1px solid rgba(212,175,55,.22);
+      border-radius:16px;
+      background: rgba(0,0,0,.18);
+      padding:12px;
+    }
+    .kpi .label{
+      font-size:11px;
+      color:var(--muted);
+      letter-spacing:.6px;
+    }
+    .kpi .value{
+      margin-top:8px;
+      font-size:18px;
+      font-weight:900;
+      color:var(--text);
+    }
+    .kpi .hint{
+      margin-top:6px;
+      font-size:11px;
+      color:var(--muted);
+    }
+
+    /* Two-column rows like screenshot */
+    .row2{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:14px;
+    }
+
+    /* Lists */
+    ul.clean{
+      list-style:none;
+      padding:0;
+      margin:0;
+      display:grid;
       gap:10px;
     }
-    .kpi-value{
-      font-size: 28px;
-      font-weight: 900;
-      margin-top: 10px;
-      letter-spacing:.5px;
-    }
-    .kpi-sub{
-      margin-top: 8px;
+    .li{
       display:flex;
-      align-items:center;
+      align-items:flex-start;
       justify-content:space-between;
-      gap:10px;
-      color: var(--muted);
-      font-size: 12px;
+      gap:12px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(212,175,55,.16);
+      background: rgba(0,0,0,.14);
     }
-    .badge{
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(212,175,55,.30);
+    .li .left{
+      min-width:0;
+    }
+    .li .name{
+      font-weight:900;
+      color:var(--text);
+    }
+    .li .meta{
+      margin-top:4px;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .tag{
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:11px;
+      font-weight:900;
+      border:1px solid rgba(212,175,55,.25);
+      color:var(--gold);
       background: rgba(212,175,55,.06);
-      color: var(--gold);
-      font-weight: 800;
-      font-size: 12px;
       white-space:nowrap;
+      flex:0 0 auto;
     }
-    .badge.ok{
-      border-color: rgba(0,200,83,.40);
+    .tag.green{
+      color:var(--green);
+      border-color: rgba(0,200,83,.35);
       background: rgba(0,200,83,.08);
-      color: var(--green);
     }
-    .badge.warn{
-      border-color: rgba(212,175,55,.55);
+    .tag.amber{
+      color:var(--amber);
+      border-color: rgba(246,195,67,.35);
+      background: rgba(246,195,67,.08);
+    }
+    .tag.red{
+      color:var(--red);
+      border-color: rgba(255,90,90,.35);
+      background: rgba(255,90,90,.08);
+    }
+
+    /* Drilldown blocks */
+    .drill{
+      border:1px solid rgba(212,175,55,.20);
+      border-radius: var(--r);
+      background: rgba(0,0,0,.14);
+      padding:14px;
+    }
+    .drill h3{
+      margin:0 0 8px 0;
+      font-size:14px;
+      color:var(--text);
+      font-weight:900;
+    }
+    .drill .small{
+      color:var(--muted);
+      font-size:12px;
+      margin-bottom:12px;
+    }
+    .drill .cols{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:12px;
+    }
+    .box{
+      border:1px solid rgba(212,175,55,.16);
+      border-radius:16px;
+      background: rgba(0,0,0,.14);
+      padding:12px;
+    }
+    .box .btitle{
+      color:var(--gold);
+      font-weight:900;
+      font-size:12px;
+      letter-spacing:.6px;
+      text-transform:uppercase;
+      margin-bottom:10px;
+    }
+    .box .line{
+      color:var(--muted);
+      font-size:12px;
+      margin:6px 0;
+    }
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+    .btn{
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(0,200,83,.35);
+      background: rgba(0,200,83,.10);
+      color:var(--green);
+      font-weight:900;
+      font-size:12px;
+      letter-spacing:.3px;
+    }
+    .btn.gold{
+      border-color: rgba(212,175,55,.35);
       background: rgba(212,175,55,.08);
       color: var(--gold);
     }
-    .badge.danger{
-      border-color: rgba(255,80,80,.45);
-      background: rgba(255,80,80,.08);
-      color: #ff6b6b;
-    }
-
-    /* Companies FIXED */
-    .company-grid{
-      display:grid;
-      grid-template-columns: repeat(12,1fr);
-      gap: 12px;
-    }
-    .company{
-      grid-column: span 12;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding: 14px;
-      border-radius: 16px;
-      border:1px solid rgba(212,175,55,.26);
-      background: linear-gradient(180deg, rgba(0,200,83,.06), rgba(212,175,55,.05));
-      box-shadow: var(--shadow);
-      transition: transform .12s ease, border-color .12s ease, box-shadow .12s ease;
-    }
-    .company:hover{
-      transform: translateY(-2px);
-      border-color: rgba(0,200,83,.50);
-      box-shadow: 0 18px 40px rgba(0,0,0,.65);
-    }
-    .company .left{
-      display:flex; align-items:center; gap:12px; min-width:0;
-    }
-    .pill{
-      width:44px;height:44px;
-      border-radius: 14px;
-      display:grid; place-items:center;
-      border:1px solid rgba(212,175,55,.40);
-      background: rgba(212,175,55,.07);
-      color: var(--gold);
-      font-weight:900;
-      flex:0 0 auto;
-    }
-    .company .name{
-      font-weight: 900;
-      letter-spacing:.2px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-    .company .desc{
-      color: var(--muted);
-      font-size: 12px;
-      margin-top: 4px;
-    }
-    .openbtn{
-      padding: 10px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(0,200,83,.40);
-      background: rgba(0,200,83,.10);
-      color: var(--green);
-      font-weight: 900;
-      letter-spacing:.3px;
-      flex:0 0 auto;
-    }
-
-    /* Command modules */
-    .module{
-      grid-column: span 12;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding: 14px;
-      border-radius: 16px;
-      border:1px solid rgba(212,175,55,.22);
-      background: rgba(212,175,55,.05);
-      transition: transform .12s ease, border-color .12s ease;
-    }
-    .module:hover{ transform: translateY(-2px); border-color: rgba(0,200,83,.45); }
-    .module .m-title{ font-weight: 900; }
-    .module .m-sub{ color: var(--muted); font-size: 12px; margin-top: 4px; }
-
-    /* Alerts */
-    .alerts{
-      display:grid;
-      grid-template-columns: repeat(12,1fr);
-      gap: 12px;
-    }
-    .alert{
-      grid-column: span 12;
-      border-radius: 16px;
-      border:1px solid rgba(212,175,55,.20);
-      background: rgba(255,255,255,0.02);
-      padding: 14px;
-    }
-    .alert ul{ margin:10px 0 0 18px; color: var(--muted); }
-    .alert li{ margin: 6px 0; }
-    .dot{
-      display:inline-block;
-      width:10px;height:10px;border-radius:99px;
-      background: var(--gold);
-      margin-right: 10px;
-      box-shadow: 0 0 0 3px rgba(212,175,55,.12);
-      transform: translateY(1px);
-    }
-    .dot.green{ background: var(--green); box-shadow: 0 0 0 3px rgba(0,200,83,.12); }
-    .dot.red{ background:#ff6b6b; box-shadow: 0 0 0 3px rgba(255,107,107,.12); }
 
     /* Responsive */
-    @media (min-width: 720px){
-      .cards .card.span4{ grid-column: span 4; }
-      .cards .card.span6{ grid-column: span 6; }
-
-      .company-grid .company{ grid-column: span 6; }
-      .modules-grid{ display:grid; grid-template-columns: repeat(12,1fr); gap:12px; }
-      .modules-grid .module{ grid-column: span 6; }
-      .alerts .alert{ grid-column: span 6; }
-    }
-    @media (min-width: 1020px){
-      .company-grid .company{ grid-column: span 4; }
-      .modules-grid .module{ grid-column: span 3; }
-      .cards .card.span6{ grid-column: span 6; }
-      .cards .card.span4{ grid-column: span 4; }
-    }
-
-    /* tiny chart line */
-    .spark{
-      height: 54px;
-      margin-top: 10px;
-      border-radius: 12px;
-      border: 1px solid rgba(212,175,55,.16);
-      background: rgba(0,0,0,.18);
-      display:flex;
-      align-items:flex-end;
-      gap:6px;
-      padding:10px;
-      overflow:hidden;
-    }
-    .bar{
-      width: 10px;
-      border-radius: 8px;
-      background: linear-gradient(180deg, rgba(0,200,83,.90), rgba(212,175,55,.60));
-      opacity:.9;
+    @media (min-width: 780px){
+      .kpi{ grid-column: span 3; }
+      .row2{ grid-template-columns: 1fr 1fr; }
+      .drill .cols{ grid-template-columns: 1.1fr .9fr; }
     }
   </style>
 </head>
 
 <body>
-  <!-- TOP BAR -->
-  <div class="topbar">
-    <div class="topbar-inner">
-      <div class="logo" aria-label="TitanCore">
-        <span>TC</span>
-      </div>
-
-      <div class="titleblock">
-        <h1>TitanCore Holdings</h1>
-        <div class="sub">Executive Dashboard • Black / Gold / Green</div>
-      </div>
-
-      <div class="timebox" aria-label="Date and time">
-        <div class="label">SYSTEM TIME</div>
-        <div class="date" id="sysDate">—</div>
-        <div class="time" id="sysTime">—</div>
-      </div>
-    </div>
-  </div>
-
   <div class="wrap">
-    <!-- SECTION 1: Executive Overview -->
-    <div class="section">
-      <div class="section-head">
-        <h2 class="section-title">Section 1: Executive Overview</h2>
-        <div class="section-note">High-level health + actions</div>
+
+    <!-- HEADER -->
+    <div class="top">
+      <div class="top-inner">
+        <div class="logo">TC</div>
+
+        <div class="titles">
+          <h1>TitanCore Holdings — CEO Command Center (Holding Company)</h1>
+          <div class="sub">Executive Control • Portfolio Snapshot • Black / Gold / Green</div>
+        </div>
+
+        <!-- TOP-RIGHT TIME (NOT LEFT) -->
+        <div class="timebox" id="timebox">
+          <div class="date" id="sysDate">—</div>
+          <div class="time" id="sysTime">—</div>
+        </div>
       </div>
 
-      <div class="cards">
-        <div class="card span4">
-          <div class="kpi-label">
-            <span>Cash Status</span>
-            <span class="badge ok">STABLE</span>
+      <div class="section">
+        <!-- KPI STRIP -->
+        <div class="kpis">
+          <div class="kpi">
+            <div class="label">Portfolio KPIs (Holding Co)</div>
+            <div class="value">Consolidated Cash: —</div>
+            <div class="hint">Updated: —</div>
           </div>
-          <div class="kpi-value">$ 1,280,450</div>
-          <div class="kpi-sub">
-            <span>7-day trend</span>
-            <span style="color:var(--green); font-weight:900;">+3.4%</span>
+          <div class="kpi">
+            <div class="label">Portfolio Revenue MTD</div>
+            <div class="value">$ —</div>
+            <div class="hint">Variance: —</div>
           </div>
-          <div class="spark" aria-hidden="true">
-            <div class="bar" style="height:18px"></div>
-            <div class="bar" style="height:24px"></div>
-            <div class="bar" style="height:22px"></div>
-            <div class="bar" style="height:30px"></div>
-            <div class="bar" style="height:34px"></div>
-            <div class="bar" style="height:38px"></div>
-            <div class="bar" style="height:42px"></div>
+          <div class="kpi">
+            <div class="label">EBITDA (Est.)</div>
+            <div class="value">$ —</div>
+            <div class="hint">Trend: —</div>
           </div>
-        </div>
-
-        <div class="card span4">
-          <div class="kpi-label">
-            <span>Risk Status</span>
-            <span class="badge warn">MONITOR</span>
-          </div>
-          <div class="kpi-value">Medium</div>
-          <div class="kpi-sub">
-            <span>Open issues</span>
-            <span style="color:var(--gold); font-weight:900;">5</span>
-          </div>
-          <div class="spark" aria-hidden="true">
-            <div class="bar" style="height:14px; opacity:.55"></div>
-            <div class="bar" style="height:18px; opacity:.60"></div>
-            <div class="bar" style="height:28px; opacity:.80"></div>
-            <div class="bar" style="height:22px; opacity:.70"></div>
-            <div class="bar" style="height:34px; opacity:.90"></div>
-            <div class="bar" style="height:26px; opacity:.78"></div>
-            <div class="bar" style="height:30px; opacity:.85"></div>
-          </div>
-        </div>
-
-        <div class="card span4">
-          <div class="kpi-label">
-            <span>Approvals Pending</span>
-            <span class="badge danger">ACTION</span>
-          </div>
-          <div class="kpi-value">12</div>
-          <div class="kpi-sub">
-            <span>Need review today</span>
-            <span style="color:#ff6b6b; font-weight:900;">4</span>
-          </div>
-          <div class="spark" aria-hidden="true">
-            <div class="bar" style="height:10px; opacity:.45"></div>
-            <div class="bar" style="height:16px; opacity:.55"></div>
-            <div class="bar" style="height:20px; opacity:.65"></div>
-            <div class="bar" style="height:28px; opacity:.80"></div>
-            <div class="bar" style="height:26px; opacity:.78"></div>
-            <div class="bar" style="height:36px; opacity:.95"></div>
-            <div class="bar" style="height:42px; opacity:1"></div>
+          <div class="kpi">
+            <div class="label">Runway</div>
+            <div class="value">— months</div>
+            <div class="hint">Assumption: —</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- SECTION 2: Companies (FIXED) -->
-    <div class="section">
-      <div class="section-head">
-        <h2 class="section-title">Section 2: Companies</h2>
-        <div class="section-note">Select a company to open its command page</div>
-      </div>
-
-      <div class="company-grid">
-        <a class="company" href="./companies/titancore-holdings/" aria-label="Open TitanCore Holdings">
-          <div class="left">
-            <div class="pill">TC</div>
-            <div>
-              <div class="name">TitanCore Holdings</div>
-              <div class="desc">Parent company • Departments • Governance</div>
-            </div>
-          </div>
-          <div class="openbtn">Open</div>
-        </a>
-
-        <a class="company" href="./companies/vaultara-capital/" aria-label="Open Vaultara Capital">
-          <div class="left">
-            <div class="pill">VC</div>
-            <div>
-              <div class="name">Vaultara Capital</div>
-              <div class="desc">Finance & capital operations • Reporting</div>
-            </div>
-          </div>
-          <div class="openbtn">Open</div>
-        </a>
-
-        <a class="company" href="./companies/vitalpath-care-group/" aria-label="Open VitalPath Care Group">
-          <div class="left">
-            <div class="pill">VP</div>
-            <div>
-              <div class="name">VitalPath Care Group</div>
-              <div class="desc">Care operations • Compliance • Scheduling</div>
-            </div>
-          </div>
-          <div class="openbtn">Open</div>
-        </a>
-
-        <a class="company" href="./companies/revmotion-auto-marine-group/" aria-label="Open RevMotion Auto & Marine Group">
-          <div class="left">
-            <div class="pill">RM</div>
-            <div>
-              <div class="name">RevMotion Auto &amp; Marine Group</div>
-              <div class="desc">Service ops • Fleet • Job pipeline</div>
-            </div>
-          </div>
-          <div class="openbtn">Open</div>
-        </a>
-
-        <a class="company" href="./companies/family-first-equity-group/" aria-label="Open Family First Equity Group">
-          <div class="left">
-            <div class="pill">FF</div>
-            <div>
-              <div class="name">Family First Equity Group</div>
-              <div class="desc">Equity • Investors • Portfolio tracking</div>
-            </div>
-          </div>
-          <div class="openbtn">Open</div>
-        </a>
-      </div>
-    </div>
-
-    <!-- SECTION 3: Command Modules -->
-    <div class="section">
-      <div class="section-head">
-        <h2 class="section-title">Section 3: Command Modules</h2>
-        <div class="section-note">Core controls</div>
-      </div>
-
-      <div class="modules-grid">
-        <a class="module" href="./modules/report-approval/" aria-label="Report & Approval">
-          <div>
-            <div class="m-title">Report &amp; Approval</div>
-            <div class="m-sub">Submit, review, approve, archive</div>
-          </div>
-          <span class="badge warn">12 Pending</span>
-        </a>
-
-        <a class="module" href="./modules/finance-command/" aria-label="Finance Command">
-          <div>
-            <div class="m-title">Finance Command</div>
-            <div class="m-sub">Dashboards • budgets • invoices</div>
-          </div>
-          <span class="badge ok">Stable</span>
-        </a>
-
-        <a class="module" href="./modules/security-access/" aria-label="Security / Access">
-          <div>
-            <div class="m-title">Security / Access</div>
-            <div class="m-sub">Roles • permissions • audit logs</div>
-          </div>
-          <span class="badge ok">Secure</span>
-        </a>
-
-        <a class="module" href="./modules/omni-system/" aria-label="Omni System">
-          <div>
-            <div class="m-title">Omni System</div>
-            <div class="m-sub">Systems hub • integrations</div>
-          </div>
-          <span class="badge">Open</span>
-        </a>
-      </div>
-    </div>
-
-    <!-- SECTION 4: Alerts & Attention -->
-    <div class="section">
-      <div class="section-head">
-        <h2 class="section-title">Section 4: Alerts &amp; Attention</h2>
-        <div class="section-note">What needs action</div>
-      </div>
-
-      <div class="alerts">
-        <div class="alert">
-          <div style="font-weight:900; margin-bottom:6px;">
-            <span class="dot red"></span>Immediate Actions
-          </div>
-          <ul>
-            <li>4 approvals due today (Report &amp; Approval)</li>
-            <li>2 high-priority risks flagged (Risk Monitor)</li>
-            <li>1 security review needed for new access request</li>
+    <!-- ROW: Subsidiary Snapshot + Capital & Deals -->
+    <div class="row2" style="margin-top:14px;">
+      <div class="panel">
+        <div class="panel-head">
+          <h2 class="panel-title">Subsidiary Snapshot (This Week)</h2>
+          <div class="panel-note">Priority + status</div>
+        </div>
+        <div class="panel-body">
+          <ul class="clean">
+            <li class="li">
+              <div class="left">
+                <div class="name">Vaultara Capital</div>
+                <div class="meta">Capital / Investments • Status: — • Priority: —</div>
+              </div>
+              <span class="tag green">GREEN</span>
+            </li>
+            <li class="li">
+              <div class="left">
+                <div class="name">VitalPath Care Group</div>
+                <div class="meta">Care / Services • Status: — • Priority: —</div>
+              </div>
+              <span class="tag amber">AMBER</span>
+            </li>
+            <li class="li">
+              <div class="left">
+                <div class="name">RevMotion Auto &amp; Marine Group</div>
+                <div class="meta">Auto / Marine • Status: — • Priority: —</div>
+              </div>
+              <span class="tag green">GREEN</span>
+            </li>
+            <li class="li">
+              <div class="left">
+                <div class="name">Family First Equity Group</div>
+                <div class="meta">Equity / Real Access • Status: — • Priority: —</div>
+              </div>
+              <span class="tag amber">AMBER</span>
+            </li>
           </ul>
         </div>
+      </div>
 
-        <div class="alert">
-          <div style="font-weight:900; margin-bottom:6px;">
-            <span class="dot green"></span>Operational Notes
-          </div>
-          <ul>
-            <li>Cash status stable — track weekly variance</li>
-            <li>Next executive review: Friday (placeholder)</li>
-            <li>All modules routing is active (pages will be created next)</li>
+      <div class="panel">
+        <div class="panel-head">
+          <h2 class="panel-title">Capital &amp; Deals</h2>
+          <div class="panel-note">Pipeline + decisions</div>
+        </div>
+        <div class="panel-body">
+          <ul class="clean">
+            <li class="li">
+              <div class="left">
+                <div class="name">Liquidity actions</div>
+                <div class="meta">—</div>
+              </div>
+              <span class="tag">OPEN</span>
+            </li>
+            <li class="li">
+              <div class="left">
+                <div class="name">Active raises / lenders</div>
+                <div class="meta">—</div>
+              </div>
+              <span class="tag">TRACK</span>
+            </li>
+            <li class="li">
+              <div class="left">
+                <div class="name">M&amp;A / acquisitions</div>
+                <div class="meta">—</div>
+              </div>
+              <span class="tag">WATCH</span>
+            </li>
+            <li class="li">
+              <div class="left">
+                <div class="name">Top 3 deal blockers</div>
+                <div class="meta">—</div>
+              </div>
+              <span class="tag red">ACTION</span>
+            </li>
           </ul>
         </div>
       </div>
     </div>
+
+    <!-- ROW: Risk/Compliance + CEO Focus -->
+    <div class="row2" style="margin-top:14px;">
+      <div class="panel">
+        <div class="panel-head">
+          <h2 class="panel-title">Risk, Compliance &amp; Controls (Red/Amber/Green)</h2>
+          <div class="panel-note">System health</div>
+        </div>
+        <div class="panel-body">
+          <ul class="clean">
+            <li class="li">
+              <div class="left">
+                <div class="name">Jurisdiction Matrix</div>
+                <div class="meta">Status: Amber</div>
+              </div>
+              <span class="tag amber">AMBER</span>
+            </li>
+            <li class="li">
+              <div class="left">
+                <div class="name">Tax Network</div>
+                <div class="meta">Status: Green</div>
+              </div>
+              <span class="tag green">GREEN</span>
+            </li>
+            <li class="li">
+              <div class="left">
+                <div class="name">Contracts &amp; Approvals</div>
+                <div class="meta">Status: Amber</div>
+              </div>
+              <span class="tag amber">AMBER</span>
+            </li>
+            <li class="li">
+              <div class="left">
+                <div class="name">Security / Access</div>
+                <div class="meta">Status: Green</div>
+              </div>
+              <span class="tag green">GREEN</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h2 class="panel-title">CEO Focus (Next 7 Days)</h2>
+          <div class="panel-note">Top priorities</div>
+        </div>
+        <div class="panel-body">
+          <ul class="clean">
+            <li class="li">
+              <div class="left">
+                <div class="name">Top 3 focus areas</div>
+                <div class="meta">1) —  2) —  3) —</div>
+              </div>
+              <span class="tag">PLAN</span>
+            </li>
+            <li class="li">
+              <div class="left">
+                <div class="name">Decisions needed</div>
+                <div class="meta">Approvals • contract routing • access</div>
+              </div>
+              <span class="tag red">DUE</span>
+            </li>
+            <li class="li">
+              <div class="left">
+                <div class="name">Actions</div>
+                <div class="meta">Confirm priorities • Assign owners • Track</div>
+              </div>
+              <span class="tag">EXEC</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Subsidiary Drilldowns -->
+    <div class="panel" style="margin-top:14px;">
+      <div class="panel-head">
+        <h2 class="panel-title">Vaultara Capital — Subsidiary Drilldown</h2>
+        <div class="panel-note">Holding Company View</div>
+      </div>
+      <div class="panel-body">
+        <div class="drill">
+          <h3>Vaultara Capital</h3>
+          <div class="small">Financial health • Compliance & risk • Growth signal • CEO actions</div>
+
+          <div class="cols">
+            <div class="box">
+              <div class="btitle">Status Summary</div>
+              <div class="line">Financial Health: —</div>
+              <div class="line">Operational Delivery: —</div>
+              <div class="line">Compliance & Risk: —</div>
+              <div class="line">Growth Signal: —</div>
+            </div>
+
+            <div class="box">
+              <div class="btitle">CEO Options</div>
+              <div class="line">• Acknowledge</div>
+              <div class="line">• Issue directive</div>
+              <div class="line">• Escalate to CEO decisions</div>
+
+              <div class="actions">
+                <a class="btn" href="./companies/vaultara-capital/">Open Vaultara Page</a>
+                <a class="btn gold" href="./modules/finance-command/">Finance Command</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top:14px;">
+      <div class="panel-head">
+        <h2 class="panel-title">VitalPath Care Group — Subsidiary Drilldown</h2>
+        <div class="panel-note">Holding Company View</div>
+      </div>
+      <div class="panel-body">
+        <div class="drill">
+          <h3>VitalPath Care Group</h3>
+          <div class="small">Operational delivery • Compliance • Staffing • CEO actions</div>
+
+          <div class="cols">
+            <div class="box">
+              <div class="btitle">Status Summary</div>
+              <div class="line">Financial Health: —</div>
+              <div class="line">Operational Delivery: —</div>
+              <div class="line">Compliance & Risk: —</div>
+              <div class="line">Growth Signal: —</div>
+            </div>
+
+            <div class="box">
+              <div class="btitle">CEO Options</div>
+              <div class="line">• Acknowledge</div>
+              <div class="line">• Issue directive</div>
+              <div class="line">• Escalate to CEO decisions</div>
+
+              <div class="actions">
+                <a class="btn" href="./companies/vitalpath-care-group/">Open VitalPath Page</a>
+                <a class="btn gold" href="./modules/report-approval/">Report & Approval</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <script>
-    function pad(n){ return String(n).padStart(2,'0'); }
+    // If you DO NOT want time at all, uncomment the next line:
+    // document.getElementById("timebox").style.display = "none";
 
+    function pad(n){ return String(n).padStart(2,'0'); }
     function tick(){
       const d = new Date();
-      const weekday = d.toLocaleDateString(undefined, { weekday: 'short' });
-      const month = d.toLocaleDateString(undefined, { month: 'short' });
+      const weekday = d.toLocaleDateString(undefined, { weekday:'long' });
+      const month = d.toLocaleDateString(undefined, { month:'short' });
       const day = d.getDate();
       const year = d.getFullYear();
 
@@ -601,14 +604,12 @@
       const m = d.getMinutes();
       const s = d.getSeconds();
 
-      // 12-hour looks more "dashboard"
       const ampm = h >= 12 ? 'PM' : 'AM';
       h = h % 12; if(h === 0) h = 12;
 
-      document.getElementById('sysDate').textContent = `${weekday}, ${month} ${day}, ${year}`;
+      document.getElementById('sysDate').textContent = `${weekday} ${month} ${day}, ${year}`;
       document.getElementById('sysTime').textContent = `${pad(h)}:${pad(m)}:${pad(s)} ${ampm}`;
     }
-
     tick();
     setInterval(tick, 1000);
   </script>
