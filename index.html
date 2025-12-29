@@ -2,550 +2,72 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>TitanCore Holdings — Dashboard</title>
-
   <style>
     :root{
-      --bg:#0B0B0F;          /* black */
-      --gold:#D4AF37;        /* gold */
-      --green:#00C853;       /* green */
-      --text:#F5F5F5;
-      --muted:#B8B8B8;
-      --panel: rgba(212,175,55,.08);
-      --panel2: rgba(0,200,83,.08);
-      --border: rgba(212,175,55,.55);
-      --shadow: 0 10px 30px rgba(0,0,0,.55);
+      --bg:#070707;
+      --panel:#0f0f10;
+      --panel2:#111213;
+      --gold:#d4af37;
+      --gold2:#b88a17;
+      --green:#00c853;
+      --text:#f3f3f3;
+      --muted:#a9a9a9;
+      --border:rgba(212,175,55,.35);
+      --glow:rgba(0,200,83,.25);
+      --shadow: 0 10px 24px rgba(0,0,0,.55);
+      --radius:16px;
     }
 
     *{box-sizing:border-box}
-    html,body{height:100%}
     body{
       margin:0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: radial-gradient(900px 600px at 20% 10%, rgba(0,200,83,.08), transparent 60%),
-                  radial-gradient(900px 600px at 80% 0%, rgba(212,175,55,.10), transparent 60%),
-                  var(--bg);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(1200px 600px at 20% 0%, rgba(0,200,83,.10), transparent 55%),
+        radial-gradient(900px 500px at 90% 10%, rgba(212,175,55,.12), transparent 55%),
+        var(--bg);
       color:var(--text);
     }
 
-    a{color:inherit; text-decoration:none}
-
-    /* Top bar */
     .topbar{
       position:sticky;
       top:0;
       z-index:10;
-      display:flex;
-      align-items:center;
-      gap:14px;
-      padding:14px 14px 14px 16px;
-      background: linear-gradient(to bottom, rgba(11,11,15,.92), rgba(11,11,15,.72));
+      backdrop-filter: blur(10px);
+      background: rgba(7,7,7,.75);
       border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(8px);
+    }
+
+    .topbar-inner{
+      max-width:1200px;
+      margin:0 auto;
+      padding:14px 16px;
+      display:flex;
+      gap:14px;
+      align-items:center;
+      justify-content:space-between;
     }
 
     .brand{
       display:flex;
-      align-items:center;
       gap:12px;
-      min-width: 240px;
+      align-items:center;
+      min-width: 220px;
     }
 
     .logo{
-      width:40px; height:40px;
-      border: 2px solid var(--gold);
-      border-radius: 10px;
+      width:42px;height:42px;
+      border-radius:12px;
+      border:1px solid var(--border);
       display:grid;
       place-items:center;
-      box-shadow: var(--shadow);
-      background: rgba(212,175,55,.08);
-      user-select:none;
-    }
-    .logo span{
       color:var(--gold);
+      box-shadow: 0 0 0 3px rgba(212,175,55,.06);
+      background: linear-gradient(180deg, rgba(212,175,55,.08), rgba(0,0,0,.2));
       font-weight:800;
       letter-spacing:.5px;
     }
 
-    .titles .name{
-      font-size: 18px;
-      font-weight: 800;
-      letter-spacing:.3px;
-      color: var(--gold);
-      line-height:1.15;
-    }
-    .titles .sub{
-      font-size: 12px;
-      color: var(--muted);
-      margin-top:2px;
-    }
-
-    .nav{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-      padding-left: 6px;
-    }
-
-    .nav a{
-      padding:10px 12px;
-      border: 1px solid rgba(212,175,55,.35);
-      background: rgba(212,175,55,.06);
-      border-radius: 10px;
-      font-size: 13px;
-      color: var(--text);
-      transition: transform .12s ease, border-color .12s ease, box-shadow .12s ease;
-      white-space:nowrap;
-    }
-    .nav a:hover{
-      transform: translateY(-1px);
-      border-color: rgba(0,200,83,.75);
-      box-shadow: 0 0 0 2px rgba(0,200,83,.12), 0 10px 20px rgba(0,0,0,.45);
-    }
-    .nav a.active{
-      border-color: rgba(0,200,83,.85);
-      background: rgba(0,200,83,.10);
-      color: var(--green);
-      font-weight: 700;
-    }
-
-    /* Right time strip (NOT a big timer box) */
-    .timeStrip{
-      margin-left:auto;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      padding:8px 10px;
-      border: 1px solid rgba(212,175,55,.35);
-      border-radius: 12px;
-      background: rgba(212,175,55,.05);
-      box-shadow: var(--shadow);
-      min-width: 210px;
-      justify-content: space-between;
-    }
-    .timeStrip .label{
-      font-size: 11px;
-      color: var(--muted);
-      letter-spacing:.3px;
-    }
-    .timeStrip .dt{
-      text-align:right;
-      line-height:1.15;
-    }
-    .timeStrip .dt .date{
-      font-size: 12px;
-      color: var(--gold);
-      font-weight: 700;
-    }
-    .timeStrip .dt .time{
-      font-size: 14px;
-      color: var(--green);
-      font-weight: 800;
-      letter-spacing:.2px;
-    }
-
-    /* Layout */
-    .wrap{
-      max-width: 1280px;
-      margin: 18px auto 34px;
-      padding: 0 14px;
-    }
-
-    .grid{
-      display:grid;
-      grid-template-columns: 1.15fr 1.4fr 1fr;
-      gap:14px;
-    }
-
-    @media (max-width: 980px){
-      .grid{grid-template-columns: 1fr}
-      .brand{min-width:auto}
-      .timeStrip{min-width:auto}
-    }
-
-    .panel{
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      background: linear-gradient(180deg, rgba(212,175,55,.08), rgba(11,11,15,.35));
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-
-    .panelHeader{
-      padding: 12px 14px;
-      display:flex;
-      align-items:center;
-      justify-content: space-between;
-      border-bottom: 1px solid rgba(212,175,55,.25);
-      background: rgba(0,0,0,.25);
-    }
-
-    .panelHeader h3{
-      margin:0;
-      font-size: 13px;
-      letter-spacing:.4px;
-      text-transform: uppercase;
-      color: var(--gold);
-    }
-
-    .panelHeader .viewAll{
-      font-size: 12px;
-      color: var(--green);
-      opacity:.9;
-      border: 1px solid rgba(0,200,83,.35);
-      padding:6px 10px;
-      border-radius: 10px;
-      background: rgba(0,200,83,.08);
-    }
-    .panelHeader .viewAll:hover{
-      border-color: rgba(212,175,55,.75);
-      color: var(--gold);
-    }
-
-    .panelBody{padding: 12px 14px 14px}
-
-    /* Click list */
-    .sectionTitle{
-      margin: 10px 0 8px;
-      font-size: 12px;
-      color: var(--green);
-      text-transform: uppercase;
-      letter-spacing:.35px;
-      font-weight: 800;
-    }
-
-    .list{
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-    }
-
-    .item{
-      display:flex;
-      align-items:center;
-      justify-content: space-between;
-      gap:10px;
-      padding: 10px 12px;
-      border: 1px solid rgba(212,175,55,.28);
-      border-radius: 12px;
-      background: rgba(212,175,55,.05);
-      transition: transform .12s ease, border-color .12s ease, box-shadow .12s ease;
-      cursor:pointer;
-      user-select:none;
-    }
-    .item:hover{
-      transform: translateY(-1px);
-      border-color: rgba(0,200,83,.70);
-      box-shadow: 0 0 0 2px rgba(0,200,83,.10);
-    }
-
-    .item .left{
-      display:flex;
-      flex-direction:column;
-      gap:2px;
-    }
-    .item .name{
-      font-size: 14px;
-      font-weight: 800;
-      color: var(--text);
-    }
-    .item .hint{
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .badge{
-      font-size: 11px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(0,200,83,.35);
-      background: rgba(0,200,83,.08);
-      color: var(--green);
-      white-space:nowrap;
-    }
-
-    /* Right column modules */
-    .module{
-      border: 1px solid rgba(212,175,55,.28);
-      border-radius: 14px;
-      background: rgba(0,0,0,.25);
-      overflow:hidden;
-    }
-    .moduleHead{
-      padding: 12px 14px;
-      display:flex;
-      align-items:center;
-      justify-content: space-between;
-      border-bottom: 1px solid rgba(212,175,55,.22);
-      background: rgba(212,175,55,.06);
-    }
-    .moduleHead .title{
-      font-weight: 900;
-      color: var(--gold);
-      letter-spacing:.3px;
-      font-size: 13px;
-      text-transform: uppercase;
-    }
-    .moduleBody{padding: 12px 14px}
-    .feed{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-    .card{
-      padding: 10px 12px;
-      border-radius: 12px;
-      border: 1px solid rgba(212,175,55,.22);
-      background: rgba(212,175,55,.04);
-      cursor:pointer;
-    }
-    .card:hover{
-      border-color: rgba(0,200,83,.60);
-      box-shadow: 0 0 0 2px rgba(0,200,83,.10);
-    }
-    .card .t{
-      font-weight: 800;
-      color: var(--text);
-      margin-bottom: 4px;
-      font-size: 13px;
-    }
-    .card .d{
-      color: var(--muted);
-      font-size: 12px;
-      line-height:1.35;
-    }
-
-    /* Small footer note */
-    .foot{
-      margin-top: 14px;
-      color: rgba(245,245,245,.6);
-      font-size: 12px;
-      text-align:center;
-    }
-  </style>
-</head>
-
-<body>
-  <header class="topbar">
-    <div class="brand">
-      <div class="logo" title="TitanCore">
-        <span>TC</span>
-      </div>
-      <div class="titles">
-        <div class="name">TitanCore Holdings</div>
-        <div class="sub">Internal Dashboard • Black / Gold / Green</div>
-      </div>
-    </div>
-
-    <nav class="nav" aria-label="Main Navigation">
-      <a class="active" href="#dashboard" data-route="dashboard">Dashboard</a>
-      <a href="#contract" data-route="contract">Contract</a>
-      <a href="#contact" data-route="contact">Contact</a>
-      <a href="#email-routing" data-route="email-routing">Email Routing</a>
-      <a href="#report-approval" data-route="report-approval">Report &amp; Approval</a>
-      <a href="#omni-system" data-route="omni-system">Omni System</a>
-      <a href="#tax-network" data-route="tax-network">Tax Network</a>
-      <a href="#agent-ai" data-route="agent-ai">Agent AI</a>
-      <a href="#finance" data-route="finance">Finance</a>
-    </nav>
-
-    <div class="timeStrip" title="Auto-updating date & time">
-      <div>
-        <div class="label">SYSTEM TIME</div>
-      </div>
-      <div class="dt">
-        <div class="date" id="dateOut">—</div>
-        <div class="time" id="timeOut">—</div>
-      </div>
-    </div>
-  </header>
-
-  <main class="wrap">
-    <div class="grid">
-      <!-- LEFT COLUMN -->
-      <section class="panel" id="dashboard">
-        <div class="panelHeader">
-          <h3>Leadership & Roles</h3>
-          <a class="viewAll" href="#leadership" data-route="leadership">View All</a>
-        </div>
-        <div class="panelBody">
-          <div class="sectionTitle">Mantle of 7</div>
-          <div class="list">
-            <div class="item" data-page="mantle/ceo">
-              <div class="left">
-                <div class="name">CEO</div>
-                <div class="hint">Private page</div>
-              </div>
-              <div class="badge">Open</div>
-            </div>
-            <div class="item" data-page="mantle/president"><div class="left"><div class="name">President</div><div class="hint">Private page</div></div><div class="badge">Open</div></div>
-            <div class="item" data-page="mantle/vice-president"><div class="left"><div class="name">Vice President</div><div class="hint">Private page</div></div><div class="badge">Open</div></div>
-            <div class="item" data-page="mantle/director"><div class="left"><div class="name">Director</div><div class="hint">Private page</div></div><div class="badge">Open</div></div>
-            <div class="item" data-page="mantle/assistant-director"><div class="left"><div class="name">Assistant Director</div><div class="hint">Private page</div></div><div class="badge">Open</div></div>
-            <div class="item" data-page="mantle/chief-of-staff"><div class="left"><div class="name">Chief of Staff</div><div class="hint">Shows 10 Chiefs inside</div></div><div class="badge">Open</div></div>
-            <div class="item" data-page="mantle/executive-advisor"><div class="left"><div class="name">Executive Advisor</div><div class="hint">Private page</div></div><div class="badge">Open</div></div>
-          </div>
-
-          <div class="sectionTitle">Generals</div>
-          <div class="list">
-            <div class="item" data-page="generals/general-manager"><div class="left"><div class="name">General Manager</div><div class="hint">Private page</div></div><div class="badge">Open</div></div>
-            <div class="item" data-page="generals/general-assistant-manager"><div class="left"><div class="name">General Assistant Manager</div><div class="hint">Private page</div></div><div class="badge">Open</div></div>
-            <div class="item" data-page="generals/general-administrator"><div class="left"><div class="name">General Administrator</div><div class="hint">Private page</div></div><div class="badge">Open</div></div>
-          </div>
-
-          <div class="sectionTitle">TitanCore Roles</div>
-          <div class="list">
-            <div class="item" data-page="roles/manager"><div class="left"><div class="name">Manager</div><div class="hint">Private page</div></div><div class="badge">Open</div></div>
-            <div class="item" data-page="roles/assistant-manager"><div class="left"><div class="name">Assistant Manager</div><div class="hint">Private page</div></div><div class="badge">Open</div></div>
-            <div class="item" data-page="roles/administrator"><div class="left"><div class="name">Administrator</div><div class="hint">Private page</div></div><div class="badge">Open</div></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- MIDDLE COLUMN -->
-      <section class="panel">
-        <div class="panelHeader">
-          <h3>Companies</h3>
-          <a class="viewAll" href="#companies" data-route="companies">View All</a>
-        </div>
-        <div class="panelBody" id="companies">
-          <div class="sectionTitle">TitanCore</div>
-          <div class="list">
-            <div class="item" data-page="companies/titancore">
-              <div class="left">
-                <div class="name">TitanCore Holdings</div>
-                <div class="hint">Open company page → departments</div>
-              </div>
-              <div class="badge">Open</div>
-            </div>
-          </div>
-
-          <div class="sectionTitle">Subsidiaries</div>
-          <div class="list">
-            <div class="item" data-page="companies/vaultara-capital"><div class="left"><div class="name">Vaultara Capital</div><div class="hint">Company page → departments</div></div><div class="badge">Open</div></div>
-            <div class="item" data-page="companies/vitalpath-care-group"><div class="left"><div class="name">VitalPath Care Group</div><div class="hint">Company page → departments</div></div><div class="badge">Open</div></div>
-            <div class="item" data-page="companies/revmotion-auto-marine"><div class="left"><div class="name">RevMotion Auto &amp; Marine Group</div><div class="hint">Company page → departments</div></div><div class="badge">Open</div></div>
-            <div class="item" data-page="companies/family-first-equity"><div class="left"><div class="name">Family First Equity Group</div><div class="hint">Company page → departments</div></div><div class="badge">Open</div></div>
-          </div>
-
-          <div class="sectionTitle">Departments</div>
-          <div class="list">
-            <div class="item" data-page="departments/finance"><div class="left"><div class="name">Finance</div><div class="hint">Dashboards • approvals • logs</div></div><div class="badge">Open</div></div>
-            <div class="item" data-page="departments/legal"><div class="left"><div class="name">Legal</div><div class="hint">Contracts • compliance</div></div><div class="badge">Open</div></div>
-            <div class="item" data-page="departments/operations"><div class="left"><div class="name">Operations</div><div class="hint">Projects • tasks</div></div><div class="badge">Open</div></div>
-            <div class="item" data-page="departments/technology"><div class="left"><div class="name">Technology</div><div class="hint">Systems • access</div></div><div class="badge">Open</div></div>
-            <div class="item" data-page="departments/communications"><div class="left"><div class="name">Communications</div><div class="hint">Email • routing</div></div><div class="badge">Open</div></div>
-            <div class="item" data-page="departments/security"><div class="left"><div class="name">Security</div><div class="hint">Policies • audits</div></div><div class="badge">Open</div></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- RIGHT COLUMN -->
-      <aside class="panel">
-        <div class="panelHeader">
-          <h3>Updates</h3>
-          <a class="viewAll" href="#updates" data-route="updates">View All</a>
-        </div>
-
-        <div class="panelBody" id="updates">
-          <div class="module">
-            <div class="moduleHead">
-              <div class="title">TitanCore News</div>
-              <a class="viewAll" href="#news-archive" data-route="news-archive">View All</a>
-            </div>
-            <div class="moduleBody">
-              <div class="feed">
-                <div class="card" data-page="news/1">
-                  <div class="t">Welcome to TitanCore Dashboard</div>
-                  <div class="d">This is the live foundation. Next we add real pages + clickable routing.</div>
-                </div>
-                <div class="card" data-page="news/2">
-                  <div class="t">Brand locked</div>
-                  <div class="d">Black + Gold + Green only. No other colors.</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div style="height:12px"></div>
-
-          <div class="module">
-            <div class="moduleHead">
-              <div class="title">TitanCore Stats / Stack</div>
-              <a class="viewAll" href="#stats-archive" data-route="stats-archive">View All</a>
-            </div>
-            <div class="moduleBody">
-              <div class="feed">
-                <div class="card" data-page="stats/overview">
-                  <div class="t">System Status</div>
-                  <div class="d"><span style="color:var(--green);font-weight:800;">LIVE</span> • Azure Static Web Apps • GitHub Actions</div>
-                </div>
-                <div class="card" data-page="stats/deployments">
-                  <div class="t">Deployment</div>
-                  <div class="d">Your next commits will auto-deploy to Azure.</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div style="height:12px"></div>
-
-          <div class="module">
-            <div class="moduleHead">
-              <div class="title">CEO Message</div>
-              <a class="viewAll" href="#ceo-messages" data-route="ceo-messages">View All</a>
-            </div>
-            <div class="moduleBody">
-              <div class="feed">
-                <div class="card" data-page="ceo/2025-12">
-                  <div class="t">Monthly Message</div>
-                  <div class="d">Click to open CEO message archive (placeholder for now).</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="foot">TitanCore Holdings LLC • Internal Use Only</div>
-        </div>
-      </aside>
-    </div>
-  </main>
-
-  <script>
-    // Auto-updating time strip
-    function pad(n){ return String(n).padStart(2,'0'); }
-    function tick(){
-      const now = new Date();
-      const date = now.toLocaleDateString(undefined, { weekday:'short', year:'numeric', month:'short', day:'2-digit' });
-      const time = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
-      document.getElementById('dateOut').textContent = date;
-      document.getElementById('timeOut').textContent = time;
-    }
-    tick();
-    setInterval(tick, 1000);
-
-    // Click routing (for now: changes hash + shows a clean alert)
-    function go(page){
-      location.hash = page;
-      // You can remove this alert later when real pages exist.
-      alert("Route: /" + page + "\\n\\nNext step: we will create this page as a real HTML file.");
-    }
-
-    document.querySelectorAll('[data-page]').forEach(el=>{
-      el.addEventListener('click', ()=> go(el.getAttribute('data-page')));
-    });
-
-    // Nav active state
-    function setActiveNav(){
-      const hash = (location.hash || "#dashboard").replace("#","");
-      document.querySelectorAll('.nav a').forEach(a=>{
-        a.classList.toggle('active', a.getAttribute('data-route') === hash);
-      });
-    }
-    window.addEventListener('hashchange', setActiveNav);
-    setActiveNav();
-  </script>
-</body>
-</html>
+   
