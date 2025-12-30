@@ -1,487 +1,267 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TitanCore Holdings — Analytics Dashboard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TitanCore Holdings — Executive Command Center</title>
 
-  <style>
-    :root{
-      --bg:#070707;
-      --panel:#101011;
-      --panel2:#141416;
-      --gold:#d4af37;
-      --gold2:#b88a17;
-      --green:#00c853;
-      --text:#f4f4f4;
-      --muted:#b7b7b7;
-      --border:rgba(212,175,55,.35);
-      --shadow: 0 14px 30px rgba(0,0,0,.55);
-      --radius:18px;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(1200px 600px at 15% 0%, rgba(0,200,83,.10), transparent 55%),
-        radial-gradient(1000px 600px at 90% 10%, rgba(212,175,55,.12), transparent 55%),
-        var(--bg);
-    }
+<style>
+:root{
+  --bg:#050607;
+  --panel:#0b0d10;
+  --gold:#d4af37;
+  --green:#00c853;
+  --text:#f2f2f2;
+  --muted:#a9a9a9;
+  --border:rgba(212,175,55,.25);
+  --shadow:0 20px 60px rgba(0,0,0,.7);
+  --r:18px;
+}
 
-    /* TOP BAR (filters like the screenshot) */
-    header{
-      position:sticky; top:0; z-index:10;
-      background: rgba(7,7,7,.80);
-      backdrop-filter: blur(10px);
-      border-bottom:1px solid var(--border);
-    }
-    .top{
-      max-width:1200px;
-      margin:0 auto;
-      padding:14px 16px;
-      display:flex; gap:12px;
-      align-items:center; justify-content:space-between;
-    }
-    .brand{
-      display:flex; align-items:center; gap:12px;
-      min-width: 250px;
-    }
-    .logo{
-      width:44px;height:44px;border-radius:14px;
-      display:grid;place-items:center;
-      border:1px solid var(--border);
-      color:var(--gold);
-      background: linear-gradient(180deg, rgba(212,175,55,.10), rgba(0,0,0,.20));
-      font-weight:900;
-      box-shadow: 0 0 0 3px rgba(212,175,55,.06);
-    }
-    .brand h1{margin:0;font-size:16px;line-height:1.1}
-    .brand p{margin:4px 0 0;color:var(--muted);font-size:12px}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  background:
+    radial-gradient(900px 500px at 10% 15%, rgba(0,200,83,.10), transparent 60%),
+    radial-gradient(900px 500px at 90% 10%, rgba(212,175,55,.12), transparent 60%),
+    var(--bg);
+  color:var(--text);
+}
 
-    .filters{
-      display:flex; gap:10px; flex-wrap:wrap;
-      justify-content:center;
-      flex:1;
-    }
-    .filter{
-      display:flex; gap:8px; align-items:center;
-      padding:10px 12px;
-      border-radius:14px;
-      border:1px solid rgba(212,175,55,.22);
-      background: rgba(16,16,17,.60);
-      font-size:12px;
-      color:var(--text);
-    }
-    .filter label{color:var(--muted)}
-    .filter select{
-      background:transparent;
-      border:none;
-      color:var(--text);
-      outline:none;
-      font-size:12px;
-    }
+a{text-decoration:none;color:inherit}
+.wrapper{max-width:1300px;margin:auto;padding:14px 14px 80px}
 
-    .clock{
-      min-width:210px;
-      padding:10px 12px;
-      border-radius:14px;
-      border:1px solid var(--border);
-      background: rgba(16,16,17,.60);
-      box-shadow: var(--shadow);
-      text-align:right;
-      line-height:1.15;
-    }
-    .clock .small{font-size:11px;color:var(--muted)}
-    .clock .date{font-size:12px;color:var(--gold);margin-top:4px}
-    .clock .time{font-size:16px;color:var(--green);font-weight:800;margin-top:2px}
+/* TOP BAR */
+.topbar{
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  background:rgba(255,255,255,.02);
+  box-shadow:var(--shadow);
+}
+.top-row{
+  display:flex;
+  align-items:center;
+  padding:14px;
+  gap:14px;
+  border-bottom:1px solid var(--border);
+}
+.logo{
+  width:46px;height:46px;border-radius:14px;
+  border:1px solid var(--border);
+  display:grid;place-items:center;
+  font-weight:900;color:var(--gold);
+}
+.title{
+  flex:1;
+}
+.title h1{
+  margin:0;font-size:16px;letter-spacing:.4px;
+}
+.title small{color:var(--muted)}
+.time{
+  text-align:right;
+  border-left:1px solid var(--border);
+  padding-left:14px;
+}
+.time strong{color:var(--green);font-size:18px}
 
-    /* LAYOUT like the screenshot: left charts, center charts, right KPI column */
-    .wrap{max-width:1200px;margin:0 auto;padding:18px 16px 40px}
-    .grid{
-      display:grid;
-      grid-template-columns: 320px 1fr 270px;
-      gap:14px;
-      align-items:start;
-    }
-    @media (max-width: 1100px){
-      .grid{grid-template-columns: 1fr}
-      .clock{display:none}
-    }
+/* NAV */
+.nav{
+  display:flex;
+  flex-wrap:nowrap;
+  overflow-x:auto;
+  gap:10px;
+  padding:12px 14px;
+}
+.nav::-webkit-scrollbar{display:none}
+.nav a{
+  flex:0 0 auto;
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:rgba(0,0,0,.18);
+  font-weight:900;
+  font-size:12px;
+  white-space:nowrap;
+  color:var(--gold);
+}
+.nav a.active{background:rgba(0,200,83,.12);color:var(--green)}
 
-    .card{
-      border-radius:var(--radius);
-      border:1px solid rgba(212,175,55,.22);
-      background: linear-gradient(180deg, rgba(20,20,22,.70), rgba(10,10,10,.55));
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-    .card .head{
-      padding:14px 14px 10px;
-      border-bottom:1px solid rgba(212,175,55,.16);
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-end;
-      gap:10px;
-    }
-    .card .head h2{
-      margin:0;
-      font-size:12px;
-      letter-spacing:.7px;
-      text-transform:uppercase;
-      color:var(--gold);
-    }
-    .card .head span{font-size:11px;color:var(--muted)}
-    .pad{padding:14px}
+/* KPI WALL */
+.kpis{
+  margin-top:14px;
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:12px;
+}
+.kpi{
+  grid-column:span 12;
+  background:rgba(0,0,0,.25);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:12px;
+}
+.kpi h4{margin:0;color:var(--muted);font-size:11px}
+.kpi strong{font-size:22px;margin-top:6px;display:block}
+.kpi span{font-size:12px;color:var(--green)}
 
-    /* KPI column on the RIGHT like the screenshot tiles */
-    .kpi{
-      padding:12px 12px;
-      border-radius:16px;
-      border:1px solid rgba(212,175,55,.22);
-      background: rgba(10,10,10,.45);
-      margin:12px 14px 0;
-    }
-    .kpi:first-of-type{margin-top:14px}
-    .kpi .label{font-size:11px;color:var(--muted)}
-    .kpi .value{font-size:22px;font-weight:900;margin-top:6px}
-    .kpi .sub{
-      margin-top:6px;
-      font-size:11px;
-      color:var(--muted);
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-    }
-    .chip{
-      display:inline-block;
-      padding:7px 10px;
-      border-radius:999px;
-      border:1px solid rgba(0,200,83,.55);
-      color:var(--green);
-      background: rgba(0,200,83,.08);
-      font-size:12px;
-      font-weight:700;
-      margin:12px 14px 14px;
-      text-align:center;
-    }
+@media(min-width:900px){
+  .kpi{grid-column:span 3}
+}
 
-    /* Simple “charts” using bars and SVG lines */
-    .bars{display:grid;gap:10px}
-    .barrow{display:grid;grid-template-columns: 1fr 64px;gap:10px;align-items:center}
-    .barlabel{font-size:11px;color:var(--muted)}
-    .bar{
-      height:10px;border-radius:999px;
-      border:1px solid rgba(212,175,55,.18);
-      background: rgba(255,255,255,.06);
-      overflow:hidden;
-    }
-    .fill{
-      height:100%;
-      background: linear-gradient(90deg, rgba(212,175,55,.95), rgba(0,200,83,.75));
-      width:60%;
-    }
-    .num{font-size:11px;color:var(--text);text-align:right}
+/* MAIN 3 COLUMNS */
+.main{
+  margin-top:14px;
+  display:grid;
+  grid-template-columns:1fr;
+  gap:14px;
+}
+@media(min-width:900px){
+  .main{grid-template-columns:1fr 1fr 1fr}
+}
 
-    .two{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:14px;
-    }
-    @media (max-width: 900px){ .two{grid-template-columns:1fr} }
+.panel{
+  background:rgba(0,0,0,.22);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  box-shadow:var(--shadow);
+}
+.panel h3{
+  margin:0;
+  padding:14px;
+  border-bottom:1px solid var(--border);
+  color:var(--gold);
+  font-size:13px;
+  letter-spacing:.8px;
+}
+.list{list-style:none;margin:0;padding:12px}
+.list li{
+  padding:10px 12px;
+  border:1px solid var(--border);
+  border-radius:14px;
+  margin-bottom:10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(0,0,0,.25);
+}
+.list small{color:var(--muted)}
+.tag{
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  font-size:11px;
+  font-weight:900;
+}
+.green{color:var(--green)}
+.gold{color:var(--gold)}
 
-    svg{width:100%;height:220px;display:block}
-    .axis{stroke: rgba(212,175,55,.18); stroke-width:1}
-    .lineA{fill:none;stroke: var(--gold); stroke-width:4}
-    .lineB{fill:none;stroke: var(--green); stroke-width:4; opacity:.95}
-
-    .donutwrap{
-      display:flex; gap:14px; align-items:center; justify-content:space-between;
-      flex-wrap:wrap;
-    }
-    .legend{display:grid;gap:10px;min-width:180px}
-    .leg{
-      display:flex; align-items:center; gap:10px;
-      font-size:12px; color:var(--muted);
-    }
-    .dot{width:10px;height:10px;border-radius:3px;border:1px solid rgba(212,175,55,.25)}
-    .dot.g{background: rgba(0,200,83,.70)}
-    .dot.y{background: rgba(212,175,55,.85)}
-    .dot.d{background: rgba(255,255,255,.25)}
-    .dot.o{background: rgba(212,175,55,.35)}
-
-    /* Click feel */
-    .click{
-      cursor:pointer;
-      transition:.12s ease;
-    }
-    .click:hover{
-      transform: translateY(-2px);
-      border-color: rgba(0,200,83,.60);
-      box-shadow: 0 0 0 3px rgba(0,200,83,.18), var(--shadow);
-    }
-
-    footer{
-      margin-top:16px;
-      text-align:center;
-      color:var(--muted);
-      font-size:11px;
-    }
-    a{color:inherit}
-  </style>
+</style>
 </head>
 
 <body>
-  <header>
-    <div class="top">
-      <div class="brand">
-        <div class="logo">TC</div>
-        <div>
-          <h1>TitanCore Holdings</h1>
-          <p>Analytics Dashboard • Black / Gold / Green</p>
-        </div>
-      </div>
+<div class="wrapper">
 
-      <div class="filters">
-        <div class="filter">
-          <label>Segment</label>
-          <select>
-            <option>All</option>
-            <option>Enterprise</option>
-            <option>Government</option>
-            <option>SMB</option>
-          </select>
-        </div>
-        <div class="filter">
-          <label>Year</label>
-          <select>
-            <option>2025</option>
-            <option>2024</option>
-            <option>2023</option>
-          </select>
-        </div>
-        <div class="filter">
-          <label>Month</label>
-          <select>
-            <option>All</option>
-            <option>Jan</option><option>Feb</option><option>Mar</option><option>Apr</option>
-            <option>May</option><option>Jun</option><option>Jul</option><option>Aug</option>
-            <option>Sep</option><option>Oct</option><option>Nov</option><option>Dec</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="clock">
-        <div class="small">SYSTEM TIME</div>
-        <div class="date" id="date"></div>
-        <div class="time" id="time"></div>
-      </div>
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="top-row">
+    <div class="logo">TC</div>
+    <div class="title">
+      <h1>TitanCore Holdings — Executive Dashboard</h1>
+      <small>Hybrid Command + Finance Control Center</small>
     </div>
-  </header>
-
-  <main class="wrap">
-    <div class="grid">
-
-      <!-- LEFT COLUMN (like screenshot: multiple small charts stacked) -->
-      <section class="card click" onclick="alert('Revenue by Country (placeholder)')">
-        <div class="head">
-          <h2>Revenue by Country</h2>
-          <span>Top markets</span>
-        </div>
-        <div class="pad bars">
-          <div class="barrow">
-            <div>
-              <div class="barlabel">United States</div>
-              <div class="bar"><div class="fill" style="width:92%"></div></div>
-            </div>
-            <div class="num">$9.2M</div>
-          </div>
-          <div class="barrow">
-            <div>
-              <div class="barlabel">UK</div>
-              <div class="bar"><div class="fill" style="width:68%"></div></div>
-            </div>
-            <div class="num">$6.8M</div>
-          </div>
-          <div class="barrow">
-            <div>
-              <div class="barlabel">Japan</div>
-              <div class="bar"><div class="fill" style="width:55%"></div></div>
-            </div>
-            <div class="num">$5.5M</div>
-          </div>
-          <div class="barrow">
-            <div>
-              <div class="barlabel">Germany</div>
-              <div class="bar"><div class="fill" style="width:46%"></div></div>
-            </div>
-            <div class="num">$4.6M</div>
-          </div>
-          <div class="barrow">
-            <div>
-              <div class="barlabel">Canada</div>
-              <div class="bar"><div class="fill" style="width:38%"></div></div>
-            </div>
-            <div class="num">$3.8M</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- CENTER COLUMN (big line chart + donut chart like screenshot) -->
-      <section class="card">
-        <div class="head">
-          <h2>Revenue Actual vs Budget</h2>
-          <span>Monthly trend</span>
-        </div>
-        <div class="pad">
-          <svg viewBox="0 0 900 220" aria-label="Line chart">
-            <!-- grid -->
-            <line class="axis" x1="40" y1="20" x2="40" y2="200"/>
-            <line class="axis" x1="40" y1="200" x2="880" y2="200"/>
-            <line class="axis" x1="40" y1="150" x2="880" y2="150"/>
-            <line class="axis" x1="40" y1="100" x2="880" y2="100"/>
-            <line class="axis" x1="40" y1="50"  x2="880" y2="50"/>
-
-            <!-- Budget (gold) -->
-            <path class="lineA" d="M40,120 C120,40 200,60 280,90 C360,120 440,180 520,150 C600,120 680,70 760,85 C820,95 850,110 880,130" />
-            <!-- Actual (green) -->
-            <path class="lineB" d="M40,140 C120,170 200,130 280,110 C360,95 440,60 520,95 C600,130 680,160 760,135 C820,120 850,105 880,90" />
-          </svg>
-
-          <div class="two" style="margin-top:14px;">
-            <div class="card" style="box-shadow:none">
-              <div class="head">
-                <h2>Units Sold by Products</h2>
-                <span>Top sellers</span>
-              </div>
-              <div class="pad bars">
-                <div class="barrow">
-                  <div>
-                    <div class="barlabel">Road Racer</div>
-                    <div class="bar"><div class="fill" style="width:88%"></div></div>
-                  </div>
-                  <div class="num">88k</div>
-                </div>
-                <div class="barrow">
-                  <div>
-                    <div class="barlabel">City Cruiser</div>
-                    <div class="bar"><div class="fill" style="width:70%"></div></div>
-                  </div>
-                  <div class="num">70k</div>
-                </div>
-                <div class="barrow">
-                  <div>
-                    <div class="barlabel">X-Terrain</div>
-                    <div class="bar"><div class="fill" style="width:55%"></div></div>
-                  </div>
-                  <div class="num">55k</div>
-                </div>
-                <div class="barrow">
-                  <div>
-                    <div class="barlabel">Trail Master</div>
-                    <div class="bar"><div class="fill" style="width:43%"></div></div>
-                  </div>
-                  <div class="num">43k</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="card" style="box-shadow:none">
-              <div class="head">
-                <h2>Profit by Products</h2>
-                <span>Mix</span>
-              </div>
-              <div class="pad donutwrap">
-                <!-- Donut SVG -->
-                <svg viewBox="0 0 220 220" style="max-width:220px;height:220px">
-                  <!-- background ring -->
-                  <circle cx="110" cy="110" r="72" stroke="rgba(255,255,255,.12)" stroke-width="28" fill="none"></circle>
-
-                  <!-- segments (stroke-dasharray) -->
-                  <!-- Total circumference ≈ 452 -->
-                  <circle cx="110" cy="110" r="72" stroke="rgba(0,200,83,.78)" stroke-width="28" fill="none"
-                          stroke-dasharray="170 452" stroke-dashoffset="0" stroke-linecap="round"
-                          transform="rotate(-90 110 110)"></circle>
-
-                  <circle cx="110" cy="110" r="72" stroke="rgba(212,175,55,.90)" stroke-width="28" fill="none"
-                          stroke-dasharray="130 452" stroke-dashoffset="-175" stroke-linecap="round"
-                          transform="rotate(-90 110 110)"></circle>
-
-                  <circle cx="110" cy="110" r="72" stroke="rgba(212,175,55,.40)" stroke-width="28" fill="none"
-                          stroke-dasharray="90 452" stroke-dashoffset="-310" stroke-linecap="round"
-                          transform="rotate(-90 110 110)"></circle>
-
-                  <text x="110" y="105" text-anchor="middle" fill="var(--text)" font-size="18" font-weight="900">$6.95M</text>
-                  <text x="110" y="128" text-anchor="middle" fill="var(--muted)" font-size="11">Total Profit</text>
-                </svg>
-
-                <div class="legend">
-                  <div class="leg"><span class="dot g"></span> City Cruiser (37%)</div>
-                  <div class="leg"><span class="dot y"></span> Road Racer (29%)</div>
-                  <div class="leg"><span class="dot o"></span> X-Terrain (20%)</div>
-                  <div class="leg"><span class="dot d"></span> Other (14%)</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- RIGHT KPI COLUMN (like screenshot tiles) -->
-      <aside class="card">
-        <div class="head">
-          <h2>Sales Dashboard</h2>
-          <span>KPIs</span>
-        </div>
-
-        <div class="kpi click" onclick="alert('Total Revenue (placeholder)')">
-          <div class="label">TOTAL REVENUE</div>
-          <div class="value">$19,539,372</div>
-          <div class="sub"><span>Compare to budget</span><strong style="color:var(--green)">+9.7%</strong></div>
-        </div>
-
-        <div class="kpi click" onclick="alert('Total Profit (placeholder)')">
-          <div class="label">TOTAL PROFIT</div>
-          <div class="value">$6,350,296</div>
-          <div class="sub"><span>Compare to budget</span><strong style="color:var(--green)">+8.5%</strong></div>
-        </div>
-
-        <div class="kpi click" onclick="alert('Profit % (placeholder)')">
-          <div class="label">PROFIT %</div>
-          <div class="value">32.50%</div>
-          <div class="sub"><span>Compare to budget</span><strong style="color:var(--green)">+3.0%</strong></div>
-        </div>
-
-        <div class="kpi click" onclick="alert('Total Units (placeholder)')">
-          <div class="label">TOTAL UNITS SOLD</div>
-          <div class="value">98,002</div>
-          <div class="sub"><span>Compare to budget</span><strong style="color:#ff5252">-3.1%</strong></div>
-        </div>
-
-        <div class="chip">Status: LIVE</div>
-      </aside>
-
+    <div class="time">
+      <div id="date"></div>
+      <strong id="clock"></strong>
     </div>
+  </div>
 
-    <footer>
-      TitanCore Holdings • Analytics Dashboard (static demo layout) • Black / Gold / Green
-    </footer>
-  </main>
+  <!-- NAV -->
+  <div class="nav">
+    <a class="active">Dashboard</a>
+    <a href="#">Contract</a>
+    <a href="#">Contact</a>
+    <a href="#">Email Routing</a>
+    <a href="#">Report & Approval</a>
+    <a href="#">Omni System</a>
+    <a href="#">Tax Network</a>
+    <a href="#">Agent AI</a>
+    <a href="#">Finance</a>
+    <a href="#">Public Portal</a>
+  </div>
+</div>
 
-  <script>
-    function tick(){
-      const d = new Date();
-      const date = d.toLocaleDateString(undefined, { weekday:"short", year:"numeric", month:"short", day:"numeric" });
-      const time = d.toLocaleTimeString(undefined, { hour:"2-digit", minute:"2-digit", second:"2-digit" });
-      const dateEl = document.getElementById("date");
-      const timeEl = document.getElementById("time");
-      if(dateEl) dateEl.textContent = date;
-      if(timeEl) timeEl.textContent = time;
-    }
-    tick();
-    setInterval(tick, 1000);
-  </script>
+<!-- KPI WALL -->
+<div class="kpis">
+  <div class="kpi"><h4>Cash Position</h4><strong>$ —</strong><span>Stable</span></div>
+  <div class="kpi"><h4>Revenue Trend</h4><strong>—</strong><span>Monitoring</span></div>
+  <div class="kpi"><h4>Profit / Loss</h4><strong>—</strong><span>YTD</span></div>
+  <div class="kpi"><h4>Risk Level</h4><strong class="green">GREEN</strong><span>Controlled</span></div>
+
+  <div class="kpi"><h4>Approvals Pending</h4><strong>—</strong><span>Action Needed</span></div>
+  <div class="kpi"><h4>Security Alerts</h4><strong>—</strong><span>Watching</span></div>
+  <div class="kpi"><h4>Compliance</h4><strong>—</strong><span>On Track</span></div>
+  <div class="kpi"><h4>Active Projects</h4><strong>—</strong><span>Across Companies</span></div>
+
+  <div class="kpi"><h4>Critical Alerts</h4><strong>—</strong><span>None</span></div>
+  <div class="kpi"><h4>CEO Focus (7 Days)</h4><strong>—</strong><span>Active</span></div>
+</div>
+
+<!-- MAIN 3 COLUMNS -->
+<div class="main">
+
+<!-- LEFT -->
+<div class="panel">
+  <h3>AUTHORITY</h3>
+  <ul class="list">
+    <li><div>CEO<br><small>Private</small></div><span class="tag gold">Open</span></li>
+    <li><div>President</div><span class="tag">Open</span></li>
+    <li><div>Vice President</div><span class="tag">Open</span></li>
+    <li><div>Director</div><span class="tag">Open</span></li>
+    <li><div>Assistant Director</div><span class="tag">Open</span></li>
+    <li><div>Chief of Staff<br><small>+10 Chiefs</small></div><span class="tag">Open</span></li>
+    <li><div>Executive Advisor</div><span class="tag">Open</span></li>
+    <li><div>General Manager</div><span class="tag">Open</span></li>
+    <li><div>General Assistant Manager</div><span class="tag">Open</span></li>
+    <li><div>General Administrator</div><span class="tag">Open</span></li>
+  </ul>
+</div>
+
+<!-- MIDDLE -->
+<div class="panel">
+  <h3>COMPANIES</h3>
+  <ul class="list">
+    <li><div>TitanCore Holdings<br><small>Holding</small></div><span class="tag gold">Open</span></li>
+    <li><div>Vaultara Capital</div><span class="tag green">GREEN</span></li>
+    <li><div>VitalPath Care Group</div><span class="tag">AMBER</span></li>
+    <li><div>RevMotion Auto & Marine</div><span class="tag green">GREEN</span></li>
+    <li><div>Family First Equity Group</div><span class="tag">AMBER</span></li>
+  </ul>
+</div>
+
+<!-- RIGHT -->
+<div class="panel">
+  <h3>INTELLIGENCE</h3>
+  <ul class="list">
+    <li><div>TitanCore News</div><span class="tag">View All</span></li>
+    <li><div>Stats / Stock</div><span class="tag">History</span></li>
+    <li><div>CEO Message</div><span class="tag">Read</span></li>
+    <li><div>Alerts & Attention</div><span class="tag">Open</span></li>
+  </ul>
+</div>
+
+</div>
+</div>
+
+<script>
+function tick(){
+  const d=new Date();
+  document.getElementById("clock").innerText=d.toLocaleTimeString();
+  document.getElementById("date").innerText=d.toDateString();
+}
+tick();setInterval(tick,1000);
+</script>
+
 </body>
 </html>
