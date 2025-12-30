@@ -2,220 +2,309 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TitanCore Holdings — Executive Command Center</title>
-
-  <link rel="stylesheet" href="./assets/styles.css" />
-  <script defer src="./assets/app.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TitanCore Holdings — Executive Command Center (NUCLEAR)</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
 </head>
-
 <body>
   <div class="wrap">
 
-    <!-- HEADER (Row 1: TitanCore green / Row 2: time right / Row 3: nav) -->
-    <header class="topbar">
-      <div class="topbar-row1">
-        <div class="logo">TC</div>
-        <div class="titles">
-          <div class="brand-title">TitanCore Holdings</div>
-          <div class="brand-sub">Executive Command Center • NUCLEAR (Portfolio Control)</div>
+    <!-- HEADER: Title (GREEN) + Time RIGHT UNDER IT + Menu below -->
+    <div class="top">
+      <div class="topInner">
+        <div class="brandRow">
+          <div class="logo"><span>TC</span></div>
+          <div class="brandText">
+            <h1 class="brandTitle">TitanCore Holdings</h1>
+            <div class="brandSub">Executive Command Center • NUCLEAR (Portfolio Control)</div>
+          </div>
+        </div>
+
+        <div class="timeBox">
+          <div class="timeLabel">System Time</div>
+          <div class="timeValue">
+            <span class="date" data-date>—</span>
+            <span class="clock" data-time>—</span>
+          </div>
         </div>
       </div>
 
-      <div class="topbar-row2">
-        <div class="timebox">
-          <div class="date" id="sysDate">—</div>
-          <div class="time" id="sysTime">—</div>
-        </div>
-      </div>
-
-      <nav class="nav" aria-label="Primary">
-        <a class="navbtn active" href="./index.html">Dashboard</a>
-        <a class="navbtn" href="./contract.html">Contract</a>
-        <a class="navbtn" href="./contact.html">Contact</a>
-        <a class="navbtn" href="./email-routing.html">Email Routing</a>
-        <a class="navbtn" href="./report-approval.html">Report &amp; Approval</a>
-        <a class="navbtn" href="./omni-system.html">Omni System</a>
-        <a class="navbtn" href="./tax-network.html">Tax Network</a>
-        <a class="navbtn" href="./agent-ai.html">Agent AI</a>
-        <a class="navbtn" href="./finance.html">Finance</a>
-        <a class="navbtn" href="./public-portal.html">Public Portal</a>
+      <nav class="nav">
+        <a href="index.html">Dashboard</a>
+        <a href="contract.html">Contract</a>
+        <a href="contact.html">Contact</a>
+        <a href="email-routing.html">Email Routing</a>
+        <a href="report-approval.html">Report & Approval</a>
+        <a href="omni-system.html">Omni System</a>
+        <a href="tax-network.html">Tax Network</a>
+        <a href="agent-ai.html">Agent AI</a>
+        <a href="finance.html">Finance</a>
+        <a href="public-portal.html">Public Portal</a>
       </nav>
-    </header>
+    </div>
 
-    <!-- NUCLEAR KPI WALL (Portfolio-wide) -->
-    <section class="panel">
-      <div class="panel-head">
-        <h2>Executive Overview (Portfolio)</h2>
-        <span class="badge">NUCLEAR</span>
+    <!-- KPI POWER TILES -->
+    <div class="sectionTitleRow">
+      <h2 class="sectionTitle">Executive Overview (Portfolio)</h2>
+      <div class="smallHint">Power tiles + command modules + governance</div>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi">
+        <div class="label">Portfolio Cash</div>
+        <div class="value">$—</div>
+        <div class="status">Holding-level cash status: <span class="gold">TRACKING</span></div>
       </div>
-
-      <div class="kpis">
-        <div class="kpi">
-          <div class="kpi-label">Portfolio Cash</div>
-          <div class="kpi-value" id="kpiCash">$—</div>
-          <div class="kpi-foot good">Holding-level</div>
-        </div>
-        <div class="kpi">
-          <div class="kpi-label">Portfolio Risk</div>
-          <div class="kpi-value" id="kpiRisk">GREEN</div>
-          <div class="kpi-foot" id="kpiRiskNote">Controlled</div>
-        </div>
-        <div class="kpi">
-          <div class="kpi-label">Approvals Pending</div>
-          <div class="kpi-value" id="kpiApprovals">—</div>
-          <div class="kpi-foot warn">Across companies</div>
-        </div>
-        <div class="kpi">
-          <div class="kpi-label">Security / Access</div>
-          <div class="kpi-value" id="kpiSecurity">SECURE</div>
-          <div class="kpi-foot good">Monitoring</div>
-        </div>
-
-        <div class="kpi">
-          <div class="kpi-label">Compliance</div>
-          <div class="kpi-value" id="kpiCompliance">—</div>
-          <div class="kpi-foot">Tax + deadlines</div>
-        </div>
-        <div class="kpi">
-          <div class="kpi-label">Active Projects</div>
-          <div class="kpi-value" id="kpiProjects">—</div>
-          <div class="kpi-foot">Across companies</div>
-        </div>
-        <div class="kpi">
-          <div class="kpi-label">Critical Alerts</div>
-          <div class="kpi-value" id="kpiCritical">—</div>
-          <div class="kpi-foot warn">Immediate action</div>
-        </div>
-        <div class="kpi">
-          <div class="kpi-label">CEO Focus (7 Days)</div>
-          <div class="kpi-value" id="kpiFocus">—</div>
-          <div class="kpi-foot">Auto-prioritized</div>
-        </div>
+      <div class="kpi">
+        <div class="label">Portfolio Risk</div>
+        <div class="value"><span class="green">GREEN</span></div>
+        <div class="status">Risk posture: <span class="green">CONTROLLED</span></div>
       </div>
-    </section>
+      <div class="kpi">
+        <div class="label">Approvals Pending</div>
+        <div class="value">—</div>
+        <div class="status">Queue: Report & Approval module</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Security / Access</div>
+        <div class="value"><span class="green">SECURE</span></div>
+        <div class="status">Monitoring: <span class="gold">ACTIVE</span></div>
+      </div>
+    </div>
 
-    <!-- 3 COLUMN BODY -->
-    <main class="grid">
+    <!-- 3 COLUMN MAIN BODY (vertical columns) -->
+    <div class="mainGrid">
 
-      <!-- LEFT: Authority -->
+      <!-- LEFT: GOVERNANCE / ROLES -->
       <section class="panel">
-        <div class="panel-head">
-          <h2>Authority</h2>
-          <a class="mini" href="./leadership.html">View All</a>
+        <div class="panelHeader">
+          <h3>Authority</h3>
+          <a class="viewAll" href="roles/index.html">View All</a>
         </div>
 
-        <div class="group-label">MANTLE OF 7</div>
-        <div class="stack">
-          <a class="row" href="./roles/ceo.html"><span>CEO</span><em>Open</em></a>
-          <a class="row" href="./roles/president.html"><span>President</span><em>Open</em></a>
-          <a class="row" href="./roles/vice-president.html"><span>Vice President</span><em>Open</em></a>
-          <a class="row" href="./roles/director.html"><span>Director</span><em>Open</em></a>
-          <a class="row" href="./roles/assistant-director.html"><span>Assistant Director</span><em>Open</em></a>
-          <a class="row" href="./roles/chief-of-staff.html"><span>Chief of Staff</span><em>+10 Chiefs</em></a>
-          <a class="row" href="./roles/executive-advisor.html"><span>Executive Advisor</span><em>Open</em></a>
-        </div>
+        <div class="list">
+          <div class="item">
+            <div class="left">
+              <p class="title">Mantle of 7</p>
+              <p class="sub">Leadership access</p>
+            </div>
+            <span class="badge">OPEN</span>
+          </div>
 
-        <div class="group-label">GENERALS</div>
-        <div class="stack">
-          <a class="row" href="./roles/general-manager.html"><span>General Manager</span><em>Open</em></a>
-          <a class="row" href="./roles/general-assistant-manager.html"><span>General Assistant Manager</span><em>Open</em></a>
-          <a class="row" href="./roles/general-administrator.html"><span>General Administrator</span><em>Open</em></a>
-        </div>
+          <a class="item" href="roles/ceo.html">
+            <div class="left">
+              <p class="title">CEO</p>
+              <p class="sub">Private page</p>
+            </div>
+            <span class="badge">OPEN</span>
+          </a>
 
-        <div class="group-label">TITANCORE ROLES</div>
-        <div class="stack">
-          <a class="row" href="./roles/manager.html"><span>Manager</span><em>Open</em></a>
-          <a class="row" href="./roles/assistant-manager.html"><span>Assistant Manager</span><em>Open</em></a>
-          <a class="row" href="./roles/administrator.html"><span>Administrator</span><em>Open</em></a>
+          <a class="item" href="roles/president.html">
+            <div class="left">
+              <p class="title">President</p>
+              <p class="sub">Private page</p>
+            </div>
+            <span class="badge">OPEN</span>
+          </a>
+
+          <a class="item" href="roles/vice-president.html">
+            <div class="left">
+              <p class="title">Vice President</p>
+              <p class="sub">Private page</p>
+            </div>
+            <span class="badge">OPEN</span>
+          </a>
+
+          <a class="item" href="roles/director.html">
+            <div class="left">
+              <p class="title">Director</p>
+              <p class="sub">Private page</p>
+            </div>
+            <span class="badge">OPEN</span>
+          </a>
+
+          <a class="item" href="roles/assistant-director.html">
+            <div class="left">
+              <p class="title">Assistant Director</p>
+              <p class="sub">Private page</p>
+            </div>
+            <span class="badge">OPEN</span>
+          </a>
+
+          <a class="item" href="roles/chief-of-staff.html">
+            <div class="left">
+              <p class="title">Chief of Staff</p>
+              <p class="sub">Shows 10 Chiefs inside</p>
+            </div>
+            <span class="badge">OPEN</span>
+          </a>
+
+          <a class="item" href="roles/executive-advisor.html">
+            <div class="left">
+              <p class="title">Executive Advisor</p>
+              <p class="sub">Private page</p>
+            </div>
+            <span class="badge">OPEN</span>
+          </a>
+
+          <div class="item">
+            <div class="left">
+              <p class="title">Generals</p>
+              <p class="sub">Holding-level control</p>
+            </div>
+            <span class="badge">OPEN</span>
+          </div>
+
+          <a class="item" href="roles/general-manager.html">
+            <div class="left">
+              <p class="title">General Manager</p>
+              <p class="sub">Private page</p>
+            </div>
+            <span class="badge">OPEN</span>
+          </a>
+
+          <a class="item" href="roles/general-assistant-manager.html">
+            <div class="left">
+              <p class="title">General Assistant Manager</p>
+              <p class="sub">Private page</p>
+            </div>
+            <span class="badge">OPEN</span>
+          </a>
+
+          <a class="item" href="roles/general-administrator.html">
+            <div class="left">
+              <p class="title">General Administrator</p>
+              <p class="sub">Private page</p>
+            </div>
+            <span class="badge">OPEN</span>
+          </a>
         </div>
       </section>
 
-      <!-- MIDDLE: Companies -->
+      <!-- MIDDLE: COMPANIES -->
       <section class="panel">
-        <div class="panel-head">
-          <h2>Companies</h2>
-          <a class="mini" href="./companies.html">View All</a>
+        <div class="panelHeader">
+          <h3>Companies</h3>
+          <a class="viewAll" href="companies/index.html">View All</a>
         </div>
 
-        <div class="stack">
-          <a class="row" href="./companies/titancore-holdings.html"><span>TitanCore Holdings</span><em>Holding</em></a>
-          <a class="row" href="./companies/vaultara-capital.html"><span>Vaultara Capital</span><em>Open</em></a>
-          <a class="row" href="./companies/vitalpath-care-group.html"><span>VitalPath Care Group</span><em>Open</em></a>
-          <a class="row" href="./companies/revmotion-auto-marine.html"><span>RevMotion Auto &amp; Marine</span><em>Open</em></a>
-          <a class="row" href="./companies/family-first-equity.html"><span>Family First Equity Group</span><em>Open</em></a>
-        </div>
+        <div class="list">
+          <a class="item" href="companies/titan-core.html">
+            <div class="left">
+              <p class="title">TitanCore Holdings</p>
+              <p class="sub">Company dashboard → departments</p>
+            </div>
+            <span class="badge">OPEN</span>
+          </a>
 
-        <div class="divider"></div>
+          <a class="item" href="companies/vaultara-capital.html">
+            <div class="left">
+              <p class="title">Vaultara Capital</p>
+              <p class="sub">Company dashboard → departments</p>
+            </div>
+            <span class="badge">OPEN</span>
+          </a>
 
-        <div class="modules">
-          <a class="tile" href="./report-approval.html">
-            <div class="tile-title">Report &amp; Approval</div>
-            <div class="tile-sub">Queue • routing • sign readiness</div>
+          <a class="item" href="companies/vitalpath.html">
+            <div class="left">
+              <p class="title">VitalPath Care Group</p>
+              <p class="sub">Company dashboard → departments</p>
+            </div>
+            <span class="badge">OPEN</span>
           </a>
-          <a class="tile" href="./finance.html">
-            <div class="tile-title">Finance Command</div>
-            <div class="tile-sub">Portfolio • subsidiaries • controls</div>
+
+          <a class="item" href="companies/revmotion.html">
+            <div class="left">
+              <p class="title">RevMotion Auto & Marine Group</p>
+              <p class="sub">Company dashboard → departments</p>
+            </div>
+            <span class="badge">OPEN</span>
           </a>
-          <a class="tile" href="./security.html">
-            <div class="tile-title">Security / Access</div>
-            <div class="tile-sub">Audit • permissions • monitoring</div>
-          </a>
-          <a class="tile" href="./omni-system.html">
-            <div class="tile-title">Omni System</div>
-            <div class="tile-sub">Operations • automation • routing</div>
+
+          <a class="item" href="companies/familyfirst.html">
+            <div class="left">
+              <p class="title">Family First Equity Group</p>
+              <p class="sub">Company dashboard → departments</p>
+            </div>
+            <span class="badge">OPEN</span>
           </a>
         </div>
       </section>
 
-      <!-- RIGHT: GLOBAL NEWS + PORTFOLIO STOCK + ALERTS (NO CEO MESSAGE HERE) -->
+      <!-- RIGHT: GLOBAL NEWS + GLOBAL STOCK/STACK (NO CEO MESSAGE HERE) -->
       <section class="panel">
-        <div class="panel-head">
-          <h2>Portfolio Intelligence</h2>
-          <span class="badge">GLOBAL</span>
+        <div class="panelHeader">
+          <h3>Global Intel</h3>
+          <a class="viewAll" href="modules/global-intel.html">View All</a>
         </div>
 
-        <!-- Global News -->
-        <div class="card">
-          <div class="card-head">
-            <h3>Global News (All Companies)</h3>
-            <a class="mini" href="./news.html">View All</a>
-          </div>
+        <div class="list">
+          <a class="item" href="modules/global-news.html">
+            <div class="left">
+              <p class="title">Portfolio News</p>
+              <p class="sub">All-company updates (holding-level)</p>
+            </div>
+            <span class="badge">OPEN</span>
+          </a>
 
-          <div class="filters" id="newsFilters"></div>
-          <ul class="feed" id="newsFeed">
-            <li>—</li>
-          </ul>
-        </div>
+          <a class="item" href="modules/global-stack.html">
+            <div class="left">
+              <p class="title">Portfolio Stack / Stock</p>
+              <p class="sub">All-company performance summary</p>
+            </div>
+            <span class="badge">OPEN</span>
+          </a>
 
-        <!-- Portfolio Stock -->
-        <div class="card">
-          <div class="card-head">
-            <h3>Portfolio Stock (All Companies)</h3>
-            <a class="mini" href="./portfolio-stock.html">View History</a>
-          </div>
+          <a class="item" href="modules/alerts.html">
+            <div class="left">
+              <p class="title">Alerts & Attention</p>
+              <p class="sub">What needs action now</p>
+            </div>
+            <span class="badge">OPEN</span>
+          </a>
 
-          <div class="stockgrid" id="portfolioStock">
-            <!-- injected by app.js -->
-          </div>
-        </div>
+          <a class="item" href="report-approval.html">
+            <div class="left">
+              <p class="title">Approvals Queue</p>
+              <p class="sub">Approve / reject items</p>
+            </div>
+            <span class="badge">OPEN</span>
+          </a>
 
-        <!-- Alerts / Attention -->
-        <div class="alert">
-          <div class="alert-title">Alerts &amp; Attention (Global)</div>
-          <ul id="alertsList">
-            <li>—</li>
-          </ul>
+          <a class="item" href="finance.html">
+            <div class="left">
+              <p class="title">Finance Command</p>
+              <p class="sub">Dashboards • approvals • logs</p>
+            </div>
+            <span class="badge">OPEN</span>
+          </a>
+
+          <a class="item" href="tax-network.html">
+            <div class="left">
+              <p class="title">Tax Network</p>
+              <p class="sub">Deadlines • filings • compliance</p>
+            </div>
+            <span class="badge">OPEN</span>
+          </a>
+
+          <a class="item" href="omni-system.html">
+            <div class="left">
+              <p class="title">Omni System</p>
+              <p class="sub">Cross-company operations</p>
+            </div>
+            <span class="badge">OPEN</span>
+          </a>
         </div>
       </section>
 
-    </main>
+    </div>
 
-    <footer class="foot">
-      <span>© TitanCore Holdings LLC</span>
-      <span class="muted">Dashboard = GLOBAL • Company pages = LOCAL</span>
-    </footer>
+    <div class="footerNote">
+      TitanCore • Black / Gold / Green • Command Center Layer 1 (NUCLEAR). Deep pages already wired.
+    </div>
 
   </div>
+
+  <script src="assets/js/app.js"></script>
 </body>
 </html>
