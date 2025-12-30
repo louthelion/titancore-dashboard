@@ -1,267 +1,236 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TitanCore Holdings — Executive Command Center</title>
-
-<style>
-:root{
-  --bg:#050607;
-  --panel:#0b0d10;
-  --gold:#d4af37;
-  --green:#00c853;
-  --text:#f2f2f2;
-  --muted:#a9a9a9;
-  --border:rgba(212,175,55,.25);
-  --shadow:0 20px 60px rgba(0,0,0,.7);
-  --r:18px;
-}
-
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-  background:
-    radial-gradient(900px 500px at 10% 15%, rgba(0,200,83,.10), transparent 60%),
-    radial-gradient(900px 500px at 90% 10%, rgba(212,175,55,.12), transparent 60%),
-    var(--bg);
-  color:var(--text);
-}
-
-a{text-decoration:none;color:inherit}
-.wrapper{max-width:1300px;margin:auto;padding:14px 14px 80px}
-
-/* TOP BAR */
-.topbar{
-  border:1px solid var(--border);
-  border-radius:var(--r);
-  background:rgba(255,255,255,.02);
-  box-shadow:var(--shadow);
-}
-.top-row{
-  display:flex;
-  align-items:center;
-  padding:14px;
-  gap:14px;
-  border-bottom:1px solid var(--border);
-}
-.logo{
-  width:46px;height:46px;border-radius:14px;
-  border:1px solid var(--border);
-  display:grid;place-items:center;
-  font-weight:900;color:var(--gold);
-}
-.title{
-  flex:1;
-}
-.title h1{
-  margin:0;font-size:16px;letter-spacing:.4px;
-}
-.title small{color:var(--muted)}
-.time{
-  text-align:right;
-  border-left:1px solid var(--border);
-  padding-left:14px;
-}
-.time strong{color:var(--green);font-size:18px}
-
-/* NAV */
-.nav{
-  display:flex;
-  flex-wrap:nowrap;
-  overflow-x:auto;
-  gap:10px;
-  padding:12px 14px;
-}
-.nav::-webkit-scrollbar{display:none}
-.nav a{
-  flex:0 0 auto;
-  padding:10px 14px;
-  border-radius:999px;
-  border:1px solid var(--border);
-  background:rgba(0,0,0,.18);
-  font-weight:900;
-  font-size:12px;
-  white-space:nowrap;
-  color:var(--gold);
-}
-.nav a.active{background:rgba(0,200,83,.12);color:var(--green)}
-
-/* KPI WALL */
-.kpis{
-  margin-top:14px;
-  display:grid;
-  grid-template-columns:repeat(12,1fr);
-  gap:12px;
-}
-.kpi{
-  grid-column:span 12;
-  background:rgba(0,0,0,.25);
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:12px;
-}
-.kpi h4{margin:0;color:var(--muted);font-size:11px}
-.kpi strong{font-size:22px;margin-top:6px;display:block}
-.kpi span{font-size:12px;color:var(--green)}
-
-@media(min-width:900px){
-  .kpi{grid-column:span 3}
-}
-
-/* MAIN 3 COLUMNS */
-.main{
-  margin-top:14px;
-  display:grid;
-  grid-template-columns:1fr;
-  gap:14px;
-}
-@media(min-width:900px){
-  .main{grid-template-columns:1fr 1fr 1fr}
-}
-
-.panel{
-  background:rgba(0,0,0,.22);
-  border:1px solid var(--border);
-  border-radius:var(--r);
-  box-shadow:var(--shadow);
-}
-.panel h3{
-  margin:0;
-  padding:14px;
-  border-bottom:1px solid var(--border);
-  color:var(--gold);
-  font-size:13px;
-  letter-spacing:.8px;
-}
-.list{list-style:none;margin:0;padding:12px}
-.list li{
-  padding:10px 12px;
-  border:1px solid var(--border);
-  border-radius:14px;
-  margin-bottom:10px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  background:rgba(0,0,0,.25);
-}
-.list small{color:var(--muted)}
-.tag{
-  padding:6px 10px;
-  border-radius:999px;
-  border:1px solid var(--border);
-  font-size:11px;
-  font-weight:900;
-}
-.green{color:var(--green)}
-.gold{color:var(--gold)}
-
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TitanCore Holdings — Executive Command Center</title>
+  <link rel="stylesheet" href="./assets/style.css" />
 </head>
 
 <body>
-<div class="wrapper">
+  <div class="wrap">
 
-<!-- TOP BAR -->
-<div class="topbar">
-  <div class="top-row">
-    <div class="logo">TC</div>
-    <div class="title">
-      <h1>TitanCore Holdings — Executive Dashboard</h1>
-      <small>Hybrid Command + Finance Control Center</small>
-    </div>
-    <div class="time">
-      <div id="date"></div>
-      <strong id="clock"></strong>
-    </div>
+    <!-- HEADER (your exact layout) -->
+    <header class="topbar">
+      <!-- Row 1: Title (GREEN) -->
+      <div class="toprow">
+        <div class="logo">TC</div>
+        <div class="titles">
+          <h1 class="brand">TitanCore Holdings</h1>
+          <div class="subtitle">Executive Dashboard — Hybrid Command + Finance (HEAVY)</div>
+        </div>
+      </div>
+
+      <!-- Row 2: Date/Time bottom-right -->
+      <div class="timerow">
+        <div class="timebox">
+          <div class="date" id="sysDate">—</div>
+          <div class="time" id="sysTime">—</div>
+        </div>
+      </div>
+
+      <!-- Row 3: Horizontal Navigation (always one row) -->
+      <nav class="nav" aria-label="Primary">
+        <a class="pill active" href="./">Dashboard</a>
+        <a class="pill" href="./contract/">Contract</a>
+        <a class="pill" href="./contact/">Contact</a>
+        <a class="pill" href="./email-routing/">Email Routing</a>
+        <a class="pill" href="./report-approval/">Report &amp; Approval</a>
+        <a class="pill" href="./omni-system/">Omni System</a>
+        <a class="pill" href="./tax-network/">Tax Network</a>
+        <a class="pill" href="./agent-ai/">Agent AI</a>
+        <a class="pill" href="./finance/">Finance</a>
+        <a class="pill" href="./public-portal/">Public Portal</a>
+      </nav>
+    </header>
+
+    <!-- HEAVY KPI WALL -->
+    <section class="panel">
+      <div class="panel-head">
+        <h2 class="panel-title">Executive Overview</h2>
+        <div class="panel-note">Control • Cash • Risk • Approvals • Security • Compliance</div>
+      </div>
+
+      <div class="panel-body">
+        <div class="kpis">
+          <div class="kpi">
+            <div class="klabel">Cash Position</div>
+            <div class="kvalue">$ —</div>
+            <div class="khint">MTD / QTD / YTD</div>
+          </div>
+          <div class="kpi">
+            <div class="klabel">Revenue Trend</div>
+            <div class="kvalue">—</div>
+            <div class="khint">Trailing 30 days</div>
+          </div>
+          <div class="kpi">
+            <div class="klabel">Profit / Loss</div>
+            <div class="kvalue">—</div>
+            <div class="khint">YTD summary</div>
+          </div>
+          <div class="kpi">
+            <div class="klabel">Risk Level</div>
+            <div class="kvalue good">GREEN</div>
+            <div class="khint">Portfolio risk posture</div>
+          </div>
+
+          <div class="kpi">
+            <div class="klabel">Approvals Pending</div>
+            <div class="kvalue">—</div>
+            <div class="khint">Contracts • expenses • access</div>
+          </div>
+          <div class="kpi">
+            <div class="klabel">Security / Access Alerts</div>
+            <div class="kvalue">—</div>
+            <div class="khint">Audit + monitoring</div>
+          </div>
+          <div class="kpi">
+            <div class="klabel">Compliance</div>
+            <div class="kvalue">—</div>
+            <div class="khint">Tax + filings + deadlines</div>
+          </div>
+          <div class="kpi">
+            <div class="klabel">Active Projects</div>
+            <div class="kvalue">—</div>
+            <div class="khint">Across all companies</div>
+          </div>
+
+          <div class="kpi">
+            <div class="klabel">Critical Alerts</div>
+            <div class="kvalue">—</div>
+            <div class="khint">Immediate action</div>
+          </div>
+          <div class="kpi">
+            <div class="klabel">CEO Focus (7 Days)</div>
+            <div class="kvalue">—</div>
+            <div class="khint">Top priorities</div>
+          </div>
+          <div class="kpi">
+            <div class="klabel">Portfolio Runway</div>
+            <div class="kvalue">— months</div>
+            <div class="khint">Cash burn estimate</div>
+          </div>
+          <div class="kpi">
+            <div class="klabel">Collections / AR</div>
+            <div class="kvalue">$ —</div>
+            <div class="khint">Receivables</div>
+          </div>
+        </div>
+
+        <!-- Visual power: mini trend charts -->
+        <div class="charts">
+          <div class="chart">
+            <div class="chart-title">Revenue (sample)</div>
+            <svg viewBox="0 0 100 40" preserveAspectRatio="none" aria-label="Revenue trend">
+              <polyline class="line-gold" fill="none" stroke-width="2"
+                points="0,26 10,22 20,18 30,24 40,28 50,21 60,17 70,20 80,23 90,18 100,16" />
+            </svg>
+          </div>
+
+          <div class="chart">
+            <div class="chart-title">Approvals load (sample)</div>
+            <svg viewBox="0 0 100 40" preserveAspectRatio="none" aria-label="Approvals trend">
+              <polyline class="line-green" fill="none" stroke-width="2"
+                points="0,30 10,29 20,26 30,25 40,23 50,21 60,24 70,27 80,25 90,22 100,20" />
+            </svg>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 3-COLUMN BODY (vertical columns) -->
+    <section class="main3">
+
+      <!-- LEFT COLUMN -->
+      <div class="col">
+        <div class="col-head">
+          <h3>Authority</h3>
+          <a class="viewall" href="./leadership/">View All</a>
+        </div>
+
+        <div class="col-body">
+          <div class="group-label">MANTLE OF 7</div>
+          <ul class="list">
+            <li><a class="rowlink" href="./leadership/ceo/"><span>CEO</span><span class="badge gold">Open</span></a></li>
+            <li><a class="rowlink" href="./leadership/president/"><span>President</span><span class="badge">Open</span></a></li>
+            <li><a class="rowlink" href="./leadership/vice-president/"><span>Vice President</span><span class="badge">Open</span></a></li>
+            <li><a class="rowlink" href="./leadership/director/"><span>Director</span><span class="badge">Open</span></a></li>
+            <li><a class="rowlink" href="./leadership/assistant-director/"><span>Assistant Director</span><span class="badge">Open</span></a></li>
+            <li><a class="rowlink" href="./leadership/chief-of-staff/"><span>Chief of Staff</span><span class="badge">+10 Chiefs</span></a></li>
+            <li><a class="rowlink" href="./leadership/executive-advisor/"><span>Executive Advisor</span><span class="badge">Open</span></a></li>
+          </ul>
+
+          <div class="group-label">GENERALS</div>
+          <ul class="list">
+            <li><a class="rowlink" href="./generals/general-manager/"><span>General Manager</span><span class="badge">Open</span></a></li>
+            <li><a class="rowlink" href="./generals/general-assistant-manager/"><span>General Assistant Manager</span><span class="badge">Open</span></a></li>
+            <li><a class="rowlink" href="./generals/general-administrator/"><span>General Administrator</span><span class="badge">Open</span></a></li>
+          </ul>
+
+          <div class="group-label">TITANCORE ROLES</div>
+          <ul class="list">
+            <li><a class="rowlink" href="./roles/manager/"><span>Manager</span><span class="badge">Open</span></a></li>
+            <li><a class="rowlink" href="./roles/assistant-manager/"><span>Assistant Manager</span><span class="badge">Open</span></a></li>
+            <li><a class="rowlink" href="./roles/administrator/"><span>Administrator</span><span class="badge">Open</span></a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- MIDDLE COLUMN -->
+      <div class="col">
+        <div class="col-head">
+          <h3>Companies</h3>
+          <a class="viewall" href="./companies/">View All</a>
+        </div>
+
+        <div class="col-body">
+          <ul class="list">
+            <li><a class="rowlink" href="./companies/titancore-holdings/"><span>TitanCore Holdings</span><span class="badge gold">Holding</span></a></li>
+            <li><a class="rowlink" href="./companies/vaultara-capital/"><span>Vaultara Capital</span><span class="badge good">GREEN</span></a></li>
+            <li><a class="rowlink" href="./companies/vitalpath-care-group/"><span>VitalPath Care Group</span><span class="badge warn">AMBER</span></a></li>
+            <li><a class="rowlink" href="./companies/revmotion-auto-marine-group/"><span>RevMotion Auto &amp; Marine Group</span><span class="badge good">GREEN</span></a></li>
+            <li><a class="rowlink" href="./companies/family-first-equity-group/"><span>Family First Equity Group</span><span class="badge warn">AMBER</span></a></li>
+          </ul>
+
+          <div class="group-label">COMMAND MODULES</div>
+          <ul class="list">
+            <li><a class="rowlink" href="./report-approval/"><span>Report &amp; Approval</span><span class="badge">Open</span></a></li>
+            <li><a class="rowlink" href="./email-routing/"><span>Email Routing</span><span class="badge">Open</span></a></li>
+            <li><a class="rowlink" href="./omni-system/"><span>Omni System</span><span class="badge">Open</span></a></li>
+            <li><a class="rowlink" href="./tax-network/"><span>Tax Network</span><span class="badge">Open</span></a></li>
+            <li><a class="rowlink" href="./agent-ai/"><span>Agent AI</span><span class="badge">Open</span></a></li>
+            <li><a class="rowlink" href="./finance/"><span>Finance</span><span class="badge">Open</span></a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div class="col">
+        <div class="col-head">
+          <h3>TitanCore Intelligence</h3>
+          <a class="viewall" href="./updates/">View All</a>
+        </div>
+
+        <div class="col-body">
+          <ul class="list">
+            <li><a class="rowlink" href="./updates/news/"><span>TitanCore News</span><span class="badge">View All</span></a></li>
+            <li><a class="rowlink" href="./updates/stock/"><span>Stats / Stock</span><span class="badge">History</span></a></li>
+            <li><a class="rowlink" href="./updates/ceo-message/"><span>CEO Message</span><span class="badge">Read</span></a></li>
+            <li><a class="rowlink" href="./alerts/"><span>Alerts &amp; Attention</span><span class="badge warn">Action</span></a></li>
+          </ul>
+        </div>
+      </div>
+
+    </section>
+
+    <footer class="foot">
+      <span>TitanCore Holdings • Executive Command Center</span>
+      <span class="muted">Black / Gold / Green • Layer 1</span>
+    </footer>
+
   </div>
 
-  <!-- NAV -->
-  <div class="nav">
-    <a class="active">Dashboard</a>
-    <a href="#">Contract</a>
-    <a href="#">Contact</a>
-    <a href="#">Email Routing</a>
-    <a href="#">Report & Approval</a>
-    <a href="#">Omni System</a>
-    <a href="#">Tax Network</a>
-    <a href="#">Agent AI</a>
-    <a href="#">Finance</a>
-    <a href="#">Public Portal</a>
-  </div>
-</div>
-
-<!-- KPI WALL -->
-<div class="kpis">
-  <div class="kpi"><h4>Cash Position</h4><strong>$ —</strong><span>Stable</span></div>
-  <div class="kpi"><h4>Revenue Trend</h4><strong>—</strong><span>Monitoring</span></div>
-  <div class="kpi"><h4>Profit / Loss</h4><strong>—</strong><span>YTD</span></div>
-  <div class="kpi"><h4>Risk Level</h4><strong class="green">GREEN</strong><span>Controlled</span></div>
-
-  <div class="kpi"><h4>Approvals Pending</h4><strong>—</strong><span>Action Needed</span></div>
-  <div class="kpi"><h4>Security Alerts</h4><strong>—</strong><span>Watching</span></div>
-  <div class="kpi"><h4>Compliance</h4><strong>—</strong><span>On Track</span></div>
-  <div class="kpi"><h4>Active Projects</h4><strong>—</strong><span>Across Companies</span></div>
-
-  <div class="kpi"><h4>Critical Alerts</h4><strong>—</strong><span>None</span></div>
-  <div class="kpi"><h4>CEO Focus (7 Days)</h4><strong>—</strong><span>Active</span></div>
-</div>
-
-<!-- MAIN 3 COLUMNS -->
-<div class="main">
-
-<!-- LEFT -->
-<div class="panel">
-  <h3>AUTHORITY</h3>
-  <ul class="list">
-    <li><div>CEO<br><small>Private</small></div><span class="tag gold">Open</span></li>
-    <li><div>President</div><span class="tag">Open</span></li>
-    <li><div>Vice President</div><span class="tag">Open</span></li>
-    <li><div>Director</div><span class="tag">Open</span></li>
-    <li><div>Assistant Director</div><span class="tag">Open</span></li>
-    <li><div>Chief of Staff<br><small>+10 Chiefs</small></div><span class="tag">Open</span></li>
-    <li><div>Executive Advisor</div><span class="tag">Open</span></li>
-    <li><div>General Manager</div><span class="tag">Open</span></li>
-    <li><div>General Assistant Manager</div><span class="tag">Open</span></li>
-    <li><div>General Administrator</div><span class="tag">Open</span></li>
-  </ul>
-</div>
-
-<!-- MIDDLE -->
-<div class="panel">
-  <h3>COMPANIES</h3>
-  <ul class="list">
-    <li><div>TitanCore Holdings<br><small>Holding</small></div><span class="tag gold">Open</span></li>
-    <li><div>Vaultara Capital</div><span class="tag green">GREEN</span></li>
-    <li><div>VitalPath Care Group</div><span class="tag">AMBER</span></li>
-    <li><div>RevMotion Auto & Marine</div><span class="tag green">GREEN</span></li>
-    <li><div>Family First Equity Group</div><span class="tag">AMBER</span></li>
-  </ul>
-</div>
-
-<!-- RIGHT -->
-<div class="panel">
-  <h3>INTELLIGENCE</h3>
-  <ul class="list">
-    <li><div>TitanCore News</div><span class="tag">View All</span></li>
-    <li><div>Stats / Stock</div><span class="tag">History</span></li>
-    <li><div>CEO Message</div><span class="tag">Read</span></li>
-    <li><div>Alerts & Attention</div><span class="tag">Open</span></li>
-  </ul>
-</div>
-
-</div>
-</div>
-
-<script>
-function tick(){
-  const d=new Date();
-  document.getElementById("clock").innerText=d.toLocaleTimeString();
-  document.getElementById("date").innerText=d.toDateString();
-}
-tick();setInterval(tick,1000);
-</script>
-
+  <script src="./assets/app.js"></script>
 </body>
 </html>
