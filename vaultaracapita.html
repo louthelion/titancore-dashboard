@@ -2,46 +2,155 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Vaultara Capital — TitanCore</title>
-  <link rel="stylesheet" href="../../assets/style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TitanCore Holdings — Company Dashboard</title>
+
+  <!-- IMPORTANT: company pages are inside /companies so go up one level -->
+  <link rel="stylesheet" href="../assets/styles.css">
+  <script defer src="../assets/app.js"></script>
 </head>
+
 <body>
   <div class="wrap">
+
     <header class="topbar">
-      <div class="toprow">
+      <div class="topbar-row1">
         <div class="logo">TC</div>
         <div class="titles">
-          <h1 class="brand">Vaultara Capital</h1>
-          <div class="subtitle">Company Dashboard (Starter Page)</div>
+          <div class="brand-title">TitanCore Holdings</div>
+          <div class="brand-sub">Company Dashboard • Operations</div>
         </div>
       </div>
-      <div class="timerow">
+
+      <div class="topbar-row2">
         <div class="timebox">
           <div class="date" id="sysDate">—</div>
           <div class="time" id="sysTime">—</div>
         </div>
       </div>
+
       <nav class="nav">
-        <a class="pill" href="../../">Dashboard</a>
-        <a class="pill" href="../">Companies</a>
-        <a class="pill active" href="./">This Page</a>
+        <a class="navbtn" href="../index.html">Executive Dashboard</a>
+        <a class="navbtn active" href="./titancore-holdings.html">TitanCore</a>
+        <a class="navbtn" href="./vaultara-capital.html">Vaultara</a>
+        <a class="navbtn" href="./vitalpath-care-group.html">VitalPath</a>
+        <a class="navbtn" href="./revmotion-auto-marine.html">RevMotion</a>
+        <a class="navbtn" href="./family-first-equity.html">Family First</a>
       </nav>
     </header>
 
     <section class="panel">
       <div class="panel-head">
-        <h2 class="panel-title">Command Page</h2>
-        <div class="panel-note">Next: departments + KPIs + workflow</div>
+        <h2>Company KPIs</h2>
+        <span class="badge">LOCAL</span>
       </div>
-      <div class="panel-body">
-        <p style="color:var(--muted); margin:0;">
-          This page is live and clickable. Next we add: departments, staff modules, reports, approvals, and finance tiles.
-        </p>
+
+      <div class="kpis">
+        <div class="kpi">
+          <div class="kpi-label">Company Cash</div>
+          <div class="kpi-value">$—</div>
+          <div class="kpi-foot good">TitanCore only</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Company Risk</div>
+          <div class="kpi-value">GREEN</div>
+          <div class="kpi-foot">Operational</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Approvals</div>
+          <div class="kpi-value">—</div>
+          <div class="kpi-foot warn">To review</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Active Projects</div>
+          <div class="kpi-value">—</div>
+          <div class="kpi-foot">TitanCore tasks</div>
+        </div>
       </div>
     </section>
-  </div>
 
-  <script src="../../assets/app.js"></script>
+    <main class="grid" style="margin-top:14px">
+
+      <!-- LEFT: TitanCore Company Roles (moved here, NOT on executive dashboard) -->
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Company Roles</h2>
+          <span class="badge">TitanCore</span>
+        </div>
+
+        <div class="stack">
+          <a class="row" href="#"><span>Manager</span><em>Local</em></a>
+          <a class="row" href="#"><span>Assistant Manager</span><em>Local</em></a>
+          <a class="row" href="#"><span>Administrator</span><em>Local</em></a>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="modules">
+          <a class="tile" href="#"><div class="tile-title">Departments</div><div class="tile-sub">Finance • Legal • Ops • Tech • Comms • Security</div></a>
+          <a class="tile" href="#"><div class="tile-title">Review Queue</div><div class="tile-sub">Contracts routed in for verification</div></a>
+        </div>
+      </section>
+
+      <!-- MIDDLE: Company News -->
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Company News</h2>
+          <span class="badge">TitanCore</span>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <h3>Internal Updates</h3>
+            <a class="mini" href="#">View All</a>
+          </div>
+          <ul class="feed">
+            <li>—</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- RIGHT: Company Stock + CEO Message (company only) -->
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Company Intelligence</h2>
+          <span class="badge">LOCAL</span>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <h3>Company Stock</h3>
+            <a class="mini" href="#">History</a>
+          </div>
+          <div class="stockgrid">
+            <div class="srow">
+              <div class="sleft">
+                <div class="sname">TitanCore Holdings</div>
+                <div class="smeta">Local performance view</div>
+              </div>
+              <div class="sright">
+                <span class="trend up">↑</span>
+                <span class="pillstat good">GOOD</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <h3>CEO Message</h3>
+            <a class="mini" href="#">Read More</a>
+          </div>
+          <p class="muted">CEO message belongs inside the company dashboard (not the executive home).</p>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="foot">
+      <span>© TitanCore Holdings LLC</span>
+      <span class="muted">Company Dashboard</span>
+    </footer>
+
+  </div>
 </body>
 </html>
