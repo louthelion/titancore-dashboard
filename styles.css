@@ -279,3 +279,10 @@ a{color:inherit;text-decoration:none}
   .kpis{grid-template-columns: repeat(2, minmax(0,1fr))}
   .grid{grid-template-columns: 1fr}
 }
+/* Active nav state */
+.nav a.active {
+  background: rgba(0, 200, 83, 0.18);
+  border-color: rgba(0, 200, 83, 0.55);
+  color: #00c853;
+  box-shadow: 0 0 14px rgba(0, 200, 83, 0.25);
+}
