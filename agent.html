@@ -3,33 +3,111 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Agent AI — TitanCore</title>
+  <title>TitanCore Executive Control Center — Agent AI</title>
   <link rel="stylesheet" href="./styles.css" />
+  <style>
+    .wrap{max-width:1100px;margin:0 auto;padding:16px}
+    .panel{border:1px solid rgba(212,175,55,.35);border-radius:18px;background:rgba(0,0,0,.28);padding:16px;margin-top:14px}
+    .title{margin:0;color:#00c853;font-weight:900;letter-spacing:.03em}
+    .muted{opacity:.82}
+    .kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:12px}
+    @media(max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}}
+    .kpi{border:1px solid rgba(212,175,55,.22);border-radius:16px;background:rgba(0,0,0,.22);padding:12px}
+    .k{font-size:12px;opacity:.78;text-transform:uppercase;letter-spacing:.08em}
+    .v{font-size:22px;margin-top:6px;color:#00c853}
+    .btnRow{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+    .btn{padding:10px 14px;border-radius:999px;border:1px solid rgba(212,175,55,.28);background:rgba(0,0,0,.25);color:#eaeaea;cursor:pointer}
+    .btn:hover{border-color:rgba(0,200,83,.35);color:#00c853}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+    @media(max-width:900px){.row{grid-template-columns:1fr}}
+    table{width:100%;border-collapse:separate;border-spacing:0 10px;margin-top:10px}
+    th{font-size:12px;opacity:.7;text-align:left;padding:0 10px}
+    td{padding:12px 10px;background:rgba(0,0,0,.25);border-top:1px solid rgba(212,175,55,.18);border-bottom:1px solid rgba(212,175,55,.18)}
+    tr td:first-child{border-left:1px solid rgba(212,175,55,.18);border-radius:14px 0 0 14px}
+    tr td:last-child{border-right:1px solid rgba(212,175,55,.18);border-radius:0 14px 14px 0}
+    .tag{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid rgba(212,175,55,.25);font-size:12px}
+    .ok{border-color:rgba(0,200,83,.35);color:#00c853}
+    .warn{border-color:rgba(255,195,0,.45);color:#ffd54a}
+  </style>
 </head>
 <body>
-  <div class="wrap">
+<div class="wrap">
 
-    <nav class="nav" aria-label="Primary navigation">
-      <a href="./index.html">Dashboard</a>
-      <a href="./contract.html">Contract</a>
-      <a href="./contact.html">Contact</a>
-      <a href="./email.html">Email Routing</a>
-      <a href="./approval.html">Report &amp; Approval</a>
-      <a href="./omni.html">Omni System</a>
-      <a href="./tax.html">Tax Network</a>
-      <a class="active" href="./agent.html">Agent AI</a>
-      <a href="./finance.html">Finance</a>
-      <a href="./public.html">Public Portal</a>
-    </nav>
+  <nav class="nav">
+    <a href="./index.html">Dashboard</a>
+    <a href="./contract.html">Contract</a>
+    <a href="./contact.html">Contact</a>
+    <a href="./email.html">Email Routing</a>
+    <a href="./approval.html">Report &amp; Approval</a>
+    <a href="./omni.html">Omni System</a>
+    <a href="./tax.html">Tax Network</a>
+    <a class="active" href="./agent.html">Agent AI</a>
+    <a href="./finance.html">Finance</a>
+    <a href="./public.html">Public Portal</a>
+  </nav>
 
-    <div class="card">
-      <div class="tag">MODULE — Agent AI</div>
-      <h1>Agent AI</h1>
-      <p>This page is LIVE. Next we build tasks, automations, monitoring, and audit logs.</p>
-      <a class="btn" href="./index.html">← Back to Dashboard</a>
+  <div class="panel">
+    <h1 class="title">MODULE — Agent AI</h1>
+    <div class="muted">Agent tasks • automations • monitoring • assigned actions (control/records)</div>
+
+    <div class="kpis">
+      <div class="kpi"><div class="k">Agents Active</div><div class="v">—</div></div>
+      <div class="kpi"><div class="k">Tasks</div><div class="v">—</div></div>
+      <div class="kpi"><div class="k">Completed</div><div class="v">—</div></div>
+      <div class="kpi"><div class="k">Exceptions</div><div class="v">—</div></div>
     </div>
 
+    <div class="btnRow">
+      <button class="btn">Task Board</button>
+      <button class="btn">Agent Status</button>
+      <button class="btn">Automations</button>
+      <button class="btn">Audit Log</button>
+    </div>
   </div>
-  <script src="./app.js"></script>
+
+  <div class="row">
+    <div class="panel">
+      <h2 class="title" style="font-size:18px">Assigned Actions (Demo Queue)</h2>
+      <table>
+        <thead>
+          <tr><th>Company</th><th>Action</th><th>Priority</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>TitanCore Holdings</td>
+            <td>Compile weekly executive summary</td>
+            <td><span class="tag warn">High</span></td>
+            <td><span class="tag ok">Monitoring</span></td>
+          </tr>
+          <tr>
+            <td>Vaultara Capital</td>
+            <td>Check investor outreach log</td>
+            <td><span class="tag ok">Normal</span></td>
+            <td><span class="tag ok">Queued</span></td>
+          </tr>
+          <tr>
+            <td>VitalPath Care Group</td>
+            <td>Verify compliance items posted</td>
+            <td><span class="tag warn">High</span></td>
+            <td><span class="tag ok">Queued</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="panel">
+      <h2 class="title" style="font-size:18px">Next Step</h2>
+      <div class="muted">
+        Next we build inside:
+        <ul>
+          <li>Task board (assigned, due, completed)</li>
+          <li>Company-level agent routing (records)</li>
+          <li>Audit trail linked to Report &amp; Approval</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
 </body>
 </html>
