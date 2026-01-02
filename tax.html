@@ -3,13 +3,78 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Tax Network — TitanCore</title>
+  <title>TitanCore Executive Control Center — Tax Network</title>
   <link rel="stylesheet" href="./styles.css" />
+  <style>
+    .wrap{max-width:1200px;margin:0 auto;padding:16px}
+    .topline{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-top:10px}
+    .h1{margin:0;font-weight:900;letter-spacing:.02em}
+    .sub{opacity:.85;margin:6px 0 0}
+    .status{display:flex;align-items:center;gap:10px}
+    .pill{display:inline-block;padding:8px 12px;border-radius:999px;border:1px solid rgba(0,200,83,.45);color:#00c853;background:rgba(0,200,83,.08);font-weight:800}
+    .grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:14px}
+    @media(max-width:980px){.grid{grid-template-columns:1fr}}
+    .panel{border:1px solid rgba(212,175,55,.38);border-radius:16px;background:rgba(0,0,0,.28);padding:14px}
+    .title{margin:0 0 8px;color:#00c853;font-weight:900;letter-spacing:.03em}
+    .panel ul{margin:0;padding-left:18px}
+    .muted{opacity:.82}
+    .two{grid-column:2 / span 1}
+    .calendarWrap{grid-column:2 / span 1;display:flex;flex-direction:column;gap:10px}
+    @media(max-width:980px){.calendarWrap{grid-column:auto}}
+    .calTitle{display:flex;justify-content:space-between;align-items:center;gap:10px}
+    .calTitle .title{margin:0}
+    .calNav{display:flex;gap:10px}
+    .btn{padding:8px 12px;border-radius:999px;border:1px solid rgba(212,175,55,.35);background:rgba(0,0,0,.35);color:#eaeaea;cursor:pointer}
+    .btn.primary{border-color:rgba(0,200,83,.55);color:#00c853}
+    .calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+    .dow{font-size:11px;opacity:.7;letter-spacing:.08em;text-transform:uppercase;padding:2px 6px}
+    .day{
+      min-height:58px;border:1px solid rgba(212,175,55,.22);border-radius:12px;
+      background:rgba(0,0,0,.22);padding:8px;cursor:pointer
+    }
+    .day:hover{border-color:rgba(0,200,83,.35);box-shadow:0 0 0 2px rgba(0,200,83,.08) inset}
+    .num{font-weight:900;opacity:.92}
+    .dots{margin-top:6px;display:flex;flex-wrap:wrap;gap:6px}
+    .dot{width:8px;height:8px;border-radius:50%;background:rgba(212,175,55,.65)}
+    .dot.g{background:rgba(0,200,83,.8)}
+    .dot.r{background:rgba(255,90,90,.85)}
+    .hint{font-size:12px;opacity:.75;margin-top:6px}
+    .primaryBar{margin-top:14px}
+    .primaryActions{
+      border:1px solid rgba(212,175,55,.38);border-radius:16px;background:rgba(0,0,0,.25);
+      padding:14px
+    }
+    .primaryActions .title{color:#00c853}
+    .actionRow{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+    .action{padding:10px 12px;border-radius:999px;border:1px solid rgba(212,175,55,.28);background:rgba(0,0,0,.22);color:#eaeaea;cursor:pointer}
+    .action:hover{border-color:rgba(0,200,83,.35);color:#00c853}
+    .drawer{
+      position:fixed;inset:0;display:none;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.55);
+      padding:18px
+    }
+    .sheet{
+      width:min(920px,100%);border-radius:18px;border:1px solid rgba(212,175,55,.35);
+      background:rgba(10,10,10,.92);padding:14px
+    }
+    .sheetTop{display:flex;justify-content:space-between;align-items:center;gap:10px}
+    .sheet h3{margin:0;color:#00c853}
+    .sheet .small{font-size:12px;opacity:.78;margin-top:6px}
+    table{width:100%;border-collapse:separate;border-spacing:0 10px;margin-top:12px}
+    th{font-size:12px;opacity:.7;text-align:left;padding:0 10px}
+    td{padding:12px 10px;background:rgba(0,0,0,.25);border-top:1px solid rgba(212,175,55,.18);border-bottom:1px solid rgba(212,175,55,.18)}
+    tr td:first-child{border-left:1px solid rgba(212,175,55,.18);border-radius:14px 0 0 14px}
+    tr td:last-child{border-right:1px solid rgba(212,175,55,.18);border-radius:0 14px 14px 0}
+    .tag{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid rgba(212,175,55,.25);font-size:12px}
+    .ok{border-color:rgba(0,200,83,.35);color:#00c853}
+    .warn{border-color:rgba(255,195,0,.45);color:#ffd54a}
+    .bad{border-color:rgba(255,90,90,.55);color:#ff8a8a}
+  </style>
 </head>
+
 <body>
   <div class="wrap">
 
-    <nav class="nav" aria-label="Primary navigation">
+    <nav class="nav">
       <a href="./index.html">Dashboard</a>
       <a href="./contract.html">Contract</a>
       <a href="./contact.html">Contact</a>
@@ -22,25 +87,255 @@
       <a href="./public.html">Public Portal</a>
     </nav>
 
-    <div class="card">
-      <div class="tag">MODULE — Tax Network</div>
-      <h1>Tax Network</h1>
-      <p>This page is LIVE. Next you’ll tell me exactly how Tax should look, and we build it.</p>
-      <a class="btn" href="./index.html">← Back to Dashboard</a>
+    <div class="topline">
+      <div>
+        <h1 class="h1">TITANCORE DASHBOARD • GTCIS (Tax &amp; Compliance)</h1>
+        <div class="sub muted">Control center view — filings, deadlines, jurisdictions, documents, integrations</div>
+      </div>
+      <div class="status">
+        <div class="muted">Status:</div>
+        <div class="pill">ACTIVE</div>
+      </div>
+    </div>
+
+    <div class="grid">
+
+      <div class="panel">
+        <h3 class="title">Entity / Company Selector</h3>
+        <ul>
+          <li>TitanCore Holdings (umbrella)</li>
+          <li>Vaultara Capital</li>
+          <li>Family First Equity Group</li>
+          <li>VitalPath Care Group</li>
+          <li>RevMotion Auto &amp; Marine</li>
+        </ul>
+      </div>
+
+      <div class="panel">
+        <h3 class="title">Filing Queue (Next 30 Days)</h3>
+        <ul class="muted">
+          <li>2026-01-05 • Sales Tax — Vaultara</li>
+          <li>2026-01-12 • Payroll — VitalPath</li>
+          <li>2026-01-18 • Annual Report — RevMotion</li>
+          <li>2026-01-22 • Franchise Tax — Family First</li>
+          <li>2026-01-28 • BOI Update — TitanCore Holdings</li>
+        </ul>
+      </div>
+
+      <div class="panel">
+        <h3 class="title">Jurisdictions Matrix</h3>
+        <div class="muted">States: FL, NY, CA, GA, TX</div>
+        <div class="muted">Taxes: Sales, Payroll, Franchise</div>
+        <div class="muted" style="margin-top:8px">
+          Status: <b>18 compliant</b> / <b>1 flagged</b>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3 class="title">Compliance Status (Summary)</h3>
+        <div class="muted">
+          Filings on track<br/>
+          Pending: <b>2 state renewals</b><br/>
+          Issue: <b>1 overdue local license</b><br/>
+          Scorecard: <b>94 / 100</b>
+        </div>
+      </div>
+
+      <div class="calendarWrap panel">
+        <div class="calTitle">
+          <h3 class="title">Deadline Calendar (Month View)</h3>
+          <div class="calNav">
+            <button class="btn" id="prev">Prev</button>
+            <button class="btn primary" id="today">Today</button>
+            <button class="btn" id="next">Next</button>
+          </div>
+        </div>
+
+        <div class="calendar" id="cal">
+          <!-- JS renders DOW + days -->
+        </div>
+
+        <div class="hint">Tip: tap a date to open all filings &amp; forms for that day.</div>
+      </div>
+
+      <div class="panel">
+        <h3 class="title">Audit Shield — Documents</h3>
+        <ul class="muted">
+          <li>Receipts &amp; confirmations</li>
+          <li>EIN / BOI / Annual reports</li>
+          <li>Bank letters &amp; licensing</li>
+        </ul>
+      </div>
+
+      <div class="panel">
+        <h3 class="title">Alerts &amp; Tasks</h3>
+        <ul class="muted">
+          <li>Auto-alert: Sales tax due (FL) — Tue</li>
+          <li>BOI/Beneficial Ownership report check</li>
+          <li>License audit: Miami-Dade</li>
+        </ul>
+      </div>
+
+      <div class="panel">
+        <h3 class="title">Integrations</h3>
+        <ul class="muted">
+          <li>QuickBooks / Xero (planned)</li>
+          <li>State portals / IRS (planned)</li>
+          <li>Payment: Stripe / Shopify (planned)</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="primaryBar">
+      <div class="primaryActions">
+        <h3 class="title">Primary Actions</h3>
+        <div class="actionRow">
+          <button class="action" onclick="alert('New Filing (demo)')">NEW FILING</button>
+          <button class="action" onclick="alert('Add Jurisdiction (demo)')">ADD JURISDICTION</button>
+          <button class="action" onclick="alert('Upload Proof (demo)')">UPLOAD PROOF</button>
+          <button class="action" onclick="alert('Generate Lender Pack (demo)')">GENERATE LENDER PACK</button>
+          <button class="action" onclick="alert('Run Compliance Scan (demo)')">RUN COMPLIANCE SCAN</button>
+          <button class="action" onclick="alert('Export Weekly Summary (demo)')">EXPORT WEEKLY SUMMARY</button>
+          <button class="action" onclick="alert('Open Mantle View (demo)')">OPEN MANTLE VIEW</button>
+        </div>
+      </div>
     </div>
 
   </div>
-  <script src="./app.js"></script>
-</body>
-</html>
-    <div class="card">
-      <div class="tag">MODULE — Tax Network</div>
-      <h1>Tax Network</h1>
-      <p>This page is LIVE. Next you’ll tell me exactly how Tax should look, and we build it.</p>
-      <a class="btn" href="./index.html">← Back to Dashboard</a>
-    </div>
 
+  <!-- DAY DRAWER -->
+  <div class="drawer" id="drawer">
+    <div class="sheet">
+      <div class="sheetTop">
+        <div>
+          <h3 id="dTitle">Deadlines</h3>
+          <div class="small muted">Records-only list. Later we connect forms + uploads + approvals.</div>
+        </div>
+        <button class="btn" onclick="closeDrawer()">Close</button>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Company</th>
+            <th>Type</th>
+            <th>Jurisdiction</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="dBody"></tbody>
+      </table>
+    </div>
   </div>
-  <script src="./app.js"></script>
+
+<script>
+  const DOW = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  const demo = [
+    {date:"2026-01-05", company:"Vaultara Capital", type:"Sales Tax", jur:"FL", status:"Pending"},
+    {date:"2026-01-12", company:"VitalPath Care Group", type:"Payroll", jur:"NY", status:"Pending"},
+    {date:"2026-01-18", company:"RevMotion Auto & Marine", type:"Annual Report", jur:"GA", status:"Monitoring"},
+    {date:"2026-01-22", company:"Family First Equity Group", type:"Franchise Tax", jur:"CA", status:"Pending"},
+    {date:"2026-01-28", company:"TitanCore Holdings", type:"BOI Update", jur:"IRS", status:"Flagged"},
+  ];
+
+  let view = new Date();
+  view.setDate(1);
+
+  function ymd(d){
+    const y=d.getFullYear();
+    const m=String(d.getMonth()+1).padStart(2,"0");
+    const da=String(d.getDate()).padStart(2,"0");
+    return `${y}-${m}-${da}`;
+  }
+
+  function statusTag(s){
+    if(s==="Flagged") return `<span class="tag bad">Flagged</span>`;
+    if(s==="Pending") return `<span class="tag warn">Pending</span>`;
+    return `<span class="tag ok">Monitoring</span>`;
+  }
+
+  function render(){
+    const cal=document.getElementById("cal");
+    cal.innerHTML="";
+
+    // dow row
+    for(const d of DOW){
+      const el=document.createElement("div");
+      el.className="dow";
+      el.textContent=d;
+      cal.appendChild(el);
+    }
+
+    const first = new Date(view);
+    const startDow = first.getDay();
+    const daysInMonth = new Date(view.getFullYear(), view.getMonth()+1, 0).getDate();
+
+    // blanks
+    for(let i=0;i<startDow;i++){
+      const b=document.createElement("div");
+      b.className="day";
+      b.style.visibility="hidden";
+      cal.appendChild(b);
+    }
+
+    for(let day=1; day<=daysInMonth; day++){
+      const d=new Date(view.getFullYear(), view.getMonth(), day);
+      const key=ymd(d);
+      const items=demo.filter(x=>x.date===key);
+
+      const box=document.createElement("div");
+      box.className="day";
+      box.onclick=()=>openDay(key);
+
+      box.innerHTML = `
+        <div class="num">${day}</div>
+        <div class="dots">
+          ${items.map(x=>{
+            if(x.status==="Flagged") return `<span class="dot r"></span>`;
+            if(x.status==="Pending") return `<span class="dot"></span>`;
+            return `<span class="dot g"></span>`;
+          }).join("")}
+        </div>
+      `;
+      cal.appendChild(box);
+    }
+  }
+
+  function openDay(key){
+    const drawer=document.getElementById("drawer");
+    const title=document.getElementById("dTitle");
+    const body=document.getElementById("dBody");
+
+    title.textContent = `Deadlines — ${key}`;
+    const items=demo.filter(x=>x.date===key);
+
+    body.innerHTML = items.length ? items.map(x=>`
+      <tr>
+        <td>${x.company}</td>
+        <td>${x.type}</td>
+        <td>${x.jur}</td>
+        <td>${statusTag(x.status)}</td>
+      </tr>
+    `).join("") : `
+      <tr>
+        <td colspan="4" class="muted">No filings scheduled for this day.</td>
+      </tr>
+    `;
+
+    drawer.style.display="flex";
+  }
+
+  function closeDrawer(){
+    document.getElementById("drawer").style.display="none";
+  }
+  window.closeDrawer = closeDrawer;
+
+  document.getElementById("prev").onclick=()=>{ view.setMonth(view.getMonth()-1); render(); };
+  document.getElementById("next").onclick=()=>{ view.setMonth(view.getMonth()+1); render(); };
+  document.getElementById("today").onclick=()=>{ const t=new Date(); view=new Date(t.getFullYear(),t.getMonth(),1); render(); };
+
+  render();
+</script>
 </body>
 </html>
