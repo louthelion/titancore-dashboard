@@ -3,33 +3,164 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>email.html — TitanCore</title>
+  <title>TitanCore Executive Control Center — Email Routing</title>
   <link rel="stylesheet" href="./styles.css" />
+  <style>
+    .wrap{max-width:1200px;margin:0 auto;padding:16px}
+    .panel{background:rgba(0,0,0,.35);border:1px solid rgba(212,175,55,.35);border-radius:18px;padding:16px;margin-top:14px}
+    .tag{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid rgba(0,200,83,.35);color:#00c853;font-size:12px}
+    .muted{opacity:.85}
+    .kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    @media(max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}}
+    .kpi{border:1px solid rgba(212,175,55,.25);border-radius:16px;padding:12px;background:rgba(0,0,0,.25)}
+    .k{font-size:12px;opacity:.8;text-transform:uppercase;letter-spacing:.08em}
+    .v{font-size:22px;margin-top:6px;color:#00c853}
+    table{width:100%;border-collapse:separate;border-spacing:0 10px}
+    th{font-size:12px;opacity:.7;text-align:left;padding:0 10px}
+    td{padding:12px 10px;background:rgba(0,0,0,.25);border-top:1px solid rgba(212,175,55,.18);border-bottom:1px solid rgba(212,175,55,.18)}
+    tr td:first-child{border-left:1px solid rgba(212,175,55,.18);border-radius:14px 0 0 14px}
+    tr td:last-child{border-right:1px solid rgba(212,175,55,.18);border-radius:0 14px 14px 0}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid rgba(212,175,55,.25);font-size:12px}
+    .ok{border-color:rgba(0,200,83,.35);color:#00c853}
+    .warn{border-color:rgba(255,195,0,.45);color:#ffd54a}
+    .bad{border-color:rgba(255,90,90,.55);color:#ff8a8a}
+    .btn{padding:8px 12px;border-radius:999px;border:1px solid rgba(212,175,55,.35);background:rgba(0,0,0,.35);color:#eaeaea;cursor:pointer}
+    .btn.danger{border-color:rgba(255,90,90,.6);color:#ff8a8a}
+    .btn.ghost{opacity:.85}
+  </style>
 </head>
+
 <body>
-  <div class="wrap">
+<div class="wrap">
 
-    <nav class="nav" aria-label="Primary navigation">
-      <a href="./index.html">Dashboard</a>
-      <a href="./contract.html">Contract</a>
-      <a href="./contact.html">Contact</a>
-      <a class="active" href="./email.html">Email Routing</a>
-      <a href="./approval.html">Report &amp; Approval</a>
-      <a href="./omni.html">Omni System</a>
-      <a href="./tax.html">Tax Network</a>
-      <a href="./agent.html">Agent AI</a>
-      <a href="./finance.html">Finance</a>
-      <a href="./public.html">Public Portal</a>
-    </nav>
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="./index.html">Dashboard</a>
+    <a href="./contract.html">Contract</a>
+    <a href="./contact.html">Contact</a>
+    <a class="active" href="./email.html">Email Routing</a>
+    <a href="./approval.html">Report &amp; Approval</a>
+    <a href="./omni.html">Omni System</a>
+    <a href="./tax.html">Tax Network</a>
+    <a href="./agent.html">Agent AI</a>
+    <a href="./finance.html">Finance</a>
+    <a href="./public.html">Public Portal</a>
+  </nav>
 
-    <div class="card">
-      <div class="tag">MODULE — Email Routing</div>
-      <h1>Email Routing</h1>
-      <p>This page is LIVE (no more 404). Next we build email inbox, routing rules, and logs.</p>
-      <a class="btn" href="./index.html">← Back to Dashboard</a>
-    </div>
-
+  <!-- HEADER -->
+  <div class="panel">
+    <span class="tag">EMAIL ROUTING — RECORDS ONLY</span>
+    <h1>Email Oversight & Routing Control</h1>
+    <p class="muted">
+      This page records <strong>contact / invest / admin</strong> emails across all companies.
+      No sending, no replying — visibility, delays, escalation only.
+    </p>
   </div>
-  <script src="./app.js"></script>
+
+  <!-- KPIs -->
+  <div class="panel">
+    <div class="kpis">
+      <div class="kpi"><div class="k">Total Emails</div><div class="v" id="k_total">—</div></div>
+      <div class="kpi"><div class="k">Pending Response</div><div class="v" id="k_pending">—</div></div>
+      <div class="kpi"><div class="k">Escalated</div><div class="v" id="k_escalated">—</div></div>
+      <div class="kpi"><div class="k">Overdue</div><div class="v" id="k_overdue">—</div></div>
+    </div>
+  </div>
+
+  <!-- TABLE -->
+  <div class="panel">
+    <h2>Email Log</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Company</th>
+          <th>Email Type</th>
+          <th>Address</th>
+          <th>Direction</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="emailBody"></tbody>
+    </table>
+
+    <div style="margin-top:10px">
+      <button class="btn ghost" onclick="seed()">Load Sample</button>
+      <button class="btn danger" onclick="clearAll()">Clear</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const KEY = "tc_email_routing_v1";
+
+function load(){ return JSON.parse(localStorage.getItem(KEY) || "[]"); }
+function save(d){ localStorage.setItem(KEY, JSON.stringify(d)); }
+function now(){ return new Date().toLocaleString(); }
+
+function pill(status){
+  if(status==="Pending") return '<span class="pill warn">Pending</span>';
+  if(status==="Escalated") return '<span class="pill bad">Escalated</span>';
+  return '<span class="pill ok">Resolved</span>';
+}
+
+function render(){
+  const data = load();
+  const body = document.getElementById("emailBody");
+  body.innerHTML = "";
+
+  let pending=0, escalated=0, overdue=0;
+
+  data.forEach((e,i)=>{
+    if(e.status==="Pending") pending++;
+    if(e.status==="Escalated") escalated++;
+    if(e.overdue) overdue++;
+
+    body.innerHTML += `
+      <tr>
+        <td>${e.date}</td>
+        <td>${e.company}</td>
+        <td>${e.type}</td>
+        <td>${e.address}</td>
+        <td>${e.direction}</td>
+        <td>${pill(e.status)}</td>
+        <td>
+          <button class="btn ghost" onclick="resolve(${i})">Resolve</button>
+          <button class="btn danger" onclick="remove(${i})">Delete</button>
+        </td>
+      </tr>`;
+  });
+
+  document.getElementById("k_total").innerText = data.length || "—";
+  document.getElementById("k_pending").innerText = pending || "—";
+  document.getElementById("k_escalated").innerText = escalated || "—";
+  document.getElementById("k_overdue").innerText = overdue || "—";
+}
+
+function resolve(i){
+  const d = load();
+  d[i].status="Resolved";
+  save(d); render();
+}
+function remove(i){
+  const d = load();
+  d.splice(i,1);
+  save(d); render();
+}
+function clearAll(){ save([]); render(); }
+
+function seed(){
+  save([
+    {date:now(),company:"Vaultara Capital",type:"contact",address:"contact@vaultaracapital.com",direction:"Inbound",status:"Pending",overdue:false},
+    {date:now(),company:"Family First Equity Group",type:"invest",address:"invest@familyfirstequatygroup.com",direction:"Inbound",status:"Escalated",overdue:true},
+    {date:now(),company:"TitanCore Holdings",type:"admin",address:"admin@titancoreholdings.com",direction:"Inbound",status:"Resolved",overdue:false}
+  ]);
+  render();
+}
+
+render();
+</script>
 </body>
 </html>
