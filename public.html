@@ -3,33 +3,123 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Public Portal — TitanCore</title>
+  <title>TitanCore Executive Control Center — Public Portal</title>
   <link rel="stylesheet" href="./styles.css" />
+  <style>
+    .wrap{max-width:1100px;margin:0 auto;padding:16px}
+    .panel{border:1px solid rgba(212,175,55,.35);border-radius:18px;background:rgba(0,0,0,.28);padding:16px;margin-top:14px}
+    .title{margin:0;color:#00c853;font-weight:900;letter-spacing:.03em}
+    .muted{opacity:.82}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+    @media(max-width:980px){.grid{grid-template-columns:1fr}}
+    .card{border:1px solid rgba(212,175,55,.22);border-radius:16px;background:rgba(0,0,0,.22);padding:14px}
+    .k{font-size:12px;opacity:.78;text-transform:uppercase;letter-spacing:.08em}
+    input,textarea,select{width:100%;padding:12px;border-radius:12px;border:1px solid rgba(212,175,55,.25);background:rgba(10,10,10,.55);color:#eaeaea}
+    textarea{resize:vertical}
+    .btn{padding:10px 14px;border-radius:999px;border:1px solid rgba(0,200,83,.45);background:rgba(0,200,83,.08);color:#00c853;cursor:pointer;font-weight:800}
+    .btn:hover{box-shadow:0 0 0 2px rgba(0,200,83,.12) inset}
+    .small{font-size:12px;opacity:.75}
+  </style>
 </head>
 <body>
-  <div class="wrap">
+<div class="wrap">
 
-    <nav class="nav" aria-label="Primary navigation">
-      <a href="./index.html">Dashboard</a>
-      <a href="./contract.html">Contract</a>
-      <a href="./contact.html">Contact</a>
-      <a href="./email.html">Email Routing</a>
-      <a href="./approval.html">Report &amp; Approval</a>
-      <a href="./omni.html">Omni System</a>
-      <a href="./tax.html">Tax Network</a>
-      <a href="./agent.html">Agent AI</a>
-      <a href="./finance.html">Finance</a>
-      <a class="active" href="./public.html">Public Portal</a>
-    </nav>
+  <nav class="nav">
+    <a href="./index.html">Dashboard</a>
+    <a href="./contract.html">Contract</a>
+    <a href="./contact.html">Contact</a>
+    <a href="./email.html">Email Routing</a>
+    <a href="./approval.html">Report &amp; Approval</a>
+    <a href="./omni.html">Omni System</a>
+    <a href="./tax.html">Tax Network</a>
+    <a href="./agent.html">Agent AI</a>
+    <a href="./finance.html">Finance</a>
+    <a class="active" href="./public.html">Public Portal</a>
+  </nav>
 
-    <div class="card">
-      <div class="tag">MODULE — Public Portal</div>
-      <h1>Public Portal</h1>
-      <p>This page is LIVE. Next we build investor/bank/company join forms and public info pages.</p>
-      <a class="btn" href="./index.html">← Back to Dashboard</a>
+  <div class="panel">
+    <h1 class="title">PUBLIC PORTAL (Records Intake)</h1>
+    <div class="muted">This page is public-facing intake. It does not expose private governance pages.</div>
+  </div>
+
+  <div class="grid">
+
+    <div class="panel">
+      <h2 class="title" style="font-size:18px">Contact TitanCore / Subsidiaries</h2>
+      <div class="card" style="margin-top:10px">
+        <div class="k">Public Contact Emails</div>
+        <div class="muted" style="margin-top:8px">
+          contact@titancoreholdings.com<br/>
+          contact@vaultaracapital.com<br/>
+          contact@familyfirstequatygroup.com<br/>
+          contact@vitalpathcaregroup.com<br/>
+          contact@revmotionautomarine.com
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px">
+        <div class="k">Investor Relationship Emails</div>
+        <div class="muted" style="margin-top:8px">
+          invest@titancoreholdings.com<br/>
+          invest@vaultaracapital.com<br/>
+          invest@familyfirstequatygroup.com<br/>
+          invest@vitalpathcaregroup.com<br/>
+          invest@revmotionautomarine.com
+        </div>
+        <div class="small" style="margin-top:8px">Used after relationship is established (banks / institutions / investors).</div>
+      </div>
+
+      <div class="card" style="margin-top:12px">
+        <div class="k">Internal Admin Emails</div>
+        <div class="muted" style="margin-top:8px">
+          admin@titancoreholdings.com<br/>
+          admin@vaultaracapital.com<br/>
+          admin@familyfirstequatygroup.com<br/>
+          admin@vitalpathcaregroup.com<br/>
+          admin@revmotionautomarine.com
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2 class="title" style="font-size:18px">Public Intake Form (Demo)</h2>
+      <div class="muted">This is a placeholder. Later we connect to Email Routing + a real database.</div>
+
+      <form style="margin-top:12px" onsubmit="event.preventDefault(); alert('Submitted (demo). Next we wire this to Email Routing.');">
+        <label class="muted">Select Company</label>
+        <select required>
+          <option value="">Choose…</option>
+          <option>TitanCore Holdings</option>
+          <option>Vaultara Capital</option>
+          <option>VitalPath Care Group</option>
+          <option>RevMotion Auto &amp; Marine Group</option>
+          <option>Family First Equity Group</option>
+        </select>
+
+        <div style="height:10px"></div>
+
+        <label class="muted">Your Name</label>
+        <input required placeholder="Full name" />
+
+        <div style="height:10px"></div>
+
+        <label class="muted">Your Email</label>
+        <input type="email" required placeholder="name@email.com" />
+
+        <div style="height:10px"></div>
+
+        <label class="muted">Message</label>
+        <textarea rows="5" required placeholder="Tell us what you need…"></textarea>
+
+        <div style="height:12px"></div>
+
+        <button class="btn" type="submit">Submit</button>
+        <div class="small" style="margin-top:10px">No private dashboard data is shown here.</div>
+      </form>
     </div>
 
   </div>
-  <script src="./app.js"></script>
+
+</div>
 </body>
 </html>
