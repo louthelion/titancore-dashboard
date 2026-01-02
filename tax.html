@@ -230,14 +230,44 @@
   </div>
 
 <script>
-  const DOW = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-  const demo = [
-    {date:"2026-01-05", company:"Vaultara Capital", type:"Sales Tax", jur:"FL", status:"Pending"},
-    {date:"2026-01-12", company:"VitalPath Care Group", type:"Payroll", jur:"NY", status:"Pending"},
-    {date:"2026-01-18", company:"RevMotion Auto & Marine", type:"Annual Report", jur:"GA", status:"Monitoring"},
-    {date:"2026-01-22", company:"Family First Equity Group", type:"Franchise Tax", jur:"CA", status:"Pending"},
-    {date:"2026-01-28", company:"TitanCore Holdings", type:"BOI Update", jur:"IRS", status:"Flagged"},
-  ];
+ const demo = [
+  // ====== TITANCORE HOLDINGS (Umbrella) ======
+  {date:"2026-01-05", company:"TitanCore Holdings", type:"BOI / Beneficial Ownership Review", jur:"FinCEN", license:"Corporate Governance", status:"Pending", auditRisk:28, riskTier:"GREEN", owner:"Compliance", priority:"M", docRequired:true, notes:"Confirm BOI accuracy + ownership changes."},
+  {date:"2026-01-15", company:"TitanCore Holdings", type:"Payroll Tax Deposit", jur:"IRS", license:"Employer Tax", status:"Pending", auditRisk:40, riskTier:"AMBER", owner:"Finance", priority:"H", docRequired:true, notes:"Deposit schedule review + payroll reconciliation."},
+  {date:"2026-01-31", company:"TitanCore Holdings", type:"Month-End Compliance Closeout", jur:"Multi-State", license:"Internal Controls", status:"Monitoring", auditRisk:35, riskTier:"GREEN", owner:"Audit", priority:"M", docRequired:false, notes:"Close monthly compliance register."},
+  {date:"2026-02-10", company:"TitanCore Holdings", type:"Sales/Use Tax Review (Holding)", jur:"FL", license:"Business Tax", status:"Monitoring", auditRisk:46, riskTier:"AMBER", owner:"Tax", priority:"M", docRequired:false, notes:"Holding-level: review nexus + filings."},
+  {date:"2026-03-10", company:"TitanCore Holdings", type:"Quarterly Risk & Audit Readiness Check", jur:"Internal", license:"Audit Program", status:"Pending", auditRisk:55, riskTier:"AMBER", owner:"Audit", priority:"H", docRequired:true, notes:"Evidence pack: policies + approvals + logs."},
+
+  // ====== VAULTARA CAPITAL ======
+  {date:"2026-01-10", company:"Vaultara Capital", type:"State Annual Report Prep", jur:"NJ", license:"Registered Entity", status:"Monitoring", auditRisk:45, riskTier:"AMBER", owner:"Compliance", priority:"M", docRequired:true, notes:"Confirm registered agent + address + officers."},
+  {date:"2026-01-15", company:"Vaultara Capital", type:"Sales Tax Filing", jur:"FL", license:"Sales & Use Tax", status:"Pending", auditRisk:52, riskTier:"AMBER", owner:"Tax", priority:"H", docRequired:true, notes:"File + payment confirmation required."},
+  {date:"2026-01-20", company:"Vaultara Capital", type:"License Renewal Review", jur:"PA", license:"Financial Services License", status:"Monitoring", auditRisk:60, riskTier:"AMBER", owner:"Legal", priority:"H", docRequired:true, notes:"Renewal may require bond/insurance confirmation."},
+  {date:"2026-02-05", company:"Vaultara Capital", type:"BOI Confirmation Check", jur:"FinCEN", license:"Corporate Governance", status:"Monitoring", auditRisk:30, riskTier:"GREEN", owner:"Compliance", priority:"M", docRequired:false, notes:"Confirm ownership/controls unchanged."},
+  {date:"2026-02-15", company:"Vaultara Capital", type:"Payroll Tax", jur:"NY", license:"Employer Tax", status:"Pending", auditRisk:49, riskTier:"AMBER", owner:"Finance", priority:"H", docRequired:true, notes:"Quarterly payroll reconciliation begins."},
+  {date:"2026-03-05", company:"Vaultara Capital", type:"Internal Audit Sample Review", jur:"Internal", license:"Audit Program", status:"Pending", auditRisk:63, riskTier:"AMBER", owner:"Audit", priority:"H", docRequired:true, notes:"Sample: invoices, approvals, access logs."},
+
+  // ====== VITALPATH CARE GROUP ======
+  {date:"2026-01-08", company:"VitalPath Care Group", type:"Healthcare License Audit Prep", jur:"GA", license:"Healthcare Facility License", status:"Pending", auditRisk:78, riskTier:"RED", owner:"Compliance", priority:"H", docRequired:true, notes:"High risk: maintain credentialing + policies."},
+  {date:"2026-01-15", company:"VitalPath Care Group", type:"Payroll Tax", jur:"IRS", license:"Employer Tax", status:"Pending", auditRisk:58, riskTier:"AMBER", owner:"Finance", priority:"H", docRequired:true, notes:"Payroll tax + benefits withholding review."},
+  {date:"2026-01-25", company:"VitalPath Care Group", type:"Local Permit Renewal", jur:"NC", license:"Local Operating Permit", status:"Monitoring", auditRisk:50, riskTier:"AMBER", owner:"Operations", priority:"M", docRequired:true, notes:"Facility permit renewal checklist."},
+  {date:"2026-02-10", company:"VitalPath Care Group", type:"Compliance Training Confirmation", jur:"Internal", license:"Healthcare Compliance", status:"Pending", auditRisk:67, riskTier:"AMBER", owner:"HR", priority:"H", docRequired:true, notes:"Required staff training logs + attestations."},
+  {date:"2026-02-20", company:"VitalPath Care Group", type:"Sales/Use Tax Filing", jur:"IL", license:"Sales & Use Tax", status:"Pending", auditRisk:62, riskTier:"AMBER", owner:"Tax", priority:"H", docRequired:true, notes:"If services taxable: verify rules."},
+  {date:"2026-03-15", company:"VitalPath Care Group", type:"Quarterly Compliance Review", jur:"Internal", license:"Healthcare Compliance", status:"Pending", auditRisk:72, riskTier:"RED", owner:"Compliance", priority:"H", docRequired:true, notes:"Policies, incidents, corrective actions."},
+
+  // ====== REVMOTION AUTO & MARINE ======
+  {date:"2026-01-12", company:"RevMotion Auto & Marine", type:"Dealer / DMV License Review", jur:"CA", license:"Auto Dealer License", status:"Pending", auditRisk:70, riskTier:"RED", owner:"Legal", priority:"H", docRequired:true, notes:"Dealer compliance is sensitive — keep docs ready."},
+  {date:"2026-01-20", company:"RevMotion Auto & Marine", type:"Sales Tax Filing", jur:"CA", license:"Sales & Use Tax", status:"Pending", auditRisk:66, riskTier:"AMBER", owner:"Tax", priority:"H", docRequired:true, notes:"Retail + parts + service separation check."},
+  {date:"2026-02-01", company:"RevMotion Auto & Marine", type:"Insurance / Bond Verification", jur:"AZ", license:"Dealer Bond/Insurance", status:"Monitoring", auditRisk:59, riskTier:"AMBER", owner:"Operations", priority:"M", docRequired:true, notes:"Verify policy coverage dates + bond."},
+  {date:"2026-02-15", company:"RevMotion Auto & Marine", type:"Payroll Tax", jur:"IRS", license:"Employer Tax", status:"Pending", auditRisk:55, riskTier:"AMBER", owner:"Finance", priority:"H", docRequired:true, notes:"Payroll compliance + contractor review."},
+  {date:"2026-03-10", company:"RevMotion Auto & Marine", type:"Inventory / Revenue Audit Prep", jur:"Internal", license:"Audit Program", status:"Pending", auditRisk:74, riskTier:"RED", owner:"Audit", priority:"H", docRequired:true, notes:"High risk: inventory valuation + margins."},
+
+  // ====== FAMILY FIRST EQUITY GROUP ======
+  {date:"2026-01-18", company:"Family First Equity Group", type:"State Annual Report Filing", jur:"TX", license:"Registered Entity", status:"Pending", auditRisk:57, riskTier:"AMBER", owner:"Compliance", priority:"H", docRequired:true, notes:"Annual report due window: confirm officers."},
+  {date:"2026-01-25", company:"Family First Equity Group", type:"Local Business License Renewal", jur:"GA", license:"General Business License", status:"Monitoring", auditRisk:48, riskTier:"AMBER", owner:"Operations", priority:"M", docRequired:true, notes:"Local renewal; confirm address + operations."},
+  {date:"2026-02-05", company:"Family First Equity Group", type:"Sales Tax Filing", jur:"FL", license:"Sales & Use Tax", status:"Pending", auditRisk:60, riskTier:"AMBER", owner:"Tax", priority:"H", docRequired:true, notes:"File + payment receipt must be stored."},
+  {date:"2026-02-18", company:"Family First Equity Group", type:"Internal Controls Review", jur:"Internal", license:"Internal Controls", status:"Monitoring", auditRisk:52, riskTier:"AMBER", owner:"Audit", priority:"M", docRequired:false, notes:"Approvals chain + access review."},
+  {date:"2026-03-25", company:"Family First Equity Group", type:"Audit Shield Pack Refresh", jur:"Internal", license:"Audit Program", status:"Pending", auditRisk:65, riskTier:"AMBER", owner:"Audit", priority:"H", docRequired:true, notes:"Update receipts, confirmations, EIN docs."}
+];
 
   let view = new Date();
   view.setDate(1);
