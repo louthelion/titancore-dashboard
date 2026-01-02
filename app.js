@@ -150,3 +150,125 @@ renderNews("all");
 renderStock();
 renderAlerts();
 renderKpis();
+// ===== Tax Network: Deadline Calendar (Month View) =====
+(function initTaxCalendar(){
+  const grid = document.getElementById("calendarGrid");
+  const label = document.getElementById("calLabel");
+  const count = document.getElementById("calCount");
+  const btnPrev = document.getElementById("calPrev");
+  const btnToday = document.getElementById("calToday");
+  const btnNext = document.getElementById("calNext");
+
+  // If the current page doesn't have the calendar, do nothing.
+  if(!grid || !label || !count || !btnPrev || !btnToday || !btnNext) return;
+
+  // Sample deadlines (you can replace these with REAL ones later)
+  // Format: YYYY-MM-DD
+  const deadlines = [
+    { date:"2026-01-05", type:"gold", title:"Sales Tax — Vaultara" },
+    { date:"2026-01-12", type:"gold", title:"NY Sales Tax — VitalPath" },
+    { date:"2026-01-20", type:"red",  title:"Annual Report — RevMotion" },
+    { date:"2026-01-27", type:"gold", title:"CA Sales Tax — Family First" },
+    { date:"2026-02-01", type:"red",  title:"BOI Update — TitanCore" },
+  ];
+
+  let view = new Date(); // month being viewed
+
+  function ymd(d){
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth()+1).padStart(2,"0");
+    const dd = String(d.getDate()).padStart(2,"0");
+    return `${yyyy}-${mm}-${dd}`;
+  }
+
+  function monthName(d){
+    return d.toLocaleString(undefined, { month:"long", year:"numeric" });
+  }
+
+  function deadlinesOn(dayStr){
+    return deadlines.filter(x => x.date === dayStr);
+  }
+
+  function render(){
+    grid.innerHTML = "";
+    label.textContent = monthName(view);
+
+    // month boundaries
+    const first = new Date(view.getFullYear(), view.getMonth(), 1);
+    const last  = new Date(view.getFullYear(), view.getMonth()+1, 0);
+
+    // start grid on Sunday (0) — you can change if you want Monday start
+    const start = new Date(first);
+    start.setDate(first.getDate() - first.getDay());
+
+    // 6 weeks = 42 cells
+    let totalDeadlinesInMonth = 0;
+
+    const todayStr = ymd(new Date());
+
+    for(let i=0;i<42;i++){
+      const cellDate = new Date(start);
+      cellDate.setDate(start.getDate()+i);
+
+      const cellStr = ymd(cellDate);
+      const inMonth = (cellDate.getMonth() === view.getMonth());
+
+      const matches = deadlinesOn(cellStr);
+      if(inMonth) totalDeadlinesInMonth += matches.length;
+
+      const day = document.createElement("div");
+      day.className = "day" + (inMonth ? "" : " mutedDay") + (cellStr===todayStr ? " activeDay" : "");
+
+      const btn = document.createElement("button");
+      btn.className = "dayBtn";
+      btn.type = "button";
+      btn.setAttribute("aria-label", `Open deadlines for ${cellStr}`);
+      btn.onclick = () => {
+        // For now: simple popup. Later we can open a real page per day.
+        if(matches.length===0){
+          alert(`No deadlines on ${cellStr}`);
+        } else {
+          alert(`${cellStr}\n\n` + matches.map(m=>`• ${m.title}`).join("\n"));
+        }
+      };
+
+      const dnum = document.createElement("div");
+      dnum.className = "dnum";
+      dnum.textContent = String(cellDate.getDate());
+
+      const dots = document.createElement("div");
+      dots.className = "dots";
+
+      matches.slice(0,4).forEach(m=>{
+        const dot = document.createElement("span");
+        dot.className = "dot " + (m.type || "");
+        dots.appendChild(dot);
+      });
+
+      btn.appendChild(dnum);
+      btn.appendChild(dots);
+      day.appendChild(btn);
+      grid.appendChild(day);
+    }
+
+    count.textContent = `${totalDeadlinesInMonth} deadlines`;
+  }
+
+  btnPrev.addEventListener("click", () => {
+    view = new Date(view.getFullYear(), view.getMonth()-1, 1);
+    render();
+  });
+
+  btnNext.addEventListener("click", () => {
+    view = new Date(view.getFullYear(), view.getMonth()+1, 1);
+    render();
+  });
+
+  btnToday.addEventListener("click", () => {
+    const now = new Date();
+    view = new Date(now.getFullYear(), now.getMonth(), 1);
+    render();
+  });
+
+  render();
+})();
