@@ -3,33 +3,244 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Omni System — TitanCore</title>
+  <title>TitanCore Executive Control Center — Omni System</title>
   <link rel="stylesheet" href="./styles.css" />
+  <style>
+    .wrap{max-width:1200px;margin:0 auto;padding:16px}
+    .panel{background:rgba(0,0,0,.35);border:1px solid rgba(212,175,55,.35);border-radius:18px;padding:16px;margin-top:14px}
+    .tag{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid rgba(0,200,83,.35);color:#00c853;font-size:12px}
+    .muted{opacity:.85}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+    .card{border:1px solid rgba(212,175,55,.25);border-radius:16px;padding:14px;background:rgba(0,0,0,.25)}
+    .k{font-size:12px;opacity:.8;text-transform:uppercase;letter-spacing:.08em}
+    .v{font-size:18px;margin-top:6px;color:#00c853}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid rgba(212,175,55,.25);font-size:12px}
+    .ok{border-color:rgba(0,200,83,.35);color:#00c853}
+    .warn{border-color:rgba(255,195,0,.45);color:#ffd54a}
+    .bad{border-color:rgba(255,90,90,.55);color:#ff8a8a}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media(max-width:860px){.row{grid-template-columns:1fr}}
+    label{display:block;font-size:13px;opacity:.9;margin-bottom:6px}
+    input,select,textarea{width:100%;padding:12px;border-radius:12px;border:1px solid rgba(212,175,55,.25);background:rgba(10,10,10,.55);color:#eaeaea}
+    textarea{resize:vertical}
+    .btn{padding:8px 12px;border-radius:999px;border:1px solid rgba(212,175,55,.35);background:rgba(0,0,0,.35);color:#eaeaea;cursor:pointer}
+    .btn.primary{border-color:rgba(0,200,83,.55);color:#00c853}
+    .btn.danger{border-color:rgba(255,90,90,.6);color:#ff8a8a}
+    table{width:100%;border-collapse:separate;border-spacing:0 10px}
+    th{font-size:12px;opacity:.7;text-align:left;padding:0 10px}
+    td{padding:12px 10px;background:rgba(0,0,0,.25);border-top:1px solid rgba(212,175,55,.18);border-bottom:1px solid rgba(212,175,55,.18)}
+    tr td:first-child{border-left:1px solid rgba(212,175,55,.18);border-radius:14px 0 0 14px}
+    tr td:last-child{border-right:1px solid rgba(212,175,55,.18);border-radius:0 14px 14px 0}
+    .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+    .small{font-size:12px;opacity:.75}
+  </style>
 </head>
+
 <body>
-  <div class="wrap">
+<div class="wrap">
 
-    <nav class="nav" aria-label="Primary navigation">
-      <a href="./index.html">Dashboard</a>
-      <a href="./contract.html">Contract</a>
-      <a href="./contact.html">Contact</a>
-      <a href="./email.html">Email Routing</a>
-      <a href="./approval.html">Report &amp; Approval</a>
-      <a class="active" href="./omni.html">Omni System</a>
-      <a href="./tax.html">Tax Network</a>
-      <a href="./agent.html">Agent AI</a>
-      <a href="./finance.html">Finance</a>
-      <a href="./public.html">Public Portal</a>
-    </nav>
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="./index.html">Dashboard</a>
+    <a href="./contract.html">Contract</a>
+    <a href="./contact.html">Contact</a>
+    <a href="./email.html">Email Routing</a>
+    <a href="./approval.html">Report &amp; Approval</a>
+    <a class="active" href="./omni.html">Omni System</a>
+    <a href="./tax.html">Tax Network</a>
+    <a href="./agent.html">Agent AI</a>
+    <a href="./finance.html">Finance</a>
+    <a href="./public.html">Public Portal</a>
+  </nav>
 
-    <div class="card">
-      <div class="tag">MODULE — Omni System</div>
-      <h1>Omni System</h1>
-      <p>This page is LIVE. Next we build integrations, automation controls, and system health.</p>
-      <a class="btn" href="./index.html">← Back to Dashboard</a>
-    </div>
-
+  <!-- HEADER -->
+  <div class="panel">
+    <span class="tag">OMNI SYSTEM — CONTROL</span>
+    <h1>System Health • Integrations • Governance Links</h1>
+    <p class="muted">
+      Omni System is your executive systems console: what tools are connected, system health, integration status,
+      and critical alerts across the ecosystem.
+    </p>
   </div>
-  <script src="./app.js"></script>
+
+  <!-- STATUS GRID -->
+  <div class="panel">
+    <div class="grid">
+      <div class="card">
+        <div class="k">Email Routing Feed</div>
+        <div class="v" id="s_email">—</div>
+        <div class="small">contact / invest / admin records</div>
+      </div>
+      <div class="card">
+        <div class="k">Contract Governance Feed</div>
+        <div class="v" id="s_contract">—</div>
+        <div class="small">review → approved → CEO sign</div>
+      </div>
+      <div class="card">
+        <div class="k">Contact Records Feed</div>
+        <div class="v" id="s_contact">—</div>
+        <div class="small">calls / transfers / missed</div>
+      </div>
+      <div class="card">
+        <div class="k">Microsoft 365 Identity</div>
+        <div class="v" id="s_m365">—</div>
+        <div class="small">internal login (later)</div>
+      </div>
+      <div class="card">
+        <div class="k">Phone Provider</div>
+        <div class="v" id="s_phone">—</div>
+        <div class="small">RingCentral (later)</div>
+      </div>
+      <div class="card">
+        <div class="k">Audit / Logs</div>
+        <div class="v" id="s_audit">—</div>
+        <div class="small">events & approvals trail</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTEGRATIONS LOG -->
+  <div class="panel">
+    <h2 style="margin:0 0 10px">Integration Status Log (Records)</h2>
+
+    <form id="form">
+      <div class="row">
+        <div>
+          <label>System</label>
+          <select id="sys" required>
+            <option value="">Select…</option>
+            <option>Email Routing</option>
+            <option>Contract Governance</option>
+            <option>Contact Records</option>
+            <option>Microsoft 365</option>
+            <option>RingCentral</option>
+            <option>Audit / Logs</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div>
+          <label>Status</label>
+          <select id="status" required>
+            <option>Connected</option>
+            <option>Not Connected</option>
+            <option>Monitoring</option>
+            <option>Issue</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="margin-top:10px">
+        <label>Notes</label>
+        <textarea id="notes" rows="3" placeholder="Describe status, what changed, what is blocked, next action…"></textarea>
+      </div>
+
+      <div class="actions">
+        <button class="btn primary" type="submit">Add Log Entry</button>
+        <button class="btn" type="button" id="seed">Load Sample</button>
+        <button class="btn danger" type="button" id="clear">Clear</button>
+      </div>
+    </form>
+
+    <div class="small" style="margin-top:10px">
+      This is a records console. Later, real integrations update this automatically.
+    </div>
+  </div>
+
+  <!-- LOG TABLE -->
+  <div class="panel">
+    <h2 style="margin:0 0 10px">System Events</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>System</th>
+          <th>Status</th>
+          <th>Notes</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="body"></tbody>
+    </table>
+  </div>
+
+</div>
+
+<script>
+  const KEY = "tc_omni_log_v1";
+
+  function load(){ return JSON.parse(localStorage.getItem(KEY) || "[]"); }
+  function save(d){ localStorage.setItem(KEY, JSON.stringify(d)); }
+  function now(){ return new Date().toLocaleString(); }
+
+  function pill(s){
+    if(s==="Connected") return '<span class="pill ok">Connected</span>';
+    if(s==="Monitoring") return '<span class="pill warn">Monitoring</span>';
+    if(s==="Issue") return '<span class="pill bad">Issue</span>';
+    return '<span class="pill">Not Connected</span>';
+  }
+
+  function render(){
+    const d = load();
+    const body = document.getElementById("body");
+    body.innerHTML = "";
+
+    d.forEach((x,i)=>{
+      body.innerHTML += `
+        <tr>
+          <td>${x.date}</td>
+          <td>${x.system}</td>
+          <td>${pill(x.status)}</td>
+          <td>${x.notes || ""}</td>
+          <td><button class="btn danger" onclick="del(${i})">Delete</button></td>
+        </tr>
+      `;
+    });
+
+    // top status cards (simple executive view)
+    // these are executive indicators, not live integrations yet:
+    document.getElementById("s_email").innerHTML = '<span class="pill ok">Active</span>';
+    document.getElementById("s_contract").innerHTML = '<span class="pill ok">Active</span>';
+    document.getElementById("s_contact").innerHTML = '<span class="pill ok">Active</span>';
+    document.getElementById("s_m365").innerHTML = '<span class="pill warn">Planned</span>';
+    document.getElementById("s_phone").innerHTML = '<span class="pill warn">Planned</span>';
+    document.getElementById("s_audit").innerHTML = '<span class="pill warn">Planned</span>';
+  }
+
+  function del(i){
+    const d = load();
+    d.splice(i,1);
+    save(d); render();
+  }
+
+  document.getElementById("form").addEventListener("submit",(e)=>{
+    e.preventDefault();
+    const d = load();
+    d.unshift({
+      date: now(),
+      system: document.getElementById("sys").value,
+      status: document.getElementById("status").value,
+      notes: document.getElementById("notes").value
+    });
+    save(d);
+    e.target.reset();
+    render();
+  });
+
+  document.getElementById("seed").addEventListener("click", ()=>{
+    save([
+      {date: now(), system:"Email Routing", status:"Connected", notes:"Records-only page active. Provider connection later."},
+      {date: now(), system:"Microsoft 365", status:"Not Connected", notes:"Internal login planned. Waiting on identity setup."},
+      {date: now(), system:"RingCentral", status:"Not Connected", notes:"Phone provider planned. Will feed Contact records later."}
+    ]);
+    render();
+  });
+
+  document.getElementById("clear").addEventListener("click", ()=>{
+    save([]); render();
+  });
+
+  render();
+</script>
 </body>
 </html>
