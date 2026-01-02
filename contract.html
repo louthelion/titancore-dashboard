@@ -1,64 +1,323 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TitanCore Module</title>
-
-  <!-- IMPORTANT: do NOT touch your existing system -->
-  <link rel="stylesheet" href="styles.css" />
-  <script src="app.js" defer></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>TitanCore — Contract Command</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <style>
+    /* Safe local styling ONLY for this page */
+    .wrap{max-width:1100px;margin:0 auto;padding:16px}
+    .panel{background:rgba(0,0,0,.35);border:1px solid rgba(212,175,55,.35);border-radius:18px;padding:16px;margin-top:14px}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media (max-width:860px){.row{grid-template-columns:1fr}}
+    label{display:block;font-size:13px;opacity:.9;margin-bottom:6px}
+    input,select,textarea{width:100%;padding:12px;border-radius:12px;border:1px solid rgba(212,175,55,.25);background:rgba(10,10,10,.55);color:#eaeaea}
+    textarea{resize:vertical}
+    .kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+    @media (max-width:860px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    .kpi{border:1px solid rgba(212,175,55,.25);border-radius:16px;padding:12px;background:rgba(0,0,0,.25)}
+    .k{font-size:12px;opacity:.8;text-transform:uppercase;letter-spacing:.08em}
+    .v{font-size:22px;margin-top:6px;color:#00c853}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;border:1px solid rgba(212,175,55,.35);background:rgba(0,0,0,.35);color:#eaeaea;text-decoration:none;cursor:pointer}
+    .btn.primary{border-color:rgba(0,200,83,.55);color:#00c853}
+    .btn.danger{border-color:rgba(255,90,90,.6);color:#ff8a8a}
+    .btn.ghost{border-color:rgba(212,175,55,.25);opacity:.95}
+    .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+    table{width:100%;border-collapse:separate;border-spacing:0 10px}
+    th{font-size:12px;opacity:.7;text-align:left;padding:0 10px}
+    td{padding:12px 10px;background:rgba(0,0,0,.25);border-top:1px solid rgba(212,175,55,.18);border-bottom:1px solid rgba(212,175,55,.18)}
+    tr td:first-child{border-left:1px solid rgba(212,175,55,.18);border-radius:14px 0 0 14px}
+    tr td:last-child{border-right:1px solid rgba(212,175,55,.18);border-radius:0 14px 14px 0}
+    .tag{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid rgba(0,200,83,.35);color:#00c853;font-size:12px}
+    .muted{opacity:.85}
+    .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;border:1px solid rgba(212,175,55,.25);font-size:12px;opacity:.95}
+    .pill.ok{border-color:rgba(0,200,83,.35);color:#00c853}
+    .pill.warn{border-color:rgba(255,195,0,.45);color:#ffd54a}
+    .pill.bad{border-color:rgba(255,90,90,.55);color:#ff8a8a}
+    .mini{font-size:12px;opacity:.8}
+    .split{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .right{display:flex;gap:10px;flex-wrap:wrap}
+    .small{font-size:12px;opacity:.75}
+  </style>
 </head>
 
 <body>
-  <!-- This page uses YOUR existing dashboard theme -->
   <div class="wrap">
-    <div class="panel" style="max-width:1100px;margin:22px auto;">
-      <div class="panelTitle" style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
+
+    <!-- NAV -->
+    <nav class="nav" aria-label="Primary navigation">
+      <a href="./index.html">Dashboard</a>
+      <a class="active" href="./contract.html">Contract</a>
+      <a href="./contact.html">Contact</a>
+      <a href="./email.html">Email Routing</a>
+      <a href="./approval.html">Report &amp; Approval</a>
+      <a href="./omni.html">Omni System</a>
+      <a href="./tax.html">Tax Network</a>
+      <a href="./agent.html">Agent AI</a>
+      <a href="./finance.html">Finance</a>
+      <a href="./public.html">Public Portal</a>
+    </nav>
+
+    <!-- HEADER -->
+    <div class="panel">
+      <div class="split">
         <div>
-          <div style="font-size:22px;font-weight:800;">
-            <span style="color:#00C853;">MODULE</span> — <span id="moduleName">Loading…</span>
+          <div class="tag">CONTRACT COMMAND</div>
+          <h1 style="margin:10px 0 6px">Contracts • TitanCore Review • CEO Final Sign</h1>
+          <div class="muted">
+            Flow: Company creates contract → TitanCore review (all departments) → TitanCore signs approval → CEO final sign under company name.
           </div>
-          <div style="opacity:.8;margin-top:4px;">This page is now FOUND (no more 404). Next we build the inside.</div>
         </div>
-        <a class="miniBtn" href="index.html" style="text-decoration:none;">← Back to Dashboard</a>
-      </div>
-
-      <div class="card" style="margin-top:16px;">
-        <div class="cardTitle">Status</div>
-        <div class="cardBody">
-          ✅ Working page.<br>
-          Next step: we will build real tools inside this module (forms, approvals, tables, etc.)
-        </div>
-      </div>
-
-      <div class="card" style="margin-top:12px;">
-        <div class="cardTitle">Next Actions</div>
-        <div class="cardBody">
-          • Add real content for this module<br>
-          • Connect to company pages (HPH) after menu is stable<br>
+        <div class="right">
+          <span class="pill ok">TitanCore = Father</span>
+          <span class="pill warn">Pending Review</span>
+          <span class="pill bad">Critical Alerts</span>
         </div>
       </div>
     </div>
+
+    <!-- KPIs -->
+    <div class="panel">
+      <div class="kpis">
+        <div class="kpi"><div class="k">Total Contracts</div><div class="v" id="k_total">—</div><div class="small">All companies</div></div>
+        <div class="kpi"><div class="k">Pending TitanCore Review</div><div class="v" id="k_review">—</div><div class="small">Dept checks</div></div>
+        <div class="kpi"><div class="k">Pending CEO Final Sign</div><div class="v" id="k_ceo">—</div><div class="small">Your queue</div></div>
+        <div class="kpi"><div class="k">Alerts</div><div class="v" id="k_alerts">—</div><div class="small">Critical + overdue</div></div>
+      </div>
+    </div>
+
+    <!-- INTAKE FORM -->
+    <div class="panel">
+      <h2 style="margin:0 0 10px">Contract Intake (Log New)</h2>
+
+      <form id="contractForm">
+        <div class="row">
+          <div>
+            <label>Company (who owns the contract)</label>
+            <select id="f_company" required>
+              <option value="">Select…</option>
+              <option>TitanCore Holdings</option>
+              <option>Vaultara Capital</option>
+              <option>VitalPath Care Group</option>
+              <option>RevMotion Auto &amp; Marine Group</option>
+              <option>Family First Equity Group</option>
+            </select>
+          </div>
+
+          <div>
+            <label>Sender Type (who sent it)</label>
+            <select id="f_sender" required>
+              <option value="">Select…</option>
+              <option>Client</option>
+              <option>Bank</option>
+              <option>Institution</option>
+              <option>Vendor</option>
+              <option>Internal</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="margin-top:10px">
+          <label>Subject</label>
+          <input id="f_subject" placeholder="e.g., Service Agreement – Q1 / Loan Docs / Partnership" required />
+        </div>
+
+        <div class="row" style="margin-top:10px">
+          <div>
+            <label>Priority</label>
+            <select id="f_priority" required>
+              <option>Normal</option>
+              <option>High</option>
+              <option>Critical</option>
+            </select>
+          </div>
+
+          <div>
+            <label>Due Date</label>
+            <input id="f_due" type="date" required />
+          </div>
+        </div>
+
+        <div style="margin-top:10px">
+          <label>Notes / Risks / Missing Docs</label>
+          <textarea id="f_notes" rows="3" placeholder="List missing items, risks, special terms, compliance notes…"></textarea>
+        </div>
+
+        <div class="actions">
+          <button class="btn primary" type="submit">Add to TitanCore Review</button>
+          <button class="btn ghost" type="button" id="btn_seed">Load Sample</button>
+          <button class="btn danger" type="button" id="btn_clear">Clear</button>
+        </div>
+
+        <div class="mini" style="margin-top:10px">
+          This is a working demo: data is stored on your device (local storage). Later we connect Microsoft 365 + database.
+        </div>
+      </form>
+    </div>
+
+    <!-- QUEUE TABLE -->
+    <div class="panel">
+      <div class="split">
+        <div>
+          <h2 style="margin:0 0 6px">TitanCore Review Queue</h2>
+          <div class="muted">Use actions to move status: Review → Approved by TitanCore → CEO Final Sign → Completed.</div>
+        </div>
+      </div>
+
+      <table aria-label="Contract queue table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Company</th>
+            <th>Sender</th>
+            <th>Subject</th>
+            <th>Priority</th>
+            <th>Due</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="qBody"></tbody>
+      </table>
+
+      <div class="mini" style="margin-top:8px">
+        Status meanings:
+        <span class="pill warn">Pending Review</span>
+        <span class="pill ok">TitanCore Approved</span>
+        <span class="pill ok">CEO Sign</span>
+        <span class="pill ok">Completed</span>
+      </div>
+    </div>
+
   </div>
 
   <script>
-    // Auto-detect which page this is
-    const file = (location.pathname.split("/").pop() || "").toLowerCase();
-    const map = {
-      "contract.html": "Contract",
-      "contact.html": "Contact",
-      "email-routing.html": "Email Routing",
-      "report-approval.html": "Report & Approval",
-      "omni-system.html": "Omni System",
-      "tax-network.html": "Tax Network",
-      "agent-ai.html": "Agent AI",
-      "finance.html": "Finance",
-      "public-portal.html": "Public Portal"
-    };
-    const title = map[file] || file.replace(".html","").replace(/-/g," ").toUpperCase();
-    document.getElementById("moduleName").textContent = title;
-    document.title = "TitanCore — " + title;
+    const KEY = "tc_contract_queue_v1";
+
+    function nowStamp(){
+      const d = new Date();
+      return d.toLocaleString();
+    }
+    function load(){ return JSON.parse(localStorage.getItem(KEY) || "[]"); }
+    function save(list){ localStorage.setItem(KEY, JSON.stringify(list)); }
+
+    function isOverdue(due){
+      if(!due) return false;
+      const today = new Date();
+      const dd = new Date(due + "T00:00:00");
+      return dd < new Date(today.toISOString().slice(0,10) + "T00:00:00");
+    }
+
+    function statusPill(status){
+      if(status === "Pending Review") return '<span class="pill warn">Pending Review</span>';
+      if(status === "TitanCore Approved") return '<span class="pill ok">TitanCore Approved</span>';
+      if(status === "CEO Final Sign") return '<span class="pill ok">CEO Final Sign</span>';
+      if(status === "Completed") return '<span class="pill ok">Completed</span>';
+      return '<span class="pill">Unknown</span>';
+    }
+
+    function render(){
+      const list = load();
+      const body = document.getElementById("qBody");
+      body.innerHTML = "";
+
+      let pendingReview = 0;
+      let pendingCEO = 0;
+      let alerts = 0;
+
+      list.forEach((item, idx) => {
+        if(item.status === "Pending Review") pendingReview++;
+        if(item.status === "CEO Final Sign") pendingCEO++;
+
+        const overdue = isOverdue(item.due);
+        const critical = item.priority === "Critical";
+        if(overdue || critical) alerts++;
+
+        const actionButtons = `
+          <button class="btn ghost" data-act="approve" data-i="${idx}">Approve</button>
+          <button class="btn ghost" data-act="ceo" data-i="${idx}">To CEO</button>
+          <button class="btn ghost" data-act="complete" data-i="${idx}">Complete</button>
+          <button class="btn danger" data-act="delete" data-i="${idx}">Delete</button>
+        `;
+
+        const priClass = critical ? "bad" : (item.priority === "High" ? "warn" : "ok");
+        const priPill = `<span class="pill ${priClass}">${item.priority}</span>`;
+        const duePill = overdue ? `<span class="pill bad">${item.due} (Overdue)</span>` : `<span class="pill">${item.due}</span>`;
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${item.created}</td>
+          <td>${item.company}</td>
+          <td>${item.sender}</td>
+          <td>${item.subject}</td>
+          <td>${priPill}</td>
+          <td>${duePill}</td>
+          <td>${statusPill(item.status)}</td>
+          <td style="white-space:nowrap">${actionButtons}</td>
+        `;
+        body.appendChild(tr);
+      });
+
+      document.getElementById("k_total").textContent = list.length || "—";
+      document.getElementById("k_review").textContent = pendingReview || "—";
+      document.getElementById("k_ceo").textContent = pendingCEO || "—";
+      document.getElementById("k_alerts").textContent = alerts || "—";
+    }
+
+    document.getElementById("contractForm").addEventListener("submit", (e)=>{
+      e.preventDefault();
+      const list = load();
+      list.unshift({
+        created: nowStamp(),
+        company: document.getElementById("f_company").value,
+        sender: document.getElementById("f_sender").value,
+        subject: document.getElementById("f_subject").value,
+        priority: document.getElementById("f_priority").value,
+        due: document.getElementById("f_due").value,
+        notes: document.getElementById("f_notes").value,
+        status: "Pending Review"
+      });
+      save(list);
+      e.target.reset();
+      render();
+    });
+
+    document.addEventListener("click", (e)=>{
+      const btn = e.target.closest("button[data-act]");
+      if(!btn) return;
+
+      const act = btn.dataset.act;
+      const i = Number(btn.dataset.i);
+      const list = load();
+      const item = list[i];
+      if(!item) return;
+
+      if(act === "approve") item.status = "TitanCore Approved";
+      if(act === "ceo") item.status = "CEO Final Sign";
+      if(act === "complete") item.status = "Completed";
+      if(act === "delete") list.splice(i, 1);
+
+      save(list);
+      render();
+    });
+
+    document.getElementById("btn_seed").addEventListener("click", ()=>{
+      const sample = [
+        {created: nowStamp(), company:"Vaultara Capital", sender:"Client", subject:"Investment Advisory Agreement", priority:"Normal", due:"2026-01-10", notes:"Standard terms.", status:"Pending Review"},
+        {created: nowStamp(), company:"TitanCore Holdings", sender:"Bank", subject:"Credit Facility Renewal", priority:"High", due:"2026-01-05", notes:"Check covenants.", status:"Pending Review"},
+        {created: nowStamp(), company:"RevMotion Auto & Marine Group", sender:"Vendor", subject:"Supply Contract – Parts", priority:"Critical", due:"2026-01-02", notes:"Missing insurance cert.", status:"Pending Review"},
+      ];
+      save(sample);
+      render();
+    });
+
+    document.getElementById("btn_clear").addEventListener("click", ()=>{
+      save([]);
+      render();
+    });
+
+    render();
   </script>
 </body>
 </html>
