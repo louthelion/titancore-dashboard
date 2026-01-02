@@ -141,14 +141,28 @@
         </div>
       </div>
 
-      <div class="calendarWrap panel">
-        <div class="calTitle">
-          <h3 class="title">Deadline Calendar (Month View)</h3>
-          <div class="calNav">
-            <button class="btn" id="prev">Prev</button>
-            <button class="btn primary" id="today">Today</button>
-            <button class="btn" id="next">Next</button>
-          </div>
+     <section class="card" id="deadlineCard">
+  <div class="cardHead">
+    <h2 class="green">Deadline Calendar (Month View)</h2>
+
+    <div class="calNav">
+      <button class="btn ghost" id="calPrev" type="button">Prev</button>
+      <button class="btn" id="calToday" type="button">Today</button>
+      <button class="btn ghost" id="calNext" type="button">Next</button>
+    </div>
+  </div>
+
+  <div class="muted small">
+    Tip: tap a date to open all filings & forms for that day.
+  </div>
+
+  <div class="calMeta">
+    <div class="pill" id="calLabel">—</div>
+    <div class="pill ghost" id="calCount">0 deadlines</div>
+  </div>
+
+  <div class="calendar" id="calendarGrid" aria-label="Month calendar grid"></div>
+</section>
         </div>
 
         <div class="calendar" id="cal">
