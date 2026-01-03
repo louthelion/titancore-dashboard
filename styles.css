@@ -327,4 +327,55 @@ a{color:inherit;text-decoration:none}
   display:block;
   width:100%;
 }
+/* ================================
+   UNIVERSAL NAV (BUTTON LOOK)
+   Paste at END of styles.css
+================================== */
+
+.nav{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin:14px 0 18px;
+}
+
+.nav a{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px 16px;
+  border-radius:999px;
+  border:1px solid rgba(212,175,55,.35);
+  background: rgba(0,0,0,.40);
+  color:#d8d8d8;
+  text-decoration:none !important;
+  font-weight:800;
+  letter-spacing:.2px;
+  line-height:1;
+  transition: transform .08s ease, background .15s ease, border-color .15s ease, color .15s ease;
+}
+
+.nav a:visited{
+  color:#d8d8d8;
+}
+
+.nav a:hover{
+  transform: translateY(-1px);
+  border-color: rgba(0,200,83,.55);
+  background: rgba(0,200,83,.12);
+  color:#00c853;
+}
+
+.nav a.active{
+  background: rgba(0,200,83,.18) !important;
+  border-color: rgba(0,200,83,.70) !important;
+  color:#00c853 !important;
+  box-shadow: 0 0 14px rgba(0,200,83,.22);
+}
+
+.nav a:focus{
+  outline:none;
+  box-shadow: 0 0 0 3px rgba(0,200,83,.18), 0 0 14px rgba(0,200,83,.18);
+}
+
 
