@@ -637,41 +637,68 @@
 
           <div style="height:12px"></div>
 
-          <div class="mini">
-            <h4>Command Modules</h4>
-            <p>Quick actions (these will become real pages next)</p>
-          </div>
+        <!-- =========================
+     EXECUTIVE CONTROL CENTER
+     Bottom Section (Dashboard Only)
+========================== -->
 
-          <div class="list">
-            <div class="item">
-              <div class="left">
-                <p class="name">Report &amp; Approval</p>
-                <p class="desc">Queue • sign-off • audit trail</p>
-              </div>
-              <a class="openbtn" href="#" data-page="mod-approval">Open</a>
-            </div>
-            <div class="item">
-              <div class="left">
-                <p class="name">Finance Command</p>
-                <p class="desc">Dashboards • budgets • variance</p>
-              </div>
-              <a class="openbtn" href="#" data-page="mod-finance">Open</a>
-            </div>
-            <div class="item">
-              <div class="left">
-                <p class="name">Security / Access</p>
-                <p class="desc">Permissions • monitoring • logs</p>
-              </div>
-              <a class="openbtn" href="#" data-page="mod-security">Open</a>
-            </div>
-            <div class="item">
-              <div class="left">
-                <p class="name">Omni System</p>
-                <p class="desc">Cross-company automation hub</p>
-              </div>
-              <a class="openbtn" href="#" data-page="mod-omni">Open</a>
-            </div>
-          </div>
+<div class="panel">
+  <h2>EXECUTIVE CONTROL CENTER</h2>
+  <p class="muted">
+    Holding-level command view: actions, risk, authority, and security health.
+  </p>
+</div>
+
+<div class="module-grid">
+
+  <!-- Executive Action Radar -->
+  <div class="module-card">
+    <h3>Executive Action Radar</h3>
+    <p class="muted">
+      Items requiring CEO or Mantle-level attention across all companies.
+    </p>
+    <a class="btn" href="./executive-action-radar.html">Open</a>
+  </div>
+
+  <!-- Portfolio Risk & Compliance -->
+  <div class="module-card">
+    <h3>Portfolio Risk & Compliance</h3>
+    <p class="muted">
+      Licenses, tax exposure, audits, regulatory and deadline risks.
+    </p>
+    <a class="btn" href="./portfolio-risk-radar.html">Open</a>
+  </div>
+
+  <!-- Authority & Control -->
+  <div class="module-card">
+    <h3>Authority & Control Monitor</h3>
+    <p class="muted">
+      Governance integrity, role boundaries, approval flow health.
+    </p>
+    <a class="btn" href="./authority-control-monitor.html">Open</a>
+  </div>
+
+  <!-- Security & Access (DASHBOARD ONLY – NO PAGE) -->
+  <div class="module-card static">
+    <h3>Security & Access</h3>
+    <p class="muted">
+      Role enforcement, login integrity, permission health.
+    </p>
+
+    <ul class="status-list">
+      <li>✔ CEO Access: Active</li>
+      <li>✔ Mantle of 7: Restricted Edit</li>
+      <li>✔ Generals: View / Report</li>
+      <li>✔ Companies: Isolated</li>
+      <li>✔ Department Managers: No Executive Access</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- =========================
+     /EXECUTIVE CONTROL CENTER
+========================== -->
         </div>
       </div>
 
