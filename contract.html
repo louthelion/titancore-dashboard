@@ -47,17 +47,32 @@
 
     <!-- NAV -->
     <nav class="nav" aria-label="Primary navigation">
-      <a href="./index.html">Dashboard</a>
-      <a class="active" href="./contract.html">Contract</a>
-      <a href="./contact.html">Contact</a>
-      <a href="./email.html">Email Routing</a>
-      <a href="./approval.html">Report &amp; Approval</a>
-      <a href="./omni.html">Omni System</a>
-      <a href="./tax.html">Tax Network</a>
-      <a href="./agent.html">Agent AI</a>
-      <a href="./finance.html">Finance</a>
-      <a href="./public.html">Public Portal</a>
-    </nav>
+  <a href="/index.html">Dashboard</a>
+  <a href="/contract.html">Contract</a>
+  <a href="/contact.html">Contact</a>
+  <a href="/email.html">Email Routing</a>
+  <a href="/approval.html">Report &amp; Approval</a>
+  <a href="/omni.html">Omni System</a>
+  <a href="/tax.html">Tax Network</a>
+  <a href="/agent.html">Agent AI</a>
+  <a href="/finance.html">Finance</a>
+  <a href="/public.html">Public Portal</a>
+</nav>
+
+<script>
+  // Auto-highlight current page as GREEN button (no manual "active" needed)
+  (function () {
+    const path = (location.pathname || "/index.html").toLowerCase();
+    document.querySelectorAll(".nav a").forEach(a => {
+      const href = (a.getAttribute("href") || "").toLowerCase();
+      if (href === path || (path === "/" && href === "/index.html")) {
+        a.classList.add("active");
+      } else {
+        a.classList.remove("active");
+      }
+    });
+  })();
+</script>
 
     <!-- HEADER -->
     <div class="panel">
