@@ -187,28 +187,6 @@
       text-align:center;
     }
   <script>
-  // ... keep your existing code above ...
-
-  window.addEventListener("DOMContentLoaded", () => {
-    // keep your existing DOMContentLoaded code
-    tick(); setInterval(tick, 1000);
-    // ... your nav highlight code ...
-    dashbot();
-
-    // ACTIVE toggle (works now)
-    const btn = document.getElementById("modeBtn");
-    const mode = localStorage.getItem("titan_mode") || "ACTIVE";
-    if (btn) btn.textContent = mode;
-
-    if (btn) {
-      btn.addEventListener("click", () => {
-        const current = localStorage.getItem("titan_mode") || "ACTIVE";
-        const next = current === "ACTIVE" ? "PAUSED" : "ACTIVE";
-        localStorage.setItem("titan_mode", next);
-        btn.textContent = next;
-      });
-    }
-  });
 </script>
     // System time
     function tick(){
