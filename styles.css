@@ -377,5 +377,111 @@ a{color:inherit;text-decoration:none}
   outline:none;
   box-shadow: 0 0 0 3px rgba(0,200,83,.18), 0 0 14px rgba(0,200,83,.18);
 }
+/* ===== TitanCore Executive Control Center (clean + separated) ===== */
+.tc-panel{
+  background: rgba(0,0,0,.35);
+  border: 1px solid rgba(212,175,55,.35);
+  border-radius: 18px;
+  padding: 18px;
+  margin-top: 16px;
+  box-shadow: 0 0 18px rgba(0,0,0,.35);
+}
 
+.tc-title{
+  margin: 0 0 10px 0;
+  font-weight: 900;
+  letter-spacing: .5px;
+  color: #00c853; /* TITANCORE GREEN */
+  text-transform: uppercase;
+}
+
+.tc-text{
+  margin: 0 0 14px 0;
+  color: rgba(212,175,55,.92); /* TITANCORE GOLD */
+  line-height: 1.35;
+}
+
+.tc-cards{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.tc-card{
+  background: rgba(0,0,0,.42);
+  border: 1px solid rgba(212,175,55,.28);
+  border-radius: 16px;
+  padding: 14px;
+}
+
+.tc-card-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.tc-card-title{
+  margin: 0;
+  color: #00c853; /* green titles */
+  font-weight: 900;
+}
+
+.tc-card-text{
+  margin: 0 0 10px 0;
+  color: rgba(212,175,55,.9); /* gold text */
+  line-height: 1.35;
+}
+
+.tc-open{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding: 8px 14px;
+  border-radius: 999px;
+  text-decoration:none;
+  font-weight: 800;
+  color: #00c853;
+  background: rgba(0,200,83,.12);
+  border: 1px solid rgba(0,200,83,.45);
+}
+
+.tc-open:active{
+  transform: scale(.98);
+}
+
+.tc-meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap: 8px;
+}
+
+.tc-pill{
+  display:inline-block;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(212,175,55,.25);
+  color: rgba(212,175,55,.92);
+  font-size: 12px;
+  font-weight: 800;
+  background: rgba(0,0,0,.25);
+}
+
+.tc-pill-ok{
+  border-color: rgba(0,200,83,.45);
+  color: #00c853;
+  background: rgba(0,200,83,.08);
+}
+
+.tc-pill-warn{
+  border-color: rgba(255,170,0,.55);
+  color: rgba(255,170,0,.95);
+  background: rgba(255,170,0,.08);
+}
+
+/* Optional: 2 columns on wider screens */
+@media (min-width: 820px){
+  .tc-cards{ grid-template-columns: 1fr 1fr; }
+}
 
