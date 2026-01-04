@@ -1,386 +1,150 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>TitanCore Executive Control Center — Tax Network</title>
-  <link rel="stylesheet" href="./styles.css">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Tax Network • TitanCore</title>
   <style>
-    .wrap{max-width:1200px;margin:0 auto;padding:16px}
-    .topline{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-top:10px}
-    .h1{margin:0;font-weight:900;letter-spacing:.02em}
-    .sub{opacity:.85;margin:6px 0 0}
-    .status{display:flex;align-items:center;gap:10px}
-    .pill{display:inline-block;padding:8px 12px;border-radius:999px;border:1px solid rgba(0,200,83,.45);color:#00c853;background:rgba(0,200,83,.08);font-weight:800}
-    .grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:14px}
-    @media(max-width:980px){.grid{grid-template-columns:1fr}}
-    .panel{border:1px solid rgba(212,175,55,.38);border-radius:16px;background:rgba(0,0,0,.28);padding:14px}
-    .title{margin:0 0 8px;color:#00c853;font-weight:900;letter-spacing:.03em}
-    .panel ul{margin:0;padding-left:18px}
-    .muted{opacity:.82}
-    .two{grid-column:2 / span 1}
-    .calendarWrap{grid-column:2 / span 1;display:flex;flex-direction:column;gap:10px}
-    @media(max-width:980px){.calendarWrap{grid-column:auto}}
-    .calTitle{display:flex;justify-content:space-between;align-items:center;gap:10px}
-    .calTitle .title{margin:0}
-    .calNav{display:flex;gap:10px}
-    .btn{padding:8px 12px;border-radius:999px;border:1px solid rgba(212,175,55,.35);background:rgba(0,0,0,.35);color:#eaeaea;cursor:pointer}
-    .btn.primary{border-color:rgba(0,200,83,.55);color:#00c853}
-    .calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
-    .dow{font-size:11px;opacity:.7;letter-spacing:.08em;text-transform:uppercase;padding:2px 6px}
-    .day{
-      min-height:58px;border:1px solid rgba(212,175,55,.22);border-radius:12px;
-      background:rgba(0,0,0,.22);padding:8px;cursor:pointer
-    }
-    .day:hover{border-color:rgba(0,200,83,.35);box-shadow:0 0 0 2px rgba(0,200,83,.08) inset}
-    .num{font-weight:900;opacity:.92}
-    .dots{margin-top:6px;display:flex;flex-wrap:wrap;gap:6px}
-    .dot{width:8px;height:8px;border-radius:50%;background:rgba(212,175,55,.65)}
-    .dot.g{background:rgba(0,200,83,.8)}
-    .dot.r{background:rgba(255,90,90,.85)}
-    .hint{font-size:12px;opacity:.75;margin-top:6px}
-    .primaryBar{margin-top:14px}
-    .primaryActions{
-      border:1px solid rgba(212,175,55,.38);border-radius:16px;background:rgba(0,0,0,.25);
-      padding:14px
-    }
-    .primaryActions .title{color:#00c853}
-    .actionRow{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
-    .action{padding:10px 12px;border-radius:999px;border:1px solid rgba(212,175,55,.28);background:rgba(0,0,0,.22);color:#eaeaea;cursor:pointer}
-    .action:hover{border-color:rgba(0,200,83,.35);color:#00c853}
-    .drawer{
-      position:fixed;inset:0;display:none;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.55);
-      padding:18px
-    }
-    .sheet{
-      width:min(920px,100%);border-radius:18px;border:1px solid rgba(212,175,55,.35);
-      background:rgba(10,10,10,.92);padding:14px
-    }
-    .sheetTop{display:flex;justify-content:space-between;align-items:center;gap:10px}
-    .sheet h3{margin:0;color:#00c853}
-    .sheet .small{font-size:12px;opacity:.78;margin-top:6px}
-    table{width:100%;border-collapse:separate;border-spacing:0 10px;margin-top:12px}
-    th{font-size:12px;opacity:.7;text-align:left;padding:0 10px}
-    td{padding:12px 10px;background:rgba(0,0,0,.25);border-top:1px solid rgba(212,175,55,.18);border-bottom:1px solid rgba(212,175,55,.18)}
-    tr td:first-child{border-left:1px solid rgba(212,175,55,.18);border-radius:14px 0 0 14px}
-    tr td:last-child{border-right:1px solid rgba(212,175,55,.18);border-radius:0 14px 14px 0}
-    .tag{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid rgba(212,175,55,.25);font-size:12px}
-    .ok{border-color:rgba(0,200,83,.35);color:#00c853}
-    .warn{border-color:rgba(255,195,0,.45);color:#ffd54a}
-    .bad{border-color:rgba(255,90,90,.55);color:#ff8a8a}
+    :root{--bg:#000;--gold:rgba(212,175,55,.95);--gold2:rgba(212,175,55,.28);--green:#00c853;--panel:rgba(0,0,0,.42);--panel2:rgba(0,0,0,.28);}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--gold);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;}
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:1220px;margin:0 auto;padding:16px}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;border:1px solid var(--gold2);background:var(--panel);border-radius:18px;padding:14px;}
+    .title{margin:0;color:var(--green);font-weight:1000}
+    .nav{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 14px;}
+    .nav a{padding:10px 14px;border-radius:999px;border:1px solid var(--gold2);background:rgba(0,0,0,.22);font-weight:900}
+    .nav a:hover{border-color:rgba(0,200,83,.45);color:var(--green)}
+    .nav a.active{border-color:rgba(0,200,83,.55);background:rgba(0,200,83,.10);color:var(--green)}
+    .panel{border:1px solid var(--gold2);background:var(--panel);border-radius:18px;padding:14px;}
+    .mini{border:1px dashed rgba(212,175,55,.25);background:rgba(0,0,0,.18);border-radius:16px;padding:10px;margin-bottom:10px;}
+    .mini h3{margin:0;color:var(--green);font-weight:1000;font-size:14px}
+    .mini p{margin:6px 0 0;opacity:.85;font-size:13px}
+    .btn{padding:9px 14px;border-radius:999px;border:1px solid rgba(0,200,83,.55);background:rgba(0,200,83,.10);color:var(--green);font-weight:1000;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;}
+    .btn:hover{background:rgba(0,200,83,.15)}
+    .btn.gold{border:1px solid rgba(212,175,55,.35);background:rgba(0,0,0,.18);color:var(--gold)}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .table{width:100%;border-collapse:separate;border-spacing:0 10px}
+    .tr{background:var(--panel2);border:1px solid rgba(212,175,55,.18)}
+    td{padding:12px;border-top:1px solid rgba(212,175,55,.18);border-bottom:1px solid rgba(212,175,55,.18)}
+    td:first-child{border-left:1px solid rgba(212,175,55,.18);border-radius:14px 0 0 14px}
+    td:last-child{border-right:1px solid rgba(212,175,55,.18);border-radius:0 14px 14px 0}
+    .pill{display:inline-flex;padding:6px 10px;border-radius:999px;border:1px solid rgba(212,175,55,.22);background:rgba(0,0,0,.18);font-weight:1000;font-size:12px}
+    .pill.ok{border-color:rgba(0,200,83,.45);color:var(--green);background:rgba(0,200,83,.08)}
+    .pill.red{border-color:rgba(255,80,80,.5);color:rgba(255,170,170,.95);background:rgba(255,80,80,.08)}
   </style>
-</head>
+  <script>
+    // simple “month view” control
+    const state = {
+      monthOffset: 0,
+      filter: "ACTIVE"
+    };
 
+    const sampleDeadlines = [
+      {company:"TitanCore Holdings", item:"State Filing", due:"2026-02-10", status:"ACTIVE"},
+      {company:"Vaultara Capital", item:"License Renewal", due:"2026-01-28", status:"ACTIVE"},
+      {company:"VitalPath Care Group", item:"Audit Prep", due:"2026-03-15", status:"ACTIVE"},
+      {company:"RevMotion Auto & Marine", item:"Quarter Tax", due:"2026-01-20", status:"ACTIVE"},
+      {company:"Family First Equity Group", item:"Compliance Review", due:"2026-02-05", status:"ACTIVE"},
+      {company:"Vaultara Capital", item:"Old Closed Item", due:"2025-10-01", status:"CLOSED"}
+    ];
+
+    function formatMonth(offset){
+      const d = new Date();
+      d.setMonth(d.getMonth() + offset);
+      return d.toLocaleDateString(undefined, {month:"long", year:"numeric"});
+    }
+
+    function render(){
+      document.getElementById("monthLabel").textContent = formatMonth(state.monthOffset);
+      document.getElementById("filterLabel").textContent = state.filter;
+
+      const tbody = document.getElementById("rows");
+      tbody.innerHTML = "";
+
+      const list = sampleDeadlines.filter(x => state.filter==="ALL" ? true : x.status==="ACTIVE");
+
+      list.forEach(x => {
+        const tr = document.createElement("tr");
+        tr.className = "tr";
+        tr.innerHTML = `
+          <td><b>${x.company}</b><div style="opacity:.85;font-size:12px;margin-top:4px;">${x.item}</div></td>
+          <td>${x.due}</td>
+          <td>${x.status==="ACTIVE" ? `<span class="pill ok">ACTIVE</span>` : `<span class="pill">CLOSED</span>`}</td>
+          <td style="text-align:right;">
+            <button class="btn gold" type="button" onclick="alert('Open details for: ${x.company} • ${x.item}')">Open</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function prev(){ state.monthOffset--; render(); }
+    function next(){ state.monthOffset++; render(); }
+    function today(){ state.monthOffset=0; render(); }
+
+    function toggleActive(){
+      state.filter = (state.filter==="ACTIVE") ? "ALL" : "ACTIVE";
+      render();
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      // nav highlight
+      const path = location.pathname || "/tax.html";
+      document.querySelectorAll(".nav a").forEach(a=>{
+        a.classList.toggle("active", a.getAttribute("href")===path);
+      });
+      render();
+    });
+  </script>
+</head>
 <body>
   <div class="wrap">
 
-    <nav class="nav" aria-label="Primary navigation">
-  <a href="./index.html">Dashboard</a>
-  <a href="./contract.html">Contract</a>
-  <a href="./contact.html">Contact</a>
-  <a href="./email.html">Email Routing</a>
-  <a href="./approval.html">Report &amp; Approval</a>
-  <a href="./omni.html">Omni System</a>
-  <a href="./tax.html">Tax Network</a>
-  <a href="./agent.html">Agent AI</a>
-  <a href="./finance.html">Finance</a>
-  <a href="./public.html">Public Portal</a>
-</nav>
-
-    <div class="topline">
-      <div>
-        <h1 class="h1">TITANCORE DASHBOARD • GTCIS (Tax &amp; Compliance)</h1>
-        <div class="sub muted">Control center view — filings, deadlines, jurisdictions, documents, integrations</div>
-      </div>
-      <div class="status">
-        <div class="muted">Status:</div>
-      <a class="pill live" href="./tax-status.html" id="taxStatusLink">Status: ACTIVE</a>
-      </div>
+    <div class="topbar">
+      <h1 class="title">Tax Network</h1>
+      <a class="btn" href="/index.html">Back to Dashboard</a>
     </div>
 
-    <div class="grid">
+    <nav class="nav">
+      <a href="/index.html">Dashboard</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/contract.html">Contract</a>
+      <a href="/email.html">Email Routing</a>
+      <a href="/approval.html">Report &amp; Approval</a>
+      <a href="/omni.html">Omni System</a>
+      <a href="/tax.html">Tax Network</a>
+      <a href="/agent-suite.html">Agent AI Suite</a>
+      <a href="/public.html">Public Portal</a>
+    </nav>
 
-      <div class="panel">
-        <h3 class="title">Entity / Company Selector</h3>
-        <ul>
-          <li>TitanCore Holdings (umbrella)</li>
-          <li>Vaultara Capital</li>
-          <li>Family First Equity Group</li>
-          <li>VitalPath Care Group</li>
-          <li>RevMotion Auto &amp; Marine</li>
-        </ul>
+    <div class="panel">
+      <div class="mini">
+        <h3>Deadline Navigator</h3>
+        <p>These buttons work now: Prev • Today • Next • Active/All</p>
       </div>
 
-      <div class="panel">
-        <h3 class="title">Filing Queue (Next 30 Days)</h3>
-        <ul class="muted">
-          <li>2026-01-05 • Sales Tax — Vaultara</li>
-          <li>2026-01-12 • Payroll — VitalPath</li>
-          <li>2026-01-18 • Annual Report — RevMotion</li>
-          <li>2026-01-22 • Franchise Tax — Family First</li>
-          <li>2026-01-28 • BOI Update — TitanCore Holdings</li>
-        </ul>
-      </div>
+      <div class="row" style="justify-content:space-between;">
+        <div class="row">
+          <button class="btn" type="button" onclick="prev()">Prev</button>
+          <button class="btn" type="button" onclick="today()">Today</button>
+          <button class="btn" type="button" onclick="next()">Next</button>
+          <span class="pill ok" id="monthLabel">—</span>
+        </div>
 
-      <div class="panel">
-        <h3 class="title">Jurisdictions Matrix</h3>
-        <div class="muted">States: FL, NY, CA, GA, TX</div>
-        <div class="muted">Taxes: Sales, Payroll, Franchise</div>
-        <div class="muted" style="margin-top:8px">
-          Status: <b>18 compliant</b> / <b>1 flagged</b>
+        <div class="row">
+          <button class="btn" type="button" onclick="toggleActive()">Active</button>
+          <span class="pill" id="filterLabel">ACTIVE</span>
         </div>
       </div>
 
-      <div class="panel">
-        <h3 class="title">Compliance Status (Summary)</h3>
-        <div class="muted">
-          Filings on track<br/>
-          Pending: <b>2 state renewals</b><br/>
-          Issue: <b>1 overdue local license</b><br/>
-          Scorecard: <b>94 / 100</b>
-        </div>
-      </div>
+      <div style="height:12px;"></div>
 
-     <section class="card" id="deadlineCard">
-  <div class="cardHead">
-    <h2 class="green">Deadline Calendar (Month View)</h2>
-
-    <div class="calNav">
-      <button class="btn ghost" id="calPrev" type="button">Prev</button>
-      <button class="btn" id="calToday" type="button">Today</button>
-      <button class="btn ghost" id="calNext" type="button">Next</button>
-    </div>
-  </div>
-
-  <div class="muted small">
-    Tip: tap a date to open all filings & forms for that day.
-  </div>
-
-  <div class="calMeta">
-    <div class="pill" id="calLabel">—</div>
-    <div class="pill ghost" id="calCount">0 deadlines</div>
-  </div>
-
-  <div class="calendar" id="calendarGrid" aria-label="Month calendar grid"></div>
-</section>
-        </div>
-
-        <div class="calendar" id="cal">
-          <!-- JS renders DOW + days -->
-        </div>
-
-        <div class="hint">Tip: tap a date to open all filings &amp; forms for that day.</div>
-      </div>
-
-      <div class="panel">
-        <h3 class="title">Audit Shield — Documents</h3>
-        <ul class="muted">
-          <li>Receipts &amp; confirmations</li>
-          <li>EIN / BOI / Annual reports</li>
-          <li>Bank letters &amp; licensing</li>
-        </ul>
-      </div>
-
-      <div class="panel">
-        <h3 class="title">Alerts &amp; Tasks</h3>
-        <ul class="muted">
-          <li>Auto-alert: Sales tax due (FL) — Tue</li>
-          <li>BOI/Beneficial Ownership report check</li>
-          <li>License audit: Miami-Dade</li>
-        </ul>
-      </div>
-
-      <div class="panel">
-        <h3 class="title">Integrations</h3>
-        <ul class="muted">
-          <li>QuickBooks / Xero (planned)</li>
-          <li>State portals / IRS (planned)</li>
-          <li>Payment: Stripe / Shopify (planned)</li>
-        </ul>
-      </div>
-
-    </div>
-
-    <div class="primaryBar">
-      <div class="primaryActions">
-        <h3 class="title">Primary Actions</h3>
-        <div class="actionRow">
-          <button class="action" onclick="alert('New Filing (demo)')">NEW FILING</button>
-          <button class="action" onclick="alert('Add Jurisdiction (demo)')">ADD JURISDICTION</button>
-          <button class="action" onclick="alert('Upload Proof (demo)')">UPLOAD PROOF</button>
-          <button class="action" onclick="alert('Generate Lender Pack (demo)')">GENERATE LENDER PACK</button>
-          <button class="action" onclick="alert('Run Compliance Scan (demo)')">RUN COMPLIANCE SCAN</button>
-          <button class="action" onclick="alert('Export Weekly Summary (demo)')">EXPORT WEEKLY SUMMARY</button>
-          <button class="action" onclick="alert('Open Mantle View (demo)')">OPEN MANTLE VIEW</button>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- DAY DRAWER -->
-  <div class="drawer" id="drawer">
-    <div class="sheet">
-      <div class="sheetTop">
-        <div>
-          <h3 id="dTitle">Deadlines</h3>
-          <div class="small muted">Records-only list. Later we connect forms + uploads + approvals.</div>
-        </div>
-        <button class="btn" onclick="closeDrawer()">Close</button>
-      </div>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Company</th>
-            <th>Type</th>
-            <th>Jurisdiction</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody id="dBody"></tbody>
+      <table class="table" aria-label="Deadlines">
+        <tbody id="rows"></tbody>
       </table>
     </div>
+
   </div>
-
-<script>
- const demo = [
-  // ====== TITANCORE HOLDINGS (Umbrella) ======
-  {date:"2026-01-05", company:"TitanCore Holdings", type:"BOI / Beneficial Ownership Review", jur:"FinCEN", license:"Corporate Governance", status:"Pending", auditRisk:28, riskTier:"GREEN", owner:"Compliance", priority:"M", docRequired:true, notes:"Confirm BOI accuracy + ownership changes."},
-  {date:"2026-01-15", company:"TitanCore Holdings", type:"Payroll Tax Deposit", jur:"IRS", license:"Employer Tax", status:"Pending", auditRisk:40, riskTier:"AMBER", owner:"Finance", priority:"H", docRequired:true, notes:"Deposit schedule review + payroll reconciliation."},
-  {date:"2026-01-31", company:"TitanCore Holdings", type:"Month-End Compliance Closeout", jur:"Multi-State", license:"Internal Controls", status:"Monitoring", auditRisk:35, riskTier:"GREEN", owner:"Audit", priority:"M", docRequired:false, notes:"Close monthly compliance register."},
-  {date:"2026-02-10", company:"TitanCore Holdings", type:"Sales/Use Tax Review (Holding)", jur:"FL", license:"Business Tax", status:"Monitoring", auditRisk:46, riskTier:"AMBER", owner:"Tax", priority:"M", docRequired:false, notes:"Holding-level: review nexus + filings."},
-  {date:"2026-03-10", company:"TitanCore Holdings", type:"Quarterly Risk & Audit Readiness Check", jur:"Internal", license:"Audit Program", status:"Pending", auditRisk:55, riskTier:"AMBER", owner:"Audit", priority:"H", docRequired:true, notes:"Evidence pack: policies + approvals + logs."},
-
-  // ====== VAULTARA CAPITAL ======
-  {date:"2026-01-10", company:"Vaultara Capital", type:"State Annual Report Prep", jur:"NJ", license:"Registered Entity", status:"Monitoring", auditRisk:45, riskTier:"AMBER", owner:"Compliance", priority:"M", docRequired:true, notes:"Confirm registered agent + address + officers."},
-  {date:"2026-01-15", company:"Vaultara Capital", type:"Sales Tax Filing", jur:"FL", license:"Sales & Use Tax", status:"Pending", auditRisk:52, riskTier:"AMBER", owner:"Tax", priority:"H", docRequired:true, notes:"File + payment confirmation required."},
-  {date:"2026-01-20", company:"Vaultara Capital", type:"License Renewal Review", jur:"PA", license:"Financial Services License", status:"Monitoring", auditRisk:60, riskTier:"AMBER", owner:"Legal", priority:"H", docRequired:true, notes:"Renewal may require bond/insurance confirmation."},
-  {date:"2026-02-05", company:"Vaultara Capital", type:"BOI Confirmation Check", jur:"FinCEN", license:"Corporate Governance", status:"Monitoring", auditRisk:30, riskTier:"GREEN", owner:"Compliance", priority:"M", docRequired:false, notes:"Confirm ownership/controls unchanged."},
-  {date:"2026-02-15", company:"Vaultara Capital", type:"Payroll Tax", jur:"NY", license:"Employer Tax", status:"Pending", auditRisk:49, riskTier:"AMBER", owner:"Finance", priority:"H", docRequired:true, notes:"Quarterly payroll reconciliation begins."},
-  {date:"2026-03-05", company:"Vaultara Capital", type:"Internal Audit Sample Review", jur:"Internal", license:"Audit Program", status:"Pending", auditRisk:63, riskTier:"AMBER", owner:"Audit", priority:"H", docRequired:true, notes:"Sample: invoices, approvals, access logs."},
-
-  // ====== VITALPATH CARE GROUP ======
-  {date:"2026-01-08", company:"VitalPath Care Group", type:"Healthcare License Audit Prep", jur:"GA", license:"Healthcare Facility License", status:"Pending", auditRisk:78, riskTier:"RED", owner:"Compliance", priority:"H", docRequired:true, notes:"High risk: maintain credentialing + policies."},
-  {date:"2026-01-15", company:"VitalPath Care Group", type:"Payroll Tax", jur:"IRS", license:"Employer Tax", status:"Pending", auditRisk:58, riskTier:"AMBER", owner:"Finance", priority:"H", docRequired:true, notes:"Payroll tax + benefits withholding review."},
-  {date:"2026-01-25", company:"VitalPath Care Group", type:"Local Permit Renewal", jur:"NC", license:"Local Operating Permit", status:"Monitoring", auditRisk:50, riskTier:"AMBER", owner:"Operations", priority:"M", docRequired:true, notes:"Facility permit renewal checklist."},
-  {date:"2026-02-10", company:"VitalPath Care Group", type:"Compliance Training Confirmation", jur:"Internal", license:"Healthcare Compliance", status:"Pending", auditRisk:67, riskTier:"AMBER", owner:"HR", priority:"H", docRequired:true, notes:"Required staff training logs + attestations."},
-  {date:"2026-02-20", company:"VitalPath Care Group", type:"Sales/Use Tax Filing", jur:"IL", license:"Sales & Use Tax", status:"Pending", auditRisk:62, riskTier:"AMBER", owner:"Tax", priority:"H", docRequired:true, notes:"If services taxable: verify rules."},
-  {date:"2026-03-15", company:"VitalPath Care Group", type:"Quarterly Compliance Review", jur:"Internal", license:"Healthcare Compliance", status:"Pending", auditRisk:72, riskTier:"RED", owner:"Compliance", priority:"H", docRequired:true, notes:"Policies, incidents, corrective actions."},
-
-  // ====== REVMOTION AUTO & MARINE ======
-  {date:"2026-01-12", company:"RevMotion Auto & Marine", type:"Dealer / DMV License Review", jur:"CA", license:"Auto Dealer License", status:"Pending", auditRisk:70, riskTier:"RED", owner:"Legal", priority:"H", docRequired:true, notes:"Dealer compliance is sensitive — keep docs ready."},
-  {date:"2026-01-20", company:"RevMotion Auto & Marine", type:"Sales Tax Filing", jur:"CA", license:"Sales & Use Tax", status:"Pending", auditRisk:66, riskTier:"AMBER", owner:"Tax", priority:"H", docRequired:true, notes:"Retail + parts + service separation check."},
-  {date:"2026-02-01", company:"RevMotion Auto & Marine", type:"Insurance / Bond Verification", jur:"AZ", license:"Dealer Bond/Insurance", status:"Monitoring", auditRisk:59, riskTier:"AMBER", owner:"Operations", priority:"M", docRequired:true, notes:"Verify policy coverage dates + bond."},
-  {date:"2026-02-15", company:"RevMotion Auto & Marine", type:"Payroll Tax", jur:"IRS", license:"Employer Tax", status:"Pending", auditRisk:55, riskTier:"AMBER", owner:"Finance", priority:"H", docRequired:true, notes:"Payroll compliance + contractor review."},
-  {date:"2026-03-10", company:"RevMotion Auto & Marine", type:"Inventory / Revenue Audit Prep", jur:"Internal", license:"Audit Program", status:"Pending", auditRisk:74, riskTier:"RED", owner:"Audit", priority:"H", docRequired:true, notes:"High risk: inventory valuation + margins."},
-
-  // ====== FAMILY FIRST EQUITY GROUP ======
-  {date:"2026-01-18", company:"Family First Equity Group", type:"State Annual Report Filing", jur:"TX", license:"Registered Entity", status:"Pending", auditRisk:57, riskTier:"AMBER", owner:"Compliance", priority:"H", docRequired:true, notes:"Annual report due window: confirm officers."},
-  {date:"2026-01-25", company:"Family First Equity Group", type:"Local Business License Renewal", jur:"GA", license:"General Business License", status:"Monitoring", auditRisk:48, riskTier:"AMBER", owner:"Operations", priority:"M", docRequired:true, notes:"Local renewal; confirm address + operations."},
-  {date:"2026-02-05", company:"Family First Equity Group", type:"Sales Tax Filing", jur:"FL", license:"Sales & Use Tax", status:"Pending", auditRisk:60, riskTier:"AMBER", owner:"Tax", priority:"H", docRequired:true, notes:"File + payment receipt must be stored."},
-  {date:"2026-02-18", company:"Family First Equity Group", type:"Internal Controls Review", jur:"Internal", license:"Internal Controls", status:"Monitoring", auditRisk:52, riskTier:"AMBER", owner:"Audit", priority:"M", docRequired:false, notes:"Approvals chain + access review."},
-  {date:"2026-03-25", company:"Family First Equity Group", type:"Audit Shield Pack Refresh", jur:"Internal", license:"Audit Program", status:"Pending", auditRisk:65, riskTier:"AMBER", owner:"Audit", priority:"H", docRequired:true, notes:"Update receipts, confirmations, EIN docs."}
-];
-
-  let view = new Date();
-  view.setDate(1);
-
-  function ymd(d){
-    const y=d.getFullYear();
-    const m=String(d.getMonth()+1).padStart(2,"0");
-    const da=String(d.getDate()).padStart(2,"0");
-    return `${y}-${m}-${da}`;
-  }
-
-  function statusTag(s){
-    if(s==="Flagged") return `<span class="tag bad">Flagged</span>`;
-    if(s==="Pending") return `<span class="tag warn">Pending</span>`;
-    return `<span class="tag ok">Monitoring</span>`;
-  }
-
-  function render(){
-    const cal=document.getElementById("cal");
-    cal.innerHTML="";
-
-    // dow row
-    for(const d of DOW){
-      const el=document.createElement("div");
-      el.className="dow";
-      el.textContent=d;
-      cal.appendChild(el);
-    }
-
-    const first = new Date(view);
-    const startDow = first.getDay();
-    const daysInMonth = new Date(view.getFullYear(), view.getMonth()+1, 0).getDate();
-
-    // blanks
-    for(let i=0;i<startDow;i++){
-      const b=document.createElement("div");
-      b.className="day";
-      b.style.visibility="hidden";
-      cal.appendChild(b);
-    }
-
-    for(let day=1; day<=daysInMonth; day++){
-      const d=new Date(view.getFullYear(), view.getMonth(), day);
-      const key=ymd(d);
-      const items=demo.filter(x=>x.date===key);
-
-      const box=document.createElement("div");
-      box.className="day";
-      box.onclick=()=>openDay(key);
-
-      box.innerHTML = `
-        <div class="num">${day}</div>
-        <div class="dots">
-          ${items.map(x=>{
-            if(x.status==="Flagged") return `<span class="dot r"></span>`;
-            if(x.status==="Pending") return `<span class="dot"></span>`;
-            return `<span class="dot g"></span>`;
-          }).join("")}
-        </div>
-      `;
-      cal.appendChild(box);
-    }
-  }
-
-  function openDay(key){
-    const drawer=document.getElementById("drawer");
-    const title=document.getElementById("dTitle");
-    const body=document.getElementById("dBody");
-
-    title.textContent = `Deadlines — ${key}`;
-    const items=demo.filter(x=>x.date===key);
-
-    body.innerHTML = items.length ? items.map(x=>`
-      <tr>
-        <td>${x.company}</td>
-        <td>${x.type}</td>
-        <td>${x.jur}</td>
-        <td>${statusTag(x.status)}</td>
-      </tr>
-    `).join("") : `
-      <tr>
-        <td colspan="4" class="muted">No filings scheduled for this day.</td>
-      </tr>
-    `;
-
-    drawer.style.display="flex";
-  }
-
-  function closeDrawer(){
-    document.getElementById("drawer").style.display="none";
-  }
-  window.closeDrawer = closeDrawer;
-
-  document.getElementById("prev").onclick=()=>{ view.setMonth(view.getMonth()-1); render(); };
-  document.getElementById("next").onclick=()=>{ view.setMonth(view.getMonth()+1); render(); };
-  document.getElementById("today").onclick=()=>{ const t=new Date(); view=new Date(t.getFullYear(),t.getMonth(),1); render(); };
-
-  render();
-</script>
-  <script src="./app.js"></script>
 </body>
 </html>
