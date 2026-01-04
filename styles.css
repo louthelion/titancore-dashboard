@@ -484,4 +484,25 @@ a{color:inherit;text-decoration:none}
 @media (min-width: 820px){
   .tc-cards{ grid-template-columns: 1fr 1fr; }
 }
+/* ===== FORCE TITANCORE COLORS (override any inline white styles) ===== */
+.tc-panel, .tc-panel *{
+  color: rgba(212,175,55,.92) !important;  /* gold text default */
+}
+
+.tc-panel .tc-title,
+.tc-panel .tc-card-title{
+  color:#00c853 !important;               /* green titles */
+}
+
+.tc-panel .tc-open{
+  color:#00c853 !important;
+  background: rgba(0,200,83,.12) !important;
+  border: 1px solid rgba(0,200,83,.45) !important;
+  text-decoration:none !important;
+}
+
+.tc-panel a{
+  color:#00c853 !important;
+  text-decoration:none !important;
+}
 
