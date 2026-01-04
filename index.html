@@ -277,9 +277,32 @@
       <div class="timebox">
         <div class="label">System Time</div>
         <div class="time" id="sysTime">—</div>
-      </div>
-
+      </div 
       <button class="statuspill" id="modeBtn" type="button" style="cursor:pointer;">ACTIVE</button>
+      <script>
+  // ... keep your existing code above ...
+
+  window.addEventListener("DOMContentLoaded", () => {
+    // keep your existing DOMContentLoaded code
+    tick(); setInterval(tick, 1000);
+    // ... your nav highlight code ...
+    dashbot();
+
+    // ACTIVE toggle (works now)
+    const btn = document.getElementById("modeBtn");
+    const mode = localStorage.getItem("titan_mode") || "ACTIVE";
+    if (btn) btn.textContent = mode;
+
+    if (btn) {
+      btn.addEventListener("click", () => {
+        const current = localStorage.getItem("titan_mode") || "ACTIVE";
+        const next = current === "ACTIVE" ? "PAUSED" : "ACTIVE";
+        localStorage.setItem("titan_mode", next);
+        btn.textContent = next;
+      });
+    }
+  });
+</script>
     </div>
 
     <!-- TOP MENU (ONLY PLACE for modules) -->
