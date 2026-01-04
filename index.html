@@ -1,252 +1,479 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>TitanCore Executive Control Center</title>
 
-  <!-- Keep your existing CSS -->
-  <link rel="stylesheet" href="/styles.css" />
-  <script src="/app.js" defer></script>
-
-  <!-- Safety: prevent purple/white default links -->
   <style>
-    body{background:#000;color:rgba(212,175,55,.92)}
-    a,a:visited{color:inherit;text-decoration:none}
-    .topbar{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px}
-    .brand h1{margin:0;color:#00c853;font-weight:900;letter-spacing:.3px}
-    .brand .sub{margin:6px 0 0;opacity:.9}
-    .meta{display:flex;flex-direction:column;align-items:flex-end;gap:8px;min-width:170px}
-    .clock{border:1px solid rgba(212,175,55,.35);border-radius:12px;padding:10px 12px;background:rgba(0,0,0,.35)}
-    .clock .date{font-weight:900;color:#00c853}
-    .clock .time{font-weight:900}
-    .rolebar{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
-    .rolebtn{border:1px solid rgba(212,175,55,.35);border-radius:999px;padding:8px 12px;background:rgba(0,0,0,.35);font-weight:900}
-    .rolebtn.active{border-color:rgba(0,200,83,.55);color:#00c853;background:rgba(0,200,83,.10)}
-    .grid3{display:grid;grid-template-columns:1fr;gap:12px}
-    @media(min-width:980px){.grid3{grid-template-columns:1.05fr 1.2fr 1fr}}
-    .panel{border:1px solid rgba(212,175,55,.28);background:rgba(0,0,0,.35);border-radius:16px;padding:14px}
-    .ptitle{margin:0 0 10px;color:#00c853;font-weight:900;text-transform:uppercase;letter-spacing:.4px}
-    .muted{opacity:.85}
-    .list{display:flex;flex-direction:column;gap:10px;margin-top:10px}
-    .row{display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid rgba(212,175,55,.18);background:rgba(0,0,0,.28);border-radius:14px;padding:10px 12px}
-    .name{font-weight:900}
-    .btn{display:inline-flex;align-items:center;justify-content:center;padding:9px 14px;border-radius:999px;font-weight:900;border:1px solid rgba(0,200,83,.45);color:#00c853;background:rgba(0,200,83,.10)}
-    .btn.ghost{border-color:rgba(212,175,55,.28);color:rgba(212,175,55,.95);background:rgba(0,0,0,.20)}
-    .pill{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;font-weight:900;border:1px solid rgba(212,175,55,.25);background:rgba(0,0,0,.20)}
-    .pill.ok{border-color:rgba(0,200,83,.40);color:#00c853;background:rgba(0,200,83,.08)}
-    .pill.warn{border-color:rgba(255,195,0,.40);color:rgba(255,195,0,.95);background:rgba(255,195,0,.08)}
-    .card{border:1px solid rgba(212,175,55,.20);background:rgba(0,0,0,.28);border-radius:14px;padding:12px}
-    .cardhead{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
-    .ctitle{margin:0;color:#00c853;font-weight:900}
-    .cmeta{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-    .actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;margin-top:10px}
-    .hidden{display:none!important}
+    :root{
+      --bg:#000000;
+      --gold: rgba(212,175,55,.95);
+      --gold2: rgba(212,175,55,.28);
+      --gold3: rgba(212,175,55,.18);
+      --green:#00c853;
+      --panel: rgba(0,0,0,.42);
+      --panel2: rgba(0,0,0,.28);
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--gold);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+    a{color:inherit;text-decoration:none}
+
+    .wrap{max-width:1220px;margin:0 auto;padding:16px}
+
+    /* TOP HEADER */
+    .topbar{
+      display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+      border:1px solid var(--gold2);
+      background:var(--panel);
+      border-radius:18px;
+      padding:14px;
+    }
+    .brand{display:flex;align-items:center;gap:12px;min-width:280px}
+    .logo{
+      width:56px;height:56px;border-radius:16px;
+      border:2px solid var(--gold);
+      display:flex;align-items:center;justify-content:center;
+      font-weight:1000;
+      color:var(--gold);
+      background:rgba(0,0,0,.25);
+    }
+    .title{
+      margin:0;
+      font-weight:1000;
+      color:var(--green);
+      line-height:1.05;
+    }
+    .subtitle{opacity:.85}
+
+    .timebox{
+      border:1px solid var(--gold2);
+      background:rgba(0,0,0,.25);
+      border-radius:18px;
+      padding:10px 14px;
+      min-width:300px;
+      text-align:left;
+    }
+    .timebox .label{opacity:.75;font-weight:900}
+    .timebox .time{color:var(--green);font-weight:1000;font-size:22px;margin-top:4px}
+
+    .statuspill{
+      display:inline-flex;align-items:center;justify-content:center;
+      padding:8px 14px;border-radius:999px;
+      border:1px solid rgba(0,200,83,.50);
+      background:rgba(0,200,83,.10);
+      color:var(--green);
+      font-weight:1000;
+    }
+
+    /* TOP NAV (buttons) */
+    .nav{
+      display:flex;flex-wrap:wrap;gap:10px;
+      margin:12px 0 14px;
+    }
+    .nav a{
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid var(--gold2);
+      background:rgba(0,0,0,.22);
+      color:var(--gold);
+      font-weight:900;
+      letter-spacing:.2px;
+    }
+    .nav a:hover{border-color:rgba(0,200,83,.45); color:var(--green)}
+    .nav a.active{
+      border-color:rgba(0,200,83,.55);
+      background:rgba(0,200,83,.10);
+      color:var(--green);
+    }
+
+    /* GRID */
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:14px;
+    }
+    @media(min-width:980px){
+      .grid{grid-template-columns: 1fr 1.1fr 1fr;}
+    }
+
+    .panel{
+      border:1px solid var(--gold2);
+      background:var(--panel);
+      border-radius:18px;
+      padding:14px;
+    }
+    .panel h2{
+      margin:0 0 10px;
+      color:var(--green);
+      font-weight:1000;
+      text-transform:uppercase;
+      letter-spacing:.4px;
+      font-size:16px;
+    }
+
+    .mini{
+      border:1px dashed rgba(212,175,55,.25);
+      background:rgba(0,0,0,.18);
+      border-radius:16px;
+      padding:10px;
+      margin-bottom:10px;
+    }
+    .mini h3{margin:0;color:var(--green);font-weight:1000;font-size:14px}
+    .mini p{margin:6px 0 0;opacity:.85;font-size:13px}
+
+    .list{display:flex;flex-direction:column;gap:10px}
+    .item{
+      border:1px solid var(--gold3);
+      background:var(--panel2);
+      border-radius:16px;
+      padding:12px;
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+    }
+    .item .name{font-weight:1000;color:var(--gold)}
+    .item .desc{opacity:.80;font-size:13px;margin-top:2px}
+
+    .btn{
+      padding:9px 14px;border-radius:999px;
+      border:1px solid rgba(0,200,83,.55);
+      background:rgba(0,200,83,.10);
+      color:var(--green);
+      font-weight:1000;
+      cursor:pointer;
+      white-space:nowrap;
+      display:inline-flex;align-items:center;justify-content:center;
+    }
+    .btn:hover{background:rgba(0,200,83,.15)}
+    .btn.gold{
+      border:1px solid rgba(212,175,55,.35);
+      background:rgba(0,0,0,.18);
+      color:var(--gold);
+    }
+
+    /* EXEC CARDS */
+    .cards{display:flex;flex-direction:column;gap:10px}
+    .card{
+      border:1px solid var(--gold3);
+      background:rgba(0,0,0,.22);
+      border-radius:18px;
+      padding:14px;
+      display:flex;justify-content:space-between;gap:12px;align-items:center;
+    }
+    .card-left{min-width:0}
+    .card-title{color:var(--green);font-weight:1000;margin:0}
+    .card-sub{opacity:.85;margin:4px 0 0;font-size:13px}
+    .tag{
+      display:inline-flex;align-items:center;
+      padding:6px 10px;border-radius:999px;
+      border:1px solid rgba(212,175,55,.22);
+      background:rgba(0,0,0,.18);
+      font-weight:1000;
+      color:var(--gold);
+      font-size:12px;
+    }
+    .tag.ok{border-color:rgba(0,200,83,.45);color:var(--green);background:rgba(0,200,83,.08)}
+
+    /* footer note (optional) */
+    .foot{
+      margin-top:14px;
+      opacity:.75;
+      font-size:12px;
+      text-align:center;
+    }
   </style>
+
+  <script>
+    // System time
+    function tick(){
+      const d = new Date();
+      const date = d.toLocaleDateString(undefined, { weekday:'long', year:'numeric', month:'short', day:'numeric' });
+      const time = d.toLocaleTimeString(undefined, {hour12:false});
+      const el = document.getElementById("sysTime");
+      if(el) el.textContent = `${date} • ${time}`;
+    }
+
+    // DashBot Executive Brief (mock data now; real data later)
+    function dashbot(){
+      const role = (localStorage.getItem("titan_role") || "EXECUTIVE").toUpperCase();
+
+      const items = [
+        {type:"NOW", area:"Contract", company:"Vaultara Capital", title:"Final signature required"},
+        {type:"SOON", area:"Tax", company:"VitalPath Care Group", title:"License renewal due soon"},
+        {type:"BLOCKED", area:"Email Routing", company:"RevMotion Auto & Marine", title:"Admin routing missing"},
+      ];
+
+      const now = items.filter(x=>x.type==="NOW").length;
+      const soon = items.filter(x=>x.type==="SOON").length;
+      const blocked = items.filter(x=>x.type==="BLOCKED").length;
+
+      const risk = { green: 10, amber: 2, red: 1 };
+      const authority = { healthy: 16, violations: 1 };
+      const security = { ok: 8, watch: 1 };
+
+      const set = (id, text) => { const el=document.getElementById(id); if(el) el.textContent=text; };
+
+      set("radarNow", `NOW: ${now}`);
+      set("radarSoon", `SOON: ${soon}`);
+      set("radarBlocked", `BLOCKED: ${blocked}`);
+
+      set("riskGreen", `GREEN: ${risk.green}`);
+      set("riskAmber", `AMBER: ${risk.amber}`);
+      set("riskRed", `RED: ${risk.red}`);
+
+      set("authHealthy", `HEALTHY: ${authority.healthy}`);
+      set("authViolations", `VIOLATIONS: ${authority.violations}`);
+
+      set("secOk", `OK: ${security.ok}`);
+      set("secWatch", `WATCH: ${security.watch}`);
+
+      const topNow = items.find(x=>x.type==="NOW");
+      const topBlocked = items.find(x=>x.type==="BLOCKED");
+
+      let brief = `Role: ${role}. `;
+      brief += (now>0) ? `You have ${now} executive action(s) waiting now. ` : `No executive actions waiting now. `;
+      brief += topNow ? `Top priority: ${topNow.company} • ${topNow.area} — ${topNow.title}. ` : `Top priority: None. `;
+      brief += topBlocked ? `Blocked: ${topBlocked.company} • ${topBlocked.area} — ${topBlocked.title}. ` : `No blocked items. `;
+      brief += (risk.red>0)
+        ? `Compliance posture has RED items. Recommendation: open Portfolio Risk & Compliance first.`
+        : `Compliance posture stable. Recommendation: review Authority Monitor and proceed.`;
+
+      const el = document.getElementById("dashbotBrief");
+      if(el) el.textContent = brief;
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      tick(); setInterval(tick, 1000);
+
+      const path = location.pathname || "/index.html";
+      document.querySelectorAll(".nav a").forEach(a=>{
+        const href=a.getAttribute("href");
+        a.classList.toggle("active", (path==="/" && href==="/index.html") || href===path);
+      });
+
+      dashbot();
+    });
+  </script>
 </head>
 
 <body>
   <div class="wrap">
 
-    <!-- Horizontal Menu (NO Omni, NO Finance) -->
+    <!-- HEADER -->
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo">TC</div>
+        <div>
+          <h1 class="title">TitanCore Executive Control Center</h1>
+          <div class="subtitle">Holding-level command • authority • compliance • control</div>
+        </div>
+      </div>
+
+      <div class="timebox">
+        <div class="label">System Time</div>
+        <div class="time" id="sysTime">—</div>
+      </div>
+
+      <div class="statuspill">ACTIVE</div>
+    </div>
+
+    <!-- TOP MENU (ONLY PLACE for modules) -->
     <nav class="nav" aria-label="Primary navigation">
       <a href="/index.html">Dashboard</a>
-      <a href="/contract.html">Contract</a>
       <a href="/contact.html">Contact</a>
+      <a href="/contract.html">Contract</a>
       <a href="/email.html">Email Routing</a>
       <a href="/approval.html">Report &amp; Approval</a>
+      <a href="/omni.html">Omni System</a>
       <a href="/tax.html">Tax Network</a>
-      <a href="/agent.html">Agent Systems</a>
+      <a href="/agent-suite.html">Agent AI Suite</a>
       <a href="/public.html">Public Portal</a>
     </nav>
 
-    <!-- Top Header -->
-    <div class="panel" style="margin-top:12px;">
-      <div class="topbar">
-        <div class="brand">
-          <h1>TitanCore Holdings</h1>
-          <div class="sub muted"><b style="color:#00c853;">Executive Control Center</b> — Holding-level command view</div>
+    <!-- 3 COLUMNS -->
+    <section class="grid" aria-label="Executive control grid">
+
+      <!-- LEFT: AUTHORITY -->
+      <div class="panel">
+        <h2>Authority</h2>
+
+        <div class="mini">
+          <h3>Executive Layer Access</h3>
+          <p>CEO + 6 Mantle + Generals only (company managers do NOT access this page).</p>
         </div>
-
-        <div class="meta">
-          <div class="clock" aria-label="Date and time">
-            <div class="date" id="tcDate">—</div>
-            <div class="time" id="tcTime">—</div>
-          </div>
-
-          <!-- Role-Based Access (CEO / Mantle / GM) -->
-          <div class="rolebar" aria-label="Role selector">
-            <button class="rolebtn" data-role="CEO">CEO</button>
-            <button class="rolebtn" data-role="MANTLE">Mantle</button>
-            <button class="rolebtn" data-role="GM">GM</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="cmeta">
-        <span class="pill ok">Black / Gold / Green</span>
-        <span class="pill">TitanCore = Father Company</span>
-        <span class="pill warn">Control Mode</span>
-      </div>
-    </div>
-
-    <!-- 3-Column Main Body -->
-    <section class="grid3" style="margin-top:12px;">
-
-      <!-- LEFT: Governance (Role-based visible) -->
-      <div class="panel" data-allow="CEO,MANTLE,GM">
-        <h2 class="ptitle">Governance</h2>
-
-        <div class="card">
-          <div class="cardhead">
-            <div>
-              <h3 class="ctitle">Mantle of 7</h3>
-              <div class="muted">CEO + 6 Mantle roles (private pages)</div>
-            </div>
-            <a class="btn ghost" href="/authority-control.html">Open</a>
-          </div>
-
-          <div class="list">
-            <div class="row"><div><div class="name">CEO</div><div class="muted">Private</div></div><a class="btn" href="/ceo.html">Open</a></div>
-            <div class="row"><div><div class="name">President</div><div class="muted">Private</div></div><a class="btn" href="/president.html">Open</a></div>
-            <div class="row"><div><div class="name">Vice President</div><div class="muted">Private</div></div><a class="btn" href="/vp.html">Open</a></div>
-            <div class="row"><div><div class="name">Director</div><div class="muted">Private</div></div><a class="btn" href="/director.html">Open</a></div>
-            <div class="row"><div><div class="name">Assistant Director</div><div class="muted">Private</div></div><a class="btn" href="/assistant-director.html">Open</a></div>
-            <div class="row"><div><div class="name">Chief of Staff</div><div class="muted">10 chiefs under (no dashboard access)</div></div><a class="btn" href="/chief-of-staff.html">Open</a></div>
-            <div class="row"><div><div class="name">Executive Advisor</div><div class="muted">Private</div></div><a class="btn" href="/executive-advisor.html">Open</a></div>
-          </div>
-        </div>
-
-        <div class="card" style="margin-top:12px;">
-          <div class="cardhead">
-            <div>
-              <h3 class="ctitle">Generals</h3>
-              <div class="muted">Oversight meetings + weekly reporting flow</div>
-            </div>
-            <span class="pill ok">Active</span>
-          </div>
-
-          <div class="list">
-            <div class="row"><div><div class="name">General Manager</div><div class="muted">Sunday reports • Monday meeting</div></div><a class="btn" href="/gm.html">Open</a></div>
-            <div class="row"><div><div class="name">General Assistant Manager</div><div class="muted">Support • coordination</div></div><a class="btn" href="/gam.html">Open</a></div>
-            <div class="row"><div><div class="name">General Administrator</div><div class="muted">Admin control</div></div><a class="btn" href="/ga.html">Open</a></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- MIDDLE: Companies -->
-      <div class="panel" data-allow="CEO,MANTLE,GM">
-        <h2 class="ptitle">Companies</h2>
-        <div class="muted">Click a company → open its dashboard → departments</div>
 
         <div class="list">
-          <div class="row"><div><div class="name">TitanCore Holdings</div><div class="muted">Father • umbrella control</div></div><a class="btn" href="/company-titancore.html">Open</a></div>
-          <div class="row"><div><div class="name">Vaultara Capital</div><div class="muted">Capital • investments</div></div><a class="btn" href="/company-vaultara.html">Open</a></div>
-          <div class="row"><div><div class="name">VitalPath Care Group</div><div class="muted">Care • compliance</div></div><a class="btn" href="/company-vitalpath.html">Open</a></div>
-          <div class="row"><div><div class="name">RevMotion Auto &amp; Marine Group</div><div class="muted">Auto • marine systems</div></div><a class="btn" href="/company-revmotion.html">Open</a></div>
-          <div class="row"><div><div class="name">Family First Equity Group</div><div class="muted">Equity • real assets</div></div><a class="btn" href="/company-familyfirst.html">Open</a></div>
+          <div class="item">
+            <div>
+              <div class="name">CEO</div>
+              <div class="desc">Private executive page</div>
+            </div>
+            <a class="btn" href="/ceo.html">Open</a>
+          </div>
+
+          <div class="item">
+            <div>
+              <div class="name">Mantle of 7 (CEO + 6)</div>
+              <div class="desc">President • VP • Director • Asst Director • Chief of Staff • Executive Advisor</div>
+            </div>
+            <a class="btn" href="/mantle.html">Open</a>
+          </div>
+
+          <div class="item">
+            <div>
+              <div class="name">Generals</div>
+              <div class="desc">General Manager • General Assistant Manager • General Administrator</div>
+            </div>
+            <a class="btn" href="/generals.html">Open</a>
+          </div>
         </div>
       </div>
 
-      <!-- RIGHT (Y SIDE): Executive Control + Agent Systems Integration -->
-      <div class="panel" data-allow="CEO,MANTLE,GM">
-        <h2 class="ptitle">Executive Control</h2>
+      <!-- MIDDLE: COMPANIES -->
+      <div class="panel">
+        <h2>Companies</h2>
 
-        <!-- EXEC ACTIONS -->
-        <div class="card">
-          <div class="cardhead">
+        <div class="mini">
+          <h3>Holding + Subsidiaries</h3>
+          <p>Click any company to open its company dashboard (departments live inside company pages).</p>
+        </div>
+
+        <div class="list">
+          <div class="item">
             <div>
-              <h3 class="ctitle">Executive Action Radar</h3>
-              <div class="muted">CEO / Mantle items needing decision</div>
+              <div class="name">TitanCore Holdings</div>
+              <div class="desc">Father company • umbrella authority</div>
+            </div>
+            <a class="btn" href="/company-titancore.html">Open</a>
+          </div>
+
+          <div class="item">
+            <div>
+              <div class="name">Vaultara Capital</div>
+              <div class="desc">Capital • funding • investment ops</div>
+            </div>
+            <a class="btn" href="/company-vaultara.html">Open</a>
+          </div>
+
+          <div class="item">
+            <div>
+              <div class="name">VitalPath Care Group</div>
+              <div class="desc">Care operations • compliance</div>
+            </div>
+            <a class="btn" href="/company-vitalpath.html">Open</a>
+          </div>
+
+          <div class="item">
+            <div>
+              <div class="name">RevMotion Auto &amp; Marine</div>
+              <div class="desc">Auto • marine services</div>
+            </div>
+            <a class="btn" href="/company-revmotion.html">Open</a>
+          </div>
+
+          <div class="item">
+            <div>
+              <div class="name">Family First Equity Group</div>
+              <div class="desc">Equity • assets • growth</div>
+            </div>
+            <a class="btn" href="/company-familyfirst.html">Open</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: DASHBOT POWER (NO MENU DUPLICATES) -->
+      <div class="panel">
+        <h2>DashBot Executive Power</h2>
+
+        <div class="mini">
+          <h3>DashBot Executive Brief</h3>
+          <p id="dashbotBrief">Loading executive brief...</p>
+        </div>
+
+        <div class="cards">
+
+          <!-- 1) Executive Action Radar -->
+          <div class="card">
+            <div class="card-left">
+              <p class="card-title">Executive Action Radar</p>
+              <div class="card-sub">
+                CEO / Mantle decision queue • approvals waiting • blocked items
+                <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;">
+                  <span class="tag ok" id="radarNow">NOW: 0</span>
+                  <span class="tag" id="radarSoon">SOON: 0</span>
+                  <span class="tag" id="radarBlocked">BLOCKED: 0</span>
+                </div>
+              </div>
             </div>
             <a class="btn" href="/executive-actions.html">Open</a>
           </div>
-          <div class="cmeta">
-            <span class="pill warn" id="pillUrgent">3 urgent</span>
-            <span class="pill" id="pillQueued">12 queued</span>
-          </div>
-        </div>
 
-        <!-- RISK / COMPLIANCE -->
-        <div class="card" style="margin-top:12px;">
-          <div class="cardhead">
-            <div>
-              <h3 class="ctitle">Risk &amp; Compliance Control</h3>
-              <div class="muted">Licenses • audits • tax deadlines • 90-day view</div>
+          <!-- 2) Portfolio Risk & Compliance -->
+          <div class="card">
+            <div class="card-left">
+              <p class="card-title">Portfolio Risk &amp; Compliance</p>
+              <div class="card-sub">
+                Deadlines • licenses • audits • tax exposure (overview only)
+                <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;">
+                  <span class="tag ok" id="riskGreen">GREEN: 0</span>
+                  <span class="tag" id="riskAmber">AMBER: 0</span>
+                  <span class="tag" id="riskRed">RED: 0</span>
+                </div>
+              </div>
             </div>
             <a class="btn" href="/risk-compliance.html">Open</a>
           </div>
-          <div class="cmeta">
-            <span class="pill ok">Controlled</span>
-            <span class="pill">1 flagged</span>
+
+          <!-- 3) Authority & Control Monitor -->
+          <div class="card">
+            <div class="card-left">
+              <p class="card-title">Authority &amp; Control Monitor</p>
+              <div class="card-sub">
+                Governance flow • approvals integrity • role boundary health
+                <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;">
+                  <span class="tag ok" id="authHealthy">HEALTHY: 0</span>
+                  <span class="tag" id="authViolations">VIOLATIONS: 0</span>
+                </div>
+              </div>
+            </div>
+            <a class="btn" href="/authority-control.html">Open</a>
           </div>
+
+          <!-- 4) Security & Access (KEEP) -->
+          <div class="card">
+            <div class="card-left">
+              <p class="card-title">Security &amp; Access</p>
+              <div class="card-sub">
+                Access integrity • login visibility • system trust indicators
+                <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;">
+                  <span class="tag ok" id="secOk">OK: 0</span>
+                  <span class="tag" id="secWatch">WATCH: 0</span>
+                </div>
+              </div>
+            </div>
+            <a class="btn" href="/security.html">Open</a>
+          </div>
+
         </div>
 
-        <!-- AUTHORITY -->
-        <div class="card" style="margin-top:12px;">
-          <div class="cardhead">
-            <div>
-              <h3 class="ctitle">Authority &amp; Governance</h3>
-              <div class="muted">Role boundaries • approval integrity</div>
-            </div>
-            <a class="btn ghost" href="/authority-control.html">Open</a>
-          </div>
-          <div class="cmeta">
-            <span class="pill ok">Stable</span>
-            <span class="pill">0 conflicts</span>
-          </div>
-        </div>
-
-        <!-- AGENT SYSTEMS INTEGRATION (LOCKED) -->
-        <div class="card" style="margin-top:12px;">
-          <div class="cardhead">
-            <div>
-              <h3 class="ctitle">Agent Systems Console</h3>
-              <div class="muted">Agents feed alerts into Executive Control</div>
-            </div>
-            <a class="btn" href="/agent.html">Open</a>
-          </div>
-
-          <div class="cmeta">
-            <span class="pill ok" id="pillAgents">Agents online</span>
-            <span class="pill warn" id="pillAgentAlerts">2 agent alerts</span>
-          </div>
-
-          <div class="actions">
-            <button class="btn ghost" type="button" id="btnRunAgentSweep">Run Sweep</button>
-            <button class="btn ghost" type="button" id="btnClearAgentAlerts">Clear Alerts</button>
-          </div>
-
-          <div class="muted" style="margin-top:10px;">
-            Latest: <span id="agentLatest">Contract Review Agent flagged 1 doc</span>
-          </div>
-        </div>
-
-        <!-- SECURITY -->
-        <div class="card" style="margin-top:12px;">
-          <div class="cardhead">
-            <div>
-              <h3 class="ctitle">Security / Access</h3>
-              <div class="muted">Permissions • logs • monitoring</div>
-            </div>
-            <a class="btn ghost" href="/security.html">Open</a>
-          </div>
-          <div class="cmeta">
-            <span class="pill ok">Secure</span>
-            <span class="pill">Audit trail</span>
-          </div>
+        <div class="mini" style="margin-top:12px;">
+          <h3>Important Rule</h3>
+          <p>
+            Top menu is the ONLY place modules appear. This right column is executive oversight only.
+            No duplicates. No news. No stock.
+          </p>
         </div>
 
       </div>
+
     </section>
 
-    <!-- If someone is NOT allowed, show this message -->
-    <div class="panel hidden" id="noAccessPanel" style="margin-top:12px;">
-      <h2 class="ptitle">Access Restricted</h2>
-      <div class="muted">
-        This Executive Control Center is only for: <b style="color:#00c853;">CEO / Mantle / General Manager</b>.
-      </div>
-    </div>
+    <div class="foot">TitanCore Colors Locked: Black background • Green titles • Gold text</div>
 
   </div>
 </body>
