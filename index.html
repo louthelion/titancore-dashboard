@@ -1,783 +1,253 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TitanCore Holdings — Executive Command Center </title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>TitanCore Executive Control Center</title>
+
+  <!-- Keep your existing CSS -->
+  <link rel="stylesheet" href="/styles.css" />
+  <script src="/app.js" defer></script>
+
+  <!-- Safety: prevent purple/white default links -->
   <style>
-    :root{
-      --bg:#0b0b0f;
-      --panel:#101018;
-      --panel2:#0f1412;
-      --gold:#d4af37;
-      --gold2:rgba(212,175,55,.22);
-      --green:#00c853;
-      --green2:rgba(0,200,83,.18);
-      --text:#f2f2f2;
-      --muted:#bdbdbd;
-      --shadow:0 18px 40px rgba(0,0,0,.45);
-      --radius:18px;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      background:radial-gradient(1200px 700px at 12% 10%, rgba(0,200,83,.10), transparent 55%),
-                 radial-gradient(900px 600px at 82% 12%, rgba(212,175,55,.10), transparent 55%),
-                 var(--bg);
-      color:var(--text);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      overflow-x:hidden;
-    }
-
-    /* ====== TOP BAR ====== */
-    .topbar{
-      position:sticky; top:0; z-index:20;
-      background:linear-gradient(180deg, rgba(10,10,14,.92), rgba(10,10,14,.70));
-      backdrop-filter: blur(10px);
-      border-bottom:1px solid var(--gold2);
-    }
-    .topbar-inner{
-      max-width:1200px;
-      margin:0 auto;
-      padding:14px 14px 10px;
-    }
-
-    /* Title row: TC + TitanCore Holdings (GREEN) + date/time on right (SECOND ROW per your request) */
-    .brand-row{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:14px;
-      padding-bottom:10px;
-      border-bottom:1px solid rgba(212,175,55,.14);
-    }
-    .brand-left{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      min-width:0;
-    }
-    .logo{
-      width:44px; height:44px;
-      border-radius:14px;
-      border:2px solid var(--gold);
-      display:grid;
-      place-items:center;
-      color:var(--gold);
-      font-weight:900;
-      letter-spacing:.5px;
-      box-shadow:0 8px 24px rgba(212,175,55,.12);
-      flex:0 0 auto;
-    }
-    .title-wrap{min-width:0}
-    .title{
-      margin:0;
-      line-height:1.05;
-      font-size:22px;
-      letter-spacing:.4px;
-      color:var(--green); /* GREEN like you asked */
-      text-shadow:0 0 18px rgba(0,200,83,.14);
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-    .subtitle{
-      margin:4px 0 0;
-      font-size:12px;
-      color:var(--muted);
-    }
-
-    .time-stack{
-      display:flex;
-      flex-direction:column;   /* timer UNDER the title area (second row) */
-      align-items:flex-end;
-      gap:6px;
-      flex:0 0 auto;
-    }
-    .timecard{
-      border:1px solid var(--gold2);
-      background:linear-gradient(180deg, rgba(16,16,24,.92), rgba(16,16,24,.60));
-      border-radius:16px;
-      padding:10px 12px;
-      box-shadow:var(--shadow);
-      min-width:165px;
-    }
-    .timecard .label{
-      font-size:11px;
-      color:var(--muted);
-      letter-spacing:.2px;
-    }
-    .timecard .value{
-      margin-top:4px;
-      font-size:14px;
-      font-weight:800;
-      color:var(--text);
-    }
-    .timecard .value b{color:var(--green)}
-    .badge-nuclear{
-      border:1px solid rgba(0,200,83,.35);
-      color:var(--green);
-      background:rgba(0,200,83,.10);
-      font-size:11px;
-      padding:6px 10px;
-      border-radius:999px;
-      font-weight:800;
-      letter-spacing:.3px;
-      text-transform:uppercase;
-    }
-
-    /* ====== NAV (HORIZONTAL) ====== */
-    .nav{
-      margin-top:10px;
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      justify-content:center; /* horizontal row */
-      padding:6px 0 2px;
-    }
-    .nav a{
-      text-decoration:none;
-      color:var(--text);
-      border:1px solid rgba(212,175,55,.22);
-      background:rgba(16,16,24,.55);
-      padding:10px 12px;
-      border-radius:999px;
-      font-size:12px;
-      font-weight:750;
-      letter-spacing:.2px;
-      transition:.15s ease;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-    }
-    .nav a:hover{
-      transform:translateY(-1px);
-      border-color:rgba(0,200,83,.40);
-      box-shadow:0 12px 26px rgba(0,0,0,.35);
-    }
-    .nav a.active{
-      border-color:rgba(0,200,83,.55);
-      background:rgba(0,200,83,.10);
-      color:var(--green);
-    }
-
-    /* ====== PAGE WRAP ====== */
-    .wrap{
-      max-width:1200px;
-      margin:0 auto;
-      padding:16px 14px 28px;
-    }
-
-    /* ====== POWER TILES ====== */
-    .tiles{
-      display:grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap:12px;
-      margin-top:14px;
-    }
-    @media (max-width: 980px){
-      .tiles{grid-template-columns: repeat(2, minmax(0, 1fr));}
-    }
-    @media (max-width: 520px){
-      .tiles{grid-template-columns: 1fr;}
-    }
-    .tile{
-      border:1px solid rgba(212,175,55,.18);
-      border-radius:18px;
-      background:linear-gradient(180deg, rgba(16,16,24,.88), rgba(16,16,24,.55));
-      padding:14px 14px 12px;
-      box-shadow:var(--shadow);
-      position:relative;
-      overflow:hidden;
-    }
-    .tile:before{
-      content:"";
-      position:absolute; inset:-80px -60px auto auto;
-      width:180px; height:180px;
-      background:radial-gradient(circle at 30% 30%, rgba(0,200,83,.20), transparent 60%);
-      transform:rotate(18deg);
-    }
-    .tile .k{
-      font-size:11px;
-      color:var(--muted);
-      letter-spacing:.25px;
-      text-transform:uppercase;
-    }
-    .tile .v{
-      margin-top:8px;
-      font-size:22px;
-      font-weight:900;
-      letter-spacing:.3px;
-    }
-    .tile .hint{
-      margin-top:6px;
-      font-size:12px;
-      color:var(--muted);
-      display:flex; justify-content:space-between; gap:10px;
-    }
-    .chip{
-      padding:4px 9px;
-      border-radius:999px;
-      font-size:11px;
-      font-weight:850;
-      border:1px solid rgba(212,175,55,.20);
-      color:var(--gold);
-      background:rgba(212,175,55,.08);
-    }
-    .chip.green{
-      border-color:rgba(0,200,83,.35);
-      color:var(--green);
-      background:rgba(0,200,83,.10);
-    }
-    .chip.red{
-      border-color:rgba(255,80,80,.35);
-      color:#ff8a80;
-      background:rgba(255,80,80,.10);
-    }
-
-    /* ====== MAIN GRID (3 columns) ====== */
-    .grid{
-      margin-top:14px;
-      display:grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap:14px;
-      align-items:start;
-    }
-    @media (max-width: 1050px){
-      .grid{grid-template-columns: 1fr;}
-    }
-    .panel{
-      border:1px solid rgba(212,175,55,.18);
-      border-radius:var(--radius);
-      background:linear-gradient(180deg, rgba(16,16,24,.88), rgba(16,16,24,.55));
-      box-shadow:var(--shadow);
-      overflow:hidden;
-    }
-    .panel-header{
-      padding:14px 14px 12px;
-      border-bottom:1px solid rgba(212,175,55,.14);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-    }
-    .panel-title{
-      margin:0;
-      font-size:13px;
-      letter-spacing:.25px;
-      text-transform:uppercase;
-      color:var(--gold);
-      font-weight:900;
-    }
-    .panel-actions a{
-      color:var(--green);
-      text-decoration:none;
-      font-weight:900;
-      font-size:12px;
-      border:1px solid rgba(0,200,83,.30);
-      padding:8px 10px;
-      border-radius:999px;
-      background:rgba(0,200,83,.10);
-      transition:.15s ease;
-      white-space:nowrap;
-    }
-    .panel-actions a:hover{transform:translateY(-1px)}
-    .panel-body{padding:14px}
-
-    /* ====== LIST CARDS ====== */
-    .list{display:flex; flex-direction:column; gap:10px;}
-    .item{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      border:1px solid rgba(212,175,55,.18);
-      border-radius:16px;
-      padding:12px 12px;
-      background:linear-gradient(180deg, rgba(10,10,14,.30), rgba(10,10,14,.10));
-    }
-    .item .left{
-      min-width:0;
-    }
-    .item .name{
-      font-weight:900;
-      letter-spacing:.2px;
-      margin:0;
-      font-size:14px;
-      color:var(--text);
-    }
-    .item .desc{
-      margin:4px 0 0;
-      font-size:12px;
-      color:var(--muted);
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      max-width:52ch;
-    }
-    .openbtn{
-      border:1px solid rgba(0,200,83,.35);
-      color:var(--green);
-      background:rgba(0,200,83,.10);
-      padding:9px 12px;
-      border-radius:999px;
-      font-weight:900;
-      font-size:12px;
-      text-decoration:none;
-      flex:0 0 auto;
-      transition:.15s ease;
-    }
-    .openbtn:hover{transform:translateY(-1px); box-shadow:0 10px 24px rgba(0,0,0,.35);}
-
-    /* ====== RIGHT SIDE: NEWS / STOCK / ACTIONS ====== */
-    .mini{
-      border:1px dashed rgba(212,175,55,.25);
-      border-radius:16px;
-      padding:12px;
-      background:rgba(10,10,14,.18);
-      margin-bottom:10px;
-    }
-    .mini h4{
-      margin:0 0 8px;
-      font-size:12px;
-      letter-spacing:.25px;
-      text-transform:uppercase;
-      color:var(--green);
-    }
-    .mini p{
-      margin:0;
-      color:var(--muted);
-      font-size:12px;
-      line-height:1.4;
-    }
-    .alerts{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      margin-top:10px;
-    }
-    .alert{
-      border:1px solid rgba(212,175,55,.18);
-      border-left:4px solid var(--gold);
-      border-radius:14px;
-      padding:12px;
-      background:rgba(16,16,24,.50);
-    }
-    .alert strong{display:block; font-size:13px; margin-bottom:4px;}
-    .alert span{color:var(--muted); font-size:12px;}
-    .alert.red{border-left-color:#ff8a80}
-    .alert.green{border-left-color:var(--green)}
-
-    /* ====== Toast ====== */
-    .toast{
-      position:fixed;
-      left:50%;
-      bottom:18px;
-      transform:translateX(-50%);
-      background:rgba(16,16,24,.92);
-      border:1px solid rgba(212,175,55,.22);
-      color:var(--text);
-      padding:10px 12px;
-      border-radius:999px;
-      box-shadow:var(--shadow);
-      font-size:13px;
-      display:none;
-      z-index:9999;
-      max-width:92vw;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-    .toast b{color:var(--green)}
+    body{background:#000;color:rgba(212,175,55,.92)}
+    a,a:visited{color:inherit;text-decoration:none}
+    .topbar{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px}
+    .brand h1{margin:0;color:#00c853;font-weight:900;letter-spacing:.3px}
+    .brand .sub{margin:6px 0 0;opacity:.9}
+    .meta{display:flex;flex-direction:column;align-items:flex-end;gap:8px;min-width:170px}
+    .clock{border:1px solid rgba(212,175,55,.35);border-radius:12px;padding:10px 12px;background:rgba(0,0,0,.35)}
+    .clock .date{font-weight:900;color:#00c853}
+    .clock .time{font-weight:900}
+    .rolebar{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+    .rolebtn{border:1px solid rgba(212,175,55,.35);border-radius:999px;padding:8px 12px;background:rgba(0,0,0,.35);font-weight:900}
+    .rolebtn.active{border-color:rgba(0,200,83,.55);color:#00c853;background:rgba(0,200,83,.10)}
+    .grid3{display:grid;grid-template-columns:1fr;gap:12px}
+    @media(min-width:980px){.grid3{grid-template-columns:1.05fr 1.2fr 1fr}}
+    .panel{border:1px solid rgba(212,175,55,.28);background:rgba(0,0,0,.35);border-radius:16px;padding:14px}
+    .ptitle{margin:0 0 10px;color:#00c853;font-weight:900;text-transform:uppercase;letter-spacing:.4px}
+    .muted{opacity:.85}
+    .list{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+    .row{display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid rgba(212,175,55,.18);background:rgba(0,0,0,.28);border-radius:14px;padding:10px 12px}
+    .name{font-weight:900}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:9px 14px;border-radius:999px;font-weight:900;border:1px solid rgba(0,200,83,.45);color:#00c853;background:rgba(0,200,83,.10)}
+    .btn.ghost{border-color:rgba(212,175,55,.28);color:rgba(212,175,55,.95);background:rgba(0,0,0,.20)}
+    .pill{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;font-weight:900;border:1px solid rgba(212,175,55,.25);background:rgba(0,0,0,.20)}
+    .pill.ok{border-color:rgba(0,200,83,.40);color:#00c853;background:rgba(0,200,83,.08)}
+    .pill.warn{border-color:rgba(255,195,0,.40);color:rgba(255,195,0,.95);background:rgba(255,195,0,.08)}
+    .card{border:1px solid rgba(212,175,55,.20);background:rgba(0,0,0,.28);border-radius:14px;padding:12px}
+    .cardhead{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+    .ctitle{margin:0;color:#00c853;font-weight:900}
+    .cmeta{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;margin-top:10px}
+    .hidden{display:none!important}
   </style>
 </head>
 
 <body>
-  <div class="topbar">
-    <div class="topbar-inner">
-      <div class="brand-row">
-        <div class="brand-left">
-          <div class="logo">TC</div>
-          <div class="title-wrap">
-            <h1 class="title">TitanCore Holdings</h1>
-            <div class="subtitle">Executive Command Center • <b class="badge-nuclear">NUCLEAR</b></div>
+  <div class="wrap">
+
+    <!-- Horizontal Menu (NO Omni, NO Finance) -->
+    <nav class="nav" aria-label="Primary navigation">
+      <a href="/index.html">Dashboard</a>
+      <a href="/contract.html">Contract</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/email.html">Email Routing</a>
+      <a href="/approval.html">Report &amp; Approval</a>
+      <a href="/tax.html">Tax Network</a>
+      <a href="/agent.html">Agent Systems</a>
+      <a href="/public.html">Public Portal</a>
+    </nav>
+
+    <!-- Top Header -->
+    <div class="panel" style="margin-top:12px;">
+      <div class="topbar">
+        <div class="brand">
+          <h1>TitanCore Holdings</h1>
+          <div class="sub muted"><b style="color:#00c853;">Executive Control Center</b> — Holding-level command view</div>
+        </div>
+
+        <div class="meta">
+          <div class="clock" aria-label="Date and time">
+            <div class="date" id="tcDate">—</div>
+            <div class="time" id="tcTime">—</div>
+          </div>
+
+          <!-- Role-Based Access (CEO / Mantle / GM) -->
+          <div class="rolebar" aria-label="Role selector">
+            <button class="rolebtn" data-role="CEO">CEO</button>
+            <button class="rolebtn" data-role="MANTLE">Mantle</button>
+            <button class="rolebtn" data-role="GM">GM</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="cmeta">
+        <span class="pill ok">Black / Gold / Green</span>
+        <span class="pill">TitanCore = Father Company</span>
+        <span class="pill warn">Control Mode</span>
+      </div>
+    </div>
+
+    <!-- 3-Column Main Body -->
+    <section class="grid3" style="margin-top:12px;">
+
+      <!-- LEFT: Governance (Role-based visible) -->
+      <div class="panel" data-allow="CEO,MANTLE,GM">
+        <h2 class="ptitle">Governance</h2>
+
+        <div class="card">
+          <div class="cardhead">
+            <div>
+              <h3 class="ctitle">Mantle of 7</h3>
+              <div class="muted">CEO + 6 Mantle roles (private pages)</div>
+            </div>
+            <a class="btn ghost" href="/authority-control.html">Open</a>
+          </div>
+
+          <div class="list">
+            <div class="row"><div><div class="name">CEO</div><div class="muted">Private</div></div><a class="btn" href="/ceo.html">Open</a></div>
+            <div class="row"><div><div class="name">President</div><div class="muted">Private</div></div><a class="btn" href="/president.html">Open</a></div>
+            <div class="row"><div><div class="name">Vice President</div><div class="muted">Private</div></div><a class="btn" href="/vp.html">Open</a></div>
+            <div class="row"><div><div class="name">Director</div><div class="muted">Private</div></div><a class="btn" href="/director.html">Open</a></div>
+            <div class="row"><div><div class="name">Assistant Director</div><div class="muted">Private</div></div><a class="btn" href="/assistant-director.html">Open</a></div>
+            <div class="row"><div><div class="name">Chief of Staff</div><div class="muted">10 chiefs under (no dashboard access)</div></div><a class="btn" href="/chief-of-staff.html">Open</a></div>
+            <div class="row"><div><div class="name">Executive Advisor</div><div class="muted">Private</div></div><a class="btn" href="/executive-advisor.html">Open</a></div>
           </div>
         </div>
 
-        <!-- Date/Time on the RIGHT, UNDER the title line (your request) -->
-        <div class="time-stack">
-          <div class="timecard" aria-label="System Time">
-            <div class="label">System Time</div>
-            <div class="value" id="dtLine"><b>—</b></div>
+        <div class="card" style="margin-top:12px;">
+          <div class="cardhead">
+            <div>
+              <h3 class="ctitle">Generals</h3>
+              <div class="muted">Oversight meetings + weekly reporting flow</div>
+            </div>
+            <span class="pill ok">Active</span>
+          </div>
+
+          <div class="list">
+            <div class="row"><div><div class="name">General Manager</div><div class="muted">Sunday reports • Monday meeting</div></div><a class="btn" href="/gm.html">Open</a></div>
+            <div class="row"><div><div class="name">General Assistant Manager</div><div class="muted">Support • coordination</div></div><a class="btn" href="/gam.html">Open</a></div>
+            <div class="row"><div><div class="name">General Administrator</div><div class="muted">Admin control</div></div><a class="btn" href="/ga.html">Open</a></div>
           </div>
         </div>
       </div>
 
-      <!-- HORIZONTAL NAV -->  
-      
-<nav class="nav" aria-label="Primary navigation">
-  <a href="./index.html">Dashboard</a>
-  <a href="./contract.html">Contract</a>
-  <a href="./contact.html">Contact</a>
-  <a href="./email.html">Email Routing</a>
-  <a href="./approval.html">Report &amp; Approval</a>
-  <a href="./omni.html">Omni System</a>
-  <a href="./tax.html">Tax Network</a>
-  <a href="./agent.html">Agent AI</a>
-  <a href="/agentsystem.html">Agent System</a>
-  <a href="./finance.html">Finance</a>
-  <a href="./public.html">Public Portal</a>
-</nav>
-  </div>
+      <!-- MIDDLE: Companies -->
+      <div class="panel" data-allow="CEO,MANTLE,GM">
+        <h2 class="ptitle">Companies</h2>
+        <div class="muted">Click a company → open its dashboard → departments</div>
 
-  <main class="wrap">
-    <!-- POWER TILES / KPIs -->
-    <section class="tiles" aria-label="Executive overview tiles">
-      <div class="tile">
-        <div class="k">Portfolio Cash</div>
-        <div class="v">$—</div>
-        <div class="hint">
-          <span>Holding-level cash status</span>
-          <span class="chip">TRACKING</span>
+        <div class="list">
+          <div class="row"><div><div class="name">TitanCore Holdings</div><div class="muted">Father • umbrella control</div></div><a class="btn" href="/company-titancore.html">Open</a></div>
+          <div class="row"><div><div class="name">Vaultara Capital</div><div class="muted">Capital • investments</div></div><a class="btn" href="/company-vaultara.html">Open</a></div>
+          <div class="row"><div><div class="name">VitalPath Care Group</div><div class="muted">Care • compliance</div></div><a class="btn" href="/company-vitalpath.html">Open</a></div>
+          <div class="row"><div><div class="name">RevMotion Auto &amp; Marine Group</div><div class="muted">Auto • marine systems</div></div><a class="btn" href="/company-revmotion.html">Open</a></div>
+          <div class="row"><div><div class="name">Family First Equity Group</div><div class="muted">Equity • real assets</div></div><a class="btn" href="/company-familyfirst.html">Open</a></div>
         </div>
       </div>
 
-      <div class="tile">
-        <div class="k">Portfolio Risk</div>
-        <div class="v">GREEN</div>
-        <div class="hint">
-          <span>Risk posture</span>
-          <span class="chip green">CONTROLLED</span>
-        </div>
-      </div>
+      <!-- RIGHT (Y SIDE): Executive Control + Agent Systems Integration -->
+      <div class="panel" data-allow="CEO,MANTLE,GM">
+        <h2 class="ptitle">Executive Control</h2>
 
-      <div class="tile">
-        <div class="k">Approvals Pending</div>
-        <div class="v" id="approvalsCount">—</div>
-        <div class="hint">
-          <span>Queue: Report &amp; Approval</span>
-          <span class="chip">IN REVIEW</span>
+        <!-- EXEC ACTIONS -->
+        <div class="card">
+          <div class="cardhead">
+            <div>
+              <h3 class="ctitle">Executive Action Radar</h3>
+              <div class="muted">CEO / Mantle items needing decision</div>
+            </div>
+            <a class="btn" href="/executive-actions.html">Open</a>
+          </div>
+          <div class="cmeta">
+            <span class="pill warn" id="pillUrgent">3 urgent</span>
+            <span class="pill" id="pillQueued">12 queued</span>
+          </div>
         </div>
-      </div>
 
-      <div class="tile">
-        <div class="k">Security / Access</div>
-        <div class="v">SECURE</div>
-        <div class="hint">
-          <span>Monitoring</span>
-          <span class="chip green">ACTIVE</span>
+        <!-- RISK / COMPLIANCE -->
+        <div class="card" style="margin-top:12px;">
+          <div class="cardhead">
+            <div>
+              <h3 class="ctitle">Risk &amp; Compliance Control</h3>
+              <div class="muted">Licenses • audits • tax deadlines • 90-day view</div>
+            </div>
+            <a class="btn" href="/risk-compliance.html">Open</a>
+          </div>
+          <div class="cmeta">
+            <span class="pill ok">Controlled</span>
+            <span class="pill">1 flagged</span>
+          </div>
         </div>
+
+        <!-- AUTHORITY -->
+        <div class="card" style="margin-top:12px;">
+          <div class="cardhead">
+            <div>
+              <h3 class="ctitle">Authority &amp; Governance</h3>
+              <div class="muted">Role boundaries • approval integrity</div>
+            </div>
+            <a class="btn ghost" href="/authority-control.html">Open</a>
+          </div>
+          <div class="cmeta">
+            <span class="pill ok">Stable</span>
+            <span class="pill">0 conflicts</span>
+          </div>
+        </div>
+
+        <!-- AGENT SYSTEMS INTEGRATION (LOCKED) -->
+        <div class="card" style="margin-top:12px;">
+          <div class="cardhead">
+            <div>
+              <h3 class="ctitle">Agent Systems Console</h3>
+              <div class="muted">Agents feed alerts into Executive Control</div>
+            </div>
+            <a class="btn" href="/agent.html">Open</a>
+          </div>
+
+          <div class="cmeta">
+            <span class="pill ok" id="pillAgents">Agents online</span>
+            <span class="pill warn" id="pillAgentAlerts">2 agent alerts</span>
+          </div>
+
+          <div class="actions">
+            <button class="btn ghost" type="button" id="btnRunAgentSweep">Run Sweep</button>
+            <button class="btn ghost" type="button" id="btnClearAgentAlerts">Clear Alerts</button>
+          </div>
+
+          <div class="muted" style="margin-top:10px;">
+            Latest: <span id="agentLatest">Contract Review Agent flagged 1 doc</span>
+          </div>
+        </div>
+
+        <!-- SECURITY -->
+        <div class="card" style="margin-top:12px;">
+          <div class="cardhead">
+            <div>
+              <h3 class="ctitle">Security / Access</h3>
+              <div class="muted">Permissions • logs • monitoring</div>
+            </div>
+            <a class="btn ghost" href="/security.html">Open</a>
+          </div>
+          <div class="cmeta">
+            <span class="pill ok">Secure</span>
+            <span class="pill">Audit trail</span>
+          </div>
+        </div>
+
       </div>
     </section>
 
-    <!-- 3 COLUMN COMMAND CENTER -->
-    <section class="grid" aria-label="Command center columns">
-
-      <!-- LEFT COLUMN: Governance -->
-      <div class="panel">
-        <div class="panel-header">
-          <h3 class="panel-title">Authority</h3>
-          <div class="panel-actions">
-            <a href="#" data-page="authority-all">View All</a>
-          </div>
-        </div>
-        <div class="panel-body">
-          <div class="mini">
-            <h4>Mantle of 7</h4>
-            <p>Private pages • governance control</p>
-          </div>
-
-          <div class="list">
-            <div class="item">
-              <div class="left">
-                <p class="name">CEO</p>
-                <p class="desc">Private page</p>
-              </div>
-              <a class="openbtn" href="#" data-page="role-ceo">Open</a>
-            </div>
-
-            <div class="item">
-              <div class="left">
-                <p class="name">President</p>
-                <p class="desc">Private page</p>
-              </div>
-              <a class="openbtn" href="#" data-page="role-president">Open</a>
-            </div>
-
-            <div class="item">
-              <div class="left">
-                <p class="name">Vice President</p>
-                <p class="desc">Private page</p>
-              </div>
-              <a class="openbtn" href="#" data-page="role-vp">Open</a>
-            </div>
-
-            <div class="item">
-              <div class="left">
-                <p class="name">Director</p>
-                <p class="desc">Private page</p>
-              </div>
-              <a class="openbtn" href="#" data-page="role-director">Open</a>
-            </div>
-
-            <div class="item">
-              <div class="left">
-                <p class="name">Assistant Director</p>
-                <p class="desc">Private page</p>
-              </div>
-              <a class="openbtn" href="#" data-page="role-asst-director">Open</a>
-            </div>
-
-            <div class="item">
-              <div class="left">
-                <p class="name">Chief of Staff</p>
-                <p class="desc">Shows 10 Chiefs inside</p>
-              </div>
-              <a class="openbtn" href="#" data-page="role-cos">Open</a>
-            </div>
-
-            <div class="item">
-              <div class="left">
-                <p class="name">Executive Advisor</p>
-                <p class="desc">Private page</p>
-              </div>
-              <a class="openbtn" href="#" data-page="role-exec-advisor">Open</a>
-            </div>
-          </div>
-
-          <div style="height:12px"></div>
-
-          <div class="mini">
-            <h4>Generals</h4>
-            <p>Oversight across all companies</p>
-          </div>
-
-          <div class="list">
-            <div class="item">
-              <div class="left">
-                <p class="name">General Manager</p>
-                <p class="desc">Private page</p>
-              </div>
-              <a class="openbtn" href="#" data-page="gen-gm">Open</a>
-            </div>
-            <div class="item">
-              <div class="left">
-                <p class="name">General Assistant Manager</p>
-                <p class="desc">Private page</p>
-              </div>
-              <a class="openbtn" href="#" data-page="gen-gam">Open</a>
-            </div>
-            <div class="item">
-              <div class="left">
-                <p class="name">General Administrator</p>
-                <p class="desc">Private page</p>
-              </div>
-              <a class="openbtn" href="#" data-page="gen-ga">Open</a>
-            </div>
-          </div>
-        </div>
+    <!-- If someone is NOT allowed, show this message -->
+    <div class="panel hidden" id="noAccessPanel" style="margin-top:12px;">
+      <h2 class="ptitle">Access Restricted</h2>
+      <div class="muted">
+        This Executive Control Center is only for: <b style="color:#00c853;">CEO / Mantle / General Manager</b>.
       </div>
-
-      <!-- MIDDLE COLUMN: Companies (vertical list) -->
-      <div class="panel">
-        <div class="panel-header">
-          <h3 class="panel-title">Companies</h3>
-          <div class="panel-actions">
-            <a href="#" data-page="companies-all">View All</a>
-          </div>
-        </div>
-        <div class="panel-body">
-          <div class="mini">
-            <h4>Holding + Subsidiaries</h4>
-            <p>Click to open company command page → departments</p>
-          </div>
-
-          <div class="list">
-            <div class="item">
-              <div class="left">
-                <p class="name">TitanCore Holdings</p>
-                <p class="desc">Holding company • portfolio control</p>
-              </div>
-              <a class="openbtn" href="#" data-page="co-titancore">Open</a>
-            </div>
-
-            <div class="item">
-              <div class="left">
-                <p class="name">Vaultara Capital</p>
-                <p class="desc">Capital • investments • deals</p>
-              </div>
-              <a class="openbtn" href="#" data-page="co-vaultara">Open</a>
-            </div>
-
-            <div class="item">
-              <div class="left">
-                <p class="name">VitalPath Care Group</p>
-                <p class="desc">Care • operations • compliance</p>
-              </div>
-              <a class="openbtn" href="#" data-page="co-vitalpath">Open</a>
-            </div>
-
-            <div class="item">
-              <div class="left">
-                <p class="name">RevMotion Auto &amp; Marine Group</p>
-                <p class="desc">Auto • marine • service systems</p>
-              </div>
-              <a class="openbtn" href="#" data-page="co-revmotion">Open</a>
-            </div>
-
-            <div class="item">
-              <div class="left">
-                <p class="name">Family First Equity Group</p>
-                <p class="desc">Equity • real assets • growth</p>
-              </div>
-              <a class="openbtn" href="#" data-page="co-familyfirst">Open</a>
-            </div>
-          </div>
-
-          <div style="height:12px"></div>
-          <!-- RIGHT COLUMN -->
-<div class="panel">
-  <div class="panel-header">
-    <h3 class="panel-title">Executive Control</h3>
-    <span class="tag ok">Holding Level</span>
-  </div>
-
-  <div class="panel-body">
-
-    <div class="card">
-      <div class="card-left">
-        <div class="card-title">Executive Action Radar</div>
-        <div class="muted">CEO & Mantle-level actions requiring attention</div>
-      </div>
-      <a class="btn ok" href="/executive-actions.html">Open</a>
-    </div>
-
-    <div class="card">
-      <div class="card-left">
-        <div class="card-title">Risk & Compliance Control</div>
-        <div class="muted">Licensing, tax exposure, audits, deadlines</div>
-      </div>
-      <a class="btn warn" href="/risk-compliance.html">Open</a>
-    </div>
-
-    <div class="card">
-      <div class="card-left">
-        <div class="card-title">Authority & Governance</div>
-        <div class="muted">Approval flow & role boundary integrity</div>
-      </div>
-      <a class="btn ghost" href="/authority-control.html">Open</a>
-    </div>
-
-    <div class="card">
-      <div class="card-left">
-        <div class="card-title">Security / Access</div>
-        <div class="muted">Permissions, monitoring, access logs</div>
-      </div>
-      <a class="btn ok" href="/security.html">Open</a>
     </div>
 
   </div>
-</div>
-
-  </div>
-</section>
-</div>
-</div>
- </div>
-
-      <!-- RIGHT COLUMN: News / Stock / Alerts -->
-      <div class="panel">
-        <div class="panel-header">
-          <h3 class="panel-title">Portfolio Intel</h3>
-          <div class="panel-actions">
-            <a href="#" data-page="intel-all">View All</a>
-          </div>
-        </div>
-        <div class="panel-body">
-          <div class="mini">
-            <h4>TitanCore News (All Companies)</h4>
-            <p>Portfolio-wide headlines and internal updates.</p>
-            <div style="height:10px"></div>
-            <a class="openbtn" href="#" data-page="news-all">Open Archive</a>
-          </div>
-
-          <div class="mini">
-            <h4>Portfolio Stock / Stats (All Companies)</h4>
-            <p>Cross-company performance + KPI stack.</p>
-            <div style="height:10px"></div>
-            <a class="openbtn" href="#" data-page="stock-all">Open Stack</a>
-          </div>
-
-          <div class="mini">
-            <h4>Alerts &amp; Attention</h4>
-            <p>What needs action now (portfolio-wide).</p>
-          </div>
-
-          <div class="alerts">
-            <div class="alert red">
-              <strong>Critical: Approvals overdue</strong>
-              <span>2 items waiting on signature • open Report &amp; Approval</span>
-            </div>
-            <div class="alert">
-              <strong>Tax / deadlines</strong>
-              <span>Quarterly filings review • open Tax Network</span>
-            </div>
-            <div class="alert green">
-              <strong>Security status</strong>
-              <span>Monitoring active • no new threats</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </section>
-  </main>
-
-  <div class="toast" id="toast">Opening <b>Page</b>…</div>
-
-  <script>
-    // ====== Live date/time ======
-    function pad(n){ return String(n).padStart(2,"0"); }
-    function updateTime(){
-      const d = new Date();
-      const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-      const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-      const line = `${days[d.getDay()]} • ${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()} • ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
-      document.getElementById("dtLine").innerHTML = `<b>${line}</b>`;
-    }
-    updateTime();
-    setInterval(updateTime, 24);
-
-    // Sample approvals count (so it looks alive)
-    document.getElementById("approvalsCount").textContent = "2";
-
-    // ====== Prevent 404: all links stay inside dashboard for now ======
-    const toast = document.getElementById("toast");
-    let tmr;
-
-    function showToast(msg){
-      toast.innerHTML = msg;
-      toast.style.display = "block";
-      clearTimeout(tmr);
-      tmr = setTimeout(()=>toast.style.display="none", 1800);
-    }
-
-    // Nav active switching + toast
-    document.querySelectorAll("a[data-page]").forEach(a=>{
-      a.addEventListener("click", (e)=>{
-        e.preventDefault();
-
-        // Make nav active highlight only for top nav items
-        if (a.closest(".nav")){
-          document.querySelectorAll(".nav a").forEach(x=>x.classList.remove("active"));
-          a.classList.add("active");
-        }
-
-        const page = a.getAttribute("data-page");
-        showToast(`Queued: <b>${page}</b> • Page builds next (no 404).`);
-      });
-    });
-  </script>
 </body>
 </html>
