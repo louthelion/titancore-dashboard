@@ -94,4 +94,18 @@
       alert("Agent alerts cleared.");
     });
   }
-})();
+})();  // ===============================
+  // ACTIVE MODE TOGGLE (WORKING)
+  // ===============================
+  const activeBtn = document.getElementById("activeToggle");
+
+  if (activeBtn) {
+    const saved = localStorage.getItem("titan_mode") || "ACTIVE";
+    activeBtn.textContent = saved;
+
+    activeBtn.addEventListener("click", () => {
+      const next = activeBtn.textContent === "ACTIVE" ? "PAUSED" : "ACTIVE";
+      localStorage.setItem("titan_mode", next);
+      activeBtn.textContent = next;
+    });
+  }
