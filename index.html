@@ -637,70 +637,64 @@
 
           <div style="height:12px"></div>
 
-        <!-- =========================
      EXECUTIVE CONTROL CENTER
-     Bottom Section (Dashboard Only)
-========================== -->
+   Bottom Section (Dashboard Only)
 
-<div class="panel">
-  <h2>EXECUTIVE CONTROL CENTER</h2>
-  <p class="muted">
+<section class="tc-panel">
+  <h2 class="tc-title">EXECUTIVE CONTROL CENTER</h2>
+  <p class="tc-text">
     Holding-level command view: actions, risk, authority, and security health.
   </p>
-</div>
 
-<div class="module-grid">
+  <div class="tc-cards">
 
-  <!-- Executive Action Radar -->
-  <div class="module-card">
-    <h3>Executive Action Radar</h3>
-    <p class="muted">
-      Items requiring CEO or Mantle-level attention across all companies.
-    </p>
-    <a class="btn" href="./executive-action-radar.html">Open</a>
-  </div>
-
-  <!-- Portfolio Risk & Compliance -->
-  <div class="module-card">
-    <h3>Portfolio Risk & Compliance</h3>
-    <p class="muted">
-      Licenses, tax exposure, audits, regulatory and deadline risks.
-    </p>
-    <a class="btn" href="./portfolio-risk-radar.html">Open</a>
-  </div>
-
-  <!-- Authority & Control -->
-  <div class="module-card">
-    <h3>Authority & Control Monitor</h3>
-    <p class="muted">
-      Governance integrity, role boundaries, approval flow health.
-    </p>
-    <a class="btn" href="./authority-control-monitor.html">Open</a>
-  </div>
-
-  <!-- Security & Access (DASHBOARD ONLY – NO PAGE) -->
-  <div class="module-card static">
-    <h3>Security & Access</h3>
-    <p class="muted">
-      Role enforcement, login integrity, permission health.
-    </p>
-
-    <ul class="status-list">
-      <li>✔ CEO Access: Active</li>
-      <li>✔ Mantle of 7: Restricted Edit</li>
-      <li>✔ Generals: View / Report</li>
-      <li>✔ Companies: Isolated</li>
-      <li>✔ Department Managers: No Executive Access</li>
-    </ul>
-  </div>
-
-</div>
-
-<!-- =========================
-     /EXECUTIVE CONTROL CENTER
-========================== -->
-        </div>
+    <div class="tc-card">
+      <div class="tc-card-head">
+        <h3 class="tc-card-title">Executive Action Radar</h3>
+        <a class="tc-open" href="/exec-actions.html">Open</a>
       </div>
+      <p class="tc-card-text">
+        Items requiring CEO or Mantle-level attention across all companies.
+      </p>
+      <div class="tc-meta">
+        <span class="tc-pill tc-pill-warn">3 urgent</span>
+        <span class="tc-pill">12 queued</span>
+      </div>
+    </div>
+
+    <div class="tc-card">
+      <div class="tc-card-head">
+        <h3 class="tc-card-title">Portfolio Risk & Compliance</h3>
+        <a class="tc-open" href="/risk-compliance.html">Open</a>
+      </div>
+      <p class="tc-card-text">
+        Licenses, tax exposure, audits, regulatory and deadline risks.
+      </p>
+      <div class="tc-meta">
+        <span class="tc-pill tc-pill-ok">Controlled</span>
+        <span class="tc-pill">1 flagged</span>
+      </div>
+    </div>
+
+    <div class="tc-card">
+      <div class="tc-card-head">
+        <h3 class="tc-card-title">Authority & Control Monitor</h3>
+        <a class="tc-open" href="/authority-monitor.html">Open</a>
+      </div>
+      <p class="tc-card-text">
+        Governance integrity, role boundaries, approval flow health.
+      </p>
+      <div class="tc-meta">
+        <span class="tc-pill tc-pill-ok">Stable</span>
+        <span class="tc-pill">0 conflicts</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+</div>
+</div>
+ </div>
 
       <!-- RIGHT COLUMN: News / Stock / Alerts -->
       <div class="panel">
