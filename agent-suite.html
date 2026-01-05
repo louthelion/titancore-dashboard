@@ -1,113 +1,137 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>TitanCore Executive Control Center — Agent AI</title>
-  <link rel="stylesheet" href="./styles.css" />
-  <style>
-    .wrap{max-width:1100px;margin:0 auto;padding:16px}
-    .panel{border:1px solid rgba(212,175,55,.35);border-radius:18px;background:rgba(0,0,0,.28);padding:16px;margin-top:14px}
-    .title{margin:0;color:#00c853;font-weight:900;letter-spacing:.03em}
-    .muted{opacity:.82}
-    .kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:12px}
-    @media(max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}}
-    .kpi{border:1px solid rgba(212,175,55,.22);border-radius:16px;background:rgba(0,0,0,.22);padding:12px}
-    .k{font-size:12px;opacity:.78;text-transform:uppercase;letter-spacing:.08em}
-    .v{font-size:22px;margin-top:6px;color:#00c853}
-    .btnRow{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
-    .btn{padding:10px 14px;border-radius:999px;border:1px solid rgba(212,175,55,.28);background:rgba(0,0,0,.25);color:#eaeaea;cursor:pointer}
-    .btn:hover{border-color:rgba(0,200,83,.35);color:#00c853}
-    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
-    @media(max-width:900px){.row{grid-template-columns:1fr}}
-    table{width:100%;border-collapse:separate;border-spacing:0 10px;margin-top:10px}
-    th{font-size:12px;opacity:.7;text-align:left;padding:0 10px}
-    td{padding:12px 10px;background:rgba(0,0,0,.25);border-top:1px solid rgba(212,175,55,.18);border-bottom:1px solid rgba(212,175,55,.18)}
-    tr td:first-child{border-left:1px solid rgba(212,175,55,.18);border-radius:14px 0 0 14px}
-    tr td:last-child{border-right:1px solid rgba(212,175,55,.18);border-radius:0 14px 14px 0}
-    .tag{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid rgba(212,175,55,.25);font-size:12px}
-    .ok{border-color:rgba(0,200,83,.35);color:#00c853}
-    .warn{border-color:rgba(255,195,0,.45);color:#ffd54a}
-  </style>
-</head>
-<body>
-<div class="wrap">
+<!-- SUITE NAV (tabs) -->
+<div class="suite-tabs" role="tablist" aria-label="Agent Suite Tabs">
+  <button class="tabbtn active" data-tab="tab-taskboard" role="tab" aria-selected="true">Task Board</button>
+  <button class="tabbtn" data-tab="tab-status" role="tab" aria-selected="false">Agent Status</button>
+  <button class="tabbtn" data-tab="tab-automations" role="tab" aria-selected="false">Automations</button>
+  <button class="tabbtn" data-tab="tab-audit" role="tab" aria-selected="false">Audit Log</button>
+  <button class="tabbtn" data-tab="tab-system" role="tab" aria-selected="false">Agent System</button>
+</div>
 
-  <nav class="nav" aria-label="Primary navigation">
-  <a href="./index.html">Dashboard</a>
-  <a href="./contract.html">Contract</a>
-  <a href="./contact.html">Contact</a>
-  <a href="./email.html">Email Routing</a>
-  <a href="./approval.html">Report &amp; Approval</a>
-  <a href="./omni.html">Omni System</a>
-  <a href="./tax.html">Tax Network</a>
-  <a href="./agent.html">Agent AI</a>
-  <a href="./finance.html">Finance</a>
-  <a href="./public.html">Public Portal</a>
-</nav>
+<!-- TAB PANELS -->
+<section id="tab-taskboard" class="tabpanel show" role="tabpanel">
+  <h3 class="panel-title">Task Board</h3>
+  <p class="muted">Assigned • Due • Completed</p>
+  <!-- keep your existing task board content here -->
+</section>
 
-  <div class="panel">
-    <h1 class="title">MODULE — Agent AI</h1>
-    <div class="muted">Agent tasks • automations • monitoring • assigned actions (control/records)</div>
+<section id="tab-status" class="tabpanel" role="tabpanel">
+  <h3 class="panel-title">Agent Registry (All Agents)</h3>
+  <p class="muted">All agents + status + scope</p>
 
-    <div class="kpis">
-      <div class="kpi"><div class="k">Agents Active</div><div class="v">—</div></div>
-      <div class="kpi"><div class="k">Tasks</div><div class="v">—</div></div>
-      <div class="kpi"><div class="k">Completed</div><div class="v">—</div></div>
-      <div class="kpi"><div class="k">Exceptions</div><div class="v">—</div></div>
+  <div class="list">
+    <div class="row">
+      <div>
+        <div class="row-title">Compliance Agent</div>
+        <div class="row-sub">Compliance • All companies</div>
+      </div>
+      <span class="pill ok">ACTIVE</span>
+      <a class="btn-open" href="agent-ai.html">Open</a>
     </div>
 
-    <div class="btnRow">
-      <button class="btn">Task Board</button>
-      <button class="btn">Agent Status</button>
-      <button class="btn">Automations</button>
-      <button class="btn">Audit Log</button>
+    <div class="row">
+      <div>
+        <div class="row-title">Contract Review Agent</div>
+        <div class="row-sub">Contracts • TitanCore + Subs</div>
+      </div>
+      <span class="pill warn">QUEUED</span>
+      <a class="btn-open" href="contract.html">Open</a>
+    </div>
+
+    <div class="row">
+      <div>
+        <div class="row-title">Tax Deadline Agent</div>
+        <div class="row-sub">Tax • Tax Network</div>
+      </div>
+      <span class="pill ok">ACTIVE</span>
+      <a class="btn-open" href="tax-network.html">Open</a>
+    </div>
+
+    <div class="row">
+      <div>
+        <div class="row-title">Security Monitor Agent</div>
+        <div class="row-sub">Security • Logs + Monitoring</div>
+      </div>
+      <span class="pill ok">ACTIVE</span>
+      <a class="btn-open" href="security-access.html">Open</a>
+    </div>
+
+    <div class="row">
+      <div>
+        <div class="row-title">Finance Variance Agent</div>
+        <div class="row-sub">Finance • Budgets + Variance</div>
+      </div>
+      <span class="pill idle">IDLE</span>
+      <a class="btn-open" href="finance.html">Open</a>
+    </div>
+
+    <div class="row">
+      <div>
+        <div class="row-title">Investor Outreach Agent</div>
+        <div class="row-sub">Outreach • Vaultara + Holding</div>
+      </div>
+      <span class="pill warn">QUEUED</span>
+      <a class="btn-open" href="public-portal.html">Open</a>
     </div>
   </div>
+</section>
 
-  <div class="row">
-    <div class="panel">
-      <h2 class="title" style="font-size:18px">Assigned Actions (Demo Queue)</h2>
-      <table>
-        <thead>
-          <tr><th>Company</th><th>Action</th><th>Priority</th><th>Status</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>TitanCore Holdings</td>
-            <td>Compile weekly executive summary</td>
-            <td><span class="tag warn">High</span></td>
-            <td><span class="tag ok">Monitoring</span></td>
-          </tr>
-          <tr>
-            <td>Vaultara Capital</td>
-            <td>Check investor outreach log</td>
-            <td><span class="tag ok">Normal</span></td>
-            <td><span class="tag ok">Queued</span></td>
-          </tr>
-          <tr>
-            <td>VitalPath Care Group</td>
-            <td>Verify compliance items posted</td>
-            <td><span class="tag warn">High</span></td>
-            <td><span class="tag ok">Queued</span></td>
-          </tr>
-        </tbody>
-      </table>
+<section id="tab-automations" class="tabpanel" role="tabpanel">
+  <h3 class="panel-title">Automations</h3>
+  <p class="muted">Schedules • Triggers • Workflows</p>
+  <!-- you can add automations controls here -->
+</section>
+
+<section id="tab-audit" class="tabpanel" role="tabpanel">
+  <h3 class="panel-title">Audit Log</h3>
+  <p class="muted">Record trail linked to Report & Approval</p>
+  <!-- your audit list goes here -->
+</section>
+
+<section id="tab-system" class="tabpanel" role="tabpanel">
+  <h3 class="panel-title">Agent System (Engine)</h3>
+  <p class="muted">Runner • Routing • Permissions • Logs</p>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="row-title">Runner & Schedules</div>
+      <div class="row-sub">Start/Stop • Run scan • Frequency</div>
+      <div class="btn-row">
+        <button class="btn-solid" id="btnStartAll">Start All</button>
+        <button class="btn-ghost" id="btnStopAll">Stop All</button>
+        <button class="btn-ghost" id="btnRunScan">Run Scan</button>
+      </div>
     </div>
 
-    <div class="panel">
-      <h2 class="title" style="font-size:18px">Next Step</h2>
-      <div class="muted">
-        Next we build inside:
-        <ul>
-          <li>Task board (assigned, due, completed)</li>
-          <li>Company-level agent routing (records)</li>
-          <li>Audit trail linked to Report &amp; Approval</li>
-        </ul>
+    <div class="card">
+      <div class="row-title">System Logs</div>
+      <div class="row-sub" id="sysLog">Last run: — • Status: —</div>
+      <div class="btn-row">
+        <button class="btn-ghost" id="btnClearLog">Clear</button>
       </div>
     </div>
   </div>
 
-</div>
-</body>
-</html>
+  <div class="card" style="margin-top:14px;">
+    <div class="row-title">Routing Map (All 5 Companies)</div>
+    <div class="row-sub">Which agents apply to each company</div>
+
+    <div class="route">
+      <div class="route-row"><b>TitanCore Holdings</b><span class="muted">All core agents</span></div>
+      <div class="route-row"><b>Vaultara Capital</b><span class="muted">Investor • Finance • Compliance</span></div>
+      <div class="route-row"><b>VitalPath Care Group</b><span class="muted">Compliance • Ops • Audit</span></div>
+      <div class="route-row"><b>RevMotion Auto & Marine Group</b><span class="muted">Contracts • Ops • Compliance</span></div>
+      <div class="route-row"><b>Family First Equity Group</b><span class="muted">Equity • Tax • Compliance</span></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:14px;">
+    <div class="row-title">Permissions</div>
+    <div class="row-sub">CEO / Mantle / GM visibility rules</div>
+    <ul class="muted" style="margin:10px 0 0 18px;">
+      <li>CEO: full view</li>
+      <li>Mantle: view only (no edit)</li>
+      <li>GM: limited view</li>
+      <li>Managers/Admin: only their company modules</li>
+    </ul>
+  </div>
+</section>
