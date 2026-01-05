@@ -109,3 +109,38 @@
       activeBtn.textContent = next;
     });
   }
+// Tab switch
+document.querySelectorAll(".tabbtn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll(".tabbtn").forEach(b=>{
+      b.classList.remove("active");
+      b.setAttribute("aria-selected","false");
+    });
+    document.querySelectorAll(".tabpanel").forEach(p=>p.classList.remove("show"));
+
+    btn.classList.add("active");
+    btn.setAttribute("aria-selected","true");
+    const id = btn.getAttribute("data-tab");
+    const panel = document.getElementById(id);
+    if(panel) panel.classList.add("show");
+  });
+});
+
+// Agent System demo controls
+const sysLog = document.getElementById("sysLog");
+function setLog(text){
+  if(sysLog) sysLog.textContent = text;
+}
+
+document.getElementById("btnStartAll")?.addEventListener("click", ()=>{
+  setLog("Last run: START ALL • Status: ACTIVE");
+});
+document.getElementById("btnStopAll")?.addEventListener("click", ()=>{
+  setLog("Last run: STOP ALL • Status: PAUSED");
+});
+document.getElementById("btnRunScan")?.addEventListener("click", ()=>{
+  setLog("Last run: SCAN NOW • Status: CHECKING");
+});
+document.getElementById("btnClearLog")?.addEventListener("click", ()=>{
+  setLog("Last run: — • Status: —");
+});
