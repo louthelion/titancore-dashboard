@@ -1,137 +1,269 @@
-<!-- SUITE NAV (tabs) -->
-<div class="suite-tabs" role="tablist" aria-label="Agent Suite Tabs">
-  <button class="tabbtn active" data-tab="tab-taskboard" role="tab" aria-selected="true">Task Board</button>
-  <button class="tabbtn" data-tab="tab-status" role="tab" aria-selected="false">Agent Status</button>
-  <button class="tabbtn" data-tab="tab-automations" role="tab" aria-selected="false">Automations</button>
-  <button class="tabbtn" data-tab="tab-audit" role="tab" aria-selected="false">Audit Log</button>
-  <button class="tabbtn" data-tab="tab-system" role="tab" aria-selected="false">Agent System</button>
-</div>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Agent AI Suite — TitanCore</title>
 
-<!-- TAB PANELS -->
-<section id="tab-taskboard" class="tabpanel show" role="tabpanel">
-  <h3 class="panel-title">Task Board</h3>
-  <p class="muted">Assigned • Due • Completed</p>
-  <!-- keep your existing task board content here -->
-</section>
+  <!-- IMPORTANT: this is what stops the page from turning WHITE -->
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/agent-suite.css" />
+</head>
 
-<section id="tab-status" class="tabpanel" role="tabpanel">
-  <h3 class="panel-title">Agent Registry (All Agents)</h3>
-  <p class="muted">All agents + status + scope</p>
-
-  <div class="list">
-    <div class="row">
+<body class="tc">
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">TC</div>
       <div>
-        <div class="row-title">Compliance Agent</div>
-        <div class="row-sub">Compliance • All companies</div>
-      </div>
-      <span class="pill ok">ACTIVE</span>
-      <a class="btn-open" href="agent-ai.html">Open</a>
-    </div>
-
-    <div class="row">
-      <div>
-        <div class="row-title">Contract Review Agent</div>
-        <div class="row-sub">Contracts • TitanCore + Subs</div>
-      </div>
-      <span class="pill warn">QUEUED</span>
-      <a class="btn-open" href="contract.html">Open</a>
-    </div>
-
-    <div class="row">
-      <div>
-        <div class="row-title">Tax Deadline Agent</div>
-        <div class="row-sub">Tax • Tax Network</div>
-      </div>
-      <span class="pill ok">ACTIVE</span>
-      <a class="btn-open" href="tax-network.html">Open</a>
-    </div>
-
-    <div class="row">
-      <div>
-        <div class="row-title">Security Monitor Agent</div>
-        <div class="row-sub">Security • Logs + Monitoring</div>
-      </div>
-      <span class="pill ok">ACTIVE</span>
-      <a class="btn-open" href="security-access.html">Open</a>
-    </div>
-
-    <div class="row">
-      <div>
-        <div class="row-title">Finance Variance Agent</div>
-        <div class="row-sub">Finance • Budgets + Variance</div>
-      </div>
-      <span class="pill idle">IDLE</span>
-      <a class="btn-open" href="finance.html">Open</a>
-    </div>
-
-    <div class="row">
-      <div>
-        <div class="row-title">Investor Outreach Agent</div>
-        <div class="row-sub">Outreach • Vaultara + Holding</div>
-      </div>
-      <span class="pill warn">QUEUED</span>
-      <a class="btn-open" href="public-portal.html">Open</a>
-    </div>
-  </div>
-</section>
-
-<section id="tab-automations" class="tabpanel" role="tabpanel">
-  <h3 class="panel-title">Automations</h3>
-  <p class="muted">Schedules • Triggers • Workflows</p>
-  <!-- you can add automations controls here -->
-</section>
-
-<section id="tab-audit" class="tabpanel" role="tabpanel">
-  <h3 class="panel-title">Audit Log</h3>
-  <p class="muted">Record trail linked to Report & Approval</p>
-  <!-- your audit list goes here -->
-</section>
-
-<section id="tab-system" class="tabpanel" role="tabpanel">
-  <h3 class="panel-title">Agent System (Engine)</h3>
-  <p class="muted">Runner • Routing • Permissions • Logs</p>
-
-  <div class="grid2">
-    <div class="card">
-      <div class="row-title">Runner & Schedules</div>
-      <div class="row-sub">Start/Stop • Run scan • Frequency</div>
-      <div class="btn-row">
-        <button class="btn-solid" id="btnStartAll">Start All</button>
-        <button class="btn-ghost" id="btnStopAll">Stop All</button>
-        <button class="btn-ghost" id="btnRunScan">Run Scan</button>
+        <div class="brand-title">Agent A.I. Suite</div>
+        <div class="brand-sub">Agents • automations • monitoring • assigned actions</div>
       </div>
     </div>
 
-    <div class="card">
-      <div class="row-title">System Logs</div>
-      <div class="row-sub" id="sysLog">Last run: — • Status: —</div>
-      <div class="btn-row">
-        <button class="btn-ghost" id="btnClearLog">Clear</button>
+    <div class="status">
+      <div class="timebox">
+        <div class="time-label">System Time</div>
+        <div class="time-value" id="tcDateTime">—</div>
       </div>
+
+      <!-- ACTIVE button (works if JS is loaded) -->
+      <button class="pill pill-green" id="tcModeBtn" type="button">ACTIVE</button>
     </div>
-  </div>
+  </header>
 
-  <div class="card" style="margin-top:14px;">
-    <div class="row-title">Routing Map (All 5 Companies)</div>
-    <div class="row-sub">Which agents apply to each company</div>
+  <!-- GLOBAL MENU (root / links so it works from ANY page) -->
+  <nav class="menu" aria-label="TitanCore Menu">
+    <a class="menu-btn" href="/index.html" data-nav="dashboard">Dashboard</a>
+    <a class="menu-btn" href="/contact.html" data-nav="contact">Contact</a>
+    <a class="menu-btn" href="/contract.html" data-nav="contract">Contract</a>
+    <a class="menu-btn" href="/email-routing.html" data-nav="email">Email Routing</a>
+    <a class="menu-btn" href="/report-approval.html" data-nav="report">Report &amp; Approval</a>
+    <a class="menu-btn" href="/omni-system.html" data-nav="omni">Omni System</a>
+    <a class="menu-btn" href="/tax-network.html" data-nav="tax">Tax Network</a>
+    <a class="menu-btn active" href="/agent-suite.html" data-nav="agent-suite">Agent A.I. Suite</a>
+    <a class="menu-btn" href="/public-portal.html" data-nav="public">Public Portal</a>
+  </nav>
 
-    <div class="route">
-      <div class="route-row"><b>TitanCore Holdings</b><span class="muted">All core agents</span></div>
-      <div class="route-row"><b>Vaultara Capital</b><span class="muted">Investor • Finance • Compliance</span></div>
-      <div class="route-row"><b>VitalPath Care Group</b><span class="muted">Compliance • Ops • Audit</span></div>
-      <div class="route-row"><b>RevMotion Auto & Marine Group</b><span class="muted">Contracts • Ops • Compliance</span></div>
-      <div class="route-row"><b>Family First Equity Group</b><span class="muted">Equity • Tax • Compliance</span></div>
-    </div>
-  </div>
+  <main class="wrap">
+    <section class="panel">
+      <div class="panel-head">
+        <h2 class="panel-title">MODULE — Agent A.I.</h2>
+        <div class="panel-note">Task board • agent registry • automation triggers • audit log • agent system engine</div>
+      </div>
 
-  <div class="card" style="margin-top:14px;">
-    <div class="row-title">Permissions</div>
-    <div class="row-sub">CEO / Mantle / GM visibility rules</div>
-    <ul class="muted" style="margin:10px 0 0 18px;">
-      <li>CEO: full view</li>
-      <li>Mantle: view only (no edit)</li>
-      <li>GM: limited view</li>
-      <li>Managers/Admin: only their company modules</li>
-    </ul>
-  </div>
-</section>
+      <!-- TOP METRICS -->
+      <div class="cards4">
+        <div class="card">
+          <div class="card-title">Agents Active</div>
+          <div class="card-value" id="mAgentsActive">—</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Tasks</div>
+          <div class="card-value" id="mTasks">—</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Completed</div>
+          <div class="card-value" id="mCompleted">—</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Exceptions</div>
+          <div class="card-value" id="mExceptions">—</div>
+        </div>
+      </div>
+
+      <!-- TABS -->
+      <div class="suite-tabs" role="tablist" aria-label="Agent Suite Tabs">
+        <button class="tabbtn active" type="button" data-tab="taskboard">Task Board</button>
+        <button class="tabbtn" type="button" data-tab="registry">Agent Status</button>
+        <button class="tabbtn" type="button" data-tab="automations">Automations</button>
+        <button class="tabbtn" type="button" data-tab="audit">Audit Log</button>
+        <button class="tabbtn" type="button" data-tab="system">Agent System</button>
+      </div>
+
+      <!-- TAB PANELS -->
+      <section class="tabpanel active" id="tab-taskboard">
+        <h3 class="h3">Task Board</h3>
+        <p class="muted">Assigned • Due • Completed (demo)</p>
+
+        <div class="list">
+          <div class="row">
+            <div class="row-left">
+              <div class="row-title">Compile weekly executive summary</div>
+              <div class="row-sub">TitanCore Holdings • Priority: High</div>
+            </div>
+            <div class="row-right"><span class="tag green">Monitoring</span></div>
+          </div>
+
+          <div class="row">
+            <div class="row-left">
+              <div class="row-title">Verify compliance items posted</div>
+              <div class="row-sub">VitalPath Care Group • Priority: High</div>
+            </div>
+            <div class="row-right"><span class="tag gold">Queued</span></div>
+          </div>
+
+          <div class="row">
+            <div class="row-left">
+              <div class="row-title">Check investor outreach log</div>
+              <div class="row-sub">Vaultara Capital • Priority: Normal</div>
+            </div>
+            <div class="row-right"><span class="tag gold">Queued</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="tabpanel" id="tab-registry">
+        <h3 class="h3">Agent Registry (All Agents)</h3>
+        <p class="muted">All agents + status + scope</p>
+
+        <div class="list">
+          <div class="row">
+            <div class="row-left">
+              <div class="row-title">Compliance Agent</div>
+              <div class="row-sub">All companies</div>
+            </div>
+            <div class="row-right">
+              <span class="tag green">ACTIVE</span>
+              <a class="openbtn" href="/agent/compliance.html">Open</a>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-left">
+              <div class="row-title">Contract Review Agent</div>
+              <div class="row-sub">TitanCore + subsidiaries</div>
+            </div>
+            <div class="row-right">
+              <span class="tag gold">QUEUED</span>
+              <a class="openbtn" href="/agent/contracts.html">Open</a>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-left">
+              <div class="row-title">Tax Deadline Agent</div>
+              <div class="row-sub">Tax Network</div>
+            </div>
+            <div class="row-right">
+              <span class="tag green">ACTIVE</span>
+              <a class="openbtn" href="/agent/tax.html">Open</a>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-left">
+              <div class="row-title">Security Monitor Agent</div>
+              <div class="row-sub">Logs + monitoring</div>
+            </div>
+            <div class="row-right">
+              <span class="tag green">ACTIVE</span>
+              <a class="openbtn" href="/agent/security.html">Open</a>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-left">
+              <div class="row-title">Finance Variance Agent</div>
+              <div class="row-sub">Budgets + variance</div>
+            </div>
+            <div class="row-right">
+              <span class="tag gray">IDLE</span>
+              <a class="openbtn" href="/agent/finance.html">Open</a>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-left">
+              <div class="row-title">Investor Outreach Agent</div>
+              <div class="row-sub">Vaultara + Holding</div>
+            </div>
+            <div class="row-right">
+              <span class="tag gold">QUEUED</span>
+              <a class="openbtn" href="/agent/outreach.html">Open</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="tabpanel" id="tab-automations">
+        <h3 class="h3">Automations</h3>
+        <p class="muted">Schedules • triggers • workflows (demo)</p>
+
+        <div class="list">
+          <div class="row">
+            <div class="row-left">
+              <div class="row-title">Weekly Executive Summary</div>
+              <div class="row-sub">Runs Saturdays • routes to CEO</div>
+            </div>
+            <div class="row-right"><span class="tag green">ACTIVE</span></div>
+          </div>
+          <div class="row">
+            <div class="row-left">
+              <div class="row-title">Tax Deadline Scan</div>
+              <div class="row-sub">Daily • routes to Tax Network</div>
+            </div>
+            <div class="row-right"><span class="tag green">ACTIVE</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="tabpanel" id="tab-audit">
+        <h3 class="h3">Audit Log</h3>
+        <p class="muted">Record trail linked to Report &amp; Approval</p>
+
+        <div class="list">
+          <div class="row">
+            <div class="row-left">
+              <div class="row-title">Contract review queued</div>
+              <div class="row-sub">RevMotion Auto &amp; Marine Group</div>
+            </div>
+            <div class="row-right"><span class="tag gold">LOGGED</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="tabpanel" id="tab-system">
+        <h3 class="h3">Agent System (Engine)</h3>
+        <p class="muted">Runner • routing • permissions • logs</p>
+
+        <div class="systembar">
+          <button class="btn" type="button" id="btnStartAll">Start All</button>
+          <button class="btn" type="button" id="btnStopAll">Stop All</button>
+          <button class="btn" type="button" id="btnRunScan">Run Scan</button>
+          <button class="btn danger" type="button" id="btnClearLog">Clear Log</button>
+        </div>
+
+        <div class="logbox">
+          <div class="logtitle">System Logs</div>
+          <pre class="log" id="sysLog">Ready.</pre>
+        </div>
+
+        <div class="mini">
+          <h4 class="h4">Routing Map (All 5 Companies)</h4>
+          <div class="muted">Which agents apply to each company</div>
+          <ul class="bullets">
+            <li><b>TitanCore Holdings</b> — All core agents</li>
+            <li><b>Vaultara Capital</b> — Investor • Finance • Compliance</li>
+            <li><b>VitalPath Care Group</b> — Compliance • Ops • Audit</li>
+            <li><b>RevMotion Auto &amp; Marine Group</b> — Contracts • Ops • Compliance</li>
+            <li><b>Family First Equity Group</b> — Equity • Tax • Compliance</li>
+          </ul>
+        </div>
+
+        <div class="mini">
+          <h4 class="h4">Permissions</h4>
+          <ul class="bullets">
+            <li>CEO: full view</li>
+            <li>Mantle: view only (no edit)</li>
+            <li>GM: limited view</li>
+            <li>Managers/Admin: only their company modules</li>
+          </ul>
+        </div>
+      </section>
+
+    </section>
+  </main>
+
+  <script src="/agent-suite.js"></script>
+</body>
+</html>
