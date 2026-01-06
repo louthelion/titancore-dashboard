@@ -1,288 +1,80 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta <!doctype html>
-<html lang="en">
-<head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>TitanCore Executive Control Center — Report & Approval</title>
-  <link rel="stylesheet" href="./styles.css" />
-  <style>
-    .wrap{max-width:1200px;margin:0 auto;padding:16px}
-    .panel{background:rgba(0,0,0,.35);border:1px solid rgba(212,175,55,.35);border-radius:18px;padding:16px;margin-top:14px}
-    .tag{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid rgba(0,200,83,.35);color:#00c853;font-size:12px}
-    .muted{opacity:.85}
-    .kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-    @media(max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}}
-    .kpi{border:1px solid rgba(212,175,55,.25);border-radius:16px;padding:12px;background:rgba(0,0,0,.25)}
-    .k{font-size:12px;opacity:.8;text-transform:uppercase;letter-spacing:.08em}
-    .v{font-size:22px;margin-top:6px;color:#00c853}
-    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    @media(max-width:860px){.row{grid-template-columns:1fr}}
-    label{display:block;font-size:13px;opacity:.9;margin-bottom:6px}
-    input,select,textarea{width:100%;padding:12px;border-radius:12px;border:1px solid rgba(212,175,55,.25);background:rgba(10,10,10,.55);color:#eaeaea}
-    textarea{resize:vertical}
-    table{width:100%;border-collapse:separate;border-spacing:0 10px}
-    th{font-size:12px;opacity:.7;text-align:left;padding:0 10px}
-    td{padding:12px 10px;background:rgba(0,0,0,.25);border-top:1px solid rgba(212,175,55,.18);border-bottom:1px solid rgba(212,175,55,.18)}
-    tr td:first-child{border-left:1px solid rgba(212,175,55,.18);border-radius:14px 0 0 14px}
-    tr td:last-child{border-right:1px solid rgba(212,175,55,.18);border-radius:0 14px 14px 0}
-    .pill{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid rgba(212,175,55,.25);font-size:12px}
-    .ok{border-color:rgba(0,200,83,.35);color:#00c853}
-    .warn{border-color:rgba(255,195,0,.45);color:#ffd54a}
-    .bad{border-color:rgba(255,90,90,.55);color:#ff8a8a}
-    .btn{padding:8px 12px;border-radius:999px;border:1px solid rgba(212,175,55,.35);background:rgba(0,0,0,.35);color:#eaeaea;cursor:pointer}
-    .btn.primary{border-color:rgba(0,200,83,.55);color:#00c853}
-    .btn.danger{border-color:rgba(255,90,90,.6);color:#ff8a8a}
-    .btn.ghost{opacity:.85}
-    .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
-    .small{font-size:12px;opacity:.75}
-  </style>
+  <title>TitanCore — Approval</title>
+  <link rel="stylesheet" href="/styles.css" />
 </head>
 
 <body>
-<div class="wrap">
+  <!-- TOP MENU (same on every page) -->
+  <nav class="menu" aria-label="TitanCore Menu">
+    <a class="menu-btn" href="/index.html">Dashboard</a>
+    <a class="menu-btn" href="/contact.html">Contact</a>
+    <a class="menu-btn" href="/contract.html">Contract</a>
+    <a class="menu-btn" href="/email-routing.html">Email Routing</a>
+    <a class="menu-btn" href="/report.html">Report</a>
+    <a class="menu-btn active" href="/approval.html">Approval</a>
+    <a class="menu-btn" href="/omni-system.html">Omni System</a>
+    <a class="menu-btn" href="/tax-network.html">Tax Network</a>
+    <a class="menu-btn" href="/agent-suite.html">Agent A.I. Suite</a>
+    <a class="menu-btn" href="/public-portal.html">Public Portal</a>
+  </nav>
 
-  <!-- NAV -->
-  <nav class="nav" aria-label="Primary navigation">
-  <a href="./index.html">Dashboard</a>
-  <a href="./contract.html">Contract</a>
-  <a href="./contact.html">Contact</a>
-  <a href="./email.html">Email Routing</a>
-  <a href="./approval.html">Report &amp; Approval</a>
-  <a href="./omni.html">Omni System</a>
-  <a href="./tax.html">Tax Network</a>
- <a href="/agent-ai-suite.html">Agent A.I. Suite</a>
-  <a href="./finance.html">Finance</a>
-  <a href="./public.html">Public Portal</a>
-</nav>
+  <main class="wrap">
+    <section class="panel">
+      <div class="panel-head">
+        <h1 class="panel-title">APPROVAL</h1>
+        <div class="panel-note">Queue → Mantle review → CEO final sign.</div>
+      </div>
 
-  <!-- HEADER -->
-  <div class="panel">
-    <span class="tag">REPORT &amp; APPROVAL — CONTROL</span>
-    <h1>Oversight Approvals (Records Only)</h1>
-    <p class="muted">
-      This module tracks approvals across all companies (including TitanCore).
-      It does not execute work — it records: pending, escalated, approved, completed.
-    </p>
-  </div>
+      <div class="cards4">
+        <div class="card"><div class="card-title">Waiting</div><div class="card-value">2</div></div>
+        <div class="card"><div class="card-title">In Review</div><div class="card-value">1</div></div>
+        <div class="card"><div class="card-title">Overdue</div><div class="card-value">1</div></div>
+        <div class="card"><div class="card-title">Signed</div><div class="card-value">0</div></div>
+      </div>
 
-  <!-- KPIs -->
-  <div class="panel">
-    <div class="kpis">
-      <div class="kpi"><div class="k">Total Items</div><div class="v" id="k_total">—</div><div class="small">All companies</div></div>
-      <div class="kpi"><div class="k">Pending Approval</div><div class="v" id="k_pending">—</div><div class="small">Needs action</div></div>
-      <div class="kpi"><div class="k">Escalated</div><div class="v" id="k_escalated">—</div><div class="small">Critical/overdue</div></div>
-      <div class="kpi"><div class="k">Completed</div><div class="v" id="k_done">—</div><div class="small">Closed items</div></div>
-    </div>
-  </div>
+      <div class="grid2">
+        <div class="card big">
+          <div class="card-title">Approval Queue</div>
+          <div class="list">
+            <div class="list-item">
+              <div>
+                <b>Weekly Executive Summary</b><div class="muted">TitanCore Holdings</div>
+              </div>
+              <span class="tag">Waiting</span>
+            </div>
 
-  <!-- CREATE RECORD -->
-  <div class="panel">
-    <h2 style="margin:0 0 10px">Log an Approval Item</h2>
+            <div class="list-item">
+              <div>
+                <b>Compliance Update</b><div class="muted">VitalPath Care Group</div>
+              </div>
+              <span class="tag">Overdue</span>
+            </div>
+          </div>
 
-    <form id="f">
-      <div class="row">
-        <div>
-          <label>Company</label>
-          <select id="company" required>
-            <option value="">Select…</option>
-            <option>TitanCore Holdings</option>
-            <option>Vaultara Capital</option>
-            <option>VitalPath Care Group</option>
-            <option>RevMotion Auto &amp; Marine Group</option>
-            <option>Family First Equity Group</option>
-          </select>
+          <div class="row">
+            <button class="pill pill-gold">Approve</button>
+            <button class="pill pill-dark">Return</button>
+            <button class="pill pill-green">CEO Final Sign</button>
+          </div>
         </div>
-        <div>
-          <label>Category</label>
-          <select id="category" required>
-            <option value="">Select…</option>
-            <option>Contract</option>
-            <option>Project Report</option>
-            <option>Compliance</option>
-            <option>Finance Approval</option>
-            <option>Security / Access</option>
-            <option>Other</option>
-          </select>
+
+        <div class="card big">
+          <div class="card-title">Audit Trail</div>
+          <p class="muted">Every action logs here (review, approve, return, sign).</p>
+          <div class="list">
+            <div class="list-item"><b>Report submitted</b><span class="tag">System</span></div>
+            <div class="list-item"><b>Mantle review started</b><span class="tag">Mantle</span></div>
+            <div class="list-item"><b>Returned for edits</b><span class="tag">GM</span></div>
+          </div>
         </div>
       </div>
+    </section>
+  </main>
 
-      <div style="margin-top:10px">
-        <label>Title</label>
-        <input id="title" placeholder="e.g., Q1 Project Report / Contract Review / Compliance Issue" required />
-      </div>
-
-      <div class="row" style="margin-top:10px">
-        <div>
-          <label>Priority</label>
-          <select id="priority" required>
-            <option>Normal</option>
-            <option>High</option>
-            <option>Critical</option>
-          </select>
-        </div>
-        <div>
-          <label>Due Date</label>
-          <input id="due" type="date" required />
-        </div>
-      </div>
-
-      <div style="margin-top:10px">
-        <label>Notes</label>
-        <textarea id="notes" rows="3" placeholder="What needs approval? Which department is blocking? Any risk?"></textarea>
-      </div>
-
-      <div class="actions">
-        <button class="btn primary" type="submit">Add Item</button>
-        <button class="btn ghost" type="button" id="seedBtn">Load Sample</button>
-        <button class="btn danger" type="button" id="clearBtn">Clear</button>
-      </div>
-
-      <div class="small" style="margin-top:10px">
-        Demo storage: local only. Later we connect real systems (M365, databases, integrations).
-      </div>
-    </form>
-  </div>
-
-  <!-- TABLE -->
-  <div class="panel">
-    <h2 style="margin:0 0 10px">Approval Queue</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Company</th>
-          <th>Category</th>
-          <th>Title</th>
-          <th>Priority</th>
-          <th>Due</th>
-          <th>Status</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody id="body"></tbody>
-    </table>
-  </div>
-
-</div>
-
-<script>
-  const KEY = "tc_approval_queue_v1";
-
-  function load(){ return JSON.parse(localStorage.getItem(KEY) || "[]"); }
-  function save(d){ localStorage.setItem(KEY, JSON.stringify(d)); }
-  function now(){ return new Date().toLocaleString(); }
-
-  function isOverdue(due){
-    if(!due) return false;
-    const today = new Date();
-    const dd = new Date(due + "T00:00:00");
-    const t0 = new Date(today.toISOString().slice(0,10) + "T00:00:00");
-    return dd < t0;
-  }
-
-  function pillPriority(p){
-    if(p==="Critical") return '<span class="pill bad">Critical</span>';
-    if(p==="High") return '<span class="pill warn">High</span>';
-    return '<span class="pill ok">Normal</span>';
-  }
-
-  function pillStatus(s, overdue){
-    if(s==="Pending"){
-      return overdue ? '<span class="pill bad">Pending (Overdue)</span>' : '<span class="pill warn">Pending</span>';
-    }
-    if(s==="Escalated") return '<span class="pill bad">Escalated</span>';
-    if(s==="Approved") return '<span class="pill ok">Approved</span>';
-    return '<span class="pill ok">Completed</span>';
-  }
-
-  function render(){
-    const d = load();
-    const body = document.getElementById("body");
-    body.innerHTML = "";
-
-    let pending=0, escalated=0, done=0;
-
-    d.forEach((x,i)=>{
-      if(x.status==="Pending") pending++;
-      if(x.status==="Escalated") escalated++;
-      if(x.status==="Completed") done++;
-
-      const overdue = isOverdue(x.due) || x.priority==="Critical";
-      const duePill = overdue ? `<span class="pill bad">${x.due}</span>` : `<span class="pill">${x.due}</span>`;
-
-      body.innerHTML += `
-        <tr>
-          <td>${x.date}</td>
-          <td>${x.company}</td>
-          <td>${x.category}</td>
-          <td>${x.title}</td>
-          <td>${pillPriority(x.priority)}</td>
-          <td>${duePill}</td>
-          <td>${pillStatus(x.status, isOverdue(x.due))}</td>
-          <td style="white-space:nowrap">
-            <button class="btn ghost" onclick="setStatus(${i},'Approved')">Approve</button>
-            <button class="btn ghost" onclick="setStatus(${i},'Escalated')">Escalate</button>
-            <button class="btn ghost" onclick="setStatus(${i},'Completed')">Complete</button>
-            <button class="btn danger" onclick="del(${i})">Delete</button>
-          </td>
-        </tr>
-      `;
-    });
-
-    document.getElementById("k_total").textContent = d.length || "—";
-    document.getElementById("k_pending").textContent = pending || "—";
-    document.getElementById("k_escalated").textContent = escalated || "—";
-    document.getElementById("k_done").textContent = done || "—";
-  }
-
-  function setStatus(i,s){
-    const d = load();
-    if(!d[i]) return;
-    d[i].status = s;
-    save(d); render();
-  }
-
-  function del(i){
-    const d = load();
-    d.splice(i,1);
-    save(d); render();
-  }
-
-  document.getElementById("f").addEventListener("submit",(e)=>{
-    e.preventDefault();
-    const d = load();
-    d.unshift({
-      date: now(),
-      company: document.getElementById("company").value,
-      category: document.getElementById("category").value,
-      title: document.getElementById("title").value,
-      priority: document.getElementById("priority").value,
-      due: document.getElementById("due").value,
-      notes: document.getElementById("notes").value,
-      status: "Pending"
-    });
-    save(d);
-    e.target.reset();
-    render();
-  });
-
-  document.getElementById("seedBtn").addEventListener("click", ()=>{
-    save([
-      {date: now(), company:"TitanCore Holdings", category:"Compliance", title:"Policy Review — Q1", priority:"High", due:"2026-01-08", notes:"Check across all departments.", status:"Pending"},
-      {date: now(), company:"Vaultara Capital", category:"Contract", title:"Bank Agreement — Review Needed", priority:"Critical", due:"2026-01-03", notes:"Overdue risk if delayed.", status:"Escalated"},
-      {date: now(), company:"RevMotion Auto & Marine Group", category:"Project Report", title:"Client Delivery Report", priority:"Normal", due:"2026-01-12", notes:"Weekly summary.", status:"Approved"},
-    ]);
-    render();
-  });
-
-  document.getElementById("clearBtn").addEventListener("click", ()=>{
-    save([]); render();
-  });
-
-  render();
-</script>
+  <script src="/app.js"></script>
 </body>
 </html>
