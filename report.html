@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>TitanCore — Report</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+
+<body>
+  <!-- TOP MENU (same on every page) -->
+  <nav class="menu" aria-label="TitanCore Menu">
+    <a class="menu-btn" href="/index.html">Dashboard</a>
+    <a class="menu-btn" href="/contact.html">Contact</a>
+    <a class="menu-btn" href="/contract.html">Contract</a>
+    <a class="menu-btn" href="/email-routing.html">Email Routing</a>
+    <a class="menu-btn active" href="/report.html">Report</a>
+    <a class="menu-btn" href="/approval.html">Approval</a>
+    <a class="menu-btn" href="/omni-system.html">Omni System</a>
+    <a class="menu-btn" href="/tax-network.html">Tax Network</a>
+    <a class="menu-btn" href="/agent-suite.html">Agent A.I. Suite</a>
+    <a class="menu-btn" href="/public-portal.html">Public Portal</a>
+  </nav>
+
+  <main class="wrap">
+    <section class="panel">
+      <div class="panel-head">
+        <h1 class="panel-title">REPORT</h1>
+        <div class="panel-note">Build reports → send to Approval.</div>
+      </div>
+
+      <div class="cards4">
+        <div class="card"><div class="card-title">Drafts</div><div class="card-value">3</div></div>
+        <div class="card"><div class="card-title">Submitted</div><div class="card-value">1</div></div>
+        <div class="card"><div class="card-title">Returned</div><div class="card-value">1</div></div>
+        <div class="card"><div class="card-title">Approved</div><div class="card-value">0</div></div>
+      </div>
+
+      <div class="grid2">
+        <div class="card big">
+          <div class="card-title">Report Builder</div>
+          <p class="muted">Create a report package: title, company, category, summary, and attachments.</p>
+
+          <label class="lbl">Report Title</label>
+          <input class="in" placeholder="e.g., Weekly Executive Summary" />
+
+          <label class="lbl">Company</label>
+          <select class="in">
+            <option>TitanCore Holdings</option>
+            <option>Vaultara Capital</option>
+            <option>VitalPath Care Group</option>
+            <option>RevMotion Auto & Marine Group</option>
+            <option>Family First Equity Group</option>
+          </select>
+
+          <label class="lbl">Summary</label>
+          <textarea class="in" rows="4" placeholder="Write the report summary..."></textarea>
+
+          <div class="row">
+            <button class="pill pill-gold">Save Draft</button>
+            <a class="pill pill-green" href="/approval.html">Submit to Approval →</a>
+          </div>
+        </div>
+
+        <div class="card big">
+          <div class="card-title">Report Archive</div>
+          <p class="muted">Recent reports</p>
+          <div class="list">
+            <div class="list-item"><b>Exec Summary</b><span class="tag">Draft</span></div>
+            <div class="list-item"><b>Compliance Update</b><span class="tag">Returned</span></div>
+            <div class="list-item"><b>Tax Review</b><span class="tag">Submitted</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>
