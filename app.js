@@ -33,9 +33,11 @@
     const role = getRole();
 
     // highlight role buttons
-    document.querySelectorAll(".rolebtn").forEach(btn => {
-      btn.classList.toggle("active", btn.dataset.role === role);
-    });
+    document.querySelectorAll('.menu-btn').forEach(link => {
+  if (link.getAttribute('href') === window.location.pathname) {
+    link.classList.add('active');
+  }
+});
 
     // show/hide sections by data-allow
     const sections = document.querySelectorAll("[data-allow]");
