@@ -3,224 +3,235 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>TitanCore — Contact Command</title>
-<link rel="stylesheet" href="/styles.css?v=2">
-    /* local safe layout only for this page */
-    .wrap{max-width:1100px;margin:0 auto;padding:16px}
-    .panel{background:rgba(0,0,0,.35);border:1px solid rgba(212,175,55,.35);border-radius:18px;padding:16px;margin-top:14px}
-    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    @media (max-width:860px){.row{grid-template-columns:1fr}}
-    label{display:block;font-size:13px;opacity:.9;margin-bottom:6px}
-    input,select,textarea{width:100%;padding:12px;border-radius:12px;border:1px solid rgba(212,175,55,.25);background:rgba(10,10,10,.55);color:#eaeaea}
-    textarea{resize:vertical}
-    .kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
-    @media (max-width:860px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
-    .kpi{border:1px solid rgba(212,175,55,.25);border-radius:16px;padding:12px;background:rgba(0,0,0,.25)}
-    .k{font-size:12px;opacity:.8;text-transform:uppercase;letter-spacing:.08em}
-    .v{font-size:22px;margin-top:6px;color:#00c853}
-    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;border:1px solid rgba(212,175,55,.35);background:rgba(0,0,0,.35);color:#eaeaea;text-decoration:none;cursor:pointer}
-    .btn.primary{border-color:rgba(0,200,83,.55);color:#00c853}
-    .btn.danger{border-color:rgba(255,90,90,.6);color:#ff8a8a}
+  <title>TitanCore Executive Control Center — Contact</title>
+
+  <!-- GLOBAL (must be on every page) -->
+  <link rel="stylesheet" href="/styles.css?v=2" />
+  <script src="/app.js?v=2" defer></script>
+
+  <!-- Page-only styles (SAFE: does not touch the menu) -->
+  <style>
+    .page-wrap{max-width:1200px;margin:0 auto;padding:14px 14px 30px;}
+    .topbar{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+    .brandline{display:flex;flex-direction:column;gap:6px;}
+    .brandtitle{font-size:22px;font-weight:900;color:#00c853;letter-spacing:.3px;}
+    .subtitle{color:#d4af37;font-weight:800;opacity:.95}
+    .sysline{margin:6px 0 0;color:#00c853;font-weight:900}
+    .sysline .dot{margin:0 8px;opacity:.8}
+
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px;margin-top:14px;}
+    .card{grid-column:span 12;border:1px solid rgba(212,175,55,.35);border-radius:14px;background:rgba(0,0,0,.35);padding:14px;}
+    .card h2{margin:0 0 10px;color:#00c853;font-size:16px;font-weight:900}
+    .muted{color:#d4af37;opacity:.9;font-weight:700}
+
+    .kpi-row{display:grid;grid-template-columns:repeat(12,1fr);gap:12px;}
+    .kpi{grid-column:span 6;border:1px solid rgba(212,175,55,.25);border-radius:14px;background:rgba(0,0,0,.28);padding:12px;}
+    .kpi .label{color:#d4af37;font-weight:800;font-size:12px;opacity:.95}
+    .kpi .value{color:#00c853;font-weight:900;font-size:20px;margin-top:6px}
+    .kpi .sub{color:#d4af37;font-weight:700;font-size:12px;opacity:.85;margin-top:4px}
+
+    .table{width:100%;border-collapse:separate;border-spacing:0 10px;}
+    .row{background:rgba(0,0,0,.25);border:1px solid rgba(212,175,55,.20);}
+    .table td{padding:12px 10px;color:#d4af37;font-weight:700}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid rgba(212,175,55,.35);background:rgba(0,0,0,.25);color:#d4af37;font-weight:800;font-size:12px}
+    .pill.green{border-color:rgba(0,200,83,.5);color:#00c853}
+    .pill.gold{border-color:rgba(212,175,55,.55);color:#d4af37}
+
+    .two{grid-column:span 12;display:grid;grid-template-columns:repeat(12,1fr);gap:14px;}
+    .half{grid-column:span 12;}
+    @media (min-width: 900px){
+      .kpi{grid-column:span 3;}
+      .half{grid-column:span 6;}
+    }
+
     .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
-    table{width:100%;border-collapse:separate;border-spacing:0 10px}
-    th{font-size:12px;opacity:.7;text-align:left;padding:0 10px}
-    td{padding:12px 10px;background:rgba(0,0,0,.25);border-top:1px solid rgba(212,175,55,.18);border-bottom:1px solid rgba(212,175,55,.18)}
-    tr td:first-child{border-left:1px solid rgba(212,175,55,.18);border-radius:14px 0 0 14px}
-    tr td:last-child{border-right:1px solid rgba(212,175,55,.18);border-radius:0 14px 14px 0}
-    .tag{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid rgba(0,200,83,.35);color:#00c853;font-size:12px}
-    .muted{opacity:.85}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;
+      padding:10px 14px;border-radius:999px;
+      border:1px solid rgba(212,175,55,.45);
+      background:rgba(0,0,0,.25);
+      color:#d4af37;font-weight:900;text-decoration:none;
+    }
+    .btn:hover{border-color:rgba(0,200,83,.65);color:#00c853}
   </style>
 </head>
 
 <body>
-  <div class="wrap">
+  <div class="page-wrap">
 
-    <!-- NAV -->
-    <nav class="menu" aria-label="TitanCore Menu">
-  <a class="menu-btn" href="/index.html">Dashboard</a>
-  <a class="menu-btn" href="/contact.html">Contact</a>
-  <a class="menu-btn" href="/contract.html">Contract</a>
-  <a class="menu-btn" href="/email.html">Email Routing</a>
-  <a class="menu-btn" href="/report.html">Report</a>
-  <a class="menu-btn" href="/approval.html">Approval</a>
-  <a class="menu-btn" href="/omni-system.html">Omni System</a>
-  <a class="menu-btn" href="/tax-network.html">Tax Network</a>
-  <a class="menu-btn" href="/agent-suite.html">Agent A.I. Suite</a>
-  <a class="menu-btn" href="/public-portal.html">Public Portal</a>
-</nav>
+    <!-- Header -->
+    <div class="topbar">
+      <div class="brandline">
+        <div class="brandtitle">TitanCore Holdings</div>
+        <div class="subtitle">Executive Control Center — Contact Command</div>
 
-    <!-- HEADER -->
-    <div class="panel">
-      <div class="tag">CONTACT COMMAND</div>
-      <h1 style="margin:10px 0 6px">Calls • Routing • Who’s calling</h1>
-      <div class="muted">Track inbound/outbound calls, caller type (Client/Bank/Institution), and which company it belongs to.</div>
-    </div>
-
-    <!-- KPIs -->
-    <div class="panel">
-      <div class="kpis">
-        <div class="kpi"><div class="k">Inbound Calls</div><div class="v" id="k_in">—</div></div>
-        <div class="kpi"><div class="k">Outbound Calls</div><div class="v" id="k_out">—</div></div>
-        <div class="kpi"><div class="k">Transfers</div><div class="v" id="k_tr">—</div></div>
-        <div class="kpi"><div class="k">Missed / Alerts</div><div class="v" id="k_miss">—</div></div>
+        <!-- Simple text time/date -->
+        <div class="sysline">
+          <span id="tcDate"></span>
+          <span class="dot">•</span>
+          <span id="tcTime"></span>
+        </div>
       </div>
     </div>
 
-    <!-- LOG FORM -->
-    <div class="panel">
-      <h2 style="margin:0 0 10px">Log a Call</h2>
+    <!-- MENU (must look like clickable buttons via styles.css) -->
+    <nav class="menu" aria-label="TitanCore Menu">
+      <a class="menu-btn" href="/index.html">Dashboard</a>
+      <a class="menu-btn active" href="/contact.html">Contact</a>
+      <a class="menu-btn" href="/contract.html">Contract</a>
+      <a class="menu-btn" href="/routing.html">Email Routing</a>
+      <a class="menu-btn" href="/report.html">Report</a>
+      <a class="menu-btn" href="/approval.html">Approval</a>
+      <a class="menu-btn" href="/omni-system.html">Omni System</a>
+      <a class="menu-btn" href="/tax-network.html">Tax Network</a>
+      <a class="menu-btn" href="/agent-suite.html">Agent A.I. Suite</a>
+      <a class="menu-btn" href="/public-portal.html">Public Portal</a>
+    </nav>
 
-      <form id="callForm">
-        <div class="row">
-          <div>
-            <label>Direction</label>
-            <select id="f_dir" required>
-              <option value="">Select…</option>
-              <option>Inbound</option>
-              <option>Outbound</option>
-              <option>Transfer</option>
-              <option>Missed</option>
-            </select>
+    <!-- CONTENT -->
+    <section class="grid">
+
+      <!-- KPIs -->
+      <div class="card">
+        <h2>Live Contact Overview</h2>
+        <div class="kpi-row">
+          <div class="kpi">
+            <div class="label">Inbound Calls (Today)</div>
+            <div class="value" id="inboundToday">0</div>
+            <div class="sub">All companies combined</div>
           </div>
-
-          <div>
-            <label>Caller Type</label>
-            <select id="f_type" required>
-              <option value="">Select…</option>
-              <option>Client</option>
-              <option>Bank</option>
-              <option>Institution</option>
-              <option>Vendor</option>
-              <option>Internal</option>
-            </select>
+          <div class="kpi">
+            <div class="label">Outbound Calls (Today)</div>
+            <div class="value" id="outboundToday">0</div>
+            <div class="sub">All companies combined</div>
           </div>
-        </div>
-
-        <div class="row" style="margin-top:10px">
-          <div>
-            <label>Company</label>
-            <select id="f_company" required>
-              <option value="">Select…</option>
-              <option>TitanCore Holdings</option>
-              <option>Vaultara Capital</option>
-              <option>VitalPath Care Group</option>
-              <option>RevMotion Auto &amp; Marine Group</option>
-              <option>Family First Equity Group</option>
-            </select>
+          <div class="kpi">
+            <div class="label">Transfers (Today)</div>
+            <div class="value" id="transferToday">0</div>
+            <div class="sub">TitanCore routed</div>
           </div>
-
-          <div>
-            <label>Phone / Name</label>
-            <input id="f_from" placeholder="e.g., +1 (xxx) xxx-xxxx / John Doe" required />
+          <div class="kpi">
+            <div class="label">Missed / Follow-up</div>
+            <div class="value" id="followupToday">0</div>
+            <div class="sub">Needs action</div>
           </div>
-        </div>
-
-        <div style="margin-top:10px">
-          <label>Reason / Notes</label>
-          <textarea id="f_notes" rows="3" placeholder="What was the call about? Any action needed?"></textarea>
         </div>
 
         <div class="actions">
-          <button class="btn primary" type="submit">Add Call</button>
-          <button class="btn" type="button" id="btn_seed">Load Sample</button>
-          <button class="btn danger" type="button" id="btn_clear">Clear</button>
+          <a class="btn" href="/contact.html">Refresh</a>
+          <a class="btn" href="/report.html">View Reports</a>
+          <a class="btn" href="/approval.html">Approvals</a>
         </div>
-      </form>
-    </div>
 
-    <!-- CALL LOG TABLE -->
-    <div class="panel">
-      <h2 style="margin:0 0 10px">Call Log</h2>
-      <table aria-label="Call log table">
-        <thead>
-          <tr>
-            <th>Time</th>
-            <th>Direction</th>
-            <th>Type</th>
-            <th>Company</th>
-            <th>From</th>
-            <th>Notes</th>
+        <p class="muted" style="margin-top:10px">
+          Note: This page is a command record view. Later we can connect live call logs (RingCentral/Teams/etc).
+        </p>
+      </div>
+
+      <!-- Two columns -->
+      <div class="two">
+
+        <!-- Call Log -->
+        <div class="card half">
+          <h2>Call Log (Sample)</h2>
+          <table class="table" aria-label="Call log">
+            <tr class="row">
+              <td><span class="pill green">Inbound</span></td>
+              <td>Client</td>
+              <td>TitanCore → Vaultara</td>
+              <td>02:14 PM</td>
+              <td><span class="pill gold">Transferred</span></td>
+            </tr>
+            <tr class="row">
+              <td><span class="pill green">Inbound</span></td>
+              <td>Bank</td>
+              <td>TitanCore → Family First</td>
+              <td>11:06 AM</td>
+              <td><span class="pill gold">In Progress</span></td>
+            </tr>
+            <tr class="row">
+              <td><span class="pill">Outbound</span></td>
+              <td>Vendor</td>
+              <td>VitalPath → Vendor</td>
+              <td>09:22 AM</td>
+              <td><span class="pill">Completed</span></td>
+            </tr>
+          </table>
+
+          <p class="muted">
+            Later: filter by company, caller type (Client / Bank / Investor), and status (Transferred / Follow-up).
+          </p>
+        </div>
+
+        <!-- Routing Summary -->
+        <div class="card half">
+          <h2>Routing Summary</h2>
+
+          <table class="table" aria-label="Routing summary">
+            <tr class="row">
+              <td><strong style="color:#00c853">TitanCore</strong></td>
+              <td>Central intake + routing</td>
+              <td><span class="pill green">Active</span></td>
+            </tr>
+            <tr class="row">
+              <td><strong style="color:#00c853">Vaultara</strong></td>
+              <td>Finance / capital requests</td>
+              <td><span class="pill">Standby</span></td>
+            </tr>
+            <tr class="row">
+              <td><strong style="color:#00c853">VitalPath</strong></td>
+              <td>Care operations</td>
+              <td><span class="pill">Standby</span></td>
+            </tr>
+            <tr class="row">
+              <td><strong style="color:#00c853">RevMotion</strong></td>
+              <td>Auto & marine services</td>
+              <td><span class="pill">Standby</span></td>
+            </tr>
+            <tr class="row">
+              <td><strong style="color:#00c853">Family First</strong></td>
+              <td>Real estate / equity</td>
+              <td><span class="pill">Standby</span></td>
+            </tr>
+          </table>
+
+          <div class="actions">
+            <a class="btn" href="/routing.html">Go to Email Routing</a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Action Queue -->
+      <div class="card">
+        <h2>Follow-up Queue</h2>
+        <table class="table" aria-label="Follow up queue">
+          <tr class="row">
+            <td><span class="pill gold">Follow-up</span></td>
+            <td>Investor inquiry received</td>
+            <td>Route to: invest@ (after relationship)</td>
+            <td>Owner: AI / TitanCore Comms</td>
           </tr>
-        </thead>
-        <tbody id="logBody"></tbody>
-      </table>
-    </div>
+          <tr class="row">
+            <td><span class="pill gold">Follow-up</span></td>
+            <td>Client requested contract update</td>
+            <td>Route to: Contract module</td>
+            <td>Owner: TitanCore Review</td>
+          </tr>
+        </table>
+      </div>
 
+    </section>
   </div>
 
+  <!-- Optional: demo numbers so page feels alive (remove later if you want) -->
   <script>
-    const KEY = "tc_call_log";
-
-    function nowStamp(){
-      const d = new Date();
-      return d.toLocaleString();
-    }
-    function load(){ return JSON.parse(localStorage.getItem(KEY) || "[]"); }
-    function save(list){ localStorage.setItem(KEY, JSON.stringify(list)); }
-
-    function render(){
-      const list = load();
-      const body = document.getElementById("logBody");
-      body.innerHTML = "";
-
-      let inbound=0,outbound=0,transfer=0,missed=0;
-
-      list.forEach(item=>{
-        if(item.dir==="Inbound") inbound++;
-        if(item.dir==="Outbound") outbound++;
-        if(item.dir==="Transfer") transfer++;
-        if(item.dir==="Missed") missed++;
-
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>${item.time}</td>
-          <td>${item.dir}</td>
-          <td>${item.type}</td>
-          <td>${item.company}</td>
-          <td>${item.from}</td>
-          <td>${item.notes || ""}</td>
-        `;
-        body.appendChild(tr);
-      });
-
-      document.getElementById("k_in").textContent  = inbound  || "—";
-      document.getElementById("k_out").textContent = outbound || "—";
-      document.getElementById("k_tr").textContent  = transfer || "—";
-      document.getElementById("k_miss").textContent= missed   || "—";
-    }
-
-    document.getElementById("callForm").addEventListener("submit", (e)=>{
-      e.preventDefault();
-      const list = load();
-      list.unshift({
-        time: nowStamp(),
-        dir: document.getElementById("f_dir").value,
-        type: document.getElementById("f_type").value,
-        company: document.getElementById("f_company").value,
-        from: document.getElementById("f_from").value,
-        notes: document.getElementById("f_notes").value
-      });
-      save(list);
-      e.target.reset();
-      render();
-    });
-
-    document.getElementById("btn_seed").addEventListener("click", ()=>{
-      const sample = [
-        {time: nowStamp(), dir:"Inbound", type:"Client", company:"Vaultara Capital", from:"+1 555-0101 / Client", notes:"Asked about investment onboarding."},
-        {time: nowStamp(), dir:"Inbound", type:"Bank", company:"TitanCore Holdings", from:"+1 555-0202 / Bank", notes:"Requested updated docs for facility."},
-        {time: nowStamp(), dir:"Transfer", type:"Institution", company:"Family First Equity Group", from:"+1 555-0303 / Institution", notes:"Transferred to subsidiary team."},
-      ];
-      save(sample);
-      render();
-    });
-
-    document.getElementById("btn_clear").addEventListener("click", ()=>{
-      save([]);
-      render();
-    });
-
-    render();
+    // demo counters
+    const rnd = (min,max)=>Math.floor(Math.random()*(max-min+1))+min;
+    document.getElementById("inboundToday").textContent = rnd(5, 22);
+    document.getElementById("outboundToday").textContent = rnd(3, 18);
+    document.getElementById("transferToday").textContent = rnd(1, 9);
+    document.getElementById("followupToday").textContent = rnd(0, 6);
   </script>
 </body>
 </html>
