@@ -1,22 +1,390 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Email Routing — TitanCore</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TitanCore — Email Routing</title>
+
+  <!-- Use your global stylesheet -->
+  <link rel="stylesheet" href="styles.css" />
+
   <style>
-    body{margin:0;background:#000;color:#d4af37;font-family:Arial;padding:22px}
-    h1{color:#00ff78;margin:0 0 10px}
-    a{color:#d4af37}
-    .box{border:1px solid rgba(212,175,55,.45);border-radius:18px;padding:16px;background:rgba(0,0,0,.35)}
+    /* Local safety styles (only if your styles.css is missing some pieces) */
+    .wrap{max-width:1100px;margin:0 auto;padding:16px}
+    .panel{
+      background:rgba(0,0,0,.35);
+      border:1px solid rgba(212,175,55,.35);
+      border-radius:18px;
+      padding:16px;
+      margin-top:14px;
+      box-shadow: 0 0 0 1px rgba(212,175,55,.08) inset;
+    }
+    .panel-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .panel-title{margin:0;color:#00c853;letter-spacing:.02em}
+    .panel-note{opacity:.85;margin-top:6px;line-height:1.35}
+    .cards4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:14px}
+    @media (max-width:860px){.cards4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    .card{
+      border:1px solid rgba(212,175,55,.25);
+      border-radius:16px;
+      padding:14px;
+      background:rgba(0,0,0,.25);
+    }
+    .card-title{opacity:.8;font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+    .card-value{font-size:26px;margin-top:6px;color:#00c853}
+    .row{display:grid;grid-template-columns:1.3fr .7fr;gap:12px;margin-top:14px}
+    @media (max-width:860px){.row{grid-template-columns:1fr}}
+    label{display:block;font-size:13px;opacity:.9;margin:0 0 6px}
+    input,select,textarea{
+      width:100%;
+      padding:12px;
+      border-radius:12px;
+      border:1px solid rgba(212,175,55,.25);
+      background:rgba(10,10,10,.55);
+      color:#d8c07a;
+      outline:none;
+    }
+    textarea{min-height:110px;resize:vertical}
+    .btn{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:10px 14px;border-radius:999px;
+      border:1px solid rgba(212,175,55,.35);
+      background:rgba(0,0,0,.35);
+      color:#d8c07a;text-decoration:none;
+      cursor:pointer;
+    }
+    .btn.primary{border-color:rgba(0,200,83,.55);color:#00c853}
+    .btn.danger{border-color:rgba(255,82,82,.55);color:#ff8a80}
+    .btn:active{transform:scale(.99)}
+    .table{
+      width:100%;border-collapse:separate;border-spacing:0 10px;margin-top:10px
+    }
+    .table th{font-size:12px;opacity:.75;text-transform:uppercase;letter-spacing:.08em;text-align:left;padding:0 10px}
+    .table td{
+      padding:12px 10px;
+      border-top:1px solid rgba(212,175,55,.18);
+      border-bottom:1px solid rgba(212,175,55,.18);
+      background:rgba(0,0,0,.25);
+    }
+    .table tr td:first-child{border-left:1px solid rgba(212,175,55,.18);border-top-left-radius:14px;border-bottom-left-radius:14px}
+    .table tr td:last-child{border-right:1px solid rgba(212,175,55,.18);border-top-right-radius:14px;border-bottom-right-radius:14px}
+    .pill{
+      display:inline-flex;align-items:center;justify-content:center;
+      padding:6px 10px;border-radius:999px;
+      border:1px solid rgba(212,175,55,.35);
+      background:rgba(0,0,0,.35);
+      font-size:12px;letter-spacing:.04em;
+    }
+    .pill.green{border-color:rgba(0,200,83,.55);color:#00c853}
+    .pill.gold{border-color:rgba(212,175,55,.55);color:#d8c07a}
+    .pill.red{border-color:rgba(255,82,82,.55);color:#ff8a80}
+    .topline{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+    .clocktext{opacity:.9}
+    .clocktext span{color:#00c853}
   </style>
 </head>
+
 <body>
-  <div class="box">
-    <h1>Email Routing</h1>
-    <p>This module is being built.</p>
-    <p><a href="/index.html">Back to Dashboard</a></p>
-    <p><a href="/agent-suite.html">Go to Agent A.I. Suite</a></p>
-  </div>
+  <main class="wrap">
+
+    <!-- TITLE + SMALL CLOCK TEXT -->
+    <section class="panel">
+      <div class="topline">
+        <div>
+          <h1 class="panel-title" style="font-size:34px;margin:0;">Email Routing</h1>
+          <div class="panel-note">Records-only routing for contact / invest / admin emails (no sending, no replying).</div>
+        </div>
+
+        <!-- Small clock (simple text, not big) -->
+        <div class="clocktext">
+          <div><span id="tcDate">—</span> • <span id="tcTime">—</span></div>
+          <div class="pill gold" style="margin-top:8px">ACTIVE</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GLOBAL MENU (BUTTONS) -->
+    <nav class="menu" aria-label="TitanCore Menu" style="margin-top:12px;">
+      <!-- IMPORTANT: ALL ROOT LINKS so they work from any page -->
+      <a class="menu-btn" href="/index.html" data-nav="index">Dashboard</a>
+      <a class="menu-btn" href="/contact.html" data-nav="contact">Contact</a>
+      <a class="menu-btn" href="/contract.html" data-nav="contract">Contract</a>
+      <a class="menu-btn active" href="/routing.html" data-nav="routing">Email Routing</a>
+      <a class="menu-btn" href="/report.html" data-nav="report">Report</a>
+      <a class="menu-btn" href="/approval.html" data-nav="approval">Approval</a>
+      <a class="menu-btn" href="/omni-system.html" data-nav="omni">Omni System</a>
+      <a class="menu-btn" href="/tax-network.html" data-nav="tax">Tax Network</a>
+      <a class="menu-btn" href="/agent-suite.html" data-nav="agent-suite">Agent A.I. Suite</a>
+      <a class="menu-btn" href="/public-portal.html" data-nav="public">Public Portal</a>
+    </nav>
+
+    <!-- KPIs -->
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <h2 class="panel-title" style="font-size:22px;margin:0;">Routing Overview</h2>
+          <div class="panel-note">Visibility + delays + escalation only (portfolio-wide).</div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn primary" id="btnSimulate">Simulate New Email</button>
+          <button class="btn danger" id="btnClear">Clear Log</button>
+        </div>
+      </div>
+
+      <div class="cards4">
+        <div class="card">
+          <div class="card-title">Total Emails</div>
+          <div class="card-value" id="kTotal">0</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Pending Response</div>
+          <div class="card-value" id="kPending">0</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Escalated</div>
+          <div class="card-value" id="kEscalated">0</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Overdue</div>
+          <div class="card-value" id="kOverdue">0</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROUTING RULES + LOG -->
+    <section class="panel">
+      <h2 class="panel-title" style="font-size:22px;margin:0;">Routing Rules</h2>
+      <div class="panel-note" style="margin-top:6px;">
+        Each message is classified, routed to the right module, and logged for audit.
+      </div>
+
+      <div class="row">
+        <div class="panel" style="margin:0;">
+          <h3 style="margin:0;color:#d8c07a;">Create Routing Rule</h3>
+          <div class="panel-note" style="margin-top:6px;">Demo rules (front-end only for now).</div>
+
+          <div style="margin-top:12px;">
+            <label>Queue</label>
+            <select id="fQueue">
+              <option value="contact">Contact</option>
+              <option value="invest">Invest / Vaultara</option>
+              <option value="admin">Admin</option>
+              <option value="compliance">Compliance</option>
+              <option value="tax">Tax Network</option>
+            </select>
+          </div>
+
+          <div style="margin-top:12px;">
+            <label>Keyword / Trigger</label>
+            <input id="fKey" placeholder="e.g. invoice, complaint, contract, tax, onboarding" />
+          </div>
+
+          <div style="margin-top:12px;">
+            <label>Action</label>
+            <select id="fAction">
+              <option value="log">Log only</option>
+              <option value="escalate">Escalate to TitanCore</option>
+              <option value="route">Route to module owner</option>
+            </select>
+          </div>
+
+          <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn primary" id="btnAddRule">Add Rule</button>
+            <span class="pill gold" id="ruleCount">0 rules</span>
+          </div>
+
+          <div id="rulesList" style="margin-top:12px;"></div>
+        </div>
+
+        <div class="panel" style="margin:0;">
+          <h3 style="margin:0;color:#d8c07a;">Email Log (Demo)</h3>
+          <div class="panel-note" style="margin-top:6px;">What came in, where it went, what status it has.</div>
+
+          <table class="table" aria-label="Email Log">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Type</th>
+                <th>Route</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="logBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // --- Small clock text (abbr month) ---
+    function pad(n){ return String(n).padStart(2,"0"); }
+    const months = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+    const days = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
+
+    function tick(){
+      const now = new Date();
+      const d = `${days[now.getDay()]}, ${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
+      const t = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+      const elD = document.getElementById("tcDate");
+      const elT = document.getElementById("tcTime");
+      if (elD) elD.textContent = d;
+      if (elT) elT.textContent = t;
+    }
+    tick(); setInterval(tick, 1000);
+
+    // --- Demo storage ---
+    const KEY_RULES = "tc_email_rules";
+    const KEY_LOG = "tc_email_log";
+
+    function loadRules(){
+      try { return JSON.parse(localStorage.getItem(KEY_RULES) || "[]"); }
+      catch(e){ return []; }
+    }
+    function saveRules(rules){
+      localStorage.setItem(KEY_RULES, JSON.stringify(rules));
+    }
+    function loadLog(){
+      try { return JSON.parse(localStorage.getItem(KEY_LOG) || "[]"); }
+      catch(e){ return []; }
+    }
+    function saveLog(items){
+      localStorage.setItem(KEY_LOG, JSON.stringify(items));
+    }
+
+    function recalcKPIs(items){
+      const total = items.length;
+      const pending = items.filter(x => x.status === "PENDING").length;
+      const escalated = items.filter(x => x.status === "ESCALATED").length;
+      const overdue = items.filter(x => x.status === "OVERDUE").length;
+      document.getElementById("kTotal").textContent = total;
+      document.getElementById("kPending").textContent = pending;
+      document.getElementById("kEscalated").textContent = escalated;
+      document.getElementById("kOverdue").textContent = overdue;
+    }
+
+    function renderRules(){
+      const rules = loadRules();
+      const box = document.getElementById("rulesList");
+      const badge = document.getElementById("ruleCount");
+      if (badge) badge.textContent = `${rules.length} rules`;
+      if (!box) return;
+
+      if (!rules.length){
+        box.innerHTML = `<div class="pill gold">No rules yet</div>`;
+        return;
+      }
+
+      box.innerHTML = rules.map((r,i)=>`
+        <div class="card" style="margin-top:10px;">
+          <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">
+            <div>
+              <div class="card-title">Queue</div>
+              <div>${r.queue.toUpperCase()}</div>
+            </div>
+            <div>
+              <div class="card-title">Trigger</div>
+              <div>${escapeHtml(r.key)}</div>
+            </div>
+            <div>
+              <div class="card-title">Action</div>
+              <div>${r.action.toUpperCase()}</div>
+            </div>
+            <button class="btn danger" data-del="${i}">Delete</button>
+          </div>
+        </div>
+      `).join("");
+
+      box.querySelectorAll("button[data-del]").forEach(btn=>{
+        btn.addEventListener("click", ()=>{
+          const idx = Number(btn.getAttribute("data-del"));
+          const rules2 = loadRules();
+          rules2.splice(idx,1);
+          saveRules(rules2);
+          renderRules();
+        });
+      });
+    }
+
+    function renderLog(){
+      const items = loadLog();
+      const body = document.getElementById("logBody");
+      if (!body) return;
+
+      if (!items.length){
+        body.innerHTML = `<tr><td colspan="4">No emails logged yet.</td></tr>`;
+        recalcKPIs(items);
+        return;
+      }
+
+      body.innerHTML = items.slice().reverse().map(x=>{
+        const pill = x.status === "ESCALATED" ? "red" : (x.status === "OVERDUE" ? "red" : (x.status === "PENDING" ? "gold" : "green"));
+        return `
+          <tr>
+            <td>${x.time}</td>
+            <td>${x.type}</td>
+            <td>${x.route}</td>
+            <td><span class="pill ${pill}">${x.status}</span></td>
+          </tr>
+        `;
+      }).join("");
+
+      recalcKPIs(items);
+    }
+
+    function escapeHtml(str){
+      return String(str||"")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    // Buttons
+    document.getElementById("btnAddRule")?.addEventListener("click", ()=>{
+      const queue = document.getElementById("fQueue").value;
+      const key = document.getElementById("fKey").value.trim();
+      const action = document.getElementById("fAction").value;
+      if (!key){ alert("Type a keyword / trigger first."); return; }
+      const rules = loadRules();
+      rules.push({ queue, key, action, ts: Date.now() });
+      saveRules(rules);
+      document.getElementById("fKey").value = "";
+      renderRules();
+    });
+
+    document.getElementById("btnSimulate")?.addEventListener("click", ()=>{
+      const types = ["CONTACT","INVEST","ADMIN","COMPLIANCE","TAX"];
+      const routes = ["Contact", "Vaultara / Invest", "Admin", "Compliance", "Tax Network"];
+      const statusPool = ["PENDING","PENDING","OK","ESCALATED","OVERDUE"];
+      const i = Math.floor(Math.random()*types.length);
+
+      const now = new Date();
+      const time = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+
+      const item = {
+        time,
+        type: types[i],
+        route: routes[i],
+        status: statusPool[Math.floor(Math.random()*statusPool.length)]
+      };
+
+      const log = loadLog();
+      log.push(item);
+      saveLog(log);
+      renderLog();
+    });
+
+    document.getElementById("btnClear")?.addEventListener("click", ()=>{
+      localStorage.removeItem(KEY_LOG);
+      renderLog();
+    });
+
+    // Init
+    renderRules();
+    renderLog();
+  </script>
 </body>
 </html>
