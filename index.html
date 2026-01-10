@@ -1,203 +1,135 @@
-<<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>TitanCore Executive Control Center</title>
-  <link rel="stylesheet" href="styles.css" />
-  <script src="app.js" defer></script>
+
+  <!-- GLOBAL (this is what prevents the white/purple-link page) -->
+  <link rel="stylesheet" href="/styles.css" />
+  <script defer src="/app.js"></script>
 </head>
 
-<body class="tcc-dashboard">
-  <div class="tcc-shell">
-    <!-- HEADER -->
-    <header class="tcc-hero">
-      <div class="tcc-brand">
-        <div class="tcc-badge" aria-hidden="true">TC</div>
-        <div class="tcc-title">
-          <h1>TitanCore<br/>Executive<br/>Control Center</h1>
-          <p class="tcc-sub">Holding-level command • authority • compliance • control</p>
-        </div>
-      </div>
+<body>
+  <div class="page">
 
-      <!-- Small, simple time (auto updates) -->
-      <div class="tcc-time">
-        <div class="tcc-time-label">System Time</div>
-        <div class="tcc-time-value" id="tcTime">—</div>
-        <div class="tcc-state">
-          <span class="tcc-dot"></span>
-          <span>CEO Mode • Active</span>
+    <!-- HERO / BRAND -->
+    <header class="panel hero">
+      <div class="brandline">
+        <div class="logo">TC</div>
+        <div>
+          <h1 class="h1">TitanCore<br/>Executive Control Center</h1>
+          <p class="sub">Holding-level command • authority • compliance • control</p>
+
+          <div class="clockwrap">
+            <div class="clocklabel">System Time</div>
+            <div class="clock" data-clock>—</div>
+            <div class="statusline">CEO Mode • Active</div>
+          </div>
         </div>
       </div>
     </header>
 
-    <!-- ZONE 2: ATTENTION REQUIRED -->
-    <section class="tcc-panel">
-      <div class="tcc-panel-head">
-        <h2>Executive Attention</h2>
-        <p>Only what needs CEO eyes — no clutter.</p>
+    <!-- DASHBOARD MENU (buttons only on dashboard) -->
+    <nav class="panel menu" aria-label="Dashboard Menu">
+      <div class="menugrid">
+        <a class="menu-btn" href="/index.html">Dashboard</a>
+        <a class="menu-btn" href="/contact.html">Contact</a>
+        <a class="menu-btn" href="/contract.html">Contract</a>
+        <a class="menu-btn" href="/routing.html">Email Routing</a>
+
+        <a class="menu-btn" href="/report.html">Report</a>
+        <a class="menu-btn" href="/approval.html">Approval</a>
+        <a class="menu-btn" href="/omni-system.html">Omni System</a>
+        <a class="menu-btn" href="/tax-network.html">Tax Network</a>
+
+        <a class="menu-btn" href="/agent-suite.html">Agent A.I. Suite</a>
+        <a class="menu-btn" href="/public-portal.html">Public Portal</a>
+        <a class="menu-btn" href="/finance.html">Finance</a>
+        <a class="menu-btn" href="/module.html">Modules</a>
       </div>
+    </nav>
 
-      <div class="tcc-kpis">
-        <a class="tcc-kpi" href="approval.html">
-          <div class="tcc-kpi-num">2</div>
-          <div class="tcc-kpi-title">CEO Attention</div>
-          <div class="tcc-kpi-note">Items needing CEO eyes</div>
-        </a>
+    <!-- EXECUTIVE ATTENTION -->
+    <section class="panel" style="margin-top:14px;">
+      <h2 class="section-title">Executive Attention</h2>
 
-        <a class="tcc-kpi" href="tax-network.html">
-          <div class="tcc-kpi-num">1</div>
-          <div class="tcc-kpi-title">Overdue</div>
-          <div class="tcc-kpi-note">Deadlines / approvals</div>
-        </a>
+      <div class="grid2">
+        <div class="kpi">
+          <div class="k">CEO Attention</div>
+          <div class="v">2</div>
+          <div class="d">Items needing CEO eyes</div>
+        </div>
 
-        <a class="tcc-kpi" href="contract.html">
-          <div class="tcc-kpi-num">3</div>
-          <div class="tcc-kpi-title">Critical Alerts</div>
-          <div class="tcc-kpi-note">Security + compliance</div>
-        </a>
+        <div class="kpi">
+          <div class="k">Overdue</div>
+          <div class="v">1</div>
+          <div class="d">Deadlines / approvals</div>
+        </div>
 
-        <a class="tcc-kpi" href="report.html">
-          <div class="tcc-kpi-num">4</div>
-          <div class="tcc-kpi-title">Ready to Review</div>
-          <div class="tcc-kpi-note">Contracts + reports</div>
-        </a>
-      </div>
+        <div class="kpi">
+          <div class="k">Critical Alerts</div>
+          <div class="v">3</div>
+          <div class="d">Security + compliance</div>
+        </div>
 
-      <div class="tcc-actions">
-        <a class="tcc-pill tcc-pill-green" href="approval.html">Approval Queue</a>
-        <a class="tcc-pill" href="contract.html">Contract Queue</a>
-        <a class="tcc-pill" href="report.html">Build Report</a>
-        <a class="tcc-pill" href="agent-suite.html">Open Agent Suite</a>
-      </div>
-    </section>
-
-    <!-- ZONE 3: SYSTEMS (THIS IS THE “DASHBOARD MENU” BUT DONE RIGHT) -->
-    <section class="tcc-panel">
-      <div class="tcc-panel-head">
-        <h2>Systems</h2>
-        <p>Tap a system to open. Dashboard stays clean.</p>
-      </div>
-
-      <div class="tcc-grid">
-        <a class="tcc-card" href="contact.html">
-          <div class="tcc-card-top">
-            <div class="tcc-card-title">Contact</div>
-            <div class="tcc-tag">Live</div>
-          </div>
-          <div class="tcc-card-note">External contact intake + routing entry points</div>
-        </a>
-
-        <a class="tcc-card" href="contract.html">
-          <div class="tcc-card-top">
-            <div class="tcc-card-title">Contract</div>
-            <div class="tcc-tag">Queue</div>
-          </div>
-          <div class="tcc-card-note">Create → TitanCore review → CEO final sign</div>
-        </a>
-
-        <a class="tcc-card" href="routing.html">
-          <div class="tcc-card-top">
-            <div class="tcc-card-title">Email Routing</div>
-            <div class="tcc-tag">Config</div>
-          </div>
-          <div class="tcc-card-note">Records-only oversight • escalation visibility</div>
-        </a>
-
-        <a class="tcc-card" href="report.html">
-          <div class="tcc-card-top">
-            <div class="tcc-card-title">Report</div>
-            <div class="tcc-tag">Build</div>
-          </div>
-          <div class="tcc-card-note">Build reports → submit to Approval</div>
-        </a>
-
-        <a class="tcc-card" href="approval.html">
-          <div class="tcc-card-top">
-            <div class="tcc-card-title">Approval</div>
-            <div class="tcc-tag">Review</div>
-          </div>
-          <div class="tcc-card-note">Queue → Mantle review → CEO final sign</div>
-        </a>
-
-        <a class="tcc-card" href="omni-system.html">
-          <div class="tcc-card-top">
-            <div class="tcc-card-title">Omni System</div>
-            <div class="tcc-tag">Ready</div>
-          </div>
-          <div class="tcc-card-note">High-level executive system map (read-only)</div>
-        </a>
-
-        <a class="tcc-card" href="tax-network.html">
-          <div class="tcc-card-top">
-            <div class="tcc-card-title">Tax Network</div>
-            <div class="tcc-tag">Ready</div>
-          </div>
-          <div class="tcc-card-note">Deadlines • licenses • audit readiness</div>
-        </a>
-
-        <a class="tcc-card" href="agent-suite.html">
-          <div class="tcc-card-top">
-            <div class="tcc-card-title">Agent A.I. Suite</div>
-            <div class="tcc-tag">Ready</div>
-          </div>
-          <div class="tcc-card-note">Agents • automations • monitoring • assigned actions</div>
-        </a>
-
-        <a class="tcc-card" href="public-portal.html">
-          <div class="tcc-card-top">
-            <div class="tcc-card-title">Public Portal</div>
-            <div class="tcc-tag">Public</div>
-          </div>
-          <div class="tcc-card-note">External-facing portal • investor / public views</div>
-        </a>
-
-        <a class="tcc-card" href="finance.html">
-          <div class="tcc-card-top">
-            <div class="tcc-card-title">Finance</div>
-            <div class="tcc-tag">Read-only</div>
-          </div>
-          <div class="tcc-card-note">Budgets • variance • executive financial oversight</div>
-        </a>
+        <div class="kpi">
+          <div class="k">Ready to Review</div>
+          <div class="v">4</div>
+          <div class="d">Contracts + reports</div>
+        </div>
       </div>
     </section>
 
-    <!-- ZONE 4: COMPANIES -->
-    <section class="tcc-panel">
-      <div class="tcc-panel-head">
-        <h2>Companies</h2>
-        <p>Holding + subsidiaries (click to open)</p>
+    <!-- COMPANIES -->
+    <section class="panel" style="margin-top:14px;">
+      <h2 class="section-title">Companies</h2>
+
+      <div class="listcard">
+        <div class="item">
+          <div>
+            <b>TitanCore Holdings</b><br/>
+            <span>Father company • governance</span>
+          </div>
+          <span>Open</span>
+        </div>
+
+        <div class="item">
+          <div>
+            <b>Vaultara Capital</b><br/>
+            <span>Investments • funding</span>
+          </div>
+          <span>Open</span>
+        </div>
+
+        <div class="item">
+          <div>
+            <b>VitalPath Care Group</b><br/>
+            <span>Healthcare • compliance</span>
+          </div>
+          <span>Open</span>
+        </div>
+
+        <div class="item">
+          <div>
+            <b>RevMotion Auto & Marine</b><br/>
+            <span>Fleet • service • ops</span>
+          </div>
+          <span>Open</span>
+        </div>
+
+        <div class="item">
+          <div>
+            <b>Family First Equity</b><br/>
+            <span>Equity • housing</span>
+          </div>
+          <span>Open</span>
+        </div>
       </div>
 
-      <div class="tcc-companylist">
-        <a class="tcc-company" href="index.html">
-          <div class="tcc-company-name">TitanCore Holdings</div>
-          <div class="tcc-company-note">Father company • governance</div>
-        </a>
-
-        <a class="tcc-company" href="vaultaracapital.html">
-          <div class="tcc-company-name">Vaultara Capital</div>
-          <div class="tcc-company-note">Investments • funding</div>
-        </a>
-
-        <a class="tcc-company" href="module.html">
-          <div class="tcc-company-name">VitalPath Care Group</div>
-          <div class="tcc-company-note">Healthcare • compliance</div>
-        </a>
-
-        <a class="tcc-company" href="module.html">
-          <div class="tcc-company-name">RevMotion Auto &amp; Marine</div>
-          <div class="tcc-company-note">Fleet • service • ops</div>
-        </a>
-
-        <a class="tcc-company" href="module.html">
-          <div class="tcc-company-name">Family First Equity</div>
-          <div class="tcc-company-note">Equity • housing</div>
-        </a>
-      </div>
-
-      <div class="tcc-footnote">TitanCore internal executive view — read-only</div>
+      <p class="sub" style="margin-top:12px;">TitanCore internal executive view — read-only</p>
     </section>
+
   </div>
 </body>
 </html>
