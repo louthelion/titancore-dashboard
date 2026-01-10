@@ -1,41 +1,26 @@
 (function () {
-  function pad(n) { return String(n).padStart(2, "0"); }
+  function fmtTime(d) {
+    const days = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
+    const months = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
 
-  function monthAbbr(m) {
-    // 0-based month
-    const M = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
-    return M[m] || "JAN";
-  }
+    const day = days[d.getDay()];
+    const mon = months[d.getMonth()];
+    const dd = String(d.getDate()).padStart(2, "0");
+    const yyyy = d.getFullYear();
 
-  function dayAbbr(d) {
-    const D = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
-    return D[d] || "SUN";
-  }
-
-  function format12h(date) {
-    let h = date.getHours();
+    let h = d.getHours();
     const ampm = h >= 12 ? "PM" : "AM";
-    h = h % 12;
-    if (h === 0) h = 12;
-    const mm = pad(date.getMinutes());
-    return `${h}:${mm} ${ampm}`;
+    h = h % 12; if (h === 0) h = 12;
+    const mm = String(d.getMinutes()).padStart(2, "0");
+
+    return `${day} • ${mon} ${dd} ${yyyy} • ${h}:${mm} ${ampm}`;
   }
 
   function tick() {
-    const now = new Date();
-
-    // Example: THU, JAN 08 2026 • 11:48 AM
-    const dateText = `${dayAbbr(now.getDay())}, ${monthAbbr(now.getMonth())} ${pad(now.getDate())} ${now.getFullYear()}`;
-    const timeText = format12h(now);
-
-    const d = document.getElementById("tcDateText");
-    const t = document.getElementById("tcTimeText");
-    if (d) d.textContent = dateText;
-    if (t) t.textContent = timeText;
+    const el = document.getElementById("tcTime");
+    if (el) el.textContent = fmtTime(new Date());
   }
 
-  document.addEventListener("DOMContentLoaded", () => {
-    tick();
-    setInterval(tick, 1000); // keeps it automatic
-  });
+  tick();
+  setInterval(tick, 1000);
 })();
