@@ -1,28 +1,41 @@
 (function () {
-  // Small date/time text (top right)
-  const el = document.getElementById("dateTime");
-  const accessLabel = document.getElementById("accessLabel");
+  function pad(n) { return String(n).padStart(2, "0"); }
 
-  function pad(n){ return String(n).padStart(2,"0"); }
-  const months = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
-
-  function tick(){
-    const d = new Date();
-    const txt = `${months[d.getMonth()]} ${pad(d.getDate())}, ${d.getFullYear()} · ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
-    if (el) el.textContent = txt;
+  function monthAbbr(m) {
+    // 0-based month
+    const M = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+    return M[m] || "JAN";
   }
-  tick();
-  setInterval(tick, 1000);
 
-  // Simple access label (read-only demo)
-  // You can change access by adding ?role=ceo OR ?role=mantle OR ?role=gm to URL
-  const params = new URLSearchParams(window.location.search);
-  const role = (params.get("role") || "ceo").toLowerCase();
+  function dayAbbr(d) {
+    const D = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
+    return D[d] || "SUN";
+  }
 
-  const map = {
-    ceo: "CEO",
-    mantle: "MANTLE",
-    gm: "GENERALS"
-  };
-  if (accessLabel) accessLabel.textContent = map[role] || "CEO";
+  function format12h(date) {
+    let h = date.getHours();
+    const ampm = h >= 12 ? "PM" : "AM";
+    h = h % 12;
+    if (h === 0) h = 12;
+    const mm = pad(date.getMinutes());
+    return `${h}:${mm} ${ampm}`;
+  }
+
+  function tick() {
+    const now = new Date();
+
+    // Example: THU, JAN 08 2026 • 11:48 AM
+    const dateText = `${dayAbbr(now.getDay())}, ${monthAbbr(now.getMonth())} ${pad(now.getDate())} ${now.getFullYear()}`;
+    const timeText = format12h(now);
+
+    const d = document.getElementById("tcDateText");
+    const t = document.getElementById("tcTimeText");
+    if (d) d.textContent = dateText;
+    if (t) t.textContent = timeText;
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    tick();
+    setInterval(tick, 1000); // keeps it automatic
+  });
 })();
