@@ -10,15 +10,14 @@
       --bg:#000;
       --bg2:#06120b;
       --gold:#d4af37;
-      --gold2: rgba(212,175,55,.28);
+      --goldLine: rgba(212,175,55,.26);
       --green:#00c853;
-      --white: rgba(255,255,255,.88);
-      --muted: rgba(212,175,55,.74);
+      --text: rgba(255,255,255,.86);
       --panelA: rgba(0,0,0,.82);
-      --panelB: rgba(0,0,0,.58);
-      --shadow: 0 18px 60px rgba(0,0,0,.55);
+      --panelB: rgba(0,0,0,.55);
       --r:18px;
       --r2:16px;
+      --shadow: 0 18px 60px rgba(0,0,0,.55);
       --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       --max:1200px;
     }
@@ -36,11 +35,11 @@
     }
     .wrap{max-width:var(--max); margin:0 auto; padding:16px}
 
-    /* TOP HEADER (Dashboard on top) */
+    /* Top */
     .top{display:flex; gap:12px; align-items:flex-start; margin-bottom:14px}
     .logo{
       width:52px; height:52px; border-radius:14px;
-      border:2px solid var(--gold2);
+      border:2px solid var(--goldLine);
       background: linear-gradient(180deg, rgba(0,200,83,.16), rgba(0,0,0,.65));
       display:flex; align-items:center; justify-content:center;
       font-weight:900; letter-spacing:.06em; color:var(--gold);
@@ -51,8 +50,8 @@
       font-size:clamp(26px, 5.2vw, 46px);
       color:rgba(212,175,55,.94);
     }
-    .sub{margin:6px 0 0 0; color:var(--muted)}
-    .timebar{margin-top:8px; font-size:13px; color:var(--white)}
+    .sub{margin:6px 0 0 0; color:rgba(212,175,55,.75)}
+    .timebar{margin-top:8px; font-size:13px; color:var(--text)}
     .pill{
       display:inline-flex; align-items:center; gap:8px;
       padding:8px 12px; border-radius:999px;
@@ -61,11 +60,11 @@
     }
     .dot{width:8px; height:8px; border-radius:999px; background:var(--green); box-shadow:0 0 16px rgba(0,200,83,.35)}
 
-    /* Double background main panel */
+    /* Double panel */
     .panel{
       position:relative;
       background: linear-gradient(180deg, var(--panelA), var(--panelB));
-      border:1px solid rgba(212,175,55,.24);
+      border:1px solid var(--goldLine);
       border-radius:var(--r);
       box-shadow: var(--shadow);
       padding:16px;
@@ -80,7 +79,7 @@
       pointer-events:none;
     }
 
-    /* 3 COLUMN GRID */
+    /* 3 columns */
     .grid{
       position:relative;
       display:grid;
@@ -107,7 +106,7 @@
       position:relative;
     }
 
-    /* LEFT MENU */
+    /* Left menu */
     .sideHead{
       position:relative;
       padding:12px 12px;
@@ -117,12 +116,241 @@
       font-weight:900;
       color:rgba(212,175,55,.92);
     }
-    .menu{
+    .menu{position:relative; display:flex; flex-direction:column; gap:10px; margin-top:10px}
+    .menu a{
+      text-decoration:none;
+      display:flex; align-items:center; gap:10px;
+      padding:12px 12px;
+      border-radius:999px;
+      border:1px solid rgba(212,175,55,.30);
+      background: rgba(0,0,0,.35);
+      color:rgba(212,175,55,.92);
+      font-weight:900;
+      cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
+      transition: transform .08s ease, border-color .18s ease, background .18s ease, color .18s ease;
+    }
+    .menu a:active{transform:scale(.99)}
+    .menu a:hover{border-color: rgba(0,200,83,.30); color: var(--green); background: rgba(0,200,83,.07)}
+    .ic{width:10px; height:10px; border-radius:999px; background: rgba(212,175,55,.45); box-shadow:0 0 14px rgba(212,175,55,.18)}
+
+    /* Companies */
+    .company{
       position:relative;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
+      display:flex; justify-content:space-between; align-items:center;
+      gap:12px;
+      padding:14px;
+      border-radius:var(--r2);
+      border:1px solid rgba(212,175,55,.22);
+      background: rgba(0,0,0,.32);
       margin-top:10px;
     }
-    .menuBtn{
-     
+    .name{font-weight:900; color:rgba(212,175,55,.95)}
+    .desc{margin-top:4px; color:rgba(255,255,255,.76); font-size:13px}
+    .openpill{
+      text-decoration:none;
+      display:inline-flex;
+      padding:10px 16px;
+      border-radius:999px;
+      border:1px solid rgba(0,200,83,.42);
+      color: var(--green);
+      background: rgba(0,200,83,.08);
+      font-weight:900;
+      letter-spacing:.06em;
+      font-size:13px;
+      cursor:pointer;
+    }
+
+    /* Leadership */
+    .card{
+      position:relative;
+      border-radius:var(--r2);
+      border:1px solid rgba(212,175,55,.22);
+      background: rgba(0,0,0,.34);
+      padding:14px;
+      margin-top:10px;
+    }
+    .card h3{margin:0 0 6px 0; color:rgba(212,175,55,.95)}
+    .card p{margin:0; color:rgba(255,255,255,.78); font-size:13px; line-height:1.35}
+    .roleRow{
+      display:flex; justify-content:space-between; align-items:center; gap:10px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(212,175,55,.18);
+      background: rgba(0,0,0,.28);
+      margin-top:10px;
+    }
+    .role{font-weight:900; color:rgba(212,175,55,.92)}
+    .miniOpen{
+      text-decoration:none;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(0,200,83,.38);
+      background: rgba(0,200,83,.08);
+      color:var(--green);
+      font-weight:900;
+      cursor:pointer;
+      font-size:12px;
+      letter-spacing:.06em;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <!-- TOP -->
+    <div class="top">
+      <div class="logo">TC</div>
+      <div>
+        <h1 class="h1">TitanCore Dashboard</h1>
+        <p class="sub">TitanCore Holdings • Executive Control Center</p>
+        <div class="timebar">
+          <span class="pill">
+            <span class="dot"></span>
+            <span>System Time</span><span>•</span>
+            <span id="clock">—</span><span>•</span>
+            <span>CEO Mode</span><span>•</span>
+            <span style="color:var(--green);font-weight:900">Active</span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN -->
+    <div class="panel">
+      <div class="grid">
+
+        <!-- LEFT: MENU (ONLY HERE) -->
+        <div>
+          <div class="sideHead">Main Control</div>
+          <div class="menu">
+            <a href="contact.html"><span class="ic"></span><span>Contact</span></a>
+            <a href="contract.html"><span class="ic"></span><span>Contract</span></a>
+            <a href="email-routing.html"><span class="ic"></span><span>Email Routing</span></a>
+            <a href="report.html"><span class="ic"></span><span>Report</span></a>
+            <a href="approval.html"><span class="ic"></span><span>Approval</span></a>
+            <a href="omni.html"><span class="ic"></span><span>Omni System</span></a>
+            <a href="tax.html"><span class="ic"></span><span>Tax Network</span></a>
+            <a href="agent.html"><span class="ic"></span><span>Agent A.I. Suite</span></a>
+            <a href="public-portal.html"><span class="ic"></span><span>Public Portal</span></a>
+            <a href="finance.html"><span class="ic"></span><span>Finance</span></a>
+          </div>
+        </div>
+
+        <!-- MIDDLE: COMPANIES -->
+        <div>
+          <h2 class="title">Companies</h2>
+          <p class="subtitle">Holding + subsidiaries (tap OPEN)</p>
+
+          <div class="company">
+            <div>
+              <div class="name">TitanCore Holdings</div>
+              <div class="desc">Father company • governance</div>
+            </div>
+            <a class="openpill" href="company-titancore.html">OPEN</a>
+          </div>
+
+          <div class="company">
+            <div>
+              <div class="name">Vaultara Capital</div>
+              <div class="desc">Investments • funding</div>
+            </div>
+            <a class="openpill" href="company-vaultara.html">OPEN</a>
+          </div>
+
+          <div class="company">
+            <div>
+              <div class="name">VitalPath Care Group</div>
+              <div class="desc">Healthcare • compliance</div>
+            </div>
+            <a class="openpill" href="company-vitalpath.html">OPEN</a>
+          </div>
+
+          <div class="company">
+            <div>
+              <div class="name">RevMotion Auto &amp; Marine</div>
+              <div class="desc">Fleet • service • ops</div>
+            </div>
+            <a class="openpill" href="company-revmotion.html">OPEN</a>
+          </div>
+
+          <div class="company">
+            <div>
+              <div class="name">Family First Equity</div>
+              <div class="desc">Equity • housing</div>
+            </div>
+            <a class="openpill" href="company-familyfirst.html">OPEN</a>
+          </div>
+        </div>
+
+        <!-- RIGHT: LEADERSHIP -->
+        <div>
+          <h2 class="title">Leadership</h2>
+          <p class="subtitle">CEO + Mantle of 7 + Generals</p>
+
+          <div class="card">
+            <h3>CEO</h3>
+            <p>Private executive page.</p>
+            <div class="roleRow">
+              <div class="role">CEO</div>
+              <a class="miniOpen" href="ceo.html">OPEN</a>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Mantle of 7 (CEO + 6)</h3>
+            <p>President • VP • Director • Asst Director • Chief of Staff • Executive Advisor</p>
+
+            <div class="roleRow"><div class="role">President</div><a class="miniOpen" href="mantle.html">OPEN</a></div>
+            <div class="roleRow"><div class="role">Vice President</div><a class="miniOpen" href="mantle.html">OPEN</a></div>
+            <div class="roleRow"><div class="role">Director</div><a class="miniOpen" href="mantle.html">OPEN</a></div>
+            <div class="roleRow"><div class="role">Asst Director</div><a class="miniOpen" href="mantle.html">OPEN</a></div>
+            <div class="roleRow"><div class="role">Chief of Staff</div><a class="miniOpen" href="mantle.html">OPEN</a></div>
+            <div class="roleRow"><div class="role">Executive Advisor</div><a class="miniOpen" href="mantle.html">OPEN</a></div>
+          </div>
+
+          <div class="card">
+            <h3>Generals</h3>
+            <p>GM • GAM • GA</p>
+            <div class="roleRow"><div class="role">General Manager</div><a class="miniOpen" href="generals.html">OPEN</a></div>
+            <div class="roleRow"><div class="role">General Asst Manager</div><a class="miniOpen" href="generals.html">OPEN</a></div>
+            <div class="roleRow"><div class="role">General Administrator</div><a class="miniOpen" href="generals.html">OPEN</a></div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // 12-hour clock with abbreviated month/day
+    const DAYS = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
+    const MONS = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+    const pad2 = (n)=> (n<10 ? "0"+n : ""+n);
+
+    function formatStamp(d){
+      const day = DAYS[d.getDay()];
+      const mon = MONS[d.getMonth()];
+      const dd  = pad2(d.getDate());
+      const yyyy = d.getFullYear();
+
+      let h = d.getHours();
+      const ampm = h >= 12 ? "PM" : "AM";
+      h = h % 12; if (h === 0) h = 12;
+
+      const mm = pad2(d.getMinutes());
+      const ss = pad2(d.getSeconds());
+      return `${day}, ${mon} ${dd} ${yyyy} • ${h}:${mm}:${ss} ${ampm}`;
+    }
+
+    function tick(){
+      document.getElementById("clock").textContent = formatStamp(new Date());
+    }
+    tick();
+    setInterval(tick, 1000);
+  </script>
+</body>
+</html>
