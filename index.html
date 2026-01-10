@@ -2,288 +2,174 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>TitanCore Executive Control Center</title>
-  <link rel="stylesheet" href="styles.css" />
-  <script defer src="app.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TitanCore Holdings — Executive Control Center</title>
+
+  <!-- GLOBAL CSS -->
+  <link rel="stylesheet" href="/styles.css" />
 </head>
 
 <body>
-  <!-- Outer shell (Layer 1) -->
-  <div class="shell">
-    <!-- Top Header -->
-    <header class="topbar">
-      <div class="brand">
-        <div class="logo">TC</div>
-        <div class="brand-text">
-          <div class="brand-title">TitanCore Holdings</div>
-          <div class="brand-subtitle">Executive Control Center</div>
+  <!-- DOUBLE BACKGROUND LAYER -->
+  <div class="bg-layer"></div>
+
+  <header class="hero">
+    <div class="hero-left">
+      <div class="tc-logo" aria-hidden="true">TC</div>
+      <div>
+        <h1 class="hero-title">TitanCore<br/>Executive<br/>Control Center</h1>
+        <div class="hero-sub">Holding-level command • authority • compliance • control</div>
+      </div>
+    </div>
+
+    <!-- SMALL AUTO TIME (12-hour) -->
+    <div class="time-box">
+      <div class="time-label">System Time</div>
+      <div class="time-text">
+        <span id="tcDateText">---</span> • <span id="tcTimeText">--:--</span>
+      </div>
+      <div class="mode-line">
+        <span class="mode-pill" id="tcMode">ACTIVE</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- DASHBOARD MENU (ONLY ON DASHBOARD PAGE) -->
+  <nav class="dash-menu" aria-label="TitanCore Dashboard Menu">
+    <a class="menu-btn active" href="/index.html">Dashboard</a>
+    <a class="menu-btn" href="/contact.html">Contact</a>
+    <a class="menu-btn" href="/contract.html">Contract</a>
+    <a class="menu-btn" href="/routing.html">Email Routing</a>
+    <a class="menu-btn" href="/report.html">Report</a>
+    <a class="menu-btn" href="/approval.html">Approval</a>
+    <a class="menu-btn" href="/omni-system.html">Omni System</a>
+    <a class="menu-btn" href="/tax-network.html">Tax Network</a>
+    <a class="menu-btn" href="/agent-suite.html">Agent A.I. Suite</a>
+    <a class="menu-btn" href="/public-portal.html">Public Portal</a>
+    <a class="menu-btn" href="/finance.html">Finance</a>
+  </nav>
+
+  <main class="wrap">
+    <!-- AUTHORITY -->
+    <section class="panel">
+      <div class="panel-head">
+        <h2 class="panel-title">Authority</h2>
+        <div class="panel-note">Executive layer access • view-only governance</div>
+      </div>
+
+      <div class="callout">
+        <div class="callout-title">Executive Layer Access</div>
+        <div class="callout-text">
+          CEO + Mantle of 7 + Generals only (company managers do NOT access this dashboard core).
         </div>
       </div>
 
-      <div class="top-meta">
-        <div class="meta-line">
-          <span class="meta-label">DATE/TIME:</span>
-          <span id="dateTime" class="meta-value">—</span>
+      <div class="list">
+        <div class="list-row">
+          <div>
+            <div class="list-title">CEO</div>
+            <div class="list-sub">Private executive page</div>
+          </div>
+          <a class="btn primary" href="/ceo.html">Open</a>
         </div>
-        <div class="meta-line">
-          <span class="meta-label">ACCESS:</span>
-          <span id="accessLabel" class="meta-value">CEO</span>
+
+        <div class="list-row">
+          <div>
+            <div class="list-title">Mantle of 7 (CEO + 6)</div>
+            <div class="list-sub">President • VP • Director • Asst Director • Chief of Staff • Executive Advisor</div>
+          </div>
+          <a class="btn primary" href="/mantle.html">Open</a>
+        </div>
+
+        <div class="list-row">
+          <div>
+            <div class="list-title">Generals</div>
+            <div class="list-sub">GM • GAM • GA (visibility + routing)</div>
+          </div>
+          <a class="btn" href="/generals.html">Open</a>
         </div>
       </div>
-    </header>
+    </section>
 
-    <!-- Horizontal Navigation (ONLY on Dashboard) -->
-    <nav class="nav">
-      <a class="nav-btn is-active" href="index.html">Dashboard</a>
-      <a class="nav-btn" href="contact.html">Contact</a>
-      <a class="nav-btn" href="contract.html">Contract</a>
-      <a class="nav-btn" href="email-routing.html">Email Routing</a>
-      <a class="nav-btn" href="report.html">Report</a>
-      <a class="nav-btn" href="approval.html">Approval</a>
-      <a class="nav-btn" href="omni.html">Omni System</a>
-      <a class="nav-btn" href="tax.html">Tax Network</a>
-      <a class="nav-btn" href="agent-ai-suite.html">Agent A.I. Suite</a>
-      <a class="nav-btn" href="public-portal.html">Public Portal</a>
-    </nav>
+    <!-- CONTROL ROOM (REPLACES the duplicate “System Status” mistake) -->
+    <section class="panel">
+      <div class="panel-head">
+        <h2 class="panel-title">Control Room</h2>
+        <div class="panel-note">CEO attention only — no duplicate menu blocks</div>
+      </div>
 
-    <!-- Inner panel (Layer 2) -->
-    <main class="panel">
-      <!-- Executive Summary -->
-      <section class="section">
-        <div class="section-head">
-          <h2 class="section-title">Executive Overview</h2>
-          <div class="section-note">Read-only command view. Drill-down pages are view-only.</div>
+      <div class="cards4">
+        <div class="card">
+          <div class="card-title">CEO Attention</div>
+          <div class="card-value">2</div>
+          <div class="card-sub">Items needing CEO eyes</div>
         </div>
-
-        <div class="kpi-grid">
-          <div class="kpi">
-            <div class="kpi-title">Company Health</div>
-            <div class="kpi-value">GREEN</div>
-            <div class="kpi-sub">0 critical • 2 watch</div>
-          </div>
-          <div class="kpi">
-            <div class="kpi-title">Contracts Queue</div>
-            <div class="kpi-value">12</div>
-            <div class="kpi-sub">3 awaiting TitanCore review</div>
-          </div>
-          <div class="kpi">
-            <div class="kpi-title">Compliance Pressure</div>
-            <div class="kpi-value">MODERATE</div>
-            <div class="kpi-sub">5 upcoming deadlines</div>
-          </div>
-          <div class="kpi">
-            <div class="kpi-title">Operational Drift</div>
-            <div class="kpi-value">LOW</div>
-            <div class="kpi-sub">1 delayed department</div>
-          </div>
+        <div class="card">
+          <div class="card-title">Overdue</div>
+          <div class="card-value">1</div>
+          <div class="card-sub">Deadlines / approvals</div>
         </div>
-      </section>
-
-      <!-- 3-column Command Layout -->
-      <section class="section">
-        <div class="section-head">
-          <h2 class="section-title">Command Layout</h2>
-          <div class="section-note">Leadership • Companies • Executive Modules</div>
+        <div class="card">
+          <div class="card-title">Critical Alerts</div>
+          <div class="card-value">3</div>
+          <div class="card-sub">Security + compliance</div>
         </div>
-
-        <div class="grid-3">
-          <!-- Left Column: Leadership -->
-          <div class="card">
-            <div class="card-head">
-              <h3 class="card-title">Leadership</h3>
-              <div class="card-tag">Executive Layer</div>
-            </div>
-
-            <div class="card-block">
-              <div class="block-title">Mantle of 7 (CEO + 6)</div>
-              <div class="list">
-                <a class="item" href="ceo.html">CEO</a>
-                <a class="item" href="president.html">President</a>
-                <a class="item" href="vice-president.html">Vice President</a>
-                <a class="item" href="director.html">Director</a>
-                <a class="item" href="assistant-director.html">Assistant Director</a>
-                <a class="item" href="chief-of-staff.html">Chief of Staff</a>
-                <a class="item" href="executive-advisor.html">Executive Advisor</a>
-              </div>
-            </div>
-
-            <div class="card-block">
-              <div class="block-title">Generals</div>
-              <div class="list">
-                <a class="item" href="general-manager.html">General Manager</a>
-                <a class="item" href="general-assistant-manager.html">General Assistant Manager</a>
-                <a class="item" href="general-administrator.html">General Administrator</a>
-              </div>
-            </div>
-
-            <div class="card-block">
-              <div class="block-title">Visibility Rules</div>
-              <div class="muted">
-                Only CEO + Mantle + Generals can access this Executive Control Center.
-                Company Managers / Department Managers do <b>not</b> access this page.
-              </div>
-            </div>
-          </div>
-
-          <!-- Middle Column: Companies -->
-          <div class="card">
-            <div class="card-head">
-              <h3 class="card-title">Companies</h3>
-              <div class="card-tag">Read-Only Drill-Down</div>
-            </div>
-
-            <div class="company-grid">
-              <a class="company" href="titancore.html">
-                <div class="company-name">TitanCore Holdings</div>
-                <div class="company-sub">Umbrella / Father Company</div>
-              </a>
-
-              <a class="company" href="vaultara.html">
-                <div class="company-name">Vaultara Capital</div>
-                <div class="company-sub">Capital • Finance • Funding</div>
-              </a>
-
-              <a class="company" href="vitalpath.html">
-                <div class="company-name">VitalPath Care Group</div>
-                <div class="company-sub">Healthcare Services</div>
-              </a>
-
-              <a class="company" href="revmotion.html">
-                <div class="company-name">RevMotion Auto &amp; Marine Group</div>
-                <div class="company-sub">Auto • Marine • Services</div>
-              </a>
-
-              <a class="company" href="familyfirst.html">
-                <div class="company-name">Family First Equity Group</div>
-                <div class="company-sub">Real Estate • Equity</div>
-              </a>
-            </div>
-
-            <div class="divider"></div>
-
-            <div class="card-block">
-              <div class="block-title">Company Drill-Down Includes</div>
-              <ul class="bullets">
-                <li>Company definition + leadership</li>
-                <li>6 departments (Manager + Assistant Manager + employees)</li>
-                <li>Contracts status • Tax status • Finance summary • Logs</li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- Right Column: Executive Modules -->
-          <div class="card">
-            <div class="card-head">
-              <h3 class="card-title">Executive Modules</h3>
-              <div class="card-tag">Control &amp; Oversight</div>
-            </div>
-
-            <div class="module-grid">
-              <a class="module" href="authority.html">
-                <div class="module-name">Authority &amp; Oversight</div>
-                <div class="module-sub">Escalations • Decisions • Controls</div>
-              </a>
-
-              <a class="module" href="compliance.html">
-                <div class="module-name">Compliance Command</div>
-                <div class="module-sub">Deadlines • Licenses • Audit readiness</div>
-              </a>
-
-              <a class="module" href="control-room.html">
-                <div class="module-name">Control Room</div>
-                <div class="module-sub">Health map • Drift • Delays</div>
-              </a>
-
-              <a class="module" href="security-access.html">
-                <div class="module-name">Security &amp; Access</div>
-                <div class="module-sub">Role visibility • Access boundaries</div>
-              </a>
-            </div>
-
-            <div class="divider"></div>
-
-            <div class="card-block">
-              <div class="block-title">System Status (Read-Only)</div>
-              <div class="status-grid">
-                <div class="status">
-                  <span class="dot green"></span>
-                  <span>Omni System</span>
-                  <span class="status-right">Ready</span>
-                </div>
-                <div class="status">
-                  <span class="dot green"></span>
-                  <span>Tax Network</span>
-                  <span class="status-right">Ready</span>
-                </div>
-                <div class="status">
-                  <span class="dot green"></span>
-                  <span>Agent A.I. Suite</span>
-                  <span class="status-right">Ready</span>
-                </div>
-                <div class="status">
-                  <span class="dot amber"></span>
-                  <span>Email Routing</span>
-                  <span class="status-right">Config</span>
-                </div>
-                <div class="status">
-                  <span class="dot amber"></span>
-                  <span>Contracts</span>
-                  <span class="status-right">Queue</span>
-                </div>
-                <div class="status">
-                  <span class="dot amber"></span>
-                  <span>Finance</span>
-                  <span class="status-right">Read-Only</span>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div class="card">
+          <div class="card-title">Ready to Review</div>
+          <div class="card-value">4</div>
+          <div class="card-sub">Contracts + reports</div>
         </div>
-      </section>
+      </div>
 
-      <!-- Executive Attention -->
-      <section class="section">
-        <div class="section-head">
-          <h2 class="section-title">Executive Attention</h2>
-          <div class="section-note">Only what needs CEO eyes — no clutter.</div>
-        </div>
+      <div class="row" style="margin-top:12px;">
+        <a class="btn primary" href="/approval.html">Approval Queue</a>
+        <a class="btn" href="/contract.html">Contract Queue</a>
+        <a class="btn" href="/report.html">Build Report</a>
+        <a class="btn" href="/agent-suite.html">Open Agent Suite</a>
+      </div>
+    </section>
 
-        <div class="attention-grid">
-          <div class="attention">
-            <div class="attention-title">Top Risks</div>
-            <ul class="bullets">
-              <li>2 deadlines within 30 days</li>
-              <li>3 contracts awaiting TitanCore review</li>
-              <li>1 department delayed (RevMotion)</li>
-            </ul>
-          </div>
+    <!-- COMPANIES -->
+    <section class="panel">
+      <div class="panel-head">
+        <h2 class="panel-title">Companies</h2>
+        <div class="panel-note">Holding + subsidiaries (click to open)</div>
+      </div>
 
-          <div class="attention">
-            <div class="attention-title">Next Actions</div>
-            <ul class="bullets">
-              <li>Open Contracts → Review queue</li>
-              <li>Open Tax Network → Upcoming deadlines</li>
-              <li>Open Omni System → Workflow status</li>
-            </ul>
-          </div>
+      <div class="grid2">
+        <a class="tile" href="/titanCore.html">
+          <div class="tile-title">TitanCore Holdings</div>
+          <div class="tile-sub">Father company • governance</div>
+        </a>
 
-          <div class="attention">
-            <div class="attention-title">Audit Readiness</div>
-            <ul class="bullets">
-              <li>Licenses list: pending build</li>
-              <li>State expansion: ready to add</li>
-              <li>Risk scoring: framework ready</li>
-            </ul>
-          </div>
-        </div>
-      </section>
+        <a class="tile" href="/vaultaracapital.html">
+          <div class="tile-title">Vaultara Capital</div>
+          <div class="tile-sub">Investments • funding</div>
+        </a>
 
-      <footer class="footer">
-        <div class="footer-left">TitanCore Executive Control Center • Read-Only Oversight</div>
-        <div class="footer-right">Black • Green • Gold</div>
-      </footer>
-    </main>
-  </div>
+        <a class="tile" href="/vitalpath.html">
+          <div class="tile-title">VitalPath Care Group</div>
+          <div class="tile-sub">Healthcare • compliance</div>
+        </a>
+
+        <a class="tile" href="/revmotion.html">
+          <div class="tile-title">RevMotion Auto & Marine</div>
+          <div class="tile-sub">Fleet • service • ops</div>
+        </a>
+
+        <a class="tile" href="/familyfirst.html">
+          <div class="tile-title">Family First Equity</div>
+          <div class="tile-sub">Equity • housing</div>
+        </a>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <div class="foot-note">TitanCore internal executive view — read-only governance.</div>
+    </footer>
+  </main>
+
+  <!-- GLOBAL JS (timer + global behaviors) -->
+  <script src="/app.js" defer></script>
 </body>
 </html>
