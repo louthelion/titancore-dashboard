@@ -1,488 +1,203 @@
-<!doctype html>
+<<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>TitanCore Executive Control Center</title>
-
-  <!-- Use your global stylesheet if you already have it -->
-  <link rel="stylesheet" href="/styles.css" />
-
-  <!-- Dashboard-only safety styles (if styles.css is missing anything) -->
-  <style>
-    :root{
-      --bg:#000;
-      --panel:#0a0a0a;
-      --panel2:rgba(0,0,0,.55);
-      --gold: #d4af37;
-      --goldSoft: rgba(212,175,55,.35);
-      --green:#00c853;
-      --greenSoft: rgba(0,200,83,.35);
-      --textGold: rgba(212,175,55,.92);
-      --textDim: rgba(212,175,55,.70);
-      --line: rgba(212,175,55,.25);
-      --line2: rgba(0,200,83,.22);
-      --radius: 18px;
-    }
-
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background:
-        radial-gradient(900px 900px at 20% 10%, rgba(0,200,83,.10), transparent 55%),
-        radial-gradient(900px 900px at 80% 0%, rgba(212,175,55,.10), transparent 55%),
-        linear-gradient(#000, #000);
-      color: var(--textGold);
-    }
-
-    /* DOUBLE BACKGROUND LOOK */
-    .stage{
-      max-width: 1040px;
-      margin: 18px auto 34px;
-      padding: 14px;
-    }
-    .shell{
-      position: relative;
-      border-radius: 26px;
-      padding: 14px;
-      border: 1px solid var(--goldSoft);
-      background: rgba(0,0,0,.55);
-      box-shadow:
-        0 0 0 1px rgba(0,200,83,.10) inset,
-        0 18px 55px rgba(0,0,0,.55);
-      overflow: hidden;
-    }
-    .shell::before{
-      content:"";
-      position:absolute; inset:10px;
-      border-radius: 22px;
-      border: 1px solid rgba(212,175,55,.18);
-      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.00));
-      pointer-events:none;
-    }
-    .shell::after{
-      content:"";
-      position:absolute; inset:-120px;
-      background:
-        radial-gradient(420px 420px at 20% 30%, rgba(0,200,83,.10), transparent 60%),
-        radial-gradient(520px 520px at 80% 40%, rgba(212,175,55,.10), transparent 65%);
-      pointer-events:none;
-      filter: blur(0px);
-      opacity: .9;
-    }
-
-    .content{
-      position: relative;
-      z-index: 1;
-      padding: 18px;
-    }
-
-    .top{
-      display:grid;
-      grid-template-columns: 1.3fr 1fr;
-      gap: 14px;
-      align-items: stretch;
-    }
-    @media (max-width: 860px){
-      .top{ grid-template-columns: 1fr; }
-    }
-
-    .brand{
-      border-radius: var(--radius);
-      border: 1px solid var(--line);
-      background: rgba(0,0,0,.45);
-      padding: 18px;
-    }
-    .brandRow{
-      display:flex; gap: 14px; align-items:flex-start;
-    }
-    .tcBadge{
-      width: 48px; height: 84px;
-      border-radius: 22px;
-      border: 2px solid var(--goldSoft);
-      display:flex; align-items:center; justify-content:center;
-      font-weight: 800;
-      color: var(--gold);
-      letter-spacing: .08em;
-    }
-    .brand h1{
-      margin: 0;
-      font-size: 44px;
-      line-height: 1.02;
-      letter-spacing: .02em;
-    }
-    .brand h1 .g{ color: var(--green); }
-    .brand .sub{
-      margin-top: 8px;
-      color: var(--textDim);
-      font-weight: 650;
-      letter-spacing: .02em;
-    }
-
-    .timeBox{
-      border-radius: var(--radius);
-      border: 1px solid var(--line);
-      background: rgba(0,0,0,.45);
-      padding: 18px;
-      display:flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 10px;
-    }
-    .timeLabel{
-      color: var(--textDim);
-      font-weight: 750;
-      letter-spacing:.04em;
-      text-transform: uppercase;
-      font-size: 13px;
-    }
-    /* SIMPLE SMALL TEXT TIME (like you requested) */
-    .timeText{
-      color: var(--textGold);
-      font-weight: 800;
-      font-size: 18px;
-      letter-spacing: .03em;
-    }
-    .activePill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      width: fit-content;
-      padding: 8px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(0,200,83,.35);
-      color: var(--gold);
-      background: rgba(0,0,0,.30);
-      font-weight: 800;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      font-size: 12px;
-    }
-    .dot{
-      width:10px; height:10px; border-radius: 50%;
-      background: var(--green);
-      box-shadow: 0 0 0 3px rgba(0,200,83,.18);
-    }
-
-    /* MENU BUTTONS (CLICKABLE LOOK) */
-    .menu{
-      margin-top: 14px;
-      display:flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    .menu a{
-      text-decoration:none;
-    }
-    .menu-btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding: 12px 16px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(0,0,0,.35);
-      color: var(--textGold);
-      font-weight: 850;
-      letter-spacing: .02em;
-      min-width: 140px;
-      cursor:pointer;
-      transition: transform .06s ease, border-color .15s ease, background .15s ease;
-    }
-    .menu-btn:active{ transform: translateY(1px); }
-    .menu-btn:hover{
-      border-color: rgba(212,175,55,.55);
-      background: rgba(0,0,0,.50);
-    }
-    .menu-btn.active{
-      border-color: rgba(0,200,83,.60);
-      box-shadow: 0 0 0 2px rgba(0,200,83,.16) inset;
-      color: var(--green);
-    }
-
-    /* PANELS */
-    .grid2{
-      margin-top: 14px;
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-    @media (max-width: 860px){
-      .grid2{ grid-template-columns: 1fr; }
-    }
-    .panel{
-      border-radius: var(--radius);
-      border: 1px solid var(--line);
-      background: rgba(0,0,0,.45);
-      padding: 16px;
-    }
-    .panel h2{
-      margin: 0 0 8px 0;
-      font-size: 22px;
-      letter-spacing:.02em;
-      color: var(--green);
-    }
-    .muted{ color: var(--textDim); font-weight: 650; }
-
-    .kpis{
-      margin-top: 10px;
-      display:grid;
-      grid-template-columns: repeat(2, minmax(0,1fr));
-      gap: 10px;
-    }
-    .kpi{
-      border-radius: 16px;
-      border: 1px solid rgba(212,175,55,.18);
-      background: rgba(0,0,0,.30);
-      padding: 12px;
-    }
-    .kpi .k{
-      text-transform: uppercase;
-      letter-spacing: .08em;
-      font-size: 11px;
-      color: rgba(212,175,55,.75);
-      font-weight: 800;
-    }
-    .kpi .v{
-      margin-top: 6px;
-      font-size: 26px;
-      font-weight: 900;
-      color: var(--textGold);
-    }
-    .kpi .s{
-      margin-top: 2px;
-      font-size: 12px;
-      color: rgba(212,175,55,.68);
-      font-weight: 700;
-    }
-
-    .list{
-      margin-top: 10px;
-      display:flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .row{
-      display:flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      padding: 12px 12px;
-      border-radius: 16px;
-      border: 1px solid rgba(212,175,55,.18);
-      background: rgba(0,0,0,.30);
-    }
-    .row .left{
-      display:flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-    .row .title{
-      font-weight: 900;
-      letter-spacing:.01em;
-      color: var(--textGold);
-    }
-    .row .desc{
-      color: rgba(212,175,55,.68);
-      font-weight: 650;
-      font-size: 12px;
-    }
-    .tag{
-      padding: 7px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(0,200,83,.30);
-      color: var(--green);
-      background: rgba(0,200,83,.08);
-      font-weight: 850;
-      font-size: 12px;
-      letter-spacing:.03em;
-      white-space: nowrap;
-    }
-
-    /* Company links */
-    .company a{
-      color: var(--textGold);
-      text-decoration: none;
-      font-weight: 850;
-    }
-    .company a:hover{
-      text-decoration: underline;
-      text-decoration-color: rgba(0,200,83,.45);
-    }
-    .company .desc{
-      margin-top: 2px;
-      color: rgba(212,175,55,.70);
-      font-weight: 650;
-      font-size: 12px;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="app.js" defer></script>
 </head>
 
-<body>
-  <div class="stage">
-    <div class="shell">
-      <div class="content">
-
-        <!-- TOP HEADER -->
-        <div class="top">
-          <div class="brand">
-            <div class="brandRow">
-              <div class="tcBadge">TC</div>
-              <div>
-                <h1><span class="g">TitanCore</span><br><span class="g">Executive</span><br><span class="g">Control</span> Center</h1>
-                <div class="sub">Holding-level command • authority • compliance • control</div>
-              </div>
-            </div>
-
-            <!-- DASHBOARD MENU (BUTTONS) -->
-            <nav class="menu" aria-label="TitanCore Menu">
-              <a class="menu-btn active" href="/index.html">Dashboard</a>
-              <a class="menu-btn" href="/contact.html">Contact</a>
-              <a class="menu-btn" href="/contract.html">Contract</a>
-              <a class="menu-btn" href="/routing.html">Email Routing</a>
-              <a class="menu-btn" href="/report.html">Report</a>
-              <a class="menu-btn" href="/approval.html">Approval</a>
-              <a class="menu-btn" href="/omni-system.html">Omni System</a>
-              <a class="menu-btn" href="/tax-network.html">Tax Network</a>
-              <a class="menu-btn" href="/agent-suite.html">Agent A.I. Suite</a>
-              <a class="menu-btn" href="/public-portal.html">Public Portal</a>
-              <a class="menu-btn" href="/finance.html">Finance</a>
-            </nav>
-          </div>
-
-          <!-- TIME (SMALL TEXT, AUTO, 12H) -->
-          <div class="timeBox">
-            <div>
-              <div class="timeLabel">System Time</div>
-              <div id="sysTime" class="timeText">Loading…</div>
-            </div>
-            <div class="activePill"><span class="dot"></span> ACTIVE</div>
-          </div>
+<body class="tcc-dashboard">
+  <div class="tcc-shell">
+    <!-- HEADER -->
+    <header class="tcc-hero">
+      <div class="tcc-brand">
+        <div class="tcc-badge" aria-hidden="true">TC</div>
+        <div class="tcc-title">
+          <h1>TitanCore<br/>Executive<br/>Control Center</h1>
+          <p class="tcc-sub">Holding-level command • authority • compliance • control</p>
         </div>
-
-        <!-- MAIN PANELS -->
-        <div class="grid2">
-          <!-- EXEC ATTENTION (NO DUPLICATE MENU BLOCKS) -->
-          <section class="panel">
-            <h2>Executive Attention</h2>
-            <div class="muted">Only what needs CEO eyes — no clutter.</div>
-
-            <div class="kpis">
-              <div class="kpi">
-                <div class="k">CEO Attention</div>
-                <div class="v" id="k_ceo">2</div>
-                <div class="s">Items needing CEO eyes</div>
-              </div>
-              <div class="kpi">
-                <div class="k">Overdue</div>
-                <div class="v" id="k_overdue">1</div>
-                <div class="s">Deadlines / approvals</div>
-              </div>
-              <div class="kpi">
-                <div class="k">Critical Alerts</div>
-                <div class="v" id="k_alerts">3</div>
-                <div class="s">Security + compliance</div>
-              </div>
-              <div class="kpi">
-                <div class="k">Ready to Review</div>
-                <div class="v" id="k_review">4</div>
-                <div class="s">Contracts + reports</div>
-              </div>
-            </div>
-
-            <div class="list" style="margin-top:12px;">
-              <div class="row">
-                <div class="left">
-                  <div class="title">Top Risk</div>
-                  <div class="desc">2 deadlines inside 30 days</div>
-                </div>
-                <div class="tag">Watch</div>
-              </div>
-              <div class="row">
-                <div class="left">
-                  <div class="title">Compliance Drift</div>
-                  <div class="desc">1 item returned for revision</div>
-                </div>
-                <div class="tag">Review</div>
-              </div>
-            </div>
-          </section>
-
-          <!-- COMPANIES -->
-          <section class="panel company">
-            <h2>Companies</h2>
-            <div class="muted">Holding + subsidiaries (click to open)</div>
-
-            <div class="list">
-              <div class="row">
-                <div class="left">
-                  <div class="title"><a href="/titanCore.html">TitanCore Holdings</a></div>
-                  <div class="desc">Father company • governance</div>
-                </div>
-                <div class="tag">Core</div>
-              </div>
-
-              <div class="row">
-                <div class="left">
-                  <div class="title"><a href="/vaultaracapital.html">Vaultara Capital</a></div>
-                  <div class="desc">Investments • funding</div>
-                </div>
-                <div class="tag">Live</div>
-              </div>
-
-              <div class="row">
-                <div class="left">
-                  <div class="title"><a href="/vitalpath.html">VitalPath Care Group</a></div>
-                  <div class="desc">Healthcare • compliance</div>
-                </div>
-                <div class="tag">Live</div>
-              </div>
-
-              <div class="row">
-                <div class="left">
-                  <div class="title"><a href="/revmotion.html">RevMotion Auto &amp; Marine</a></div>
-                  <div class="desc">Fleet • service • ops</div>
-                </div>
-                <div class="tag">Live</div>
-              </div>
-
-              <div class="row">
-                <div class="left">
-                  <div class="title"><a href="/familyfirst.html">Family First Equity</a></div>
-                  <div class="desc">Equity • housing</div>
-                </div>
-                <div class="tag">Live</div>
-              </div>
-            </div>
-
-            <div class="muted" style="margin-top:12px;">
-              TitanCore internal executive view — read-only
-            </div>
-          </section>
-        </div>
-
       </div>
-    </div>
-  </div>
 
-  <!-- Time updater (safe even if app.js exists) -->
-  <script>
-    (function(){
-      function fmt(d){
-        const wd = new Intl.DateTimeFormat('en-US',{weekday:'short'}).format(d);
-        const mdY = new Intl.DateTimeFormat('en-US',{month:'short', day:'2-digit', year:'numeric'}).format(d);
-        const hm = new Intl.DateTimeFormat('en-US',{hour:'numeric', minute:'2-digit', hour12:true}).format(d);
-        // Example: Fri · Jan 09 2026 · 9:31 PM
-        return wd + " \u00B7 " + mdY + " \u00B7 " + hm;
-      }
-      const el = document.getElementById('sysTime');
-      function tick(){
-        if(!el) return;
-        el.textContent = fmt(new Date());
-      }
-      tick();
-      setInterval(tick, 1000);
-    })();
-  </script>
+      <!-- Small, simple time (auto updates) -->
+      <div class="tcc-time">
+        <div class="tcc-time-label">System Time</div>
+        <div class="tcc-time-value" id="tcTime">—</div>
+        <div class="tcc-state">
+          <span class="tcc-dot"></span>
+          <span>CEO Mode • Active</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- ZONE 2: ATTENTION REQUIRED -->
+    <section class="tcc-panel">
+      <div class="tcc-panel-head">
+        <h2>Executive Attention</h2>
+        <p>Only what needs CEO eyes — no clutter.</p>
+      </div>
+
+      <div class="tcc-kpis">
+        <a class="tcc-kpi" href="approval.html">
+          <div class="tcc-kpi-num">2</div>
+          <div class="tcc-kpi-title">CEO Attention</div>
+          <div class="tcc-kpi-note">Items needing CEO eyes</div>
+        </a>
+
+        <a class="tcc-kpi" href="tax-network.html">
+          <div class="tcc-kpi-num">1</div>
+          <div class="tcc-kpi-title">Overdue</div>
+          <div class="tcc-kpi-note">Deadlines / approvals</div>
+        </a>
+
+        <a class="tcc-kpi" href="contract.html">
+          <div class="tcc-kpi-num">3</div>
+          <div class="tcc-kpi-title">Critical Alerts</div>
+          <div class="tcc-kpi-note">Security + compliance</div>
+        </a>
+
+        <a class="tcc-kpi" href="report.html">
+          <div class="tcc-kpi-num">4</div>
+          <div class="tcc-kpi-title">Ready to Review</div>
+          <div class="tcc-kpi-note">Contracts + reports</div>
+        </a>
+      </div>
+
+      <div class="tcc-actions">
+        <a class="tcc-pill tcc-pill-green" href="approval.html">Approval Queue</a>
+        <a class="tcc-pill" href="contract.html">Contract Queue</a>
+        <a class="tcc-pill" href="report.html">Build Report</a>
+        <a class="tcc-pill" href="agent-suite.html">Open Agent Suite</a>
+      </div>
+    </section>
+
+    <!-- ZONE 3: SYSTEMS (THIS IS THE “DASHBOARD MENU” BUT DONE RIGHT) -->
+    <section class="tcc-panel">
+      <div class="tcc-panel-head">
+        <h2>Systems</h2>
+        <p>Tap a system to open. Dashboard stays clean.</p>
+      </div>
+
+      <div class="tcc-grid">
+        <a class="tcc-card" href="contact.html">
+          <div class="tcc-card-top">
+            <div class="tcc-card-title">Contact</div>
+            <div class="tcc-tag">Live</div>
+          </div>
+          <div class="tcc-card-note">External contact intake + routing entry points</div>
+        </a>
+
+        <a class="tcc-card" href="contract.html">
+          <div class="tcc-card-top">
+            <div class="tcc-card-title">Contract</div>
+            <div class="tcc-tag">Queue</div>
+          </div>
+          <div class="tcc-card-note">Create → TitanCore review → CEO final sign</div>
+        </a>
+
+        <a class="tcc-card" href="routing.html">
+          <div class="tcc-card-top">
+            <div class="tcc-card-title">Email Routing</div>
+            <div class="tcc-tag">Config</div>
+          </div>
+          <div class="tcc-card-note">Records-only oversight • escalation visibility</div>
+        </a>
+
+        <a class="tcc-card" href="report.html">
+          <div class="tcc-card-top">
+            <div class="tcc-card-title">Report</div>
+            <div class="tcc-tag">Build</div>
+          </div>
+          <div class="tcc-card-note">Build reports → submit to Approval</div>
+        </a>
+
+        <a class="tcc-card" href="approval.html">
+          <div class="tcc-card-top">
+            <div class="tcc-card-title">Approval</div>
+            <div class="tcc-tag">Review</div>
+          </div>
+          <div class="tcc-card-note">Queue → Mantle review → CEO final sign</div>
+        </a>
+
+        <a class="tcc-card" href="omni-system.html">
+          <div class="tcc-card-top">
+            <div class="tcc-card-title">Omni System</div>
+            <div class="tcc-tag">Ready</div>
+          </div>
+          <div class="tcc-card-note">High-level executive system map (read-only)</div>
+        </a>
+
+        <a class="tcc-card" href="tax-network.html">
+          <div class="tcc-card-top">
+            <div class="tcc-card-title">Tax Network</div>
+            <div class="tcc-tag">Ready</div>
+          </div>
+          <div class="tcc-card-note">Deadlines • licenses • audit readiness</div>
+        </a>
+
+        <a class="tcc-card" href="agent-suite.html">
+          <div class="tcc-card-top">
+            <div class="tcc-card-title">Agent A.I. Suite</div>
+            <div class="tcc-tag">Ready</div>
+          </div>
+          <div class="tcc-card-note">Agents • automations • monitoring • assigned actions</div>
+        </a>
+
+        <a class="tcc-card" href="public-portal.html">
+          <div class="tcc-card-top">
+            <div class="tcc-card-title">Public Portal</div>
+            <div class="tcc-tag">Public</div>
+          </div>
+          <div class="tcc-card-note">External-facing portal • investor / public views</div>
+        </a>
+
+        <a class="tcc-card" href="finance.html">
+          <div class="tcc-card-top">
+            <div class="tcc-card-title">Finance</div>
+            <div class="tcc-tag">Read-only</div>
+          </div>
+          <div class="tcc-card-note">Budgets • variance • executive financial oversight</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ZONE 4: COMPANIES -->
+    <section class="tcc-panel">
+      <div class="tcc-panel-head">
+        <h2>Companies</h2>
+        <p>Holding + subsidiaries (click to open)</p>
+      </div>
+
+      <div class="tcc-companylist">
+        <a class="tcc-company" href="index.html">
+          <div class="tcc-company-name">TitanCore Holdings</div>
+          <div class="tcc-company-note">Father company • governance</div>
+        </a>
+
+        <a class="tcc-company" href="vaultaracapital.html">
+          <div class="tcc-company-name">Vaultara Capital</div>
+          <div class="tcc-company-note">Investments • funding</div>
+        </a>
+
+        <a class="tcc-company" href="module.html">
+          <div class="tcc-company-name">VitalPath Care Group</div>
+          <div class="tcc-company-note">Healthcare • compliance</div>
+        </a>
+
+        <a class="tcc-company" href="module.html">
+          <div class="tcc-company-name">RevMotion Auto &amp; Marine</div>
+          <div class="tcc-company-note">Fleet • service • ops</div>
+        </a>
+
+        <a class="tcc-company" href="module.html">
+          <div class="tcc-company-name">Family First Equity</div>
+          <div class="tcc-company-note">Equity • housing</div>
+        </a>
+      </div>
+
+      <div class="tcc-footnote">TitanCore internal executive view — read-only</div>
+    </section>
+  </div>
 </body>
 </html>
