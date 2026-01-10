@@ -3,405 +3,225 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>TitanCore Executive Control Center</title>
-
-  <style>
-    :root{
-      --bg:#050606;
-      --panel:rgba(8,10,10,.72);
-      --panel2:rgba(0,0,0,.45);
-      --gold:rgba(212,175,55,.75);
-      --gold2:rgba(212,175,55,.35);
-      --green:#00c853;
-      --text:#d7b85a;
-      --white:#e9e9e9;
-    }
-
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(1200px 700px at 20% 10%, rgba(0,200,83,.10), transparent 60%),
-        radial-gradient(900px 600px at 85% 20%, rgba(212,175,55,.08), transparent 55%),
-        linear-gradient(180deg, #020303, #050606);
-      min-height:100vh;
-    }
-
-    /* DOUBLE BACKGROUND / LAYERED WRAP */
-    .wrap{
-      max-width: 1100px;
-      margin: 18px auto 40px;
-      padding: 14px;
-      position:relative;
-    }
-    .wrap::before{
-      content:"";
-      position:absolute;
-      inset: 8px;
-      border-radius: 26px;
-      background:
-        radial-gradient(900px 500px at 10% 0%, rgba(0,200,83,.10), transparent 60%),
-        radial-gradient(800px 520px at 100% 20%, rgba(212,175,55,.10), transparent 55%),
-        linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.0));
-      filter: blur(0.2px);
-      z-index:-2;
-    }
-    .wrap::after{
-      content:"";
-      position:absolute;
-      inset: 0;
-      border-radius: 28px;
-      background: rgba(0,0,0,.35);
-      border:1px solid var(--gold2);
-      box-shadow:
-        0 12px 30px rgba(0,0,0,.55),
-        0 0 0 1px rgba(0,200,83,.08) inset;
-      z-index:-3;
-    }
-
-    /* HEADER */
-    .header{
-      padding: 18px 16px 14px;
-      border-radius: 22px;
-      background: linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.25));
-      border:1px solid var(--gold2);
-      box-shadow: 0 10px 26px rgba(0,0,0,.35);
-    }
-    .brandRow{
-      display:flex;
-      align-items:flex-start;
-      gap:12px;
-    }
-    .tc{
-      width:46px;height:46px;
-      border-radius:16px;
-      border:2px solid var(--gold);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      color:var(--gold);
-      font-weight:800;
-      letter-spacing:.5px;
-      margin-top:4px;
-      flex:0 0 auto;
-    }
-    h1{
-      margin:0;
-      line-height:1.02;
-      letter-spacing:.2px;
-      font-size: 44px;
-      color: var(--green);
-      text-shadow: 0 0 18px rgba(0,200,83,.10);
-    }
-    .sub{
-      margin:8px 0 0;
-      color:var(--text);
-      opacity:.95;
-      letter-spacing:.3px;
-    }
-
-    /* SMALL SIMPLE TIME (AUTO) */
-    .timeLine{
-      margin-top: 14px;
-      padding-top: 10px;
-      border-top: 1px solid rgba(212,175,55,.22);
-      font-size: 14px;
-      color: var(--white);
-      opacity:.9;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-    }
-    .timeLabel{ color:var(--text); opacity:.9 }
-    .dot{opacity:.5}
-
-    /* DASHBOARD MENU (BUTTONS) */
-    .menu{
-      margin-top: 14px;
-      display:grid;
-      grid-template-columns: repeat(2, minmax(0,1fr));
-      gap: 12px;
-    }
-    @media (min-width: 760px){
-      .menu{ grid-template-columns: repeat(4, minmax(0,1fr)); }
-    }
-
-    .pill{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-decoration:none;
-      text-align:center;
-      padding: 12px 12px;
-      border-radius: 999px;
-      background: rgba(0,0,0,.35);
-      border: 1px solid var(--gold2);
-      color: var(--text);
-      font-weight: 800;
-      letter-spacing:.2px;
-      box-shadow: 0 10px 18px rgba(0,0,0,.25);
-      transition: transform .08s ease, border-color .12s ease, background .12s ease;
-      user-select:none;
-    }
-    .pill:active{ transform: scale(.98); }
-    .pill:hover{ border-color: var(--gold); }
-
-    .pill.active{
-      border-color: rgba(0,200,83,.55);
-      color: var(--green);
-      box-shadow: 0 0 0 2px rgba(0,200,83,.10) inset, 0 10px 18px rgba(0,0,0,.25);
-    }
-
-    /* PANELS */
-    .grid{
-      margin-top: 16px;
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 14px;
-    }
-    @media (min-width: 900px){
-      .grid{ grid-template-columns: 1.15fr .85fr; }
-    }
-
-    .panel{
-      border-radius: 22px;
-      background: linear-gradient(180deg, var(--panel), var(--panel2));
-      border:1px solid var(--gold2);
-      padding: 16px;
-      box-shadow: 0 10px 26px rgba(0,0,0,.30);
-    }
-    .ptitle{
-      margin:0 0 10px;
-      font-size: 18px;
-      letter-spacing:.3px;
-      color: var(--green);
-    }
-    .note{
-      margin:0 0 12px;
-      color: var(--text);
-      opacity:.9;
-    }
-
-    /* CEO tiles */
-    .tiles{
-      display:grid;
-      grid-template-columns: repeat(2, minmax(0,1fr));
-      gap: 12px;
-    }
-    .tile{
-      border-radius: 18px;
-      padding: 14px;
-      border:1px solid rgba(212,175,55,.22);
-      background: rgba(0,0,0,.25);
-    }
-    .tile .n{
-      font-size: 30px;
-      font-weight: 900;
-      color: var(--green);
-      margin:0;
-      line-height:1;
-    }
-    .tile .t{
-      margin: 8px 0 0;
-      font-weight: 800;
-      color: var(--white);
-      opacity:.9;
-    }
-    .tile .s{
-      margin: 6px 0 0;
-      color: var(--text);
-      opacity:.9;
-      font-size: 13px;
-    }
-
-    /* Companies */
-    .companyBtn{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:10px;
-      padding: 14px 14px;
-      border-radius: 18px;
-      text-decoration:none;
-      border:1px solid rgba(212,175,55,.22);
-      background: rgba(0,0,0,.22);
-      color: var(--white);
-    }
-    .companyBtn strong{ color: var(--text); }
-    .companyBtn span{ opacity:.85; font-size: 13px; }
-    .openTag{
-      padding: 8px 12px;
-      border-radius: 999px;
-      border:1px solid rgba(0,200,83,.45);
-      color: var(--green);
-      font-weight: 900;
-      font-size: 12px;
-      background: rgba(0,200,83,.06);
-      flex:0 0 auto;
-    }
-
-    .footer{
-      margin-top: 14px;
-      text-align:center;
-      font-size: 12px;
-      opacity:.75;
-      color: var(--text);
-    }
-  </style>
+  <title>TitanCore • Executive Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
-  <div class="wrap">
-    <div class="header">
-      <div class="brandRow">
-        <div class="tc">TC</div>
-        <div>
-          <h1>TitanCore<br/>Executive<br/>Control Center</h1>
-          <p class="sub">Holding-level command • authority • compliance • control</p>
-
-          <div class="timeLine">
-            <span class="timeLabel">System Time</span>
-            <span class="dot">•</span>
-            <span id="sysTime">—</span>
-            <span class="dot">•</span>
-            <span>CEO Mode</span>
-            <span class="dot">•</span>
-            <span style="color:var(--green);font-weight:800">Active</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- MENU BUTTONS (ONLY ON DASHBOARD) -->
-      <div class="menu" aria-label="Dashboard Menu">
-        <a class="pill active" href="index.html">Dashboard</a>
-        <a class="pill" href="contact.html">Contact</a>
-        <a class="pill" href="contract.html">Contract</a>
-        <a class="pill" href="routing.html">Email Routing</a>
-        <a class="pill" href="report.html">Report</a>
-        <a class="pill" href="approval.html">Approval</a>
-        <a class="pill" href="omni-system.html">Omni System</a>
-        <a class="pill" href="tax-network.html">Tax Network</a>
-        <a class="pill" href="agent-suite.html">Agent A.I. Suite</a>
-        <a class="pill" href="public-portal.html">Public Portal</a>
-        <a class="pill" href="finance.html">Finance</a>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">TC</div>
+      <div>
+        <div class="brand-title">TitanCore Dashboard</div>
+        <div class="brand-sub">Executive Control Center</div>
       </div>
     </div>
 
-    <div class="grid">
-      <div class="panel">
-        <h2 class="ptitle">Executive Attention</h2>
-        <p class="note">Only what needs CEO eyes — no clutter.</p>
+    <nav class="tabs" aria-label="Primary">
+      <a class="tab active" href="#">Dashboard</a>
+      <a class="tab" href="contact.html">Contact</a>
+      <a class="tab" href="contract.html">Contract</a>
+      <a class="tab" href="routing.html">Email Routing</a>
+      <a class="tab" href="report.html">Report</a>
+      <a class="tab" href="approval.html">Approval</a>
+      <a class="tab" href="omni-system.html">Omni System</a>
+      <a class="tab" href="tax-network.html">Tax Network</a>
+      <a class="tab" href="agent-suite.html">Agent A.I. Suite</a>
+      <a class="tab" href="public-portal.html">Public Portal</a>
+      <a class="tab" href="finance.html">Finance</a>
+    </nav>
 
-        <div class="tiles">
-          <div class="tile">
-            <p class="n">2</p>
-            <div class="t">CEO Attention</div>
-            <div class="s">Items needing CEO eyes</div>
-          </div>
-          <div class="tile">
-            <p class="n">1</p>
-            <div class="t">Overdue</div>
-            <div class="s">Deadlines / approvals</div>
-          </div>
-          <div class="tile">
-            <p class="n">3</p>
-            <div class="t">Critical Alerts</div>
-            <div class="s">Security + compliance</div>
-          </div>
-          <div class="tile">
-            <p class="n">4</p>
-            <div class="t">Ready to Review</div>
-            <div class="s">Contracts + reports</div>
-          </div>
-        </div>
-
-        <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
-          <a class="pill" href="approval.html" style="min-width:160px;">Approval Queue</a>
-          <a class="pill" href="contract.html" style="min-width:160px;">Contract Queue</a>
-          <a class="pill" href="report.html" style="min-width:160px;">Build Report</a>
-          <a class="pill" href="agent-suite.html" style="min-width:190px;">Open Agent Suite</a>
-        </div>
-      </div>
-
-      <div class="panel">
-        <h2 class="ptitle">Companies</h2>
-        <p class="note">Holding + subsidiaries (click to open)</p>
-
-        <div style="display:grid; gap:10px;">
-          <a class="companyBtn" href="index.html">
-            <div>
-              <strong>TitanCore Holdings</strong><br/>
-              <span>Father company • governance</span>
-            </div>
-            <div class="openTag">OPEN</div>
-          </a>
-
-          <a class="companyBtn" href="vaultaracapital.html">
-            <div>
-              <strong>Vaultara Capital</strong><br/>
-              <span>Investments • funding</span>
-            </div>
-            <div class="openTag">OPEN</div>
-          </a>
-
-          <a class="companyBtn" href="#">
-            <div>
-              <strong>VitalPath Care Group</strong><br/>
-              <span>Healthcare • compliance</span>
-            </div>
-            <div class="openTag">OPEN</div>
-          </a>
-
-          <a class="companyBtn" href="#">
-            <div>
-              <strong>RevMotion Auto & Marine</strong><br/>
-              <span>Fleet • service • ops</span>
-            </div>
-            <div class="openTag">OPEN</div>
-          </a>
-
-          <a class="companyBtn" href="#">
-            <div>
-              <strong>Family First Equity</strong><br/>
-              <span>Equity • housing</span>
-            </div>
-            <div class="openTag">OPEN</div>
-          </a>
-        </div>
-      </div>
+    <div class="meta">
+      <div class="pill" id="clock">—</div>
+      <button class="icon-btn" title="More">
+        <span class="dots">•••</span>
+      </button>
     </div>
+  </header>
 
-    <div class="footer">TitanCore internal executive view — read-only</div>
-  </div>
+  <main class="wrap">
+    <section class="grid">
 
-  <script>
-    // Small auto-updating time: FRI, JAN 10 2026 • 6:00 AM
-    function fmtTime(d){
-      const days = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
-      const mons = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
-      const day = days[d.getDay()];
-      const mon = mons[d.getMonth()];
-      const dd  = String(d.getDate()).padStart(2,"0");
-      const yyyy = d.getFullYear();
+      <!-- Limits -->
+      <article class="card span-5">
+        <div class="card-head">
+          <div>
+            <div class="card-title">Limits</div>
+            <div class="card-sub">2 cards</div>
+          </div>
+          <button class="kebab" aria-label="Menu">⋯</button>
+        </div>
 
-      let h = d.getHours();
-      const ampm = h >= 12 ? "PM" : "AM";
-      h = h % 12; if (h === 0) h = 12;
-      const m = String(d.getMinutes()).padStart(2,"0");
+        <div class="limits">
+          <div class="limit">
+            <div class="limit-top">
+              <div class="label">Credit limit</div>
+              <div class="value">$7,189 <span class="muted">/ $10,000</span></div>
+            </div>
+            <div class="bar">
+              <div class="bar-fill orange" style="width:72%"></div>
+            </div>
+          </div>
 
-      return `${day}, ${mon} ${dd} ${yyyy} • ${h}:${m} ${ampm}`;
-    }
+          <div class="limit">
+            <div class="limit-top">
+              <div class="label">Online limit</div>
+              <div class="value">$1,125 <span class="muted">/ $5,000</span></div>
+            </div>
+            <div class="bar">
+              <div class="bar-fill blue" style="width:23%"></div>
+            </div>
+          </div>
+        </div>
 
-    function tick(){
-      const el = document.getElementById("sysTime");
-      if (!el) return;
-      el.textContent = fmtTime(new Date());
-    }
-    tick();
-    setInterval(tick, 1000);
-  </script>
+        <div class="mini-cards">
+          <div class="mini">
+            <div class="mini-row">
+              <span class="chip visa">VISA</span>
+              <span class="mini-num">•••• 4329</span>
+            </div>
+            <div class="mini-amt">$62,690.67</div>
+            <div class="mini-sub">Available balance</div>
+          </div>
+
+          <div class="mini">
+            <div class="mini-row">
+              <span class="chip mc">MC</span>
+              <span class="mini-num">•••• 3765</span>
+            </div>
+            <div class="mini-amt">$24,635.29</div>
+            <div class="mini-sub">Available balance</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Transaction Frequency -->
+      <article class="card span-7">
+        <div class="card-head">
+          <div>
+            <div class="card-title">Transaction Frequency</div>
+            <div class="card-sub">Monthly count of transactions</div>
+          </div>
+          <button class="kebab" aria-label="Menu">⋯</button>
+        </div>
+        <div class="chart" data-chart="line" data-points="18,22,24,20,26,28,25,29,31,27,30,33"></div>
+      </article>
+
+      <!-- Expense Sources (donut) -->
+      <article class="card span-4">
+        <div class="card-head">
+          <div>
+            <div class="card-title">Expense Sources</div>
+            <div class="card-sub">Total: <b>6</b></div>
+          </div>
+          <button class="kebab" aria-label="Menu">⋯</button>
+        </div>
+
+        <div class="donut-wrap">
+          <div class="chart donut" data-chart="donut" data-values="42,21,16,11,6,4"></div>
+          <div class="donut-legend">
+            <div class="legend-row"><span class="swatch s1"></span> Online purchase <span class="right">42%</span></div>
+            <div class="legend-row"><span class="swatch s2"></span> In-store shopping <span class="right">21%</span></div>
+            <div class="legend-row"><span class="swatch s3"></span> Bills <span class="right">16%</span></div>
+            <div class="legend-row"><span class="swatch s4"></span> Services <span class="right">11%</span></div>
+            <div class="legend-row"><span class="swatch s5"></span> Travel <span class="right">6%</span></div>
+            <div class="legend-row"><span class="swatch s6"></span> Other <span class="right">4%</span></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Monthly Balance (bar + line) -->
+      <article class="card span-8">
+        <div class="card-head">
+          <div>
+            <div class="card-title">Monthly Balance</div>
+            <div class="card-sub">Net inflow / outflow</div>
+          </div>
+          <button class="kebab" aria-label="Menu">⋯</button>
+        </div>
+        <div class="chart" data-chart="barline"
+             data-bars="24,35,28,42,55,39,45"
+             data-line="28,32,30,38,50,41,43"
+             data-labels="Apr,May,Jun,Jul,Aug,Sep,Oct"></div>
+
+        <div class="table-mini">
+          <div class="row"><span class="muted">September</span><span class="pos">+$11,896.25</span></div>
+          <div class="row"><span class="muted">August</span><span class="neg">-$12,526.25</span></div>
+          <div class="row"><span class="muted">July</span><span class="neg">-$9,564.84</span></div>
+        </div>
+      </article>
+
+      <!-- Recurring transactions -->
+      <article class="card span-4">
+        <div class="card-head">
+          <div>
+            <div class="card-title">Recurring transactions</div>
+            <div class="card-sub">This month</div>
+          </div>
+          <button class="kebab" aria-label="Menu">⋯</button>
+        </div>
+
+        <div class="recurring">
+          <div class="big-num">12</div>
+          <div class="muted">Recurring transactions</div>
+
+          <div class="check-grid" aria-label="Recurring grid">
+            <!-- 30 tiny boxes -->
+            <div class="box on"></div><div class="box on"></div><div class="box"></div><div class="box on"></div><div class="box"></div>
+            <div class="box on"></div><div class="box"></div><div class="box on"></div><div class="box"></div><div class="box"></div>
+            <div class="box"></div><div class="box on"></div><div class="box on"></div><div class="box"></div><div class="box on"></div>
+            <div class="box"></div><div class="box"></div><div class="box on"></div><div class="box"></div><div class="box"></div>
+            <div class="box"></div><div class="box"></div><div class="box on"></div><div class="box"></div><div class="box"></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Statistics -->
+      <article class="card span-7">
+        <div class="card-head">
+          <div>
+            <div class="card-title">Statistics</div>
+            <div class="card-sub">Monthly</div>
+          </div>
+          <button class="kebab" aria-label="Menu">⋯</button>
+        </div>
+
+        <div class="chart" data-chart="duoline"
+             data-a="12,14,11,15,13,16,14,18,17,19,18,20"
+             data-b="10,9,11,10,12,11,12,13,12,12,11,12"></div>
+
+        <div class="stats-bottom">
+          <div>
+            <div class="muted">Average Income</div>
+            <div class="big">$12,325.96 <span class="up">↑ 14%</span></div>
+          </div>
+          <div>
+            <div class="muted">Average Expenses</div>
+            <div class="big">$8,146.96 <span class="down">↓ 8%</span></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Flow (Sankey-ish) -->
+      <article class="card span-5">
+        <div class="card-head">
+          <div>
+            <div class="card-title">Fund Flow</div>
+            <div class="card-sub">Own vs Credit → Cards</div>
+          </div>
+          <button class="kebab" aria-label="Menu">⋯</button>
+        </div>
+
+        <div class="chart" data-chart="flow"></div>
+        <div class="flow-legend">
+          <div class="legend-row"><span class="swatch s2"></span> Own money <span class="right">$9,840.41</span></div>
+          <div class="legend-row"><span class="swatch s5"></span> Credit money <span class="right">$2,160.56</span></div>
+        </div>
+      </article>
+
+    </section>
+  </main>
+
+  <script src="app.js"></script>
 </body>
 </html>
