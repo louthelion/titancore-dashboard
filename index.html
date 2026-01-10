@@ -2,226 +2,635 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>TitanCore • Executive Dashboard</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TitanCore Executive Control Center</title>
+  <style>
+    :root{
+      --bg:#000;
+      --bg2:#06120b;
+      --gold:#d4af37;
+      --gold2: rgba(212,175,55,.32);
+      --green:#00c853;
+      --green2: rgba(0,200,83,.22);
+      --white: rgba(255,255,255,.88);
+      --muted: rgba(212,175,55,.70);
+      --panelA: rgba(0,0,0,.82);
+      --panelB: rgba(0,0,0,.62);
+      --shadow: 0 18px 60px rgba(0,0,0,.55);
+      --radius:18px;
+      --radius2:16px;
+      --max:1100px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--font);
+      color:var(--gold);
+      background:
+        radial-gradient(1200px 600px at 20% 0%, rgba(0,200,83,.20), transparent 60%),
+        radial-gradient(1200px 600px at 90% 30%, rgba(212,175,55,.14), transparent 55%),
+        linear-gradient(180deg, var(--bg2), var(--bg) 70%);
+      background-attachment: fixed;
+    }
+    a{color:inherit; text-decoration:none}
+    a:visited{color:inherit}
+
+    .wrap{max-width:var(--max); margin:0 auto; padding:16px}
+    .top{display:flex; gap:12px; align-items:flex-start; margin-bottom:14px}
+    .logo{
+      width:52px; height:52px; border-radius:14px;
+      border:2px solid var(--gold2);
+      background: linear-gradient(180deg, rgba(0,200,83,.16), rgba(0,0,0,.65));
+      display:flex; align-items:center; justify-content:center;
+      font-weight:900; letter-spacing:.06em;
+      color:var(--gold);
+      flex:0 0 auto;
+    }
+    .h1{
+      margin:0; line-height:1.02;
+      font-size:clamp(30px, 5.4vw, 54px);
+      color:rgba(212,175,55,.92);
+    }
+    .sub{margin:6px 0 0 0; color:var(--muted)}
+    .timebar{
+      margin-top:8px;
+      font-size:13px;
+      color:var(--white);
+      letter-spacing:.02em;
+    }
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 12px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.35);
+    }
+    .dot{width:8px; height:8px; border-radius:999px; background:var(--green); box-shadow:0 0 16px rgba(0,200,83,.35)}
+
+    /* double background panel */
+    .panel{
+      position:relative;
+      background: linear-gradient(180deg, var(--panelA), var(--panelB));
+      border:1px solid rgba(212,175,55,.24);
+      border-radius:var(--radius);
+      box-shadow: var(--shadow);
+      padding:16px;
+      overflow:hidden;
+    }
+    .panel::before{
+      content:"";
+      position:absolute; inset:10px;
+      border-radius: calc(var(--radius) - 8px);
+      border:1px solid rgba(0,200,83,.16);
+      background: radial-gradient(800px 420px at 0% 0%, rgba(0,200,83,.08), transparent 55%);
+      pointer-events:none;
+    }
+
+    .section-title{
+      position:relative;
+      margin:0 0 10px 0;
+      color:var(--green);
+      font-size:22px;
+      letter-spacing:.02em;
+    }
+    .section-sub{
+      position:relative;
+      margin:0 0 12px 0;
+      color:rgba(212,175,55,.85);
+    }
+
+    .spacer{height:14px}
+
+    /* dashboard buttons */
+    .nav-grid{
+      position:relative;
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:12px;
+    }
+    @media (min-width:820px){
+      .nav-grid{grid-template-columns:repeat(3, minmax(0,1fr))}
+    }
+    .nav-btn{
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:56px;
+      padding:14px 14px;
+      border-radius:999px;
+      border:1px solid rgba(212,175,55,.35);
+      background: rgba(0,0,0,.40);
+      color:rgba(212,175,55,.92);
+      font-weight:900;
+      letter-spacing:.02em;
+      cursor:pointer;
+      transition: transform .08s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease, color .18s ease;
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .nav-btn:hover{transform:translateY(-1px); box-shadow:0 14px 34px rgba(0,0,0,.45)}
+    .nav-btn:active{transform:translateY(0px) scale(.99)}
+    .nav-btn.primary{
+      border-color: rgba(0,200,83,.38);
+      color: var(--green);
+      background: rgba(0,200,83,.08);
+    }
+
+    /* KPI cards */
+    .grid2{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:12px}
+    @media (max-width:420px){ .grid2{grid-template-columns:1fr} }
+    .kpi{
+      position:relative;
+      border-radius:var(--radius2);
+      border:1px solid rgba(212,175,55,.22);
+      background: rgba(0,0,0,.38);
+      padding:14px;
+    }
+    .kpi .n{font-size:34px; font-weight:900; color:var(--green); line-height:1}
+    .kpi .t{margin-top:6px; font-weight:900; color:rgba(255,255,255,.88)}
+    .kpi .d{margin-top:6px; color:rgba(212,175,55,.82)}
+
+    /* company rows */
+    .company{
+      position:relative;
+      display:flex; justify-content:space-between; align-items:center;
+      gap:12px;
+      padding:14px;
+      border-radius:var(--radius2);
+      border:1px solid rgba(212,175,55,.22);
+      background: rgba(0,0,0,.32);
+    }
+    .company .name{font-weight:900; color:rgba(212,175,55,.95)}
+    .company .desc{margin-top:4px; color:rgba(255,255,255,.76); font-size:13px}
+    .openpill{
+      display:inline-flex;
+      padding:10px 16px;
+      border-radius:999px;
+      border:1px solid rgba(0,200,83,.42);
+      color: var(--green);
+      background: rgba(0,200,83,.08);
+      font-weight:900;
+      letter-spacing:.06em;
+      font-size:13px;
+    }
+    .stack{display:flex; flex-direction:column}
+
+    /* module screens */
+    .screen{display:none}
+    .screen.active{display:block}
+
+    .page-title{
+      margin:0 0 8px 0;
+      font-size:clamp(26px, 4.8vw, 42px);
+      color:var(--green);
+      position:relative;
+    }
+    .page-note{margin:0 0 14px 0; color:rgba(212,175,55,.85); position:relative}
+
+    .block{
+      position:relative;
+      border-radius:var(--radius2);
+      border:1px solid rgba(212,175,55,.22);
+      background: rgba(0,0,0,.34);
+      padding:14px;
+      margin-top:12px;
+    }
+    .block h3{margin:0 0 8px 0; color:rgba(212,175,55,.95)}
+    .block p{margin:0; color:rgba(255,255,255,.82); line-height:1.45}
+    .list{margin:10px 0 0 0; padding-left:18px; color:rgba(255,255,255,.82)}
+    .list li{margin:6px 0}
+
+    /* small bottom back button */
+    .footer{display:flex; justify-content:center; padding:18px 0 10px 0}
+    .back{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid rgba(212,175,55,.30);
+      background: rgba(0,0,0,.35);
+      color:rgba(212,175,55,.92);
+      font-weight:900;
+      font-size:13px;
+      cursor:pointer;
+    }
+    .back:hover{border-color: rgba(0,200,83,.30); color:var(--green); background: rgba(0,200,83,.07)}
+  </style>
 </head>
 
 <body>
-  <header class="topbar">
-    <div class="brand">
+  <div class="wrap">
+    <div class="top">
       <div class="logo">TC</div>
       <div>
-        <div class="brand-title">TitanCore Dashboard</div>
-        <div class="brand-sub">Executive Control Center</div>
+        <h1 class="h1">TitanCore Executive Control Center</h1>
+        <p class="sub">Holding-level command • authority • compliance • control</p>
+        <div class="timebar">
+          <span class="pill">
+            <span class="dot"></span>
+            <span>System Time</span><span>•</span>
+            <span data-clock>—</span><span>•</span>
+            <span>CEO Mode</span><span>•</span>
+            <span style="color:var(--green);font-weight:900">Active</span>
+          </span>
+        </div>
       </div>
     </div>
 
-    <nav class="tabs" aria-label="Primary">
-      <a class="tab active" href="#">Dashboard</a>
-      <a class="tab" href="contact.html">Contact</a>
-      <a class="tab" href="contract.html">Contract</a>
-      <a class="tab" href="routing.html">Email Routing</a>
-      <a class="tab" href="report.html">Report</a>
-      <a class="tab" href="approval.html">Approval</a>
-      <a class="tab" href="omni-system.html">Omni System</a>
-      <a class="tab" href="tax-network.html">Tax Network</a>
-      <a class="tab" href="agent-suite.html">Agent A.I. Suite</a>
-      <a class="tab" href="public-portal.html">Public Portal</a>
-      <a class="tab" href="finance.html">Finance</a>
-    </nav>
+    <!-- DASHBOARD -->
+    <section id="dashboard" class="screen active">
+      <div class="panel">
+        <h2 class="section-title">Dashboard Menu</h2>
+        <p class="section-sub">Tap a module to open. (Inside modules only show a small “Back to Dashboard” button at the bottom.)</p>
 
-    <div class="meta">
-      <div class="pill" id="clock">—</div>
-      <button class="icon-btn" title="More">
-        <span class="dots">•••</span>
-      </button>
-    </div>
-  </header>
+        <div class="nav-grid">
+          <button class="nav-btn primary" data-open="dashboard">Dashboard</button>
+          <button class="nav-btn" data-open="contact">Contact</button>
+          <button class="nav-btn" data-open="contract">Contract</button>
+          <button class="nav-btn" data-open="routing">Email Routing</button>
+          <button class="nav-btn" data-open="report">Report</button>
+          <button class="nav-btn" data-open="approval">Approval</button>
+          <button class="nav-btn" data-open="omni">Omni System</button>
+          <button class="nav-btn" data-open="tax">Tax Network</button>
+          <button class="nav-btn" data-open="agent">Agent A.I. Suite</button>
+          <button class="nav-btn" data-open="public">Public Portal</button>
+          <button class="nav-btn" data-open="finance">Finance</button>
+        </div>
+      </div>
 
-  <main class="wrap">
-    <section class="grid">
+      <div class="spacer"></div>
 
-      <!-- Limits -->
-      <article class="card span-5">
-        <div class="card-head">
-          <div>
-            <div class="card-title">Limits</div>
-            <div class="card-sub">2 cards</div>
-          </div>
-          <button class="kebab" aria-label="Menu">⋯</button>
+      <div class="panel">
+        <h2 class="section-title">Executive Attention</h2>
+        <p class="section-sub">Only what needs CEO eyes — no clutter.</p>
+
+        <div class="grid2">
+          <div class="kpi"><div class="n">2</div><div class="t">CEO Attention</div><div class="d">Items needing CEO eyes</div></div>
+          <div class="kpi"><div class="n">1</div><div class="t">Overdue</div><div class="d">Deadlines / approvals</div></div>
+          <div class="kpi"><div class="n">3</div><div class="t">Critical Alerts</div><div class="d">Security + compliance</div></div>
+          <div class="kpi"><div class="n">4</div><div class="t">Ready to Review</div><div class="d">Contracts + reports</div></div>
         </div>
 
-        <div class="limits">
-          <div class="limit">
-            <div class="limit-top">
-              <div class="label">Credit limit</div>
-              <div class="value">$7,189 <span class="muted">/ $10,000</span></div>
-            </div>
-            <div class="bar">
-              <div class="bar-fill orange" style="width:72%"></div>
-            </div>
-          </div>
+        <div class="spacer"></div>
 
-          <div class="limit">
-            <div class="limit-top">
-              <div class="label">Online limit</div>
-              <div class="value">$1,125 <span class="muted">/ $5,000</span></div>
-            </div>
-            <div class="bar">
-              <div class="bar-fill blue" style="width:23%"></div>
-            </div>
-          </div>
+        <div class="nav-grid" style="grid-template-columns:1fr; max-width:520px; margin:0 auto;">
+          <button class="nav-btn" data-open="approval">Approval Queue</button>
+          <button class="nav-btn" data-open="contract">Contract Queue</button>
+          <button class="nav-btn" data-open="report">Build Report</button>
+          <button class="nav-btn" data-open="agent">Open Agent Suite</button>
+        </div>
+      </div>
+
+      <div class="spacer"></div>
+
+      <div class="panel">
+        <h2 class="section-title">Companies</h2>
+        <p class="section-sub">Holding + subsidiaries (tap to open — placeholders)</p>
+
+        <div class="company">
+          <div class="stack"><div class="name">TitanCore Holdings</div><div class="desc">Father company • governance</div></div>
+          <span class="openpill">OPEN</span>
+        </div>
+        <div style="height:10px"></div>
+
+        <div class="company">
+          <div class="stack"><div class="name">Vaultara Capital</div><div class="desc">Investments • funding</div></div>
+          <span class="openpill">OPEN</span>
+        </div>
+        <div style="height:10px"></div>
+
+        <div class="company">
+          <div class="stack"><div class="name">VitalPath Care Group</div><div class="desc">Healthcare • compliance</div></div>
+          <span class="openpill">OPEN</span>
+        </div>
+        <div style="height:10px"></div>
+
+        <div class="company">
+          <div class="stack"><div class="name">RevMotion Auto &amp; Marine</div><div class="desc">Fleet • service • ops</div></div>
+          <span class="openpill">OPEN</span>
+        </div>
+        <div style="height:10px"></div>
+
+        <div class="company">
+          <div class="stack"><div class="name">Family First Equity</div><div class="desc">Equity • housing</div></div>
+          <span class="openpill">OPEN</span>
         </div>
 
-        <div class="mini-cards">
-          <div class="mini">
-            <div class="mini-row">
-              <span class="chip visa">VISA</span>
-              <span class="mini-num">•••• 4329</span>
-            </div>
-            <div class="mini-amt">$62,690.67</div>
-            <div class="mini-sub">Available balance</div>
-          </div>
-
-          <div class="mini">
-            <div class="mini-row">
-              <span class="chip mc">MC</span>
-              <span class="mini-num">•••• 3765</span>
-            </div>
-            <div class="mini-amt">$24,635.29</div>
-            <div class="mini-sub">Available balance</div>
-          </div>
+        <div style="height:14px"></div>
+        <div style="text-align:center; color:rgba(212,175,55,.65); font-size:13px; position:relative;">
+          TitanCore internal executive view — read-only
         </div>
-      </article>
-
-      <!-- Transaction Frequency -->
-      <article class="card span-7">
-        <div class="card-head">
-          <div>
-            <div class="card-title">Transaction Frequency</div>
-            <div class="card-sub">Monthly count of transactions</div>
-          </div>
-          <button class="kebab" aria-label="Menu">⋯</button>
-        </div>
-        <div class="chart" data-chart="line" data-points="18,22,24,20,26,28,25,29,31,27,30,33"></div>
-      </article>
-
-      <!-- Expense Sources (donut) -->
-      <article class="card span-4">
-        <div class="card-head">
-          <div>
-            <div class="card-title">Expense Sources</div>
-            <div class="card-sub">Total: <b>6</b></div>
-          </div>
-          <button class="kebab" aria-label="Menu">⋯</button>
-        </div>
-
-        <div class="donut-wrap">
-          <div class="chart donut" data-chart="donut" data-values="42,21,16,11,6,4"></div>
-          <div class="donut-legend">
-            <div class="legend-row"><span class="swatch s1"></span> Online purchase <span class="right">42%</span></div>
-            <div class="legend-row"><span class="swatch s2"></span> In-store shopping <span class="right">21%</span></div>
-            <div class="legend-row"><span class="swatch s3"></span> Bills <span class="right">16%</span></div>
-            <div class="legend-row"><span class="swatch s4"></span> Services <span class="right">11%</span></div>
-            <div class="legend-row"><span class="swatch s5"></span> Travel <span class="right">6%</span></div>
-            <div class="legend-row"><span class="swatch s6"></span> Other <span class="right">4%</span></div>
-          </div>
-        </div>
-      </article>
-
-      <!-- Monthly Balance (bar + line) -->
-      <article class="card span-8">
-        <div class="card-head">
-          <div>
-            <div class="card-title">Monthly Balance</div>
-            <div class="card-sub">Net inflow / outflow</div>
-          </div>
-          <button class="kebab" aria-label="Menu">⋯</button>
-        </div>
-        <div class="chart" data-chart="barline"
-             data-bars="24,35,28,42,55,39,45"
-             data-line="28,32,30,38,50,41,43"
-             data-labels="Apr,May,Jun,Jul,Aug,Sep,Oct"></div>
-
-        <div class="table-mini">
-          <div class="row"><span class="muted">September</span><span class="pos">+$11,896.25</span></div>
-          <div class="row"><span class="muted">August</span><span class="neg">-$12,526.25</span></div>
-          <div class="row"><span class="muted">July</span><span class="neg">-$9,564.84</span></div>
-        </div>
-      </article>
-
-      <!-- Recurring transactions -->
-      <article class="card span-4">
-        <div class="card-head">
-          <div>
-            <div class="card-title">Recurring transactions</div>
-            <div class="card-sub">This month</div>
-          </div>
-          <button class="kebab" aria-label="Menu">⋯</button>
-        </div>
-
-        <div class="recurring">
-          <div class="big-num">12</div>
-          <div class="muted">Recurring transactions</div>
-
-          <div class="check-grid" aria-label="Recurring grid">
-            <!-- 30 tiny boxes -->
-            <div class="box on"></div><div class="box on"></div><div class="box"></div><div class="box on"></div><div class="box"></div>
-            <div class="box on"></div><div class="box"></div><div class="box on"></div><div class="box"></div><div class="box"></div>
-            <div class="box"></div><div class="box on"></div><div class="box on"></div><div class="box"></div><div class="box on"></div>
-            <div class="box"></div><div class="box"></div><div class="box on"></div><div class="box"></div><div class="box"></div>
-            <div class="box"></div><div class="box"></div><div class="box on"></div><div class="box"></div><div class="box"></div>
-          </div>
-        </div>
-      </article>
-
-      <!-- Statistics -->
-      <article class="card span-7">
-        <div class="card-head">
-          <div>
-            <div class="card-title">Statistics</div>
-            <div class="card-sub">Monthly</div>
-          </div>
-          <button class="kebab" aria-label="Menu">⋯</button>
-        </div>
-
-        <div class="chart" data-chart="duoline"
-             data-a="12,14,11,15,13,16,14,18,17,19,18,20"
-             data-b="10,9,11,10,12,11,12,13,12,12,11,12"></div>
-
-        <div class="stats-bottom">
-          <div>
-            <div class="muted">Average Income</div>
-            <div class="big">$12,325.96 <span class="up">↑ 14%</span></div>
-          </div>
-          <div>
-            <div class="muted">Average Expenses</div>
-            <div class="big">$8,146.96 <span class="down">↓ 8%</span></div>
-          </div>
-        </div>
-      </article>
-
-      <!-- Flow (Sankey-ish) -->
-      <article class="card span-5">
-        <div class="card-head">
-          <div>
-            <div class="card-title">Fund Flow</div>
-            <div class="card-sub">Own vs Credit → Cards</div>
-          </div>
-          <button class="kebab" aria-label="Menu">⋯</button>
-        </div>
-
-        <div class="chart" data-chart="flow"></div>
-        <div class="flow-legend">
-          <div class="legend-row"><span class="swatch s2"></span> Own money <span class="right">$9,840.41</span></div>
-          <div class="legend-row"><span class="swatch s5"></span> Credit money <span class="right">$2,160.56</span></div>
-        </div>
-      </article>
-
+      </div>
     </section>
-  </main>
 
-  <script src="app.js"></script>
+    <!-- CONTACT -->
+    <section id="contact" class="screen">
+      <div class="panel">
+        <h2 class="page-title">Contact</h2>
+        <p class="page-note">External intake + internal routing (UI ready; integrations can be wired later).</p>
+
+        <div class="block">
+          <h3>Contact Intake</h3>
+          <p>Collect requests and route them to the correct company and department.</p>
+          <ul class="list">
+            <li>Name, Email, Phone, Company, Topic, Message</li>
+            <li>Routing rules (who receives the request)</li>
+            <li>Priority level + attachments</li>
+          </ul>
+        </div>
+
+        <div class="block">
+          <h3>RingCentral / Microsoft</h3>
+          <p>This page is clean and stable. When you’re ready, we can connect this to RingCentral and Microsoft login without changing this design.</p>
+        </div>
+
+        <div class="footer"><button class="back" data-back>← Back to Dashboard</button></div>
+      </div>
+    </section>
+
+    <!-- CONTRACT -->
+    <section id="contract" class="screen">
+      <div class="panel">
+        <h2 class="page-title">Contract</h2>
+        <p class="page-note">Create → TitanCore department review → CEO final sign.</p>
+
+        <div class="block">
+          <h3>Contract Intake</h3>
+          <p>Log contract packages from subsidiaries and track their status through TitanCore review.</p>
+          <ul class="list">
+            <li>Company owner + contract type</li>
+            <li>Department checklist (Finance / Legal / Ops / Tech)</li>
+            <li>CEO final-sign queue</li>
+          </ul>
+        </div>
+
+        <div class="block">
+          <h3>Queues</h3>
+          <p>Pending TitanCore Review • Pending CEO Final Sign • Completed.</p>
+        </div>
+
+        <div class="footer"><button class="back" data-back>← Back to Dashboard</button></div>
+      </div>
+    </section>
+
+    <!-- EMAIL ROUTING -->
+    <section id="routing" class="screen">
+      <div class="panel">
+        <h2 class="page-title">Email Routing</h2>
+        <p class="page-note">Records-only oversight • escalation visibility.</p>
+
+        <div class="block">
+          <h3>Routing Configuration</h3>
+          <p>Define which mailbox receives which package type (contracts, approvals, tax, etc.).</p>
+          <ul class="list">
+            <li>Company → Department mailbox map</li>
+            <li>Escalation rules (overdue goes to TitanCore)</li>
+            <li>Audit log (who changed routes)</li>
+          </ul>
+        </div>
+
+        <div class="block">
+          <h3>Private Email</h3>
+          <p>If you already have your private email page (example: <b>email.html</b>), we can connect to it later. This dashboard will not break it.</p>
+        </div>
+
+        <div class="footer"><button class="back" data-back>← Back to Dashboard</button></div>
+      </div>
+    </section>
+
+    <!-- REPORT -->
+    <section id="report" class="screen">
+      <div class="panel">
+        <h2 class="page-title">Report</h2>
+        <p class="page-note">Build reports → submit to Approval.</p>
+
+        <div class="block">
+          <h3>Report Builder</h3>
+          <p>Create a report package: title, company, category, summary, attachments.</p>
+          <ul class="list">
+            <li>Drafts • Submitted • Returned • Approved</li>
+            <li>Attach PDFs / images</li>
+            <li>Submit sends to Approval queue</li>
+          </ul>
+        </div>
+
+        <div class="block">
+          <h3>Archive</h3>
+          <p>Approved reports stored as read-only history.</p>
+        </div>
+
+        <div class="footer"><button class="back" data-back>← Back to Dashboard</button></div>
+      </div>
+    </section>
+
+    <!-- APPROVAL -->
+    <section id="approval" class="screen">
+      <div class="panel">
+        <h2 class="page-title">Approval</h2>
+        <p class="page-note">Queue → Mantle review → CEO final sign.</p>
+
+        <div class="block">
+          <h3>Approval Queue</h3>
+          <p>A single list of items requiring approval (reports, contracts, exceptions).</p>
+          <ul class="list">
+            <li>Department review status</li>
+            <li>Return for edits or Approve</li>
+            <li>CEO final sign indicator</li>
+          </ul>
+        </div>
+
+        <div class="block">
+          <h3>Archive</h3>
+          <p>Approved items (read-only).</p>
+        </div>
+
+        <div class="footer"><button class="back" data-back>← Back to Dashboard</button></div>
+      </div>
+    </section>
+
+    <!-- OMNI -->
+    <section id="omni" class="screen">
+      <div class="panel">
+        <h2 class="page-title">Omni System</h2>
+        <p class="page-note">High-level executive system map (read-only).</p>
+
+        <div class="block">
+          <h3>System Overview</h3>
+          <p>Shows how all TitanCore modules connect (command + governance view).</p>
+          <ul class="list">
+            <li>Contracts → Review → CEO Sign</li>
+            <li>Reports → Approval → Archive</li>
+            <li>Tax Network + Compliance</li>
+          </ul>
+        </div>
+
+        <div class="footer"><button class="back" data-back>← Back to Dashboard</button></div>
+      </div>
+    </section>
+
+    <!-- TAX -->
+    <section id="tax" class="screen">
+      <div class="panel">
+        <h2 class="page-title">Tax Network</h2>
+        <p class="page-note">Deadlines • licenses • audit readiness.</p>
+
+        <div class="block">
+          <h3>Compliance Status</h3>
+          <p>Track filings, deadlines, and audit readiness across subsidiaries.</p>
+          <ul class="list">
+            <li>Deadline calendar (monthly)</li>
+            <li>License tracker</li>
+            <li>Audit shelf documents</li>
+          </ul>
+        </div>
+
+        <div class="block">
+          <h3>Escalation</h3>
+          <p>Overdue items escalate to TitanCore (rules to be wired later).</p>
+        </div>
+
+        <div class="footer"><button class="back" data-back>← Back to Dashboard</button></div>
+      </div>
+    </section>
+
+    <!-- AGENT -->
+    <section id="agent" class="screen">
+      <div class="panel">
+        <h2 class="page-title">Agent A.I. Suite</h2>
+        <p class="page-note">Agents • automations • monitoring • assigned actions.</p>
+
+        <div class="block">
+          <h3>Agent Control</h3>
+          <p>Launch agents and monitor tasks across companies.</p>
+          <ul class="list">
+            <li>Agent roster</li>
+            <li>Automation rules</li>
+            <li>Action assignments</li>
+          </ul>
+        </div>
+
+        <div class="block">
+          <h3>Security</h3>
+          <p>This executive view is read-only. Later we can restrict actions by role.</p>
+        </div>
+
+        <div class="footer"><button class="back" data-back>← Back to Dashboard</button></div>
+      </div>
+    </section>
+
+    <!-- PUBLIC -->
+    <section id="public" class="screen">
+      <div class="panel">
+        <h2 class="page-title">Public Portal</h2>
+        <p class="page-note">External-facing portal • investor / public views.</p>
+
+        <div class="block">
+          <h3>Public Pages</h3>
+          <p>Approved announcements only (clean and professional).</p>
+          <ul class="list">
+            <li>Press releases</li>
+            <li>Investor overview</li>
+            <li>Public contact entry point</li>
+          </ul>
+        </div>
+
+        <div class="footer"><button class="back" data-back>← Back to Dashboard</button></div>
+      </div>
+    </section>
+
+    <!-- FINANCE -->
+    <section id="finance" class="screen">
+      <div class="panel">
+        <h2 class="page-title">Finance</h2>
+        <p class="page-note">Budgets • variance • executive financial oversight (read-only view).</p>
+
+        <div class="block">
+          <h3>Executive Rollup</h3>
+          <p>High-level overview across subsidiaries (safe executive view — no random bank screens).</p>
+          <ul class="list">
+            <li>Budget vs Actual (monthly)</li>
+            <li>Variance drivers</li>
+            <li>Cash + runway summary</li>
+          </ul>
+        </div>
+
+        <div class="block">
+          <h3>Audit Mode</h3>
+          <p>Attach audit-ready exports and store them in a read-only archive.</p>
+        </div>
+
+        <div class="footer"><button class="back" data-back>← Back to Dashboard</button></div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    // ====== CLOCK (12-hour AM/PM, auto, on every screen) ======
+    const DAYS = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
+    const MONS = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+    const pad2 = (n)=> (n<10 ? "0"+n : ""+n);
+
+    function formatStamp(d){
+      const day = DAYS[d.getDay()];
+      const mon = MONS[d.getMonth()];
+      const dd  = pad2(d.getDate());
+      const yyyy = d.getFullYear();
+
+      let h = d.getHours();
+      const ampm = h >= 12 ? "PM" : "AM";
+      h = h % 12; if (h === 0) h = 12;
+
+      const mm = pad2(d.getMinutes());
+      const ss = pad2(d.getSeconds());
+      return `${day}, ${mon} ${dd} ${yyyy} • ${h}:${mm}:${ss} ${ampm}`;
+    }
+
+    function tick(){
+      const now = new Date();
+      document.querySelectorAll("[data-clock]").forEach(el => el.textContent = formatStamp(now));
+    }
+    tick();
+    setInterval(tick, 1000);
+
+    // ====== NAV (menu only on dashboard; modules have only Back button) ======
+    const screens = Array.from(document.querySelectorAll(".screen"));
+
+    function show(id){
+      screens.forEach(s => s.classList.remove("active"));
+      const el = document.getElementById(id);
+      if (el) el.classList.add("active");
+      // update hash so refresh keeps the same module
+      if (id === "dashboard") {
+        history.replaceState(null, "", location.pathname);
+      } else {
+        location.hash = id;
+      }
+      window.scrollTo({ top: 0, behavior: "instant" });
+    }
+
+    // open buttons
+    document.querySelectorAll("[data-open]").forEach(btn=>{
+      btn.addEventListener("click", ()=> show(btn.getAttribute("data-open")));
+    });
+
+    // back buttons
+    document.querySelectorAll("[data-back]").forEach(btn=>{
+      btn.addEventListener("click", ()=> show("dashboard"));
+    });
+
+    // if user loads with a hash (example: /#finance)
+    const start = (location.hash || "").replace("#","").trim();
+    if (start && document.getElementById(start)) show(start);
+
+    // if user presses browser back
+    window.addEventListener("hashchange", ()=>{
+      const h = (location.hash || "").replace("#","").trim();
+      if (!h) show("dashboard");
+      else if (document.getElementById(h)) show(h);
+    });
+  </script>
 </body>
 </html>
