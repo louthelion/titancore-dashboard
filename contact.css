@@ -1,108 +1,308 @@
-/* contact.css — Contact page only (keeps TitanCore black/green/gold look) */
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Contact — TitanCore</title>
+  <style>
+    /* SAME STYLE AS index.html — do not change */
+    :root{--bg:#050505;--gold:#d7b24a;--green:#22c55e;--text:#f6d98a;--muted:#bfae7a;--line:rgba(215,178,74,.35);--shadow:0 10px 30px rgba(0,0,0,.55);--radius:14px;}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:radial-gradient(1200px 700px at 20% 10%, rgba(34,197,94,.06), transparent 55%),radial-gradient(1200px 700px at 80% 20%, rgba(215,178,74,.06), transparent 55%),linear-gradient(180deg,var(--bg),#000);color:var(--text);}
+    .shell{min-height:100vh;padding:14px}
+    .shell-inner{min-height:calc(100vh - 28px);background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.00));border:1px solid rgba(215,178,74,.22);border-radius:18px;box-shadow:var(--shadow);overflow:hidden;}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px;background:linear-gradient(180deg, rgba(215,178,74,.10), rgba(0,0,0,.0));border-bottom:1px solid var(--line);}
+    .brand{display:flex;flex-direction:column;gap:2px}
+    .brand .t1{font-weight:900;letter-spacing:.6px;color:var(--green);font-size:16px;text-transform:uppercase}
+    .brand .t2{font-weight:800;color:var(--gold);font-size:14px}
+    .clock{font-weight:900;color:var(--text);font-size:13px;padding:8px 10px;border:1px solid var(--line);border-radius:12px;background:rgba(0,0,0,.35);white-space:nowrap;}
+    .layout{display:grid;grid-template-columns:260px 1fr 320px;gap:12px;padding:12px}
+    @media (max-width: 1100px){ .layout{grid-template-columns:1fr} .right{order:3} }
+    .sidebar,.main,.right{background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(0,0,0,.12));border:1px solid var(--line);border-radius:var(--radius);padding:12px;}
+    .side-title{display:flex;align-items:center;justify-content:space-between;padding:10px;border-radius:12px;background:rgba(0,0,0,.35);border:1px solid rgba(34,197,94,.18);margin-bottom:10px;}
+    .side-title .label{font-weight:900;color:var(--green)}
+    .side-title .mini{font-size:12px;color:var(--muted);font-weight:900}
+    .nav{display:flex;flex-direction:column;gap:8px}
+    .navbtn{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;padding:10px;border-radius:12px;border:1px solid rgba(215,178,74,.25);background:rgba(0,0,0,.35);color:var(--text);font-weight:950;text-decoration:none;cursor:pointer;}
+    .navbtn:hover{border-color:rgba(34,197,94,.55);box-shadow:0 0 0 2px rgba(34,197,94,.10) inset;color:var(--gold)}
+    .navbtn.active{border-color:rgba(34,197,94,.75);background:linear-gradient(180deg, rgba(34,197,94,.12), rgba(0,0,0,.30));color:var(--gold)}
+    .chev{font-size:12px;color:var(--gold);padding:2px 6px;border-radius:10px;border:1px solid rgba(215,178,74,.25);background:rgba(0,0,0,.35)}
+    .panel-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+    .panel-title h2{margin:0;font-size:15px;color:var(--green);font-weight:950;letter-spacing:.3px;text-transform:uppercase}
+    .tag{font-size:12px;padding:6px 10px;border-radius:999px;border:1px solid rgba(215,178,74,.25);background:rgba(0,0,0,.35);color:var(--muted);font-weight:900}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    @media (max-width: 1100px){ .grid{grid-template-columns:1fr} }
+    .card{border:1px solid rgba(215,178,74,.22);border-radius:var(--radius);background:linear-gradient(180deg, rgba(0,0,0,.50), rgba(0,0,0,.25));padding:12px;}
+    .card h3{margin:0 0 6px 0;color:var(--gold);font-size:13px;font-weight:950}
+    .muted{color:var(--muted);font-weight:900;font-size:12px;line-height:1.4}
+    .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+    @media (max-width: 800px){ .kpis{grid-template-columns:1fr} }
+    .kpi{border:1px solid rgba(34,197,94,.16);border-radius:12px;padding:10px;background:rgba(0,0,0,.35)}
+    .kpi .k1{font-size:11px;color:var(--muted);font-weight:900}
+    .kpi .k2{font-size:18px;color:var(--text);font-weight:1000;margin-top:4px}
+    .section{margin-top:12px}
+    .section h3{margin:0 0 8px 0;color:var(--green);font-weight:1000;text-transform:uppercase;font-size:13px;letter-spacing:.4px}
+    .list{display:flex;flex-direction:column;gap:8px}
+    .row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px;border-radius:12px;border:1px solid rgba(215,178,74,.18);background:rgba(0,0,0,.35)}
+    .row b{color:var(--text)}
+    .pill{font-size:12px;padding:6px 10px;border-radius:999px;border:1px solid rgba(34,197,94,.22);color:var(--green);font-weight:1000;background:rgba(0,0,0,.35);white-space:nowrap}
+    .pill.warn{border-color:rgba(215,178,74,.30);color:var(--gold)}
+    .pill.bad{border-color:rgba(255,80,80,.30);color:#ff8080}
+    .footer{padding:14px;text-align:center;color:var(--muted);font-weight:900;font-size:12px;border-top:1px solid var(--line);background:rgba(0,0,0,.25)}
+    .tc-modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(0,0,0,.70);z-index:999}
+    .tc-modal.open{display:flex}
+    .tc-modal-box{width:min(980px,100%);border-radius:16px;border:1px solid var(--line);background:rgba(10,10,10,.96);padding:14px}
+    .tc-modal-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:10px}
+    .tc-modal-title{color:var(--green);font-weight:1000;font-size:16px}
+    .tc-modal-sub{color:var(--muted);font-size:12px;margin-top:2px;font-weight:900}
+    .tc-modal-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    @media (max-width:720px){.tc-modal-grid{grid-template-columns:1fr}}
+    .tc-card{border:1px solid rgba(215,178,74,.18);border-radius:14px;padding:12px;background:rgba(0,0,0,.25)}
+    .tc-card-title{font-weight:1000;color:var(--gold)}
+    .tc-card-sub{margin-top:4px;color:var(--muted);font-size:12px;font-weight:900}
+    .tc-btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 12px;border-radius:12px;border:1px solid rgba(215,178,74,.25);background:rgba(0,0,0,.35);color:var(--gold);font-weight:1000;text-decoration:none;cursor:pointer;}
+    .tc-btn:hover{border-color:rgba(34,197,94,.55);color:var(--gold)}
+    .tc-btn-green{border-color:rgba(34,197,94,.55);color:var(--green)}
+    .tc-btn-small{padding:7px 10px;border-radius:10px;font-size:12px}
+  </style>
+</head>
+<body>
 
-/* Page wrapper spacing */
-.contact-wrap{
-  max-width: 980px;
-  margin: 0 auto;
-  padding: 18px 14px 26px;
-}
+<div class="shell"><div class="shell-inner">
+  <div class="topbar">
+    <div class="brand">
+      <div class="t1">TitanCore Holdings</div>
+      <div class="t2">Contact Command Center</div>
+    </div>
+    <div class="clock" id="clock">Loading…</div>
+  </div>
 
-/* Header strip inside contact page */
-.contact-head{
-  border: 1px solid rgba(184,146,47,.35);
-  border-radius: 18px;
-  background: rgba(0,0,0,.50);
-  padding: 16px;
-  margin-bottom: 14px;
-}
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="side-title"><div class="label">Menu</div><div class="mini">Tap → mini-menu</div></div>
+      <div class="nav" id="navArea"></div>
+    </aside>
 
-.contact-title{
-  margin: 0 0 6px;
-  font-size: 34px;
-  font-weight: 900;
-  color: var(--green, #11b053);
-}
+    <main class="main">
+      <div class="panel-title">
+        <h2>Contact</h2>
+        <div class="tag">Calls • Transfers • Routing • Records</div>
+      </div>
 
-.contact-sub{
-  margin: 0;
-  color: rgba(233,214,163,.9);
-  line-height: 1.35;
-}
+      <div class="grid" id="transfers">
+        <div class="card">
+          <h3>Calls In</h3>
+          <div class="muted">Incoming calls across all companies (placeholder until RingCentral).</div>
+          <div class="kpis">
+            <div class="kpi"><div class="k1">Today</div><div class="k2">0</div></div>
+            <div class="kpi"><div class="k1">This Week</div><div class="k2">0</div></div>
+            <div class="kpi"><div class="k1">Priority</div><div class="k2">0</div></div>
+          </div>
+        </div>
 
-/* KPI grid (Calls In/Out, Transfers, Missed) */
-.kpi-grid{
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-  margin-top: 14px;
-}
+        <div class="card">
+          <h3>Transfers</h3>
+          <div class="muted">TitanCore ↔ Company transfers (placeholder).</div>
+          <div class="kpis">
+            <div class="kpi"><div class="k1">Today</div><div class="k2">0</div></div>
+            <div class="kpi"><div class="k1">Escalations</div><div class="k2">0</div></div>
+            <div class="kpi"><div class="k1">Missed</div><div class="k2">0</div></div>
+          </div>
+        </div>
 
-.kpi-card{
-  border: 1px solid rgba(184,146,47,.30);
-  border-radius: 18px;
-  background: rgba(0,0,0,.55);
-  padding: 14px;
-  min-height: 128px;
-}
+        <div class="card">
+          <h3>Call Types</h3>
+          <div class="muted">Client • Bank • Institution • Investor • Vendor • Internal.</div>
+          <div class="kpis">
+            <div class="kpi"><div class="k1">Tagged</div><div class="k2">Ready</div></div>
+            <div class="kpi"><div class="k1">Unlabeled</div><div class="k2">0</div></div>
+            <div class="kpi"><div class="k1">Urgent</div><div class="k2">0</div></div>
+          </div>
+        </div>
+      </div>
 
-.kpi-label{
-  font-weight: 800;
-  color: rgba(233,214,163,.95);
-  margin: 0 0 10px;
-}
+      <div class="section" id="calllog">
+        <h3>Call Log</h3>
+        <div class="list">
+          <div class="row"><div><b>Status</b><div class="muted">UI ready. Real logs come after RingCentral backend.</div></div><div class="pill warn">Later</div></div>
+          <div class="row"><div><b>Fields</b><div class="muted">Time • In/Out • Caller • Company • Result • Notes</div></div><div class="pill">Ready</div></div>
+        </div>
+      </div>
 
-.kpi-value{
-  font-size: 34px;
-  font-weight: 900;
-  color: rgba(233,214,163,.95);
-  margin: 0 0 8px;
-}
+      <div class="section" id="routing">
+        <h3>Routing Rules</h3>
+        <div class="list">
+          <div class="row"><div><b>Public Calls</b><div class="muted">TitanCore receives → transfers to company</div></div><div class="pill">Rule</div></div>
+          <div class="row"><div><b>Bank/Institution</b><div class="muted">Escalate to Mantle/CEO queue</div></div><div class="pill bad">Priority</div></div>
+        </div>
+      </div>
 
-.kpi-note{
-  margin: 0;
-  color: rgba(233,214,163,.70);
-  line-height: 1.35;
-}
+      <div class="section" id="escalations">
+        <h3>Escalations</h3>
+        <div class="list">
+          <div class="row"><div><b>CEO Queue</b><div class="muted">Calls needing CEO attention</div></div><div class="pill warn">Queue</div></div>
+          <div class="row"><div><b>Mantle Queue</b><div class="muted">President/VP/Director queue</div></div><div class="pill warn">Queue</div></div>
+        </div>
+      </div>
+    </main>
 
-/* Bullet notes section */
-.contact-notes{
-  margin-top: 14px;
-  border: 1px solid rgba(184,146,47,.22);
-  border-radius: 18px;
-  background: rgba(0,0,0,.40);
-  padding: 14px 14px 6px;
-}
+    <aside class="right">
+      <div class="card">
+        <h3>Notes</h3>
+        <div class="muted">This page is heavy UI and fully connected to the same menu system.</div>
+      </div>
+      <div class="card" style="margin-top:10px;">
+        <h3>RingCentral</h3>
+        <div class="muted">Real “call counts/logs” require backend integration later.</div>
+      </div>
+    </aside>
+  </div>
 
-.contact-notes ul{
-  margin: 0;
-  padding-left: 18px;
-  color: rgba(233,214,163,.85);
-}
+  <div class="footer">TitanCore • Contact Module</div>
+</div></div>
 
-.contact-notes li{
-  margin: 0 0 10px;
-}
+<div class="tc-modal" id="tcModal">
+  <div class="tc-modal-box">
+    <div class="tc-modal-head">
+      <div>
+        <div class="tc-modal-title" id="tcModalTitle">Menu</div>
+        <div class="tc-modal-sub" id="tcModalSub">Choose inside section</div>
+      </div>
+      <button class="tc-btn tc-btn-small" id="tcModalClose">Close</button>
+    </div>
+    <div class="tc-modal-grid" id="tcModalGrid"></div>
+    <div style="display:flex;justify-content:flex-end;margin-top:12px;">
+      <a class="tc-btn tc-btn-small tc-btn-green" id="tcOpenModule" href="#">Open Full Page</a>
+    </div>
+  </div>
+</div>
 
-/* Bottom actions */
-.contact-actions{
-  margin-top: 16px;
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
+<script>
+  // SAME MENU LIST AS index.html (must match exactly)
+  const MENU = [
+    {name:"Dashboard", file:"index.html", subs:[
+      {t:"Executive Overview", href:"index.html#overview", sub:"KPIs • approvals • risk"},
+      {t:"Companies", href:"index.html#companies", sub:"TitanCore + subsidiaries"},
+      {t:"Leadership", href:"index.html#leadership", sub:"Mantle of 7 + Generals"},
+      {t:"System Status", href:"index.html#status", sub:"Core health indicators"},
+    ]},
+    {name:"Contact", file:"contact.html", subs:[
+      {t:"Call Log", href:"contact.html#calllog", sub:"Inbound/outbound/transfers"},
+      {t:"Transfers", href:"contact.html#transfers", sub:"TitanCore ↔ Companies"},
+      {t:"Routing Rules", href:"contact.html#routing", sub:"Priority escalation"},
+      {t:"Escalations", href:"contact.html#escalations", sub:"CEO/Mantle queue"},
+    ]},
+    {name:"Contract", file:"contract.html", subs:[
+      {t:"Packages Queue", href:"contract.html#queue", sub:"Incoming packages"},
+      {t:"Review Pipeline", href:"contract.html#pipeline", sub:"Department reviews"},
+      {t:"Ready to Sign", href:"contract.html#sign", sub:"CEO signature queue"},
+      {t:"Archive", href:"contract.html#archive", sub:"Completed contracts"},
+    ]},
+    {name:"Email Routing", file:"email-routing.html", subs:[
+      {t:"Public Contact", href:"email-routing.html#public", sub:"contact@..."},
+      {t:"Investor Channel", href:"email-routing.html#investor", sub:"invest@..."},
+      {t:"Admin Internal", href:"email-routing.html#admin", sub:"admin@..."},
+      {t:"Routing Rules", href:"email-routing.html#rules", sub:"Auto sort & escalation"},
+    ]},
+    {name:"Report", file:"report.html", subs:[
+      {t:"Daily Brief", href:"report.html#daily", sub:"Operational summary"},
+      {t:"Weekly Reports", href:"report.html#weekly", sub:"By company + dept"},
+      {t:"Monthly Reports", href:"report.html#monthly", sub:"KPIs + trends"},
+      {t:"Exports", href:"report.html#exports", sub:"PDF/CSV export queue"},
+    ]},
+    {name:"Approval", file:"approval.html", subs:[
+      {t:"Department Review", href:"approval.html#review", sub:"TitanCore departments"},
+      {t:"Pending", href:"approval.html#pending", sub:"Waiting approvals"},
+      {t:"Approved", href:"approval.html#approved", sub:"Completed approvals"},
+      {t:"Rejected", href:"approval.html#rejected", sub:"Issues and returns"},
+    ]},
+    {name:"Omni System", file:"omni.html", subs:[
+      {t:"Operations Map", href:"omni.html#map", sub:"Command overview"},
+      {t:"Workflows", href:"omni.html#flows", sub:"End-to-end processes"},
+      {t:"Automations", href:"omni.html#auto", sub:"Rules + triggers"},
+      {t:"System Logs", href:"omni.html#logs", sub:"Audit trail"},
+    ]},
+    {name:"Tax Network", file:"tax-network.html", subs:[
+      {t:"Upcoming Deadlines", href:"tax-network.html#deadlines", sub:"Prev • Today • Next"},
+      {t:"Compliance Status", href:"tax-network.html#status", sub:"States + licenses"},
+      {t:"Audit Risks", href:"tax-network.html#audit", sub:"Risk scoring"},
+      {t:"License Matrix", href:"tax-network.html#licenses", sub:"Types + states"},
+    ]},
+    {name:"Agent A.I. Suite", file:"agent-ai-suite.html", subs:[
+      {t:"Agent Systems", href:"agent-ai-suite.html#systems", sub:"Core agent platform"},
+      {t:"Agents List", href:"agent-ai-suite.html#agents", sub:"Finance/Legal/Ops/etc"},
+      {t:"Company Agents", href:"agent-ai-suite.html#companies", sub:"Per company"},
+      {t:"Runs & Logs", href:"agent-ai-suite.html#runs", sub:"Execution history"},
+    ]},
+    {name:"Public Portal", file:"public-portal.html", subs:[
+      {t:"Public Intake", href:"public-portal.html#intake", sub:"Requests pipeline"},
+      {t:"Investor Entry", href:"public-portal.html#invest", sub:"Institution channel"},
+      {t:"Status Page", href:"public-portal.html#status", sub:"Public status"},
+      {t:"Directory", href:"public-portal.html#directory", sub:"Contacts"},
+    ]},
+    {name:"Finance Show", file:"finance-show.html", subs:[
+      {t:"Profit & Loss", href:"finance-show.html#pl", sub:"Group and per company"},
+      {t:"Budgets", href:"finance-show.html#budget", sub:"Planned vs actual"},
+      {t:"Loans/Internal", href:"finance-show.html#loans", sub:"Intercompany flows"},
+      {t:"Forecast", href:"finance-show.html#forecast", sub:"Forward view"},
+    ]},
+  ];
 
-.contact-actions .btn{
-  width: 100%;
-  text-align: center;
-}
-
-/* Desktop / wide screens */
-@media (min-width: 720px){
-  .kpi-grid{
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+  function buildNav(){
+    const nav=document.getElementById("navArea");
+    const here=(location.pathname.split("/").pop()||"index.html").toLowerCase();
+    MENU.forEach(m=>{
+      const a=document.createElement("a");
+      a.className="navbtn"+(here===m.file.toLowerCase()?" active":"");
+      a.href=m.file;
+      const left=document.createElement("div"); left.textContent=m.name;
+      const right=document.createElement("div"); right.className="chev"; right.textContent="▾";
+      a.appendChild(left); a.appendChild(right);
+      a.addEventListener("click",(e)=>{ e.preventDefault(); openMiniMenu(m); });
+      nav.appendChild(a);
+    });
   }
-  .contact-actions .btn{
-    width: auto;
-    min-width: 220px;
+
+  function openMiniMenu(m){
+    const modal=document.getElementById("tcModal");
+    const title=document.getElementById("tcModalTitle");
+    const sub=document.getElementById("tcModalSub");
+    const grid=document.getElementById("tcModalGrid");
+    const openBtn=document.getElementById("tcOpenModule");
+    title.textContent=m.name;
+    sub.textContent="Pick section (or open full page)";
+    grid.innerHTML="";
+    (m.subs||[]).forEach(s=>{
+      const div=document.createElement("div");
+      div.className="tc-card";
+      div.innerHTML=`
+        <div class="tc-card-title">${s.t}</div>
+        <div class="tc-card-sub">${s.sub}</div>
+        <div style="margin-top:10px;"><a class="tc-btn tc-btn-small" href="${s.href}">Open</a></div>`;
+      grid.appendChild(div);
+    });
+    openBtn.href=m.file;
+    modal.classList.add("open");
   }
-}
+
+  function closeMiniMenu(){ document.getElementById("tcModal").classList.remove("open"); }
+
+  document.addEventListener("click",(e)=>{
+    if(e.target.id==="tcModal") closeMiniMenu();
+    if(e.target.id==="tcModalClose") closeMiniMenu();
+  });
+
+  function updateClock(){
+    const el=document.getElementById("clock");
+    const d=new Date();
+    const months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    let h=d.getHours(); const ampm=h>=12?"PM":"AM"; h=h%12; if(h===0) h=12;
+    const mm=String(d.getMinutes()).padStart(2,"0");
+    const ss=String(d.getSeconds()).padStart(2,"0");
+    el.textContent=`${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()} • ${h}:${mm}:${ss} ${ampm}`;
+  }
+
+  buildNav(); updateClock(); setInterval(updateClock,1000);
+</script>
+</body>
+</html>
