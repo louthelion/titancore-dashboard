@@ -1,933 +1,405 @@
-<!d<!doctype html>
+<!d<!<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>TitanCore Dashboard — Executive Control Center</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>TitanCore Executive Control Center</title>
   <style>
     :root{
-      --bg0:#000;
-      --bg1:#071a10;
-      --panel:#070707;
-      --panel2:#0b0b0b;
-      --gold:#c7a24a;
-      --gold2:#7a6126;
-      --green:#18d06f;
-      --green2:#0aa85a;
-      --text:#e9d7a6;
-      --muted:#bda66d;
-      --border: rgba(199,162,74,.55);
-      --border2: rgba(24,208,111,.25);
-      --shadow: 0 18px 55px rgba(0,0,0,.65);
-      --radius: 26px;
+      --bg:#050505; --gold:#d7b24a; --green:#22c55e; --text:#f6d98a; --muted:#bfae7a;
+      --line:rgba(215,178,74,.35); --shadow:0 10px 30px rgba(0,0,0,.55); --radius:14px;
     }
-
     *{box-sizing:border-box}
-    html,body{height:100%}
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", Helvetica, sans-serif;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+      background:
+        radial-gradient(1200px 700px at 20% 10%, rgba(34,197,94,.06), transparent 55%),
+        radial-gradient(1200px 700px at 80% 20%, rgba(215,178,74,.06), transparent 55%),
+        linear-gradient(180deg,var(--bg),#000);
       color:var(--text);
-      background:
-        radial-gradient(900px 700px at 20% 8%, rgba(24,208,111,.18), transparent 55%),
-        radial-gradient(800px 600px at 90% 18%, rgba(199,162,74,.12), transparent 55%),
-        linear-gradient(180deg, rgba(7,26,16,.75), rgba(0,0,0,1) 55%);
-      background-color: var(--bg0);
     }
+    .shell{min-height:100vh;padding:14px}
+    .shell-inner{
+      min-height:calc(100vh - 28px);
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.00));
+      border:1px solid rgba(215,178,74,.22);
+      border-radius:18px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .topbar{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      padding:14px;
+      background:linear-gradient(180deg, rgba(215,178,74,.10), rgba(0,0,0,.0));
+      border-bottom:1px solid var(--line);
+    }
+    .brand{display:flex;flex-direction:column;gap:2px}
+    .brand .t1{font-weight:900;letter-spacing:.6px;color:var(--green);font-size:16px;text-transform:uppercase}
+    .brand .t2{font-weight:800;color:var(--gold);font-size:14px}
+    .clock{
+      font-weight:900;color:var(--text);font-size:13px;
+      padding:8px 10px;border:1px solid var(--line);border-radius:12px;
+      background:rgba(0,0,0,.35);white-space:nowrap;
+    }
+    .layout{display:grid;grid-template-columns:260px 1fr 320px;gap:12px;padding:12px}
+    @media (max-width: 1100px){ .layout{grid-template-columns:1fr} .right{order:3} }
 
-    a{color:inherit}
+    .sidebar,.main,.right{
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(0,0,0,.12));
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:12px;
+    }
+    .side-title{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:10px;border-radius:12px;background:rgba(0,0,0,.35);
+      border:1px solid rgba(34,197,94,.18);margin-bottom:10px;
+    }
+    .side-title .label{font-weight:900;color:var(--green)}
+    .side-title .mini{font-size:12px;color:var(--muted);font-weight:900}
 
-    /* “double background” effect */
-    .shell{
-      min-height:100%;
-      padding: 18px 14px 28px;
+    .nav{display:flex;flex-direction:column;gap:8px}
+    .navbtn{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      width:100%;padding:10px;border-radius:12px;
+      border:1px solid rgba(215,178,74,.25);
+      background:rgba(0,0,0,.35);
+      color:var(--text);font-weight:950;text-decoration:none;cursor:pointer;
     }
-    .frame{
-      max-width: 1180px;
-      margin: 0 auto;
-      padding: 14px;
-      border-radius: calc(var(--radius) + 10px);
-      background:
-        radial-gradient(900px 600px at 30% 0%, rgba(24,208,111,.12), transparent 55%),
-        linear-gradient(180deg, rgba(10,20,14,.55), rgba(0,0,0,.92));
-      border: 1px solid rgba(199,162,74,.35);
-      box-shadow: var(--shadow);
-      position: relative;
-      overflow: hidden;
-    }
-    .frame::before{
-      content:"";
-      position:absolute; inset: 10px;
-      border-radius: var(--radius);
-      border: 1px solid rgba(24,208,111,.18);
-      pointer-events:none;
-    }
+    .navbtn:hover{border-color:rgba(34,197,94,.55);box-shadow:0 0 0 2px rgba(34,197,94,.10) inset;color:var(--gold)}
+    .navbtn.active{border-color:rgba(34,197,94,.75);background:linear-gradient(180deg, rgba(34,197,94,.12), rgba(0,0,0,.30));color:var(--gold)}
+    .chev{font-size:12px;color:var(--gold);padding:2px 6px;border-radius:10px;border:1px solid rgba(215,178,74,.25);background:rgba(0,0,0,.35)}
 
-    /* Header */
-    .top{
-      display:flex;
-      align-items:flex-start;
-      gap: 14px;
-      padding: 10px 10px 16px;
-    }
-    .logo{
-      width: 56px;
-      height: 56px;
-      border-radius: 16px;
-      display:grid;
-      place-items:center;
-      background:
-        radial-gradient(circle at 30% 30%, rgba(24,208,111,.22), transparent 55%),
-        linear-gradient(180deg, rgba(0,0,0,.8), rgba(0,0,0,.95));
-      border: 1px solid rgba(199,162,74,.55);
-      box-shadow: 0 12px 25px rgba(0,0,0,.55);
-      flex: 0 0 auto;
-    }
-    .logo span{
-      font-weight: 900;
-      letter-spacing: .8px;
-      color: var(--gold);
-    }
+    .panel-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+    .panel-title h2{margin:0;font-size:15px;color:var(--green);font-weight:950;letter-spacing:.3px;text-transform:uppercase}
+    .tag{font-size:12px;padding:6px 10px;border-radius:999px;border:1px solid rgba(215,178,74,.25);background:rgba(0,0,0,.35);color:var(--muted);font-weight:900}
 
-    .titles{min-width:0}
-    .h1{
-      margin:0;
-      font-size: 30px;
-      line-height: 1.1;
-      letter-spacing: .3px;
-      color: var(--gold);
-      font-weight: 900;
-    }
-    .h2{
-      margin: 6px 0 0;
-      font-size: 14px;
-      color: var(--muted);
-      letter-spacing: .3px;
-    }
-
-    .timepill{
-      margin-left:auto;
-      display:flex;
-      gap: 14px;
-      align-items:center;
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.85));
-      border: 1px solid rgba(199,162,74,.35);
-      box-shadow: 0 10px 25px rgba(0,0,0,.45);
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      max-width: 460px;
-    }
-    .timepill .label{color: var(--muted); font-size: 12px}
-    .timepill .value{color: var(--text); font-size: 13px; letter-spacing: .3px}
-    .timepill .active{
-      color: var(--green);
-      font-weight: 800;
-      letter-spacing: .4px;
-    }
-
-    /* Main layout */
-    .grid{
-      display:grid;
-      grid-template-columns: 320px 1fr 360px;
-      gap: 14px;
-      padding: 6px 10px 14px;
-    }
-
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    @media (max-width: 1100px){ .grid{grid-template-columns:1fr} }
     .card{
-      border-radius: var(--radius);
-      background:
-        radial-gradient(700px 300px at 20% 0%, rgba(24,208,111,.10), transparent 55%),
-        linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.88));
-      border: 1px solid rgba(199,162,74,.35);
-      box-shadow: 0 16px 35px rgba(0,0,0,.45);
-      overflow: hidden;
-      position: relative;
+      border:1px solid rgba(215,178,74,.22);
+      border-radius:var(--radius);
+      background:linear-gradient(180deg, rgba(0,0,0,.50), rgba(0,0,0,.25));
+      padding:12px;
     }
-    .card::before{
-      content:"";
-      position:absolute; inset: 10px;
-      border-radius: calc(var(--radius) - 6px);
-      border: 1px solid rgba(24,208,111,.12);
-      pointer-events:none;
-    }
-    .card .inner{
-      padding: 16px;
-      position: relative;
-      z-index: 1;
-    }
+    .card h3{margin:0 0 6px 0;color:var(--gold);font-size:13px;font-weight:950}
+    .muted{color:var(--muted);font-weight:900;font-size:12px;line-height:1.4}
+    .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+    @media (max-width: 800px){ .kpis{grid-template-columns:1fr} }
+    .kpi{border:1px solid rgba(34,197,94,.16);border-radius:12px;padding:10px;background:rgba(0,0,0,.35)}
+    .kpi .k1{font-size:11px;color:var(--muted);font-weight:900}
+    .kpi .k2{font-size:18px;color:var(--text);font-weight:1000;margin-top:4px}
+    .section{margin-top:12px}
+    .section h3{margin:0 0 8px 0;color:var(--green);font-weight:1000;text-transform:uppercase;font-size:13px;letter-spacing:.4px}
+    .list{display:flex;flex-direction:column;gap:8px}
+    .row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px;border-radius:12px;border:1px solid rgba(215,178,74,.18);background:rgba(0,0,0,.35)}
+    .row b{color:var(--text)}
+    .pill{font-size:12px;padding:6px 10px;border-radius:999px;border:1px solid rgba(34,197,94,.22);color:var(--green);font-weight:1000;background:rgba(0,0,0,.35);white-space:nowrap}
+    .pill.warn{border-color:rgba(215,178,74,.30);color:var(--gold)}
+    .pill.bad{border-color:rgba(255,80,80,.30);color:#ff8080}
+    .footer{padding:14px;text-align:center;color:var(--muted);font-weight:900;font-size:12px;border-top:1px solid var(--line);background:rgba(0,0,0,.25)}
 
-    .sectionTitle{
-      margin:0 0 10px;
-      color: var(--green);
-      font-weight: 900;
-      letter-spacing: .4px;
-      font-size: 18px;
+    /* Mini menu modal */
+    .tc-modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(0,0,0,.70);z-index:999}
+    .tc-modal.open{display:flex}
+    .tc-modal-box{width:min(980px,100%);border-radius:16px;border:1px solid var(--line);background:rgba(10,10,10,.96);padding:14px}
+    .tc-modal-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:10px}
+    .tc-modal-title{color:var(--green);font-weight:1000;font-size:16px}
+    .tc-modal-sub{color:var(--muted);font-size:12px;margin-top:2px;font-weight:900}
+    .tc-modal-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    @media (max-width:720px){.tc-modal-grid{grid-template-columns:1fr}}
+    .tc-card{border:1px solid rgba(215,178,74,.18);border-radius:14px;padding:12px;background:rgba(0,0,0,.25)}
+    .tc-card-title{font-weight:1000;color:var(--gold)}
+    .tc-card-sub{margin-top:4px;color:var(--muted);font-size:12px;font-weight:900}
+    .tc-btn{
+      display:inline-flex;align-items:center;justify-content:center;
+      padding:10px 12px;border-radius:12px;border:1px solid rgba(215,178,74,.25);
+      background:rgba(0,0,0,.35);
+      color:var(--gold);font-weight:1000;text-decoration:none;cursor:pointer;
     }
-    .sectionSub{
-      margin: 0 0 14px;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.35;
-    }
-
-    /* Left menu */
-    .menuHeader{
-      display:flex;
-      align-items:center;
-      justify-content: space-between;
-      gap:10px;
-      margin-bottom: 12px;
-    }
-    .menuHeader .dashLabel{
-      font-weight: 900;
-      color: var(--gold);
-      letter-spacing: .4px;
-      font-size: 16px;
-    }
-    .pill{
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(199,162,74,.35);
-      background: rgba(0,0,0,.45);
-      color: var(--muted);
-      font-size: 12px;
-      white-space: nowrap;
-    }
-
-    .menuList{
-      display:flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .itemBtn{
-      width: 100%;
-      display:flex;
-      align-items:center;
-      justify-content: space-between;
-      gap: 10px;
-      text-align:left;
-      padding: 14px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(199,162,74,.35);
-      background: rgba(0,0,0,.40);
-      color: var(--text);
-      cursor: pointer;
-      transition: transform .08s ease, border-color .12s ease, background .12s ease;
-      font-weight: 800;
-      letter-spacing: .2px;
-    }
-    .itemBtn .dot{
-      width: 9px; height: 9px; border-radius: 50%;
-      background: rgba(199,162,74,.55);
-      box-shadow: 0 0 0 3px rgba(199,162,74,.12);
-      flex: 0 0 auto;
-      margin-right: 10px;
-    }
-    .itemBtn .left{
-      display:flex; align-items:center; gap:10px;
-      min-width:0;
-    }
-    .itemBtn .name{
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .itemBtn:hover{
-      transform: translateY(-1px);
-      border-color: rgba(24,208,111,.55);
-      background: rgba(24,208,111,.08);
-    }
-    .itemBtn:active{transform: translateY(0px) scale(.99)}
-    .itemBtn.active{
-      border-color: rgba(24,208,111,.65);
-      background: rgba(24,208,111,.10);
-    }
-    .itemBtn.active .dot{
-      background: var(--green);
-      box-shadow: 0 0 0 3px rgba(24,208,111,.16);
-    }
-
-    /* Middle companies */
-    .companyList{
-      display:flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-top: 6px;
-    }
-    .row{
-      display:flex;
-      align-items:center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 14px;
-      border-radius: 22px;
-      border: 1px solid rgba(199,162,74,.25);
-      background: rgba(0,0,0,.35);
-    }
-    .row .meta{min-width:0}
-    .row .title{
-      margin:0;
-      color: var(--gold);
-      font-weight: 900;
-      letter-spacing: .2px;
-      font-size: 16px;
-    }
-    .row .desc{
-      margin: 4px 0 0;
-      color: rgba(233,215,166,.72);
-      font-size: 12.5px;
-      letter-spacing: .2px;
-    }
-    .openBtn{
-      border:none;
-      cursor:pointer;
-      padding: 10px 16px;
-      border-radius: 999px;
-      background: rgba(0,0,0,.45);
-      border: 1px solid rgba(24,208,111,.55);
-      color: var(--green);
-      font-weight: 900;
-      letter-spacing: .8px;
-      transition: transform .08s ease, background .12s ease;
-      flex: 0 0 auto;
-    }
-    .openBtn:hover{background: rgba(24,208,111,.10); transform: translateY(-1px)}
-    .openBtn:active{transform: translateY(0px) scale(.99)}
-
-    /* Right leadership */
-    .stack{
-      display:flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-top: 6px;
-    }
-    .subHead{
-      margin: 12px 0 0;
-      color: rgba(233,215,166,.75);
-      font-weight: 800;
-      letter-spacing: .2px;
-      font-size: 12px;
-    }
-
-    /* Full view pages (modules / company / leadership) */
-    .view{
-      display:none;
-      padding: 10px;
-    }
-    .view.active{display:block}
-    .viewCard{
-      border-radius: var(--radius);
-      background:
-        radial-gradient(900px 500px at 20% 0%, rgba(24,208,111,.14), transparent 55%),
-        linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.92));
-      border: 1px solid rgba(199,162,74,.35);
-      box-shadow: var(--shadow);
-      position: relative;
-      overflow: hidden;
-    }
-    .viewCard::before{
-      content:"";
-      position:absolute; inset: 10px;
-      border-radius: calc(var(--radius) - 6px);
-      border: 1px solid rgba(24,208,111,.12);
-      pointer-events:none;
-    }
-    .viewInner{
-      padding: 18px;
-      position: relative;
-      z-index: 1;
-    }
-    .viewTitle{
-      margin:0;
-      font-size: 22px;
-      color: var(--green);
-      font-weight: 950;
-      letter-spacing: .4px;
-    }
-    .viewSub{
-      margin: 8px 0 14px;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.4;
-    }
-    .tiles{
-      display:grid;
-      grid-template-columns: repeat(2, minmax(0,1fr));
-      gap: 12px;
-      margin-top: 12px;
-    }
-    .tile{
-      padding: 14px;
-      border-radius: 20px;
-      background: rgba(0,0,0,.35);
-      border: 1px solid rgba(199,162,74,.22);
-    }
-    .tile .k{color: rgba(233,215,166,.75); font-size: 12px}
-    .tile .v{color: var(--text); font-weight: 900; font-size: 18px; margin-top: 6px}
-    .tile .note{color: rgba(233,215,166,.65); font-size: 12px; margin-top: 6px; line-height:1.35}
-
-    .bullets{
-      margin: 14px 0 0;
-      padding-left: 18px;
-      color: rgba(233,215,166,.80);
-      line-height: 1.45;
-      font-size: 13px;
-    }
-
-    /* Back button at bottom ONLY */
-    .backWrap{
-      margin-top: 18px;
-      display:flex;
-      justify-content: center;
-    }
-    .backBtn{
-      cursor:pointer;
-      border:none;
-      padding: 10px 16px;
-      border-radius: 999px;
-      background: rgba(0,0,0,.55);
-      border: 1px solid rgba(199,162,74,.35);
-      color: rgba(233,215,166,.85);
-      font-weight: 900;
-      letter-spacing: .3px;
-    }
-    .backBtn:hover{border-color: rgba(24,208,111,.55); color: var(--green)}
-    .backBtn:active{transform: scale(.99)}
-
-    /* Footer line */
-    .foot{
-      padding: 10px 12px 2px;
-      color: rgba(233,215,166,.55);
-      font-size: 12px;
-      letter-spacing: .2px;
-      text-align: center;
-    }
-
-    /* Responsive */
-    @media (max-width: 1020px){
-      .grid{grid-template-columns: 1fr}
-      .timepill{max-width: none}
-    }
+    .tc-btn:hover{border-color:rgba(34,197,94,.55);color:var(--gold)}
+    .tc-btn-green{border-color:rgba(34,197,94,.55);color:var(--green)}
+    .tc-btn-small{padding:7px 10px;border-radius:10px;font-size:12px}
   </style>
 </head>
 <body>
-  <div class="shell">
-    <div class="frame">
-      <header class="top">
-        <div class="logo" aria-label="TitanCore">
-          <span>TC</span>
-        </div>
 
-        <div class="titles">
-          <h1 class="h1">TitanCore Dashboard</h1>
-          <div class="h2">TitanCore Holdings • Executive Control Center</div>
-        </div>
+<div class="shell"><div class="shell-inner">
 
-        <div class="timepill" aria-label="System Time">
-          <div>
-            <div class="label">System Time</div>
-            <div class="value" id="timeLine">—</div>
-          </div>
-          <div>
-            <div class="label">Mode</div>
-            <div class="value">CEO</div>
-          </div>
-          <div>
-            <div class="label">Status</div>
-            <div class="value active">Active</div>
-          </div>
-        </div>
-      </header>
-
-      <!-- DASHBOARD (3 columns) -->
-      <main id="dashboard" class="grid">
-        <!-- LEFT: Main Control -->
-        <section class="card">
-          <div class="inner">
-            <div class="menuHeader">
-              <div class="dashLabel">Main Control</div>
-              <div class="pill">tap to open</div>
-            </div>
-
-            <div class="menuList" id="menuList">
-               <button class="itemBtn" data-open="contact">
-                <span class="left"><span class="dot"></span><span class="name">Contact</span></span>
-                <span class="pill">Live</span>
-              </button>
-              <button class="itemBtn" data-open="contract">
-                <span class="left"><span class="dot"></span><span class="name">Contract</span></span>
-                <span class="pill">Queue</span>
-              </button>
-              <button class="itemBtn" data-open="email">
-                <span class="left"><span class="dot"></span><span class="name">Email Routing</span></span>
-                <span class="pill">Config</span>
-              </button>
-              <button class="itemBtn" data-open="report">
-                <span class="left"><span class="dot"></span><span class="name">Report</span></span>
-                <span class="pill">Build</span>
-              </button>
-              <button class="itemBtn" data-open="approval">
-                <span class="left"><span class="dot"></span><span class="name">Approval</span></span>
-                <span class="pill">Review</span>
-              </button>
-              <button class="itemBtn" data-open="omni">
-                <span class="left"><span class="dot"></span><span class="name">Omni System</span></span>
-                <span class="pill">Ready</span>
-              </button>
-              <button class="itemBtn" data-open="tax">
-                <span class="left"><span class="dot"></span><span class="name">Tax Network</span></span>
-                <span class="pill">Ready</span>
-              </button>
-              <button class="itemBtn" data-open="ai">
-                <span class="left"><span class="dot"></span><span class="name">Agent A.I. Suite</span></span>
-                <span class="pill">Ready</span>
-              </button>
-              <button class="itemBtn" data-open="public">
-                <span class="left"><span class="dot"></span><span class="name">Public Portal</span></span>
-                <span class="pill">Public</span>
-              </button>
-              <button class="itemBtn" data-open="finance">
-                <span class="left"><span class="dot"></span><span class="name">Finance</span></span>
-                <span class="pill">Read-only</span>
-              </button>
-            </div>
-          </div>
-        </section>
-
-        <!-- MIDDLE: Companies -->
-        <section class="card">
-          <div class="inner">
-            <h3 class="sectionTitle">Companies</h3>
-            <p class="sectionSub">Holding + subsidiaries (tap OPEN)</p>
-
-            <div class="companyList">
-              <div class="row">
-                <div class="meta">
-                  <p class="title">TitanCore Holdings</p>
-                  <p class="desc">Father company • governance</p>
-                </div>
-                <button class="openBtn" data-open="co_titancore">OPEN</button>
-              </div>
-
-              <div class="row">
-                <div class="meta">
-                  <p class="title">Vaultara Capital</p>
-                  <p class="desc">Investments • funding</p>
-                </div>
-                <button class="openBtn" data-open="co_vaultara">OPEN</button>
-              </div>
-
-              <div class="row">
-                <div class="meta">
-                  <p class="title">VitalPath Care Group</p>
-                  <p class="desc">Healthcare • compliance</p>
-                </div>
-                <button class="openBtn" data-open="co_vitalpath">OPEN</button>
-              </div>
-
-              <div class="row">
-                <div class="meta">
-                  <p class="title">RevMotion Auto & Marine</p>
-                  <p class="desc">Fleet • service • ops</p>
-                </div>
-                <button class="openBtn" data-open="co_revmotion">OPEN</button>
-              </div>
-
-              <div class="row">
-                <div class="meta">
-                  <p class="title">Family First Equity</p>
-                  <p class="desc">Equity • housing</p>
-                </div>
-                <button class="openBtn" data-open="co_familyfirst">OPEN</button>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- RIGHT: Leadership -->
-        <section class="card">
-          <div class="inner">
-            <h3 class="sectionTitle">Leadership</h3>
-            <p class="sectionSub">CEO + Mantle of 7 + Generals</p>
-
-            <div class="stack">
-              <div class="row">
-                <div class="meta">
-                  <p class="title">CEO</p>
-                  <p class="desc">Private executive page</p>
-                </div>
-                <button class="openBtn" data-open="lead_ceo">OPEN</button>
-              </div>
-
-              <div class="subHead">Mantle of 7 (CEO + 6)</div>
-
-              <div class="row">
-                <div class="meta">
-                  <p class="title">President</p>
-                  <p class="desc">Oversight • governance</p>
-                </div>
-                <button class="openBtn" data-open="lead_president">OPEN</button>
-              </div>
-
-              <div class="row">
-                <div class="meta">
-                  <p class="title">Vice President</p>
-                  <p class="desc">Operations • execution</p>
-                </div>
-                <button class="openBtn" data-open="lead_vp">OPEN</button>
-              </div>
-
-              <div class="row">
-                <div class="meta">
-                  <p class="title">Director</p>
-                  <p class="desc">Programs • enforcement</p>
-                </div>
-                <button class="openBtn" data-open="lead_director">OPEN</button>
-              </div>
-
-              <div class="row">
-                <div class="meta">
-                  <p class="title">Asst Director</p>
-                  <p class="desc">Coordination • support</p>
-                </div>
-                <button class="openBtn" data-open="lead_asst_director">OPEN</button>
-              </div>
-
-              <div class="row">
-                <div class="meta">
-                  <p class="title">Chief of Staff</p>
-                  <p class="desc">Routing • visibility</p>
-                </div>
-                <button class="openBtn" data-open="lead_cos">OPEN</button>
-              </div>
-
-              <div class="row">
-                <div class="meta">
-                  <p class="title">Executive Advisor</p>
-                  <p class="desc">Strategy • counsel</p>
-                </div>
-                <button class="openBtn" data-open="lead_advisor">OPEN</button>
-              </div>
-
-              <div class="subHead">Generals</div>
-
-              <div class="row">
-                <div class="meta">
-                  <p class="title">General Manager</p>
-                  <p class="desc">Visibility • routing</p>
-                </div>
-                <button class="openBtn" data-open="lead_gm">OPEN</button>
-              </div>
-
-              <div class="row">
-                <div class="meta">
-                  <p class="title">General Asst Manager</p>
-                  <p class="desc">Support • coordination</p>
-                </div>
-                <button class="openBtn" data-open="lead_gam">OPEN</button>
-              </div>
-
-              <div class="row">
-                <div class="meta">
-                  <p class="title">General Administrator</p>
-                  <p class="desc">Records • compliance</p>
-                </div>
-                <button class="openBtn" data-open="lead_ga">OPEN</button>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      <!-- FULL VIEW (one at a time) -->
-      <section id="view" class="view">
-        <div class="viewCard">
-          <div class="viewInner">
-            <h2 class="viewTitle" id="viewTitle">—</h2>
-            <p class="viewSub" id="viewSub">—</p>
-
-            <div id="viewBody"></div>
-
-            <div class="backWrap">
-              <button class="backBtn" id="backBtn">Back to Dashboard</button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <div class="foot">TitanCore internal executive view — read-only</div>
+  <div class="topbar">
+    <div class="brand">
+      <div class="t1">TitanCore Holdings</div>
+      <div class="t2">Executive Control Center</div>
     </div>
+    <div class="clock" id="clock">Loading…</div>
   </div>
 
-  <script>
-    // -------- Time (auto, 12-hour, month abbreviated) --------
-    const $timeLine = document.getElementById('timeLine');
-    const DOW = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
-    const MON = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+  <div class="layout">
 
-    function pad(n){ return String(n).padStart(2,'0'); }
-    function formatTime(d){
-      const dow = DOW[d.getDay()];
-      const mon = MON[d.getMonth()];
-      const day = pad(d.getDate());
-      const yr  = d.getFullYear();
-      let h = d.getHours();
-      const ampm = h >= 12 ? "PM" : "AM";
-      h = h % 12; if(h === 0) h = 12;
-      const m = pad(d.getMinutes());
-      const s = pad(d.getSeconds());
-      return `${dow}, ${mon} ${day} ${yr} • ${h}:${m}:${s} ${ampm}`;
-    }
-    function tick(){
-      const now = new Date();
-      $timeLine.textContent = formatTime(now);
-    }
-    tick(); setInterval(tick, 1000);
+    <!-- LEFT MENU -->
+    <aside class="sidebar">
+      <div class="side-title">
+        <div class="label">Menu</div>
+        <div class="mini">Tap → mini-menu</div>
+      </div>
+      <div class="nav" id="navArea"></div>
+    </aside>
 
-    // -------- Views (modules / companies / leadership) --------
-    const dashboardEl = document.getElementById('dashboard');
-    const viewEl = document.getElementById('view');
-    const viewTitleEl = document.getElementById('viewTitle');
-    const viewSubEl = document.getElementById('viewSub');
-    const viewBodyEl = document.getElementById('viewBody');
-    const backBtn = document.getElementById('backBtn');
+    <!-- CENTER -->
+    <main class="main">
+      <div class="panel-title">
+        <h2>Dashboard</h2>
+        <div class="tag">Command View • Governance • Records</div>
+      </div>
 
-    const views = {
-      // MODULES
-      contact: {
-        title: "Contact",
-        sub: "Executive visibility • calls in/out • transfers • company routing (summary view)",
-        body: `
-          <div class="tiles">
-            <div class="tile"><div class="k">Calls In (24h)</div><div class="v">—</div><div class="note">Inbound activity summary for all companies.</div></div>
-            <div class="tile"><div class="k">Calls Out (24h)</div><div class="v">—</div><div class="note">Outbound activity summary for all companies.</div></div>
-            <div class="tile"><div class="k">Transfers</div><div class="v">—</div><div class="note">Internal hand-offs between companies/departments.</div></div>
-            <div class="tile"><div class="k">Missed / Escalations</div><div class="v">—</div><div class="note">Anything needing executive attention.</div></div>
+      <div id="overview" class="grid">
+        <div class="card">
+          <h3>Cash Status</h3>
+          <div class="muted">Top-level finance view across TitanCore + subsidiaries (placeholder).</div>
+          <div class="kpis">
+            <div class="kpi"><div class="k1">Group Cash</div><div class="k2">$0</div></div>
+            <div class="kpi"><div class="k1">Receivables</div><div class="k2">$0</div></div>
+            <div class="kpi"><div class="k1">Payables</div><div class="k2">$0</div></div>
           </div>
-          <ul class="bullets">
-            <li>RingCentral / phone system integration goes here (later).</li>
-            <li>This page is read-only executive summary.</li>
-            <li>Company managers operate inside their own systems; TitanCore only sees oversight.</li>
-          </ul>
-        `
-      },
-      contract: {
-        title: "Contract",
-        sub: "Queue • create → TitanCore review → CEO final sign (oversight)",
-        body: `
-          <div class="tiles">
-            <div class="tile"><div class="k">New Drafts</div><div class="v">—</div><div class="note">Created by departments → company manager package.</div></div>
-            <div class="tile"><div class="k">TitanCore Review</div><div class="v">—</div><div class="note">Legal/finance/ops cross-check.</div></div>
-            <div class="tile"><div class="k">Awaiting CEO Sign</div><div class="v">—</div><div class="note">Final approval stage.</div></div>
-            <div class="tile"><div class="k">Completed</div><div class="v">—</div><div class="note">Archived with audit trail.</div></div>
+        </div>
+
+        <div class="card">
+          <h3>Risk Status</h3>
+          <div class="muted">Compliance, audit risks, exposure indicators (placeholder).</div>
+          <div class="kpis">
+            <div class="kpi"><div class="k1">Open Risks</div><div class="k2">0</div></div>
+            <div class="kpi"><div class="k1">Audit Alerts</div><div class="k2">0</div></div>
+            <div class="kpi"><div class="k1">Compliance</div><div class="k2">OK</div></div>
           </div>
-          <ul class="bullets">
-            <li>All packages flow: departments → company M/AM/Admin → TitanCore departments → TitanCore M/AM/Admin → CEO.</li>
-            <li>This is a dashboard summary (not an editor).</li>
-          </ul>
-        `
-      },
-      email: {
-        title: "Email Routing",
-        sub: "Config • records-only oversight • escalation visibility",
-        body: `
-          <div class="tiles">
-            <div class="tile"><div class="k">Inbound (24h)</div><div class="v">—</div><div class="note">All mailbox traffic counts.</div></div>
-            <div class="tile"><div class="k">Routed to Departments</div><div class="v">—</div><div class="note">Finance / Legal / Ops / Tech / Comms etc.</div></div>
-            <div class="tile"><div class="k">Escalations</div><div class="v">—</div><div class="note">Flagged items requiring executive attention.</div></div>
-            <div class="tile"><div class="k">Failures / Bounces</div><div class="v">—</div><div class="note">Delivery errors & routing issues.</div></div>
+        </div>
+
+        <div class="card">
+          <h3>Approvals Pending</h3>
+          <div class="muted">Waiting on TitanCore departments + CEO sign (placeholder).</div>
+          <div class="kpis">
+            <div class="kpi"><div class="k1">Waiting</div><div class="k2">0</div></div>
+            <div class="kpi"><div class="k1">In Review</div><div class="k2">0</div></div>
+            <div class="kpi"><div class="k1">Ready</div><div class="k2">0</div></div>
           </div>
-          <ul class="bullets">
-            <li>Microsoft email login + routing can be added after dashboard is stable.</li>
-            <li>This page is a place-holder that already navigates correctly.</li>
-          </ul>
-        `
-      },
-      report: {
-        title: "Report",
-        sub: "Build reports → submit to Approval (executive visibility)",
-        body: `
-          <div class="tiles">
-            <div class="tile"><div class="k">Reports Drafting</div><div class="v">—</div><div class="note">Operational + financial + compliance reporting.</div></div>
-            <div class="tile"><div class="k">Submitted</div><div class="v">—</div><div class="note">Waiting for review.</div></div>
-            <div class="tile"><div class="k">Approved</div><div class="v">—</div><div class="note">Logged to archive.</div></div>
-            <div class="tile"><div class="k">Returned</div><div class="v">—</div><div class="note">Needs correction.</div></div>
-          </div>
-          <ul class="bullets">
-            <li>Keep this page as executive dashboard summary.</li>
-          </ul>
-        `
-      },
-      approval: {
-        title: "Approval",
-        sub: "Queue → Mantle review → CEO final sign (executive control)",
-        body: `
-          <div class="tiles">
-            <div class="tile"><div class="k">Approval Queue</div><div class="v">—</div><div class="note">Items waiting for Mantle review.</div></div>
-            <div class="tile"><div class="k">CEO Attention</div><div class="v">—</div><div class="note">Ready for final decision.</div></div>
-            <div class="tile"><div class="k">Overdue</div><div class="v">—</div><div class="note">Deadlines / approvals approaching.</div></div>
-            <div class="tile"><div class="k">Completed</div><div class="v">—</div><div class="note">Approved and archived.</div></div>
-          </div>
-          <ul class="bullets">
-            <li>Approval rules are enforced in departments; this dashboard tracks visibility.</li>
-          </ul>
-        `
-      },
-      omni: {
-        title: "Omni System",
-        sub: "High-level executive system map (read-only)",
-        body: `
-          <div class="tiles">
-            <div class="tile"><div class="k">Systems Online</div><div class="v">—</div><div class="note">Status of connected modules.</div></div>
-            <div class="tile"><div class="k">Incidents</div><div class="v">—</div><div class="note">Tech alerts requiring attention.</div></div>
-            <div class="tile"><div class="k">Integrations</div><div class="v">—</div><div class="note">Email/voice/document connectors.</div></div>
-            <div class="tile"><div class="k">Audit Trail</div><div class="v">—</div><div class="note">System accountability & logs.</div></div>
-          </div>
-        `
-      },
-      tax: {
-        title: "Tax Network",
-        sub: "Deadlines • licenses • audit readiness (executive overview)",
-        body: `
-          <div class="tiles">
-            <div class="tile"><div class="k">Upcoming Deadlines</div><div class="v">—</div><div class="note">Next 30/60/90 day checkpoints.</div></div>
-            <div class="tile"><div class="k">Open Filings</div><div class="v">—</div><div class="note">Filed / pending / needs review.</div></div>
-            <div class="tile"><div class="k">Compliance Flags</div><div class="v">—</div><div class="note">Anything risky.</div></div>
-            <div class="tile"><div class="k">Audit Readiness</div><div class="v">—</div><div class="note">Document completeness score.</div></div>
-          </div>
-        `
-      },
-      ai: {
-        title: "Agent A.I. Suite",
-        sub: "Agents • automations • monitoring • assigned actions",
-        body: `
-          <div class="tiles">
-            <div class="tile"><div class="k">Active Agents</div><div class="v">—</div><div class="note">Bots / assistants running tasks.</div></div>
-            <div class="tile"><div class="k">Automations</div><div class="v">—</div><div class="note">Scheduled workflows.</div></div>
-            <div class="tile"><div class="k">Monitoring</div><div class="v">—</div><div class="note">Alerts across companies.</div></div>
-            <div class="tile"><div class="k">Assigned Actions</div><div class="v">—</div><div class="note">What needs follow-up.</div></div>
-          </div>
-        `
-      },
-      public: {
-        title: "Public Portal",
-        sub: "External-facing portal • investor / public views (placeholder)",
-        body: `
-          <ul class="bullets">
-            <li>Public landing + investor summary pages will live here later.</li>
-            <li>For now, this page is connected and routes correctly.</li>
-          </ul>
-        `
-      },
-      finance: {
-        title: "Finance",
-        sub: "Budgets • variance • executive financial oversight (read-only summary)",
-        body: `
-          <div class="tiles">
-            <div class="tile"><div class="k">Cash Position</div><div class="v">—</div><div class="note">Holding + subsidiaries summary.</div></div>
-            <div class="tile"><div class="k">Monthly In/Out</div><div class="v">—</div><div class="note">Net inflow/outflow.</div></div>
-            <div class="tile"><div class="k">Spend Categories</div><div class="v">—</div><div class="note">High level spending mix.</div></div>
-            <div class="tile"><div class="k">Variance Flags</div><div class="v">—</div><div class="note">Over-budget risk.</div></div>
-          </div>
-          <ul class="bullets">
-            <li>This is executive-only visibility. No editing here.</li>
-          </ul>
-        `
-      },
+        </div>
+      </div>
 
-      // COMPANIES
-      co_titancore: {
-        title: "TitanCore Holdings",
-        sub: "Holding company • governance • executive command",
-        body: `
-          <ul class="bullets">
-            <li>Oversight dashboard for all companies.</li>
-            <li>Departments receive packages from subsidiaries for review.</li>
-            <li>CEO final approvals route through TitanCore.</li>
-          </ul>
-        `
-      },
-      co_vaultara: {
-        title: "Vaultara Capital",
-        sub: "Investments • funding • capital operations",
-        body: `<ul class="bullets"><li>Investment pipeline overview (placeholder).</li><li>Funding activity summary (placeholder).</li></ul>`
-      },
-      co_vitalpath: {
-        title: "VitalPath Care Group",
-        sub: "Healthcare • compliance • patient-facing operations",
-        body: `<ul class="bullets"><li>Compliance oversight (placeholder).</li><li>Quality and incident summary (placeholder).</li></ul>`
-      },
-      co_revmotion: {
-        title: "RevMotion Auto & Marine",
-        sub: "Fleet • service • operations",
-        body: `<ul class="bullets"><li>Fleet status & service logs (placeholder).</li><li>Operations metrics (placeholder).</li></ul>`
-      },
-      co_familyfirst: {
-        title: "Family First Equity",
-        sub: "Equity • housing • holdings",
-        body: `<ul class="bullets"><li>Property / equity overview (placeholder).</li><li>Pipeline and risk summary (placeholder).</li></ul>`
-      },
+      <div id="companies" class="section">
+        <h3>Companies</h3>
+        <div class="list">
+          <div class="row"><div><b>TitanCore Holdings</b><div class="muted">Father company • governance • review</div></div><div class="pill">OPEN</div></div>
+          <div class="row"><div><b>Vaultara Capital</b><div class="muted">Capital • lending • funding</div></div><div class="pill">OPEN</div></div>
+          <div class="row"><div><b>VitalPath Care Group</b><div class="muted">Care ops • compliance</div></div><div class="pill">OPEN</div></div>
+          <div class="row"><div><b>RevMotion Auto & Marine</b><div class="muted">Operations • services</div></div><div class="pill">OPEN</div></div>
+          <div class="row"><div><b>Family First Equity Group</b><div class="muted">Equity • portfolio</div></div><div class="pill">OPEN</div></div>
+        </div>
+      </div>
 
-      // LEADERSHIP
-      lead_ceo: {
-        title: "CEO — Private Executive Page",
-        sub: "Command • final approval • strategic decisions",
-        body: `<ul class="bullets"><li>CEO dashboard notes (placeholder).</li><li>High priority approvals + risks (placeholder).</li></ul>`
-      },
-      lead_president: { title:"President", sub:"Oversight • governance", body:`<ul class="bullets"><li>Executive oversight (placeholder).</li></ul>` },
-      lead_vp: { title:"Vice President", sub:"Operations • execution", body:`<ul class="bullets"><li>Ops execution dashboard (placeholder).</li></ul>` },
-      lead_director: { title:"Director", sub:"Programs • enforcement", body:`<ul class="bullets"><li>Program status (placeholder).</li></ul>` },
-      lead_asst_director: { title:"Asst Director", sub:"Coordination • support", body:`<ul class="bullets"><li>Coordination view (placeholder).</li></ul>` },
-      lead_cos: { title:"Chief of Staff", sub:"Routing • visibility", body:`<ul class="bullets"><li>Routing and escalation (placeholder).</li></ul>` },
-      lead_advisor: { title:"Executive Advisor", sub:"Strategy • counsel", body:`<ul class="bullets"><li>Strategy notes (placeholder).</li></ul>` },
-      lead_gm: { title:"General Manager", sub:"Visibility • routing", body:`<ul class="bullets"><li>General management overview (placeholder).</li></ul>` },
-      lead_gam: { title:"General Asst Manager", sub:"Support • coordination", body:`<ul class="bullets"><li>Support and coordination (placeholder).</li></ul>` },
-      lead_ga: { title:"General Administrator", sub:"Records • compliance", body:`<ul class="bullets"><li>Records & compliance (placeholder).</li></ul>` },
-    };
+      <div id="status" class="section">
+        <h3>System Status</h3>
+        <div class="list">
+          <div class="row"><div><b>Navigation</b><div class="muted">No more “not found” when filenames match.</div></div><div class="pill">OK</div></div>
+          <div class="row"><div><b>Clock</b><div class="muted">Auto 12-hour clock on every page.</div></div><div class="pill">LIVE</div></div>
+          <div class="row"><div><b>Integrations</b><div class="muted">RingCentral/Microsoft/Email are placeholders until backend.</div></div><div class="pill warn">LATER</div></div>
+        </div>
+      </div>
+    </main>
 
-    function openView(key){
-      const v = views[key];
-      if(!v) return;
+    <!-- RIGHT -->
+    <aside class="right" id="leadership">
+      <div class="card">
+        <h3>Mantle of 7</h3>
+        <div class="list">
+          <div class="row"><div><b>CEO</b><div class="muted">Final approval</div></div><div class="pill">Executive</div></div>
+          <div class="row"><div><b>President</b><div class="muted">Oversight</div></div><div class="pill">Mantle</div></div>
+          <div class="row"><div><b>Vice President</b><div class="muted">Oversight</div></div><div class="pill">Mantle</div></div>
+          <div class="row"><div><b>Director</b><div class="muted">Oversight</div></div><div class="pill">Mantle</div></div>
+          <div class="row"><div><b>Assistant Director</b><div class="muted">Oversight</div></div><div class="pill">Mantle</div></div>
+          <div class="row"><div><b>Chief of Staff</b><div class="muted">Execution</div></div><div class="pill">Mantle</div></div>
+          <div class="row"><div><b>Executive Advisor</b><div class="muted">Advisory</div></div><div class="pill">Mantle</div></div>
+        </div>
+      </div>
 
-      // Hide dashboard columns
-      dashboardEl.style.display = 'none';
+      <div class="card" style="margin-top:10px;">
+        <h3>Generals</h3>
+        <div class="list">
+          <div class="row"><div><b>General Manager</b><div class="muted">Cross-company</div></div><div class="pill">Reports</div></div>
+          <div class="row"><div><b>General Assistant Manager</b><div class="muted">Support</div></div><div class="pill">Reports</div></div>
+          <div class="row"><div><b>General Administrator</b><div class="muted">Admin control</div></div><div class="pill">Reports</div></div>
+        </div>
+      </div>
+    </aside>
 
-      // Show view
-      viewTitleEl.textContent = v.title;
-      viewSubEl.textContent = v.sub;
-      viewBodyEl.innerHTML = v.body || "";
-      viewEl.classList.add('active');
+  </div>
 
-      // highlight active on left menu
-      document.querySelectorAll('.itemBtn').forEach(b=>{
-        b.classList.toggle('active', b.dataset.open === key);
-      });
+  <div class="footer">TitanCore Executive Control Center • Heavy UI Pack</div>
 
-      window.scrollTo({top:0, behavior:'smooth'});
-    }
+</div></div>
 
-    function backToDashboard(){
-      viewEl.classList.remove('active');
-      dashboardEl.style.display = 'grid';
-      document.querySelectorAll('.itemBtn').forEach(b=>b.classList.remove('active'));
-      window.scrollTo({top:0, behavior:'smooth'});
-    }
+<!-- MINI MENU MODAL -->
+<div class="tc-modal" id="tcModal">
+  <div class="tc-modal-box">
+    <div class="tc-modal-head">
+      <div>
+        <div class="tc-modal-title" id="tcModalTitle">Menu</div>
+        <div class="tc-modal-sub" id="tcModalSub">Choose inside section</div>
+      </div>
+      <button class="tc-btn tc-btn-small" id="tcModalClose">Close</button>
+    </div>
 
-    // Click binding for any element with data-open
-    document.addEventListener('click', (e)=>{
-      const t = e.target.closest('[data-open]');
-      if(!t) return;
-      openView(t.dataset.open);
+    <div class="tc-modal-grid" id="tcModalGrid"></div>
+
+    <div style="display:flex;justify-content:flex-end;margin-top:12px;">
+      <a class="tc-btn tc-btn-small tc-btn-green" id="tcOpenModule" href="#">Open Full Page</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // IMPORTANT: These filenames MUST exist in your folder or you get "NOT FOUND"
+  const MENU = [
+    {name:"Dashboard", file:"index.html", subs:[
+      {t:"Executive Overview", href:"index.html#overview", sub:"KPIs • approvals • risk"},
+      {t:"Companies", href:"index.html#companies", sub:"TitanCore + subsidiaries"},
+      {t:"Leadership", href:"index.html#leadership", sub:"Mantle of 7 + Generals"},
+      {t:"System Status", href:"index.html#status", sub:"Core health indicators"},
+    ]},
+    {name:"Contact", file:"contact.html", subs:[
+      {t:"Call Log", href:"contact.html#calllog", sub:"Inbound/outbound/transfers"},
+      {t:"Transfers", href:"contact.html#transfers", sub:"TitanCore ↔ Companies"},
+      {t:"Routing Rules", href:"contact.html#routing", sub:"Priority escalation"},
+      {t:"Escalations", href:"contact.html#escalations", sub:"CEO/Mantle queue"},
+    ]},
+    {name:"Contract", file:"contract.html", subs:[
+      {t:"Packages Queue", href:"contract.html#queue", sub:"Incoming packages"},
+      {t:"Review Pipeline", href:"contract.html#pipeline", sub:"Department reviews"},
+      {t:"Ready to Sign", href:"contract.html#sign", sub:"CEO signature queue"},
+      {t:"Archive", href:"contract.html#archive", sub:"Completed contracts"},
+    ]},
+    {name:"Email Routing", file:"email-routing.html", subs:[
+      {t:"Public Contact", href:"email-routing.html#public", sub:"contact@..."},
+      {t:"Investor Channel", href:"email-routing.html#investor", sub:"invest@..."},
+      {t:"Admin Internal", href:"email-routing.html#admin", sub:"admin@..."},
+      {t:"Routing Rules", href:"email-routing.html#rules", sub:"Auto sort & escalation"},
+    ]},
+    {name:"Report", file:"report.html", subs:[
+      {t:"Daily Brief", href:"report.html#daily", sub:"Operational summary"},
+      {t:"Weekly Reports", href:"report.html#weekly", sub:"By company + dept"},
+      {t:"Monthly Reports", href:"report.html#monthly", sub:"KPIs + trends"},
+      {t:"Exports", href:"report.html#exports", sub:"PDF/CSV export queue"},
+    ]},
+    {name:"Approval", file:"approval.html", subs:[
+      {t:"Department Review", href:"approval.html#review", sub:"TitanCore departments"},
+      {t:"Pending", href:"approval.html#pending", sub:"Waiting approvals"},
+      {t:"Approved", href:"approval.html#approved", sub:"Completed approvals"},
+      {t:"Rejected", href:"approval.html#rejected", sub:"Issues and returns"},
+    ]},
+    {name:"Omni System", file:"omni.html", subs:[
+      {t:"Operations Map", href:"omni.html#map", sub:"Command overview"},
+      {t:"Workflows", href:"omni.html#flows", sub:"End-to-end processes"},
+      {t:"Automations", href:"omni.html#auto", sub:"Rules + triggers"},
+      {t:"System Logs", href:"omni.html#logs", sub:"Audit trail"},
+    ]},
+    {name:"Tax Network", file:"tax-network.html", subs:[
+      {t:"Upcoming Deadlines", href:"tax-network.html#deadlines", sub:"Prev • Today • Next"},
+      {t:"Compliance Status", href:"tax-network.html#status", sub:"States + licenses"},
+      {t:"Audit Risks", href:"tax-network.html#audit", sub:"Risk scoring"},
+      {t:"License Matrix", href:"tax-network.html#licenses", sub:"Types + states"},
+    ]},
+    {name:"Agent A.I. Suite", file:"agent-ai-suite.html", subs:[
+      {t:"Agent Systems", href:"agent-ai-suite.html#systems", sub:"Core agent platform"},
+      {t:"Agents List", href:"agent-ai-suite.html#agents", sub:"Finance/Legal/Ops/etc"},
+      {t:"Company Agents", href:"agent-ai-suite.html#companies", sub:"Per company"},
+      {t:"Runs & Logs", href:"agent-ai-suite.html#runs", sub:"Execution history"},
+    ]},
+    {name:"Public Portal", file:"public-portal.html", subs:[
+      {t:"Public Intake", href:"public-portal.html#intake", sub:"Requests pipeline"},
+      {t:"Investor Entry", href:"public-portal.html#invest", sub:"Institution channel"},
+      {t:"Status Page", href:"public-portal.html#status", sub:"Public status"},
+      {t:"Directory", href:"public-portal.html#directory", sub:"Contacts"},
+    ]},
+    {name:"Finance Show", file:"finance-show.html", subs:[
+      {t:"Profit & Loss", href:"finance-show.html#pl", sub:"Group and per company"},
+      {t:"Budgets", href:"finance-show.html#budget", sub:"Planned vs actual"},
+      {t:"Loans/Internal", href:"finance-show.html#loans", sub:"Intercompany flows"},
+      {t:"Forecast", href:"finance-show.html#forecast", sub:"Forward view"},
+    ]},
+  ];
+
+  function buildNav(){
+    const nav=document.getElementById("navArea");
+    const here=(location.pathname.split("/").pop()||"index.html").toLowerCase();
+
+    MENU.forEach(m=>{
+      const a=document.createElement("a");
+      a.className="navbtn"+(here===m.file.toLowerCase()?" active":"");
+      a.href=m.file;
+
+      const left=document.createElement("div"); left.textContent=m.name;
+      const right=document.createElement("div"); right.className="chev"; right.textContent="▾";
+
+      a.appendChild(left); a.appendChild(right);
+
+      // Open mini-menu instead of direct navigation
+      a.addEventListener("click",(e)=>{ e.preventDefault(); openMiniMenu(m); });
+
+      nav.appendChild(a);
+    });
+  }
+
+  function openMiniMenu(m){
+    const modal=document.getElementById("tcModal");
+    const title=document.getElementById("tcModalTitle");
+    const sub=document.getElementById("tcModalSub");
+    const grid=document.getElementById("tcModalGrid");
+    const openBtn=document.getElementById("tcOpenModule");
+
+    title.textContent=m.name;
+    sub.textContent="Pick what you want inside (or open full page)";
+    grid.innerHTML="";
+
+    (m.subs||[]).forEach(s=>{
+      const div=document.createElement("div");
+      div.className="tc-card";
+      div.innerHTML=`
+        <div class="tc-card-title">${s.t}</div>
+        <div class="tc-card-sub">${s.sub}</div>
+        <div style="margin-top:10px;">
+          <a class="tc-btn tc-btn-small" href="${s.href}">Open</a>
+        </div>`;
+      grid.appendChild(div);
     });
 
-    backBtn.addEventListener('click', backToDashboard);
+    openBtn.href=m.file;
+    modal.classList.add("open");
+  }
 
-    // Optional: allow ESC to go back
-    document.addEventListener('keydown', (e)=>{
-      if(e.key === 'Escape' && viewEl.classList.contains('active')) backToDashboard();
-    });
-  </script>
+  function closeMiniMenu(){
+    document.getElementById("tcModal").classList.remove("open");
+  }
+
+  document.addEventListener("click",(e)=>{
+    if(e.target.id==="tcModal") closeMiniMenu();
+    if(e.target.id==="tcModalClose") closeMiniMenu();
+  });
+
+  // 12-hour clock
+  function updateClock(){
+    const el=document.getElementById("clock");
+    const d=new Date();
+    const months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    let h=d.getHours();
+    const ampm=h>=12?"PM":"AM";
+    h=h%12; if(h===0) h=12;
+    const mm=String(d.getMinutes()).padStart(2,"0");
+    const ss=String(d.getSeconds()).padStart(2,"0");
+    el.textContent=`${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()} • ${h}:${mm}:${ss} ${ampm}`;
+  }
+
+  buildNav();
+  updateClock();
+  setInterval(updateClock,1000);
+</script>
 </body>
 </html>
