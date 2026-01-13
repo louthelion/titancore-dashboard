@@ -3,376 +3,525 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TitanCore — Contact</title>
+  <title>Contact — TitanCore Executive Control Center</title>
 
-  <!-- If your main stylesheet is in the ROOT (same place as index.html), keep this: -->
-  <link rel="stylesheet" href="./styles.css" />
+  <!-- If your global CSS exists, it will load -->
+  <link rel="stylesheet" href="../assets/style.css" />
 
-  <!-- Contact page safety-styles (so it still looks correct even if styles.css is missing something) -->
+  <!-- Fallback styling (so it never turns white even if CSS is missing) -->
   <style>
     :root{
-      --bg:#050806;
-      --panel:#070b08;
-      --panel2:#0b120d;
-      --gold:#b8922f;
-      --gold2:#8f6e1c;
-      --green:#11b053;
-      --text:#e9d6a3;
-      --muted:#bda86b;
-      --line: rgba(184,146,47,.35);
-      --glow: rgba(17,176,83,.18);
-      --shadow: rgba(0,0,0,.55);
+      --bg:#050505;
+      --panel:#0b0b0b;
+      --panel2:#070707;
+      --gold:#d6b15e;
+      --gold2:#8c6b1f;
+      --green:#18c26e;
+      --text:#f2d27b;
+      --muted:#bca36a;
+      --line:rgba(214,177,94,.35);
+      --shadow:0 10px 30px rgba(0,0,0,.55);
+      --radius:16px;
+      --radius2:12px;
+      --pad:14px;
+      --font: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     }
+    *{box-sizing:border-box}
     body{
       margin:0;
-      background: radial-gradient(1200px 700px at 20% 10%, rgba(17,176,83,.18), transparent 55%),
-                  radial-gradient(900px 600px at 80% 15%, rgba(184,146,47,.10), transparent 55%),
-                  linear-gradient(180deg, #050806, #020302 55%, #000);
-      color: var(--text);
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    }
-    .wrap{max-width:980px;margin:0 auto;padding:18px 14px 34px;}
-    .top{
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-      padding:14px 14px;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      background: linear-gradient(180deg, rgba(8,14,10,.92), rgba(0,0,0,.72));
-      box-shadow: 0 14px 40px var(--shadow);
-    }
-    .brand{display:flex; align-items:center; gap:12px;}
-    .logo{
-      width:52px;height:52px;border-radius:14px;
-      border:1px solid var(--line);
-      background: radial-gradient(70% 70% at 30% 30%, rgba(17,176,83,.35), rgba(0,0,0,.85));
-      display:flex; align-items:center; justify-content:center;
-      color: var(--gold);
-      font-weight:800;
-      letter-spacing:.8px;
-    }
-    .titles .h1{
-      font-size:22px; font-weight:900; letter-spacing:.2px; color: var(--gold);
-      margin:0; line-height:1.1;
-    }
-    .titles .h2{
-      margin:4px 0 0; color: rgba(233,214,163,.78);
-      font-size:13px; letter-spacing:.2px;
+      font-family:var(--font);
+      background:
+        radial-gradient(1200px 600px at 20% -10%, rgba(24,194,110,.10), transparent 55%),
+        radial-gradient(900px 500px at 90% 0%, rgba(214,177,94,.10), transparent 55%),
+        linear-gradient(180deg, #000, var(--bg));
+      color:var(--text);
     }
 
-    /* time capsule */
-    .capsule{
-      min-width: 290px;
-      border:1px solid rgba(233,214,163,.20);
-      border-radius: 22px;
-      padding:10px 12px;
-      background: linear-gradient(180deg, rgba(8,14,10,.85), rgba(0,0,0,.55));
-      box-shadow: inset 0 0 0 1px rgba(17,176,83,.10);
+    /* Double background frame */
+    .tc-shell{
+      min-height:100vh;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      padding:18px 12px 60px;
     }
-    .capRow{display:flex; align-items:center; justify-content:space-between; gap:10px;}
-    .capLabel{font-size:12px; color: rgba(233,214,163,.75); letter-spacing:.2px;}
-    .capValue{font-size:12px; color: rgba(233,214,163,.95); text-align:right;}
-    .capDot{
-      width:9px;height:9px;border-radius:99px;background:rgba(17,176,83,.55);
-      box-shadow: 0 0 0 3px rgba(17,176,83,.12);
-      margin-right:8px; display:inline-block;
-    }
-    .active{color: var(--green); font-weight:800;}
-
-    .card{
-      margin-top:14px;
-      border:1px solid var(--line);
+    .tc-frame{
+      width:min(1100px, 96vw);
       border-radius:18px;
-      background: linear-gradient(180deg, rgba(8,14,10,.88), rgba(0,0,0,.66));
-      box-shadow: 0 14px 40px var(--shadow);
-      padding:16px;
-    }
-    .pageTitle{
-      margin:0;
-      font-size:28px;
-      color: var(--green);
-      font-weight:900;
-      letter-spacing:.2px;
-    }
-    .sub{
-      margin:6px 0 0;
-      color: rgba(233,214,163,.75);
-      font-size:14px;
-      line-height:1.35;
-    }
-
-    .grid4{
-      margin-top:14px;
-      display:grid;
-      grid-template-columns: repeat(2, minmax(0,1fr));
-      gap:12px;
-    }
-    @media (min-width: 900px){
-      .grid4{ grid-template-columns: repeat(4, minmax(0,1fr)); }
-    }
-    .mini{
-      border:1px solid rgba(233,214,163,.18);
-      border-radius:16px;
-      padding:12px;
-      background: linear-gradient(180deg, rgba(6,10,7,.86), rgba(0,0,0,.70));
-      box-shadow: inset 0 0 0 1px rgba(17,176,83,.08);
-      min-height:94px;
-    }
-    .mini .k{font-size:13px; color: rgba(233,214,163,.70); margin:0 0 8px;}
-    .mini .v{font-size:26px; font-weight:900; color: var(--gold); margin:0;}
-    .mini .t{margin:6px 0 0; color: rgba(233,214,163,.62); font-size:12px; line-height:1.25;}
-
-    .split{
-      margin-top:12px;
-      display:grid;
-      grid-template-columns: 1fr;
-      gap:12px;
-    }
-    @media (min-width: 900px){
-      .split{ grid-template-columns: 1.2fr .8fr; }
-    }
-
-    .sectionTitle{
-      margin:0 0 10px;
-      font-size:16px;
-      font-weight:900;
-      color: var(--gold);
-      letter-spacing:.2px;
-    }
-    table{
-      width:100%;
-      border-collapse:separate;
-      border-spacing:0;
+      background:
+        linear-gradient(180deg, rgba(214,177,94,.12), rgba(0,0,0,0) 35%),
+        linear-gradient(180deg, rgba(24,194,110,.08), rgba(0,0,0,0) 40%),
+        linear-gradient(180deg, #0b0b0b, #050505);
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
       overflow:hidden;
+      position:relative;
+    }
+    .tc-frame:before{
+      content:"";
+      position:absolute; inset:10px;
       border-radius:14px;
-      border:1px solid rgba(233,214,163,.16);
-      background: rgba(0,0,0,.35);
+      border:1px solid rgba(24,194,110,.22);
+      pointer-events:none;
     }
-    th, td{
-      padding:10px 10px;
-      border-bottom:1px solid rgba(233,214,163,.10);
-      font-size:13px;
-      color: rgba(233,214,163,.82);
-      text-align:left;
+
+    /* Top header (NO dashboard menu here — only page identity) */
+    .tc-top{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      padding:14px 16px;
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(214,177,94,.10), rgba(0,0,0,0));
     }
-    th{color: rgba(233,214,163,.92); background: rgba(17,176,83,.08);}
-    tr:last-child td{border-bottom:none;}
-    .tag{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid rgba(17,176,83,.30);
-      background: rgba(17,176,83,.10);
-      color: rgba(233,214,163,.92);
-      font-size:12px;
+    .tc-badge{
+      width:42px; height:42px;
+      border-radius:12px;
+      display:grid; place-items:center;
+      border:1px solid rgba(214,177,94,.50);
+      background:linear-gradient(180deg, #0c0c0c, #050505);
+      color:var(--gold);
+      font-weight:800;
+      letter-spacing:.5px;
+    }
+    .tc-titles{line-height:1.1}
+    .tc-h1{
+      margin:0;
+      font-size:16px;
+      color:var(--green);
+      letter-spacing:.3px;
       font-weight:800;
     }
-    .tag.warn{
-      border-color: rgba(184,146,47,.35);
-      background: rgba(184,146,47,.10);
+    .tc-h2{
+      margin-top:6px;
+      font-size:12px;
+      color:var(--muted);
+      letter-spacing:.2px;
     }
 
-    .bullets{
-      margin:10px 0 0;
-      padding-left:18px;
-      color: rgba(233,214,163,.70);
-      font-size:13px;
-      line-height:1.35;
+    /* Content grid */
+    .tc-main{
+      padding:14px 16px 18px;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:14px;
+    }
+    @media (max-width: 940px){
+      .tc-main{grid-template-columns:1fr}
     }
 
-    .actions{
+    /* Card */
+    .tc-card{
+      border-radius:var(--radius);
+      border:1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(24,194,110,.06), rgba(0,0,0,0) 40%),
+        linear-gradient(180deg, #0b0b0b, #060606);
+      padding:var(--pad);
+    }
+    .tc-cardTitle{
+      margin:0 0 10px;
+      font-size:14px;
+      color:var(--green);
+      font-weight:900;
+      letter-spacing:.2px;
+    }
+    .tc-sub{
+      margin:0 0 12px;
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    /* KPI tiles */
+    .tc-kpis{
+      display:grid;
+      grid-template-columns:repeat(4, 1fr);
+      gap:10px;
+    }
+    @media (max-width: 940px){
+      .tc-kpis{grid-template-columns:repeat(2, 1fr)}
+    }
+    .tc-kpi{
+      border-radius:14px;
+      border:1px solid rgba(214,177,94,.28);
+      background:linear-gradient(180deg, #0a0a0a, #050505);
+      padding:12px;
+      min-height:74px;
+    }
+    .tc-k{
+      font-size:11px;
+      color:var(--muted);
+      letter-spacing:.2px;
+    }
+    .tc-v{
+      font-size:20px;
+      font-weight:900;
+      margin-top:6px;
+      color:var(--text);
+    }
+    .tc-v small{
+      font-size:11px;
+      color:var(--muted);
+      font-weight:700;
+      margin-left:6px;
+    }
+
+    /* Controls */
+    .tc-controls{
       display:flex;
       flex-wrap:wrap;
       gap:10px;
-      margin-top:14px;
-      justify-content:center;
+      align-items:center;
+      margin:10px 0 6px;
     }
-    .btn{
+    .tc-select, .tc-input{
+      background:#050505;
+      border:1px solid rgba(214,177,94,.35);
+      color:var(--text);
+      border-radius:12px;
+      padding:10px 10px;
+      font-size:12px;
+      outline:none;
+    }
+    .tc-input{min-width:240px; flex:1}
+    .tc-pill{
+      border-radius:999px;
+      border:1px solid rgba(24,194,110,.35);
+      background:rgba(24,194,110,.08);
+      color:var(--green);
+      padding:7px 10px;
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:.2px;
+    }
+
+    /* Table */
+    .tc-tableWrap{
+      border-radius:14px;
+      border:1px solid rgba(214,177,94,.25);
+      overflow:hidden;
+      background:#060606;
+    }
+    table{
+      width:100%;
+      border-collapse:collapse;
+      font-size:12px;
+    }
+    thead th{
+      text-align:left;
+      padding:10px 10px;
+      color:var(--muted);
+      background:linear-gradient(180deg, rgba(214,177,94,.10), rgba(0,0,0,0));
+      border-bottom:1px solid rgba(214,177,94,.22);
+      font-weight:800;
+      letter-spacing:.2px;
+    }
+    tbody td{
+      padding:10px 10px;
+      border-bottom:1px solid rgba(214,177,94,.12);
+      vertical-align:top;
+    }
+    tbody tr:hover{background:rgba(24,194,110,.06)}
+    .tc-tag{
+      display:inline-block;
+      padding:4px 8px;
+      border-radius:999px;
+      border:1px solid rgba(214,177,94,.30);
+      color:var(--text);
+      font-weight:800;
+      font-size:11px;
+      background:rgba(214,177,94,.06);
+    }
+    .tc-tag.green{
+      border-color:rgba(24,194,110,.40);
+      background:rgba(24,194,110,.08);
+      color:var(--green);
+    }
+
+    /* Right rail */
+    .tc-rail .tc-card{position:sticky; top:12px}
+    .tc-mini{
+      display:grid;
+      gap:10px;
+    }
+    .tc-miniBox{
+      border-radius:14px;
+      border:1px solid rgba(214,177,94,.22);
+      background:linear-gradient(180deg, #0a0a0a, #050505);
+      padding:12px;
+    }
+    .tc-miniBox h3{
+      margin:0 0 8px;
+      color:var(--green);
+      font-size:12px;
+      font-weight:900;
+    }
+    .tc-miniBox p{
+      margin:0;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.35;
+    }
+    .tc-actions{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      margin-top:10px;
+    }
+    .tc-btn{
+      text-decoration:none;
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      padding:12px 18px;
-      border-radius:999px;
-      border:1px solid rgba(184,146,47,.35);
-      background: rgba(0,0,0,.35);
-      color: rgba(233,214,163,.92);
+      gap:8px;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid rgba(214,177,94,.45);
+      color:var(--text);
+      background:linear-gradient(180deg, rgba(214,177,94,.12), rgba(0,0,0,0));
       font-weight:900;
-      letter-spacing:.2px;
-      text-decoration:none;
-      min-width: 220px;
-    }
-    .btn:hover{ box-shadow: 0 0 0 4px var(--glow); }
-    .btn.primary{
-      border-color: rgba(17,176,83,.45);
-      color: var(--green);
-    }
-
-    .footerNote{
-      margin-top:14px;
-      text-align:center;
-      color: rgba(233,214,163,.55);
       font-size:12px;
+      letter-spacing:.2px;
+    }
+    .tc-btn:hover{border-color:rgba(24,194,110,.55); color:var(--green)}
+
+    /* Back button (small, bottom) */
+    .tc-back{
+      display:flex;
+      justify-content:center;
+      padding:14px 16px 18px;
+    }
+    .tc-back a{
+      text-decoration:none;
+      padding:10px 14px;
+      border-radius:12px;
+      border:1px solid rgba(214,177,94,.35);
+      color:var(--text);
+      background:linear-gradient(180deg, #0a0a0a, #050505);
+      font-weight:900;
+      font-size:12px;
+      letter-spacing:.2px;
+    }
+    .tc-back a:hover{border-color:rgba(24,194,110,.55); color:var(--green)}
+
+    .tc-foot{
+      text-align:center;
+      color:rgba(188,163,106,.8);
+      font-size:11px;
+      padding:0 16px 14px;
     }
   </style>
 </head>
 
 <body>
-  <div class="wrap">
+  <div class="tc-shell">
+    <div class="tc-frame">
 
-    <!-- TOP BAR -->
-    <div class="top">
-      <div class="brand">
-        <div class="logo">TC</div>
-        <div class="titles">
-          <p class="h1">TitanCore Dashboard</p>
-          <p class="h2">TitanCore Holdings • Executive Control Center</p>
+      <header class="tc-top">
+        <div class="tc-badge">TC</div>
+        <div class="tc-titles">
+          <h1 class="tc-h1">TitanCore Executive Control Center</h1>
+          <div class="tc-h2">Contact Module • Calls In/Out • Transfers • Company Routing</div>
         </div>
-      </div>
+      </header>
 
-      <div class="capsule" aria-label="system time capsule">
-        <div class="capRow">
-          <div class="capLabel"><span class="capDot"></span>System Time</div>
-          <div class="capValue" id="tcTime">—</div>
-        </div>
-        <div class="capRow" style="margin-top:6px">
-          <div class="capLabel">Mode</div>
-          <div class="capValue">CEO</div>
-        </div>
-        <div class="capRow" style="margin-top:6px">
-          <div class="capLabel">Status</div>
-          <div class="capValue active">Active</div>
-        </div>
-      </div>
-    </div>
+      <main class="tc-main">
+        <!-- LEFT: Main content -->
+        <section class="tc-card">
+          <h2 class="tc-cardTitle">Executive Call Overview</h2>
+          <p class="tc-sub">This page is the record center: what happened, where it routed, and what needs attention.</p>
 
-    <!-- MAIN CARD -->
-    <div class="card">
-      <h1 class="pageTitle">Contact</h1>
-      <p class="sub">Executive visibility • calls in/out • transfers • company routing (summary view)</p>
-
-      <div class="grid4">
-        <div class="mini">
-          <p class="k">Calls In (24h)</p>
-          <p class="v" id="callsIn">—</p>
-          <p class="t">Inbound activity summary for all companies.</p>
-        </div>
-        <div class="mini">
-          <p class="k">Calls Out (24h)</p>
-          <p class="v" id="callsOut">—</p>
-          <p class="t">Outbound activity summary for all companies.</p>
-        </div>
-        <div class="mini">
-          <p class="k">Transfers</p>
-          <p class="v" id="transfers">—</p>
-          <p class="t">Internal hand-offs between companies/departments.</p>
-        </div>
-        <div class="mini">
-          <p class="k">Missed / Escalations</p>
-          <p class="v" id="missed">—</p>
-          <p class="t">Anything needing executive attention.</p>
-        </div>
-      </div>
-
-      <div class="split">
-
-        <!-- ROUTING MATRIX -->
-        <div class="mini" style="min-height:auto;">
-          <p class="sectionTitle">Company Contact Routing (summary)</p>
-          <table>
-            <thead>
-              <tr>
-                <th>Company</th>
-                <th>Main Line</th>
-                <th>Last 24h</th>
-                <th>Escalations</th>
-              </tr>
-            </thead>
-            <tbody id="routingRows">
-              <tr>
-                <td>TitanCore Holdings</td>
-                <td><span class="tag">HQ Oversight</span></td>
-                <td>—</td>
-                <td>—</td>
-              </tr>
-              <tr>
-                <td>Vaultara Capital</td>
-                <td><span class="tag warn">Client Intake</span></td>
-                <td>—</td>
-                <td>—</td>
-              </tr>
-              <tr>
-                <td>VitalPath Care Group</td>
-                <td><span class="tag warn">Patient Support</span></td>
-                <td>—</td>
-                <td>—</td>
-              </tr>
-              <tr>
-                <td>RevMotion Auto &amp; Marine</td>
-                <td><span class="tag warn">Service Desk</span></td>
-                <td>—</td>
-                <td>—</td>
-              </tr>
-              <tr>
-                <td>Family First Equity</td>
-                <td><span class="tag warn">Housing Intake</span></td>
-                <td>—</td>
-                <td>—</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <ul class="bullets">
-            <li>RingCentral / phone system integration goes here (secure server required).</li>
-            <li>This page is read-only executive summary.</li>
-            <li>Company managers operate inside their own systems; TitanCore sees oversight.</li>
-          </ul>
-        </div>
-
-        <!-- INTEGRATION STATUS -->
-        <div class="mini" style="min-height:auto;">
-          <p class="sectionTitle">RingCentral Status</p>
-          <p style="margin:0;color:rgba(233,214,163,.75);font-size:13px;line-height:1.35">
-            Integration can’t run directly in browser without exposing secrets.
-            We will connect RingCentral through a secure API (Azure Function / backend).
-          </p>
-
-          <div style="margin-top:12px;display:grid;gap:10px">
-            <div class="tag" id="rcStatus">DISCONNECTED • Demo Mode</div>
-            <div class="tag warn" id="rcHint">Next: create Azure Function endpoint</div>
+          <div class="tc-kpis" id="kpis">
+            <div class="tc-kpi"><div class="tc-k">Calls In (24h)</div><div class="tc-v" id="k_in">—</div></div>
+            <div class="tc-kpi"><div class="tc-k">Calls Out (24h)</div><div class="tc-v" id="k_out">—</div></div>
+            <div class="tc-kpi"><div class="tc-k">Transfers (24h)</div><div class="tc-v" id="k_transfers">—</div></div>
+            <div class="tc-kpi"><div class="tc-k">Escalations / Missed</div><div class="tc-v" id="k_escalations">—</div></div>
           </div>
 
-          <div class="actions" style="margin-top:12px;justify-content:flex-start;">
-            <button class="btn primary" type="button" id="demoBtn">Load Demo Data</button>
-            <a class="btn" href="./index.html">Back to Dashboard</a>
-          </div>
-        </div>
+          <div class="tc-controls">
+            <span class="tc-pill" id="statusPill">Status: Active Logging</span>
 
+            <select class="tc-select" id="companyFilter">
+              <option value="ALL">All Companies</option>
+              <option value="TitanCore Holdings">TitanCore Holdings</option>
+              <option value="Vaultara Capital">Vaultara Capital</option>
+              <option value="VitalPath Care Group">VitalPath Care Group</option>
+              <option value="RevMotion Auto & Marine Group">RevMotion Auto & Marine Group</option>
+              <option value="Family First Equity Group">Family First Equity Group</option>
+            </select>
+
+            <select class="tc-select" id="typeFilter">
+              <option value="ALL">All Caller Types</option>
+              <option value="Client">Client</option>
+              <option value="Bank">Bank</option>
+              <option value="Investor">Investor</option>
+              <option value="Internal">Internal</option>
+              <option value="Unknown">Unknown</option>
+            </select>
+
+            <input class="tc-input" id="search" placeholder="Search name / number / note (example: 'bank', 'vaultara', 'transfer')" />
+          </div>
+
+          <div class="tc-tableWrap">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width:120px;">Time</th>
+                  <th style="width:120px;">Direction</th>
+                  <th style="width:160px;">Company</th>
+                  <th style="width:140px;">Caller Type</th>
+                  <th>Caller / Note</th>
+                  <th style="width:160px;">Routing</th>
+                </tr>
+              </thead>
+              <tbody id="rows"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- RIGHT: Executive attention -->
+        <aside class="tc-rail">
+          <div class="tc-card">
+            <h2 class="tc-cardTitle">Attention & Control</h2>
+            <p class="tc-sub">Executive actions (records only — automation comes later when you connect phone/email systems).</p>
+
+            <div class="tc-mini">
+              <div class="tc-miniBox">
+                <h3>Routing Summary</h3>
+                <p><span class="tc-tag green" id="r_ok">—</span> Clean routes</p>
+                <p><span class="tc-tag" id="r_review">—</span> Needs review</p>
+                <p><span class="tc-tag" id="r_missed">—</span> Missed / escalation</p>
+              </div>
+
+              <div class="tc-miniBox">
+                <h3>Executive Notes</h3>
+                <p>• Identify high-value callers (Banks / Investors)</p>
+                <p>• Confirm transfers went to the correct company</p>
+                <p>• Escalations get flagged for TitanCore oversight</p>
+              </div>
+
+              <div class="tc-miniBox">
+                <h3>Quick Actions</h3>
+                <div class="tc-actions">
+                  <a class="tc-btn" href="#" onclick="exportCSV();return false;">Export Call Log (CSV)</a>
+                  <a class="tc-btn" href="#" onclick="toggleStatus();return false;">Toggle Status</a>
+                  <a class="tc-btn" href="#" onclick="mockEscalate();return false;">Mark Selected as Escalation</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </main>
+
+      <div class="tc-back">
+        <!-- IMPORTANT: go back one folder -->
+        <a href="../index.html">Back to Dashboard</a>
       </div>
 
-      <div class="footerNote">TitanCore internal executive view — read-only</div>
+      <div class="tc-foot">TitanCore internal executive view • Contact module (records + oversight)</div>
     </div>
-
   </div>
 
-  <!-- Page scripts -->
-  <script>
-    // 12-hour time (NOT military), updates every second
-    function tcFormatNow(){
-      const now = new Date();
-      const day = now.toLocaleDateString(undefined, { weekday:"short" }).toUpperCase();
-      const month = now.toLocaleDateString(undefined, { month:"short" }).toUpperCase();
-      const dd = String(now.getDate()).padStart(2,"0");
-      const yyyy = now.getFullYear();
-      const time = now.toLocaleTimeString(undefined, { hour:"numeric", minute:"2-digit", second:"2-digit", hour12:true });
-      return `${day}, ${month} ${dd} ${yyyy} • ${time}`;
-    }
-    function tcTick(){
-      const el = document.getElementById("tcTime");
-      if(el) el.textContent = tcFormatNow();
-    }
-    tcTick();
-    setInterval(tcTick, 1000);
-  </script>
+  <!-- Optional: your global JS if it exists -->
+  <script src="../assets/app.js"></script>
 
-  <script src="./contact.js"></script>
+  <!-- Local JS so the page works even if app.js is empty -->
+  <script>
+    const data = [
+      {t:"09:12 AM", dir:"IN",  co:"Vaultara Capital", type:"Bank",     who:"First National — Loan officer", route:"Transferred → Vaultara Finance"},
+      {t:"09:34 AM", dir:"IN",  co:"Family First Equity Group", type:"Client",   who:"Apartment acquisition inquiry", route:"AI Intake → FamilyFirst Ops"},
+      {t:"10:05 AM", dir:"OUT", co:"TitanCore Holdings", type:"Internal", who:"Follow-up: contract package approval", route:"TitanCore → Company Admin"},
+      {t:"10:41 AM", dir:"IN",  co:"VitalPath Care Group", type:"Investor", who:"Healthcare partner request", route:"Transferred → VitalPath Admin"},
+      {t:"11:22 AM", dir:"IN",  co:"RevMotion Auto & Marine Group", type:"Client", who:"Fleet service request", route:"Transferred → RevMotion Service"},
+      {t:"12:08 PM", dir:"IN",  co:"TitanCore Holdings", type:"Unknown", who:"No caller ID", route:"Missed → Escalation queue"},
+    ];
+
+    const rowsEl = document.getElementById("rows");
+    const companyFilter = document.getElementById("companyFilter");
+    const typeFilter = document.getElementById("typeFilter");
+    const searchEl = document.getElementById("search");
+
+    function render(){
+      const c = companyFilter.value;
+      const ty = typeFilter.value;
+      const q = (searchEl.value || "").toLowerCase().trim();
+
+      const filtered = data.filter(x=>{
+        if(c !== "ALL" && x.co !== c) return false;
+        if(ty !== "ALL" && x.type !== ty) return false;
+        if(q){
+          const hay = (x.t+" "+x.dir+" "+x.co+" "+x.type+" "+x.who+" "+x.route).toLowerCase();
+          if(!hay.includes(q)) return false;
+        }
+        return true;
+      });
+
+      rowsEl.innerHTML = filtered.map((x,i)=>`
+        <tr>
+          <td>${x.t}</td>
+          <td><span class="tc-tag ${x.dir==='IN'?'green':''}">${x.dir}</span></td>
+          <td>${x.co}</td>
+          <td><span class="tc-tag ${x.type==='Internal'?'green':''}">${x.type}</span></td>
+          <td>${x.who}</td>
+          <td>${x.route}</td>
+        </tr>
+      `).join("");
+
+      // KPIs (simple demo logic)
+      const callsIn = data.filter(x=>x.dir==="IN").length;
+      const callsOut = data.filter(x=>x.dir==="OUT").length;
+      const transfers = data.filter(x=>x.route.toLowerCase().includes("transferred")).length;
+      const escalations = data.filter(x=>x.route.toLowerCase().includes("missed") || x.route.toLowerCase().includes("escalation")).length;
+
+      document.getElementById("k_in").textContent = callsIn;
+      document.getElementById("k_out").textContent = callsOut;
+      document.getElementById("k_transfers").textContent = transfers;
+      document.getElementById("k_escalations").textContent = escalations;
+
+      document.getElementById("r_ok").textContent = Math.max(0, data.length - escalations);
+      document.getElementById("r_review").textContent = transfers;
+      document.getElementById("r_missed").textContent = escalations;
+    }
+
+    companyFilter.addEventListener("change", render);
+    typeFilter.addEventListener("change", render);
+    searchEl.addEventListener("input", render);
+
+    function exportCSV(){
+      const header = ["Time","Direction","Company","CallerType","CallerNote","Routing"];
+      const lines = [header.join(",")].concat(data.map(x=>{
+        return [x.t,x.dir,x.co,x.type,quote(x.who),quote(x.route)].join(",");
+      }));
+      const blob = new Blob([lines.join("\n")], {type:"text/csv;charset=utf-8;"});
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "titancore-contact-call-log.csv";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }
+    function quote(s){ return `"${String(s).replaceAll('"','""')}"`; }
+
+    function toggleStatus(){
+      const pill = document.getElementById("statusPill");
+      if(pill.textContent.includes("Active")){
+        pill.textContent = "Status: Paused Logging";
+        pill.style.borderColor = "rgba(214,177,94,.35)";
+        pill.style.color = "var(--text)";
+        pill.style.background = "rgba(214,177,94,.06)";
+      } else {
+        pill.textContent = "Status: Active Logging";
+        pill.style.borderColor = "rgba(24,194,110,.35)";
+        pill.style.color = "var(--green)";
+        pill.style.background = "rgba(24,194,110,.08)";
+      }
+    }
+
+    function mockEscalate(){
+      alert("Escalation marked (demo). Next step later: connect this to real call system logs.");
+    }
+
+    render();
+  </script>
 </body>
 </html>
