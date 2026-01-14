@@ -1,51 +1,204 @@
-/* contact.js
-   This runs the demo numbers so you SEE the page change immediately.
-   Real RingCentral data will come later from a secure backend (Azure Function).
-*/
+// TitanCore Contact Command — RingCentral-ready UI
+const $ = (id) => document.getElementById(id);
 
-(function () {
-  const $ = (id) => document.getElementById(id);
+function setDateTime() {
+  const d = new Date();
+  const opts = { weekday:"short", month:"short", day:"2-digit", year:"numeric" };
+  const date = d.toLocaleDateString(undefined, opts);
+  const time = d.toLocaleTimeString(undefined, { hour:"2-digit", minute:"2-digit" });
+  $("datetime").textContent = `${date} • ${time}`;
+}
+setDateTime();
+setInterval(setDateTime, 1000 * 30);
 
-  function setNum(id, n) {
-    const el = $(id);
-    if (el) el.textContent = String(n);
+const views = ["overview","calls","transfers","analytics"];
+function showView(name){
+  views.forEach(v => {
+    const el = $(`view-${v}`);
+    if (!el) return;
+    el.classList.toggle("hidden", v !== name);
+  });
+}
+
+document.querySelectorAll(".chip").forEach(btn => {
+  btn.addEventListener("click", () => showView(btn.dataset.view));
+});
+
+// Default view
+showView("overview");
+
+function safeText(x){ return (x ?? "").toString(); }
+function fmtTime(iso){
+  if(!iso) return "—";
+  const d = new Date(iso);
+  return d.toLocaleString(undefined, { month:"short", day:"2-digit", hour:"2-digit", minute:"2-digit" });
+}
+function fmtSeconds(s){
+  const n = Number(s || 0);
+  if (!Number.isFinite(n)) return "—";
+  const m = Math.floor(n / 60);
+  const r = n % 60;
+  return `${m}m ${r}s`;
+}
+
+function classifyCompany(numberOrExt){
+  const v = safeText(numberOrExt).toLowerCase();
+  // You can later map real numbers to companies here.
+  // For now, we keep it simple.
+  if (v.includes("vault")) return "VAULTARA";
+  if (v.includes("vital")) return "VITALPATH";
+  if (v.includes("revm")) return "REVMOTION";
+  if (v.includes("family")) return "FAMILYFIRST";
+  return "TITANCORE";
+}
+
+function looksLikeTransfer(record){
+  // Transfers vary by RC account; we use a conservative heuristic.
+  const action = safeText(record?.action).toLowerCase();
+  const result = safeText(record?.result).toLowerCase();
+  const reason = safeText(record?.reason).toLowerCase();
+  const from = safeText(record?.from?.phoneNumber || record?.from?.extensionNumber);
+  const to = safeText(record?.to?.phoneNumber || record?.to?.extensionNumber);
+
+  const flag =
+    action.includes("transfer") ||
+    reason.includes("transfer") ||
+    result.includes("transferred") ||
+    (from && to && from !== to && safeText(record?.direction).toLowerCase() === "inbound" && action.includes("phone"));
+
+  return flag;
+}
+
+function addListItem(ol, label, value){
+  const li = document.createElement("li");
+  li.textContent = `${label} — ${value}`;
+  ol.appendChild(li);
+}
+
+async function load(){
+  const days = $("days").value;
+  const company = $("company").value;
+
+  $("kpiIn").textContent = "…";
+  $("kpiOut").textContent = "…";
+  $("kpiMissed").textContent = "…";
+  $("kpiXfer").textContent = "…";
+  $("callsBody").innerHTML = "";
+  $("xferBody").innerHTML = "";
+  $("topCallers").innerHTML = "";
+  $("topTo").innerHTML = "";
+
+  const res = await fetch(`/api/ringcentral-call-log?days=${encodeURIComponent(days)}`);
+  const data = await res.json();
+
+  if(!res.ok){
+    $("kpiIn").textContent = "ERR";
+    $("kpiOut").textContent = "ERR";
+    $("kpiMissed").textContent = "ERR";
+    $("kpiXfer").textContent = "ERR";
+    $("callsBody").innerHTML = `<tr><td colspan="6">${safeText(data?.error || "RingCentral API not connected yet.")}</td></tr>`;
+    return;
   }
 
-  function loadDemo() {
-    // Demo numbers (replace later with real API results)
-    setNum("callsIn", 128);
-    setNum("callsOut", 94);
-    setNum("transfers", 23);
-    setNum("missed", 7);
+  const records = Array.isArray(data.records) ? data.records : [];
+  const filtered = records.filter(r => {
+    if (company === "ALL") return true;
+    const from = safeText(r?.from?.phoneNumber || r?.from?.extensionNumber);
+    const to = safeText(r?.to?.phoneNumber || r?.to?.extensionNumber);
+    const c = classifyCompany(from + " " + to);
+    return c === company;
+  });
 
-    const rows = document.querySelectorAll("#routingRows tr");
-    // Just drop demo stats into the 3rd and 4th columns for each company row
-    const demoStats = [
-      ["TitanCore Holdings", "44", "1"],
-      ["Vaultara Capital", "22", "2"],
-      ["VitalPath Care Group", "31", "3"],
-      ["RevMotion Auto & Marine", "19", "1"],
-      ["Family First Equity", "12", "0"],
-    ];
+  let inCount = 0, outCount = 0, missed = 0, xfers = 0;
 
-    rows.forEach((tr, i) => {
-      const tds = tr.querySelectorAll("td");
-      if (tds.length >= 4 && demoStats[i]) {
-        tds[2].textContent = demoStats[i][1];
-        tds[3].textContent = demoStats[i][2];
-      }
+  const callers = new Map();
+  const tos = new Map();
+
+  filtered.forEach(r => {
+    const dir = safeText(r.direction).toLowerCase();
+    if (dir === "inbound") inCount++;
+    if (dir === "outbound") outCount++;
+
+    const result = safeText(r.result).toLowerCase();
+    if (result.includes("missed") || result.includes("no answer")) missed++;
+
+    if (looksLikeTransfer(r)) xfers++;
+
+    const from = safeText(r?.from?.phoneNumber || r?.from?.extensionNumber || "Unknown");
+    const to = safeText(r?.to?.phoneNumber || r?.to?.extensionNumber || "Unknown");
+    callers.set(from, (callers.get(from) || 0) + 1);
+    tos.set(to, (tos.get(to) || 0) + 1);
+  });
+
+  $("kpiIn").textContent = inCount;
+  $("kpiOut").textContent = outCount;
+  $("kpiMissed").textContent = missed;
+  $("kpiXfer").textContent = xfers;
+
+  // Call Log table
+  const body = $("callsBody");
+  if(filtered.length === 0){
+    body.innerHTML = `<tr><td colspan="6">No call log records for this window.</td></tr>`;
+  } else {
+    filtered.slice(0, 100).forEach(r => {
+      const tr = document.createElement("tr");
+      const from = safeText(r?.from?.phoneNumber || r?.from?.extensionNumber || "—");
+      const to = safeText(r?.to?.phoneNumber || r?.to?.extensionNumber || "—");
+      tr.innerHTML = `
+        <td>${fmtTime(r.startTime)}</td>
+        <td>${safeText(r.direction)}</td>
+        <td>${from}</td>
+        <td>${to}</td>
+        <td>${safeText(r.result || r.action || "—")}</td>
+        <td>${fmtSeconds(r.duration)}</td>
+      `;
+      body.appendChild(tr);
     });
-
-    const rcStatus = $("rcStatus");
-    const rcHint = $("rcHint");
-    if (rcStatus) rcStatus.textContent = "DEMO CONNECTED • Local numbers";
-    if (rcHint) rcHint.textContent = "Next: Replace demo with Azure Function → RingCentral";
   }
 
-  function wire() {
-    const demoBtn = $("demoBtn");
-    if (demoBtn) demoBtn.addEventListener("click", loadDemo);
+  // Transfers table
+  const xbody = $("xferBody");
+  const xlist = filtered.filter(looksLikeTransfer).slice(0, 100);
+  if(xlist.length === 0){
+    xbody.innerHTML = `<tr><td colspan="4">No transfer-like records detected.</td></tr>`;
+  } else {
+    xlist.forEach(r => {
+      const tr = document.createElement("tr");
+      const from = safeText(r?.from?.phoneNumber || r?.from?.extensionNumber || "—");
+      const to = safeText(r?.to?.phoneNumber || r?.to?.extensionNumber || "—");
+      const reason = safeText(r?.action || r?.reason || r?.result || "transfer");
+      tr.innerHTML = `
+        <td>${fmtTime(r.startTime)}</td>
+        <td>${from}</td>
+        <td>${to}</td>
+        <td>${reason}</td>
+      `;
+      xbody.appendChild(tr);
+    });
   }
 
-  document.addEventListener("DOMContentLoaded", wire);
-})();
+  // Analytics
+  const topCallers = [...callers.entries()].sort((a,b)=>b[1]-a[1]).slice(0,8);
+  const topTo = [...tos.entries()].sort((a,b)=>b[1]-a[1]).slice(0,8);
+
+  if(topCallers.length === 0){
+    $("topCallers").innerHTML = "<li>—</li>";
+  } else {
+    topCallers.forEach(([k,v]) => addListItem($("topCallers"), k, v));
+  }
+
+  if(topTo.length === 0){
+    $("topTo").innerHTML = "<li>—</li>";
+  } else {
+    topTo.forEach(([k,v]) => addListItem($("topTo"), k, v));
+  }
+}
+
+$("refresh").addEventListener("click", load);
+$("days").addEventListener("change", load);
+$("company").addEventListener("change", load);
+
+// First load
+load().catch(err => {
+  $("callsBody").innerHTML = `<tr><td colspan="6">Error: ${safeText(err.message)}</td></tr>`;
+});
