@@ -1,50 +1,35 @@
-// Azure Static Web Apps API — RingCentral Call Log
-// Uses the token helper above
-const tokenMod = require("../ringcentral-token/index.js");
-
-module.exports = async function (context, req) {
+// /api/ringcentral-calls/index.js
+export default async function (context, req) {
   try {
-    const token = await tokenMod.fetchToken();
+    const server = process.env.RC_SERVER_URL || "https://platform.ringcentral.com";
 
-    const serverUrl = process.env.RC_SERVER_URL || "https://platform.ringcentral.com";
-    const days = Math.max(1, Math.min(90, Number(req.query.days || 7)));
+    // 1) Get token from our token function
+    const tokenRes = await fetch(`${req.headers["x-forwarded-proto"] || "https"}://${req.headers.host}/api/ringcentral-token`);
+    const tokenData = await tokenRes.json();
 
-    const dateTo = new Date();
-    const dateFrom = new Date(Date.now() - days * 24 * 60 * 60 * 1000);
-
-    const qs = new URLSearchParams();
-    qs.set("view", "Simple");
-    qs.set("dateFrom", dateFrom.toISOString());
-    qs.set("dateTo", dateTo.toISOString());
-    qs.set("perPage", "100");
-
-    // Extension call log (change to account call log if you want broader scope)
-    const url = `${serverUrl}/restapi/v1.0/account/~/extension/~/call-log?${qs.toString()}`;
-
-    const resp = await fetch(url, {
-      headers: {
-        "Authorization": `Bearer ${token}`,
-        "Accept": "application/json"
-      }
-    });
-
-    const json = await resp.json();
-    if (!resp.ok) {
-      const msg = json?.message || JSON.stringify(json);
-      context.res = { status: 502, body: { ok: false, error: `RingCentral call-log error: ${msg}` } };
+    if (!tokenRes.ok || !tokenData.access_token) {
+      context.res = { status: 500, body: { error: "Could not get access token", detail: tokenData } };
       return;
     }
 
-    context.res = {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-      body: { ok: true, records: json.records || [] }
-    };
+    const accessToken = tokenData.access_token;
+
+    // 2) Pull call log (latest 100)
+    const url = `${server}/restapi/v1.0/account/~/call-log?perPage=100&view=Simple`;
+    const r = await fetch(url, {
+      headers: { "Authorization": `Bearer ${accessToken}` }
+    });
+
+    const data = await r.json();
+
+    if (!r.ok) {
+      context.res = { status: r.status, body: { error: "Call-log error", detail: data } };
+      return;
+    }
+
+    // Return the call log records only
+    context.res = { status: 200, body: { records: data.records || [] } };
   } catch (e) {
-    context.res = {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
-      body: { ok: false, error: e.message }
-    };
+    context.res = { status: 500, body: { error: String(e) } };
   }
-};
+}
