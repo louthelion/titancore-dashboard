@@ -306,3 +306,63 @@
 </script>
 </body>
 </html>
+<section class="panel">
+  <h2 class="panel-title">Call Records (RingCentral)</h2>
+  <div id="rcSummary" class="muted">Loading…</div>
+  <div style="overflow:auto; margin-top:10px;">
+    <table class="table" id="rcTable">
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Direction</th>
+          <th>From</th>
+          <th>To</th>
+          <th>Result</th>
+          <th>Duration</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</section>
+
+<script>
+async function loadRingCentralCalls(){
+  const summary = document.getElementById("rcSummary");
+  const tbody = document.querySelector("#rcTable tbody");
+  tbody.innerHTML = "";
+
+  try{
+    const r = await fetch("/api/ringcentral-calls");
+    const data = await r.json();
+    const records = data.records || [];
+
+    summary.textContent = `Loaded ${records.length} calls`;
+
+    for(const call of records){
+      const start = call.startTime ? new Date(call.startTime) : null;
+      const time = start ? start.toLocaleString() : "-";
+      const direction = call.direction || "-";
+      const from = call.from?.phoneNumber || call.from?.name || "-";
+      const to = call.to?.phoneNumber || call.to?.name || "-";
+      const result = call.result || "-";
+      const duration = (call.duration != null) ? `${call.duration}s` : "-";
+
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${time}</td>
+        <td>${direction}</td>
+        <td>${from}</td>
+        <td>${to}</td>
+        <td>${result}</td>
+        <td>${duration}</td>
+      `;
+      tbody.appendChild(tr);
+    }
+  } catch(e){
+    summary.textContent = "Failed to load call logs.";
+  }
+}
+loadRingCentralCalls();
+</script>
+
