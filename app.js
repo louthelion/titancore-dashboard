@@ -46,3 +46,16 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+for (const m of (data.rows || [])) {
+  const tr = document.createElement("tr");
+  tr.innerHTML = `
+    <td>${esc(fmtTime(m.dateTime))}</td>
+    <td>${esc(m.direction)}</td>
+    <td>${esc(m.mailbox)}</td>
+    <td>${esc(m.from)}</td>
+    <td>${esc((m.to || []).join(", "))}</td>
+    <td>${esc(m.subject)}</td>
+    <td>${m.direction === "IN" ? (m.isRead ? "Read" : "Unread") : "-"}</td>
+  `;
+  tbody.appendChild(tr);
+}
