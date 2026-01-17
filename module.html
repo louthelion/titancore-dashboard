@@ -1,199 +1,33 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>TitanCore • Module</title>
-
-  <!-- keep your current styling -->
-  <link rel="stylesheet" href="./styles.css" />
-
-  <style>
-    /* Safe local fallback styles (only affects module.html) */
-    .pageWrap{max-width:980px;margin:0 auto;padding:18px 16px 40px}
-    .topRow{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
-    .backLink{color:#caa84a;text-decoration:none;border:1px solid rgba(212,175,55,.35);padding:10px 12px;border-radius:14px}
-    .card{background:rgba(10,12,10,.55);border:1px solid rgba(212,175,55,.35);border-radius:22px;padding:18px;margin:14px 0}
-    .title{font-size:34px;letter-spacing:.5px;margin:0 0 6px}
-    .sub{opacity:.85;margin:0}
-    .kpiGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
-    .kpi{border:1px solid rgba(212,175,55,.28);border-radius:18px;padding:14px}
-    .kpi .k{opacity:.8;font-size:13px;letter-spacing:.8px;text-transform:uppercase}
-    .kpi .v{font-size:22px;margin-top:6px}
-    .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
-    .btn{display:inline-block;text-decoration:none;color:#e9e9e9;border:1px solid rgba(212,175,55,.30);padding:10px 14px;border-radius:16px}
-    .pill{display:inline-block;margin-left:10px;padding:6px 10px;border-radius:999px;border:1px solid rgba(0,200,83,.45);color:#00c853}
-  </style>
+  <link rel="stylesheet" href="assets/css/style.css" />
 </head>
-
-<body>
-  <div class="pageWrap">
-    <div class="topRow">
-      <a class="backLink" href="./index.html">← Back to Dashboard</a>
-      <div class="pill" id="moduleStatus">LIVE</div>
-    </div>
-
-    <div class="card">
-      <h1 class="title" id="moduleTitle">Module</h1>
-      <p class="sub" id="moduleDesc">Loading…</p>
-
-      <div class="kpiGrid" id="kpis"></div>
-
-      <div class="actions" id="views"></div>
-    </div>
-
-    <div class="card">
-      <h2 style="margin:0 0 8px;color:#caa84a">Next step</h2>
-      <div id="nextStep" style="opacity:.9">We will build the inside of this module after the menu is stable.</div>
-    </div>
-  </div>
-
-  <script>
-    // reads: module.html#finance   OR   module.html#tax
-    const key = (location.hash || "#dashboard").replace("#","").toLowerCase();
-
-    const data = {
-      contract: {
-        title: "MODULE — Contract",
-        desc: "Contracts coming in / going out • CEO final review • company routing",
-        kpis: [
-          ["Incoming", "—"],
-          ["Pending CEO", "—"],
-          ["Signed", "—"],
-          ["Alerts", "—"]
-        ],
-        views: ["Incoming Queue", "CEO Approval", "Contract Archive", "Company Contracts"],
-        next: "Tell me: what contract data you want first (incoming list, approval queue, or archive)."
-      },
-
-      contact: {
-        title: "MODULE — Contact",
-        desc: "Call traffic • caller type (client/bank/institution) • routing & logs",
-        kpis: [
-          ["Calls In", "—"],
-          ["Calls Out", "—"],
-          ["Transfers", "—"],
-          ["Missed", "—"]
-        ],
-        views: ["Live Calls", "Call Logs", "Caller Types", "Routing Rules"],
-        next: "Next we build: calls in/out table + caller type tags + routing history."
-      },
-
-      email: {
-        title: "MODULE — Email Routing",
-        desc: "Inbound/outbound email traffic • routing • tags • priority queues",
-        kpis: [
-          ["Inbox", "—"],
-          ["Sent", "—"],
-          ["Priority", "—"],
-          ["Alerts", "—"]
-        ],
-        views: ["Inbox Queue", "Routing Map", "Tags & Filters", "Email Logs"],
-        next: "Next we build: inbox table + routing rules + priority tagging."
-      },
-
-      approval: {
-        title: "MODULE — Report & Approval",
-        desc: "Approvals pipeline • reports submitted • escalations • CEO decisions",
-        kpis: [
-          ["Pending", "—"],
-          ["In Review", "—"],
-          ["Approved", "—"],
-          ["Escalated", "—"]
-        ],
-        views: ["Approval Queue", "Reports", "Escalations", "Decision Log"],
-        next: "Next we build: approval queue with status + who submitted + deadline."
-      },
-
-      omni: {
-        title: "MODULE — Omni System",
-        desc: "Master control hub • integrations • systems health • automations",
-        kpis: [
-          ["Systems Online", "—"],
-          ["Integrations", "—"],
-          ["Automations", "—"],
-          ["Incidents", "—"]
-        ],
-        views: ["System Health", "Integrations", "Automations", "Incident Log"],
-        next: "Next we build: system tiles + integrations list + incident tracker."
-      },
-
-      tax: {
-        title: "MODULE — Tax Network",
-        desc: "Deadlines • compliance • filings • documents • audit trail",
-        kpis: [
-          ["Deadlines", "—"],
-          ["Open Filings", "—"],
-          ["Compliance", "—"],
-          ["Alerts", "—"]
-        ],
-        views: ["Deadline Calendar", "Filing Tracker", "Documents", "Audit Trail"],
-        next: "When you’re ready, tell me how you want the Tax page to look inside (your exact layout)."
-      },
-
-      agent: {
-        title: "MODULE — Agent AI",
-        desc: "Agent tasks • automations • monitoring • assigned actions",
-        kpis: [
-          ["Agents Active", "—"],
-          ["Tasks", "—"],
-          ["Completed", "—"],
-          ["Exceptions", "—"]
-        ],
-        views: ["Task Board", "Agent Status", "Automations", "Audit Log"],
-        next: "Next we build: task board (assigned, due, completed) + audit trail."
-      },
-
-      finance: {
-        title: "MODULE — Finance",
-        desc: "Holding + subsidiaries finance view • cash • profit • approvals",
-        kpis: [
-          ["Cash", "—"],
-          ["Revenue", "—"],
-          ["Profit", "—"],
-          ["AR/AP", "—"]
-        ],
-        views: ["Portfolio KPIs", "Company Finance", "Approvals", "Financial Reports"],
-        next: "Next we build: finance KPIs + company breakdown tiles + report list."
-      },
-
-      public: {
-        title: "MODULE — Public Portal",
-        desc: "External portal • intake forms • investor/bank/company requests",
-        kpis: [
-          ["New Requests", "—"],
-          ["In Review", "—"],
-          ["Approved", "—"],
-          ["Rejected", "—"]
-        ],
-        views: ["Intake Inbox", "Investor Form", "Bank Form", "Company Join Form"],
-        next: "Next we build: portal inbox + forms (investor/bank/company)."
-      }
-    };
-
-    // map your menu name -> module key
-    const fallback = {
-      dashboard: "approval"
-    };
-
-    const modKey = data[key] ? key : (fallback[key] || "contract");
-    const mod = data[modKey];
-
-    document.title = "TitanCore • " + modKey.toUpperCase();
-    document.getElementById("moduleTitle").textContent = mod.title;
-    document.getElementById("moduleDesc").textContent = mod.desc;
-    document.getElementById("nextStep").textContent = mod.next;
-
-    const kpiWrap = document.getElementById("kpis");
-    kpiWrap.innerHTML = mod.kpis.map(([k,v]) => `
-      <div class="kpi">
-        <div class="k">${k}</div>
-        <div class="v">${v}</div>
+<body class="tc">
+  <header class="top slim">
+    <div class="brand">
+      <div class="logo">TC</div>
+      <div class="titles">
+        <div class="h1" id="modTitle">Loading…</div>
+        <div class="h2" id="modSub">Quick view</div>
       </div>
-    `).join("");
+    </div>
+    <a class="closeTop" href="index.html">Back</a>
+  </header>
 
-    const views = document.getElementById("views");
-    views.innerHTML = mod.views.map(name => `<a class="btn" href="#">${name}</a>`).join("");
-  </script>
+  <main class="pageWrap">
+    <section class="card pageCard">
+      <div class="pageBody" id="modBody"></div>
+      <div class="pageActions">
+        <a class="btn" id="goFull" href="page.html">Open Full Page</a>
+        <a class="btn" href="index.html">Back to Dashboard</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="assets/js/app.js"></script>
 </body>
 </html>
