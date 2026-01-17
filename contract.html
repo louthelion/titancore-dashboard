@@ -2,338 +2,83 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>TitanCore — Contract Command</title>
-  <link rel="stylesheet" href="/styles.css">
-<script src="/app.js" defer></script>
-  <style>
-    /* Safe local styling ONLY for this page */
-    .wrap{max-width:1100px;margin:0 auto;padding:16px}
-    .panel{background:rgba(0,0,0,.35);border:1px solid rgba(212,175,55,.35);border-radius:18px;padding:16px;margin-top:14px}
-    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    @media (max-width:860px){.row{grid-template-columns:1fr}}
-    label{display:block;font-size:13px;opacity:.9;margin-bottom:6px}
-    input,select,textarea{width:100%;padding:12px;border-radius:12px;border:1px solid rgba(212,175,55,.25);background:rgba(10,10,10,.55);color:#eaeaea}
-    textarea{resize:vertical}
-    .kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
-    @media (max-width:860px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
-    .kpi{border:1px solid rgba(212,175,55,.25);border-radius:16px;padding:12px;background:rgba(0,0,0,.25)}
-    .k{font-size:12px;opacity:.8;text-transform:uppercase;letter-spacing:.08em}
-    .v{font-size:22px;margin-top:6px;color:#00c853}
-    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;border:1px solid rgba(212,175,55,.35);background:rgba(0,0,0,.35);color:#eaeaea;text-decoration:none;cursor:pointer}
-    .btn.primary{border-color:rgba(0,200,83,.55);color:#00c853}
-    .btn.danger{border-color:rgba(255,90,90,.6);color:#ff8a8a}
-    .btn.ghost{border-color:rgba(212,175,55,.25);opacity:.95}
-    .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
-    table{width:100%;border-collapse:separate;border-spacing:0 10px}
-    th{font-size:12px;opacity:.7;text-align:left;padding:0 10px}
-    td{padding:12px 10px;background:rgba(0,0,0,.25);border-top:1px solid rgba(212,175,55,.18);border-bottom:1px solid rgba(212,175,55,.18)}
-    tr td:first-child{border-left:1px solid rgba(212,175,55,.18);border-radius:14px 0 0 14px}
-    tr td:last-child{border-right:1px solid rgba(212,175,55,.18);border-radius:0 14px 14px 0}
-    .tag{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid rgba(0,200,83,.35);color:#00c853;font-size:12px}
-    .muted{opacity:.85}
-    .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;border:1px solid rgba(212,175,55,.25);font-size:12px;opacity:.95}
-    .pill.ok{border-color:rgba(0,200,83,.35);color:#00c853}
-    .pill.warn{border-color:rgba(255,195,0,.45);color:#ffd54a}
-    .pill.bad{border-color:rgba(255,90,90,.55);color:#ff8a8a}
-    .mini{font-size:12px;opacity:.8}
-    .split{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
-    .right{display:flex;gap:10px;flex-wrap:wrap}
-    .small{font-size:12px;opacity:.75}
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact • TitanCore</title>
+  <link rel="stylesheet" href="styles.css?v=20260117" />
 </head>
-
 <body>
-  <div class="wrap">
-
-    <!-- NAV -->
-    <nav class="menu" aria-label="TitanCore Menu">
-  <a class="menu-btn" href="/index.html">Dashboard</a>
-  <a class="menu-btn" href="/contact.html">Contact</a>
-  <a class="menu-btn" href="/contract.html">Contract</a>
-  <a class="menu-btn" href="/email.html">Email Routing</a>
-  <a class="menu-btn" href="/report.html">Report</a>
-  <a class="menu-btn" href="/approval.html">Approval</a>
-  <a class="menu-btn" href="/omni-system.html">Omni System</a>
-  <a class="menu-btn" href="/tax-network.html">Tax Network</a>
-  <a class="menu-btn" href="/agent-suite.html">Agent A.I. Suite</a>
-  <a class="menu-btn" href="/public-portal.html">Public Portal</a>
-</nav>
-
-<script>
-  // Auto-highlight current page as GREEN button (no manual "active" needed)
-  (function () {
-    const path = (location.pathname || "/index.html").toLowerCase();
-    document.querySelectorAll(".nav a").forEach(a => {
-      const href = (a.getAttribute("href") || "").toLowerCase();
-      if (href === path || (path === "/" && href === "/index.html")) {
-        a.classList.add("active");
-      } else {
-        a.classList.remove("active");
-      }
-    });
-  })();
-</script>
-
-    <!-- HEADER -->
-    <div class="panel">
-      <div class="split">
-        <div>
-          <div class="tag">CONTRACT COMMAND</div>
-          <h1 style="margin:10px 0 6px">Contracts • TitanCore Review • CEO Final Sign</h1>
-          <div class="muted">
-            Flow: Company creates contract → TitanCore review (all departments) → TitanCore signs approval → CEO final sign under company name.
-          </div>
-        </div>
-        <div class="right">
-          <span class="pill ok">TitanCore = Father</span>
-          <span class="pill warn">Pending Review</span>
-          <span class="pill bad">Critical Alerts</span>
-        </div>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">TC</div>
+      <div class="brandText">
+        <div class="title">Contact</div>
+        <div class="subtitle">Executive visibility • call volume • transfers • routing</div>
       </div>
     </div>
-
-    <!-- KPIs -->
-    <div class="panel">
-      <div class="kpis">
-        <div class="kpi"><div class="k">Total Contracts</div><div class="v" id="k_total">—</div><div class="small">All companies</div></div>
-        <div class="kpi"><div class="k">Pending TitanCore Review</div><div class="v" id="k_review">—</div><div class="small">Dept checks</div></div>
-        <div class="kpi"><div class="k">Pending CEO Final Sign</div><div class="v" id="k_ceo">—</div><div class="small">Your queue</div></div>
-        <div class="kpi"><div class="k">Alerts</div><div class="v" id="k_alerts">—</div><div class="small">Critical + overdue</div></div>
-      </div>
+    <div class="sysBox">
+      <div class="sysRow"><div class="sysLabel">Mode</div><div class="sysValue">CEO</div></div>
+      <div class="sysRow"><div class="sysLabel">Status</div><div class="sysValue statusActive">Active</div></div>
+      <div class="sysRow"><div class="sysLabel">System Time</div><div class="sysValue" id="sysTime">—</div></div>
     </div>
+  </header>
 
-    <!-- INTAKE FORM -->
-    <div class="panel">
-      <h2 style="margin:0 0 10px">Contract Intake (Log New)</h2>
-
-      <form id="contractForm">
-        <div class="row">
+  <main class="wrap">
+    <section class="grid" style="grid-template-columns:1fr;">
+      <section class="card">
+        <div class="cardHead">
           <div>
-            <label>Company (who owns the contract)</label>
-            <select id="f_company" required>
-              <option value="">Select…</option>
-              <option>TitanCore Holdings</option>
-              <option>Vaultara Capital</option>
-              <option>VitalPath Care Group</option>
-              <option>RevMotion Auto &amp; Marine Group</option>
-              <option>Family First Equity Group</option>
-            </select>
+            <div class="cardTitle green">Contact Center</div>
+            <div class="muted">Read-only executive dashboard (real logs connect later)</div>
           </div>
-
-          <div>
-            <label>Sender Type (who sent it)</label>
-            <select id="f_sender" required>
-              <option value="">Select…</option>
-              <option>Client</option>
-              <option>Bank</option>
-              <option>Institution</option>
-              <option>Vendor</option>
-              <option>Internal</option>
-            </select>
-          </div>
+          <a class="pillBtn" href="index.html">Back to Dashboard</a>
         </div>
 
-        <div style="margin-top:10px">
-          <label>Subject</label>
-          <input id="f_subject" placeholder="e.g., Service Agreement – Q1 / Loan Docs / Partnership" required />
-        </div>
-
-        <div class="row" style="margin-top:10px">
-          <div>
-            <label>Priority</label>
-            <select id="f_priority" required>
-              <option>Normal</option>
-              <option>High</option>
-              <option>Critical</option>
-            </select>
+        <div class="list">
+          <div class="row" id="call-volume">
+            <div>
+              <div class="rowTitle">Call Volume (24h)</div>
+              <div class="muted">Calls In • Calls Out • totals across all companies</div>
+            </div>
+            <div class="muted">—</div>
           </div>
 
-          <div>
-            <label>Due Date</label>
-            <input id="f_due" type="date" required />
+          <div class="row" id="transfers">
+            <div>
+              <div class="rowTitle">Transfers & Routing</div>
+              <div class="muted">TitanCore receives → AI routes → transfers to company</div>
+            </div>
+            <div class="muted">Ready</div>
+          </div>
+
+          <div class="row" id="caller-types">
+            <div>
+              <div class="rowTitle">Caller Types</div>
+              <div class="muted">Client • Bank/Institution • Investor • Vendor</div>
+            </div>
+            <div class="muted">Ready</div>
+          </div>
+
+          <div class="row" id="company-breakdown">
+            <div>
+              <div class="rowTitle">Company Breakdown</div>
+              <div class="muted">Which company they requested • where the call went</div>
+            </div>
+            <div class="muted">Ready</div>
           </div>
         </div>
 
-        <div style="margin-top:10px">
-          <label>Notes / Risks / Missing Docs</label>
-          <textarea id="f_notes" rows="3" placeholder="List missing items, risks, special terms, compliance notes…"></textarea>
+        <div class="divider"></div>
+
+        <div class="muted">
+          RingCentral backend connection will fill real counts/logs.
+          This page stays executive read-only.
         </div>
+      </section>
+    </section>
 
-        <div class="actions">
-          <button class="btn primary" type="submit">Add to TitanCore Review</button>
-          <button class="btn ghost" type="button" id="btn_seed">Load Sample</button>
-          <button class="btn danger" type="button" id="btn_clear">Clear</button>
-        </div>
+    <footer class="footer">TitanCore • Contact Module — read-only</footer>
+  </main>
 
-        <div class="mini" style="margin-top:10px">
-          This is a working demo: data is stored on your device (local storage). Later we connect Microsoft 365 + database.
-        </div>
-      </form>
-    </div>
-
-    <!-- QUEUE TABLE -->
-    <div class="panel">
-      <div class="split">
-        <div>
-          <h2 style="margin:0 0 6px">TitanCore Review Queue</h2>
-          <div class="muted">Use actions to move status: Review → Approved by TitanCore → CEO Final Sign → Completed.</div>
-        </div>
-      </div>
-
-      <table aria-label="Contract queue table">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Company</th>
-            <th>Sender</th>
-            <th>Subject</th>
-            <th>Priority</th>
-            <th>Due</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody id="qBody"></tbody>
-      </table>
-
-      <div class="mini" style="margin-top:8px">
-        Status meanings:
-        <span class="pill warn">Pending Review</span>
-        <span class="pill ok">TitanCore Approved</span>
-        <span class="pill ok">CEO Sign</span>
-        <span class="pill ok">Completed</span>
-      </div>
-    </div>
-
-  </div>
-
-  <script>
-    const KEY = "tc_contract_queue_v1";
-
-    function nowStamp(){
-      const d = new Date();
-      return d.toLocaleString();
-    }
-    function load(){ return JSON.parse(localStorage.getItem(KEY) || "[]"); }
-    function save(list){ localStorage.setItem(KEY, JSON.stringify(list)); }
-
-    function isOverdue(due){
-      if(!due) return false;
-      const today = new Date();
-      const dd = new Date(due + "T00:00:00");
-      return dd < new Date(today.toISOString().slice(0,10) + "T00:00:00");
-    }
-
-    function statusPill(status){
-      if(status === "Pending Review") return '<span class="pill warn">Pending Review</span>';
-      if(status === "TitanCore Approved") return '<span class="pill ok">TitanCore Approved</span>';
-      if(status === "CEO Final Sign") return '<span class="pill ok">CEO Final Sign</span>';
-      if(status === "Completed") return '<span class="pill ok">Completed</span>';
-      return '<span class="pill">Unknown</span>';
-    }
-
-    function render(){
-      const list = load();
-      const body = document.getElementById("qBody");
-      body.innerHTML = "";
-
-      let pendingReview = 0;
-      let pendingCEO = 0;
-      let alerts = 0;
-
-      list.forEach((item, idx) => {
-        if(item.status === "Pending Review") pendingReview++;
-        if(item.status === "CEO Final Sign") pendingCEO++;
-
-        const overdue = isOverdue(item.due);
-        const critical = item.priority === "Critical";
-        if(overdue || critical) alerts++;
-
-        const actionButtons = `
-          <button class="btn ghost" data-act="approve" data-i="${idx}">Approve</button>
-          <button class="btn ghost" data-act="ceo" data-i="${idx}">To CEO</button>
-          <button class="btn ghost" data-act="complete" data-i="${idx}">Complete</button>
-          <button class="btn danger" data-act="delete" data-i="${idx}">Delete</button>
-        `;
-
-        const priClass = critical ? "bad" : (item.priority === "High" ? "warn" : "ok");
-        const priPill = `<span class="pill ${priClass}">${item.priority}</span>`;
-        const duePill = overdue ? `<span class="pill bad">${item.due} (Overdue)</span>` : `<span class="pill">${item.due}</span>`;
-
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>${item.created}</td>
-          <td>${item.company}</td>
-          <td>${item.sender}</td>
-          <td>${item.subject}</td>
-          <td>${priPill}</td>
-          <td>${duePill}</td>
-          <td>${statusPill(item.status)}</td>
-          <td style="white-space:nowrap">${actionButtons}</td>
-        `;
-        body.appendChild(tr);
-      });
-
-      document.getElementById("k_total").textContent = list.length || "—";
-      document.getElementById("k_review").textContent = pendingReview || "—";
-      document.getElementById("k_ceo").textContent = pendingCEO || "—";
-      document.getElementById("k_alerts").textContent = alerts || "—";
-    }
-
-    document.getElementById("contractForm").addEventListener("submit", (e)=>{
-      e.preventDefault();
-      const list = load();
-      list.unshift({
-        created: nowStamp(),
-        company: document.getElementById("f_company").value,
-        sender: document.getElementById("f_sender").value,
-        subject: document.getElementById("f_subject").value,
-        priority: document.getElementById("f_priority").value,
-        due: document.getElementById("f_due").value,
-        notes: document.getElementById("f_notes").value,
-        status: "Pending Review"
-      });
-      save(list);
-      e.target.reset();
-      render();
-    });
-
-    document.addEventListener("click", (e)=>{
-      const btn = e.target.closest("button[data-act]");
-      if(!btn) return;
-
-      const act = btn.dataset.act;
-      const i = Number(btn.dataset.i);
-      const list = load();
-      const item = list[i];
-      if(!item) return;
-
-      if(act === "approve") item.status = "TitanCore Approved";
-      if(act === "ceo") item.status = "CEO Final Sign";
-      if(act === "complete") item.status = "Completed";
-      if(act === "delete") list.splice(i, 1);
-
-      save(list);
-      render();
-    });
-
-    document.getElementById("btn_seed").addEventListener("click", ()=>{
-      const sample = [
-        {created: nowStamp(), company:"Vaultara Capital", sender:"Client", subject:"Investment Advisory Agreement", priority:"Normal", due:"2026-01-10", notes:"Standard terms.", status:"Pending Review"},
-        {created: nowStamp(), company:"TitanCore Holdings", sender:"Bank", subject:"Credit Facility Renewal", priority:"High", due:"2026-01-05", notes:"Check covenants.", status:"Pending Review"},
-        {created: nowStamp(), company:"RevMotion Auto & Marine Group", sender:"Vendor", subject:"Supply Contract – Parts", priority:"Critical", due:"2026-01-02", notes:"Missing insurance cert.", status:"Pending Review"},
-      ];
-      save(sample);
-      render();
-    });
-
-    document.getElementById("btn_clear").addEventListener("click", ()=>{
-      save([]);
-      render();
-    });
-
-    render();
-  </script>
+  <script src="app.js?v=20260117"></script>
 </body>
 </html>
