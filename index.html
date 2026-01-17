@@ -3,233 +3,241 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>TitanCore Dashboard</title>
-  <link rel="stylesheet" href="assets/css/style.css" />
+  <title>TitanCore Executive Control Center</title>
+  <link rel="stylesheet" href="/style.css" />
 </head>
-<body class="tc">
-  <header class="top">
-    <div class="brand">
-      <div class="logo">TC</div>
-      <div class="titles">
-        <div class="h1">TitanCore Dashboard</div>
-        <div class="h2">TitanCore Holdings • Executive Control Center</div>
+<body>
+  <div class="container">
+    <div class="topbar">
+      <div class="brand">
+        <div class="title">TitanCore Holdings</div>
+        <div class="subtitle">Executive Control Center</div>
+      </div>
+
+      <div class="datetime">
+        <strong>Date / Time</strong>
+        <div data-datetime>—</div>
       </div>
     </div>
 
-    <div class="statusCard">
-      <div class="statusRow">
-        <div class="label">System Time</div>
-        <div class="value" id="tcTime">—</div>
-      </div>
-      <div class="statusRow">
-        <div class="label">Mode</div>
-        <div class="value">CEO</div>
-      </div>
-      <div class="statusRow">
-        <div class="label">Status</div>
-        <div class="value green">Active</div>
-      </div>
-    </div>
-  </header>
+    <div class="grid-3">
 
-  <main class="grid3">
-
-    <!-- LEFT: MENU (Dashboard title not clickable) -->
-    <section class="card">
-      <div class="cardHead">
-        <div class="cardTitle green">Menu</div>
-        <div class="cardSub">Tap ▾ for mini-menu</div>
-      </div>
-
-      <div class="menuList" id="mainMenu">
-        <!-- Dashboard (title only) -->
-        <div class="menuItem titleOnly">
-          <div class="menuText">Dashboard</div>
-          <button class="dropBtn" data-mini="dashboard" aria-label="Open dashboard mini menu">▾</button>
+      <!-- LEFT: MENU -->
+      <div class="panel">
+        <div class="panel-h">
+          <h3>Navigation</h3>
+          <span class="badge">Read-Only Control</span>
         </div>
+        <div class="panel-b">
+          <div class="menu">
+            <div class="menu-title">DASHBOARD</div>
+            <small>Dashboard is a title (not clickable). Click below to open modules.</small>
 
-        <!-- clickable menu items -->
-        <div class="menuItem">
-          <a class="menuLink" href="page.html?id=contact">Contact</a>
-          <button class="dropBtn" data-mini="contact" aria-label="Open contact mini menu">▾</button>
-        </div>
+            <!-- Each button opens a mini menu (simple text links) -->
+            <button class="menu-item" data-mini-trigger="contact">CONTACT</button>
+            <div class="minimenu" data-mini-panel="contact">
+              <div class="mini-title">CONTACT — Quick View</div>
+              <a href="/contact/index.html">Open Contact Center</a>
+              <a href="/contact/call-volume.html">Call Volume (In/Out)</a>
+              <a href="/contact/transfers.html">Transfers & Routing</a>
+              <a href="/contact/callers.html">Caller Types (Client/Bank/Investor)</a>
+              <a href="/contact/companies.html">Company Breakdown</a>
+            </div>
 
-        <div class="menuItem">
-          <a class="menuLink" href="page.html?id=contract">Contract</a>
-          <button class="dropBtn" data-mini="contract" aria-label="Open contract mini menu">▾</button>
-        </div>
+            <button class="menu-item" data-mini-trigger="contract">CONTRACT</button>
+            <div class="minimenu" data-mini-panel="contract">
+              <div class="mini-title">CONTRACT — Quick View</div>
+              <a href="/contract/index.html">Open Contract Tracking</a>
+              <a href="/contract/pipeline.html">Pipeline Status</a>
+              <a href="/contract/review-queue.html">TitanCore Review Queue</a>
+              <a href="/contract/approvals.html">Approval Chain Visibility</a>
+              <a href="/contract/history.html">History & Audit Trail</a>
+            </div>
 
-        <div class="menuItem">
-          <a class="menuLink" href="page.html?id=email">Email Routing</a>
-          <button class="dropBtn" data-mini="email" aria-label="Open email mini menu">▾</button>
-        </div>
+            <button class="menu-item" data-mini-trigger="email">EMAIL ROUTING</button>
+            <div class="minimenu" data-mini-panel="email">
+              <div class="mini-title">EMAIL ROUTING — Quick View</div>
+              <a href="/email-routing/index.html">Open Email Routing</a>
+              <a href="/email-routing/inboxes.html">Inboxes (Contact/Invest/Admin)</a>
+              <a href="/email-routing/rules.html">Routing Rules</a>
+              <a href="/email-routing/volume.html">Volume & Trends</a>
+              <a href="/email-routing/flags.html">Flags & Attention</a>
+            </div>
 
-        <div class="menuItem">
-          <a class="menuLink" href="page.html?id=report">Report</a>
-          <button class="dropBtn" data-mini="report" aria-label="Open report mini menu">▾</button>
-        </div>
+            <button class="menu-item" data-mini-trigger="report">REPORT</button>
+            <div class="minimenu" data-mini-panel="report">
+              <div class="mini-title">REPORT — Quick View</div>
+              <a href="/report/index.html">Open Executive Reports</a>
+              <a href="/report/weekly.html">Weekly Summary</a>
+              <a href="/report/monthly.html">Monthly Summary</a>
+              <a href="/report/exceptions.html">Exceptions & Delays</a>
+              <a href="/report/cross-company.html">Cross-Company Intelligence</a>
+            </div>
 
-        <div class="menuItem">
-          <a class="menuLink" href="page.html?id=approval">Approval</a>
-          <button class="dropBtn" data-mini="approval" aria-label="Open approval mini menu">▾</button>
-        </div>
+            <button class="menu-item" data-mini-trigger="approval">APPROVAL</button>
+            <div class="minimenu" data-mini-panel="approval">
+              <div class="mini-title">APPROVAL — Quick View</div>
+              <a href="/approval/index.html">Open Approval Center</a>
+              <a href="/approval/pending.html">Pending Approvals</a>
+              <a href="/approval/authority.html">Authority Chain</a>
+              <a href="/approval/signature.html">Signature Flow</a>
+              <a href="/approval/log.html">Approval Log</a>
+            </div>
 
-        <div class="menuItem">
-          <a class="menuLink" href="page.html?id=omni">Omni System</a>
-          <button class="dropBtn" data-mini="omni" aria-label="Open omni mini menu">▾</button>
-        </div>
+            <button class="menu-item" data-mini-trigger="omni">OMNI SYSTEM</button>
+            <div class="minimenu" data-mini-panel="omni">
+              <div class="mini-title">OMNI SYSTEM — Quick View</div>
+              <a href="/omni-system/index.html">Open Omni System</a>
+              <a href="/omni-system/orchestration.html">Orchestration Map</a>
+              <a href="/omni-system/health.html">System Health</a>
+              <a href="/omni-system/queues.html">Queues & Load</a>
+              <a href="/omni-system/changes.html">Change Log</a>
+            </div>
 
-        <div class="menuItem">
-          <a class="menuLink" href="page.html?id=tax">Tax Network</a>
-          <button class="dropBtn" data-mini="tax" aria-label="Open tax mini menu">▾</button>
-        </div>
+            <button class="menu-item" data-mini-trigger="tax">TAX NETWORK</button>
+            <div class="minimenu" data-mini-panel="tax">
+              <div class="mini-title">TAX NETWORK — Quick View</div>
+              <a href="/tax-network/index.html">Open Tax Network</a>
+              <a href="/tax-network/deadlines.html">Deadlines Calendar</a>
+              <a href="/tax-network/compliance.html">Compliance Status</a>
+              <a href="/tax-network/risks.html">Audit Risks</a>
+              <a href="/tax-network/licenses.html">Licenses & States</a>
+            </div>
 
-        <div class="menuItem">
-          <a class="menuLink" href="page.html?id=ai">Agent A.I. Suite</a>
-          <button class="dropBtn" data-mini="ai" aria-label="Open AI mini menu">▾</button>
-        </div>
+            <button class="menu-item" data-mini-trigger="ai">AGENT AI SUITE</button>
+            <div class="minimenu" data-mini-panel="ai">
+              <div class="mini-title">AGENT AI SUITE — Quick View</div>
+              <a href="/agent-ai-suite/index.html">Open Agent AI Suite</a>
+              <a href="/agent-ai-suite/agents.html">All Agents</a>
+              <a href="/agent-ai-suite/systems.html">Agent Systems</a>
+              <a href="/agent-ai-suite/orchestration.html">Orchestration Visibility</a>
+              <a href="/agent-ai-suite/logs.html">Agent Logs</a>
+            </div>
 
-        <div class="menuItem">
-          <a class="menuLink" href="page.html?id=public">Public Portal</a>
-          <button class="dropBtn" data-mini="public" aria-label="Open public mini menu">▾</button>
-        </div>
+            <button class="menu-item" data-mini-trigger="portal">PUBLIC PORTAL</button>
+            <div class="minimenu" data-mini-panel="portal">
+              <div class="mini-title">PUBLIC PORTAL — Quick View</div>
+              <a href="/public-portal/index.html">Open Public Portal</a>
+              <a href="/public-portal/intake.html">Intake Forms</a>
+              <a href="/public-portal/traffic.html">Traffic Intelligence</a>
+              <a href="/public-portal/messages.html">Inbound Messages</a>
+              <a href="/public-portal/summary.html">Portal Summary</a>
+            </div>
 
-        <div class="menuItem">
-          <a class="menuLink" href="page.html?id=finance">Finance</a>
-          <button class="dropBtn" data-mini="finance" aria-label="Open finance mini menu">▾</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- MIDDLE: COMPANIES -->
-    <section class="card">
-      <div class="cardHead">
-        <div class="cardTitle green">Companies</div>
-        <div class="cardSub">Holding + subsidiaries</div>
-      </div>
-
-      <div class="companyList">
-        <div class="companyRow">
-          <div>
-            <div class="companyName gold">TitanCore Holdings</div>
-            <div class="companyDesc">Father company • governance</div>
+            <button class="menu-item" data-mini-trigger="finance">FINANCE</button>
+            <div class="minimenu" data-mini-panel="finance">
+              <div class="mini-title">FINANCE — Quick View</div>
+              <a href="/finance/index.html">Open Finance Visibility</a>
+              <a href="/finance/cashflow.html">Cash Flow</a>
+              <a href="/finance/budget.html">Budget vs Actual</a>
+              <a href="/finance/portfolio.html">Portfolio View</a>
+              <a href="/finance/audit.html">Audit Snapshot</a>
+            </div>
           </div>
-          <a class="pillBtn" href="page.html?id=company&titan=holdings">OPEN</a>
-        </div>
-
-        <div class="companyRow">
-          <div>
-            <div class="companyName gold">Vaultara Capital</div>
-            <div class="companyDesc">Investments • funding</div>
-          </div>
-          <a class="pillBtn" href="page.html?id=company&name=vaultara">OPEN</a>
-        </div>
-
-        <div class="companyRow">
-          <div>
-            <div class="companyName gold">VitalPath Care Group</div>
-            <div class="companyDesc">Healthcare • compliance</div>
-          </div>
-          <a class="pillBtn" href="page.html?id=company&name=vitalpath">OPEN</a>
-        </div>
-
-        <div class="companyRow">
-          <div>
-            <div class="companyName gold">RevMotion Auto & Marine</div>
-            <div class="companyDesc">Fleet • service • ops</div>
-          </div>
-          <a class="pillBtn" href="page.html?id=company&name=revmotion">OPEN</a>
-        </div>
-
-        <div class="companyRow">
-          <div>
-            <div class="companyName gold">Family First Equity</div>
-            <div class="companyDesc">Equity • housing</div>
-          </div>
-          <a class="pillBtn" href="page.html?id=company&name=familyfirst">OPEN</a>
         </div>
       </div>
-    </section>
 
-    <!-- RIGHT: LEADERSHIP -->
-    <section class="card">
-      <div class="cardHead">
-        <div class="cardTitle green">Leadership</div>
-        <div class="cardSub">Mantle of 7 + Generals</div>
-      </div>
+      <!-- MIDDLE: COMPANIES -->
+      <div class="panel">
+        <div class="panel-h">
+          <h3>Companies</h3>
+          <span class="badge">Click to Open</span>
+        </div>
+        <div class="panel-b">
 
-      <div class="peopleList">
-        <!-- CEO -->
-        <div class="personRow">
-          <div>
-            <div class="personName gold">CEO</div>
-            <div class="personDesc">Private executive page</div>
+          <div class="kpis">
+            <div class="kpi">
+              <div class="k-title">Approvals Pending</div>
+              <div class="k-value">—</div>
+              <div class="k-sub">Executive visibility only</div>
+            </div>
+            <div class="kpi">
+              <div class="k-title">Contracts in Review</div>
+              <div class="k-value">—</div>
+              <div class="k-sub">TitanCore review queue</div>
+            </div>
+            <div class="kpi">
+              <div class="k-title">Compliance Alerts</div>
+              <div class="k-value">—</div>
+              <div class="k-sub">Tax Network deadlines</div>
+            </div>
           </div>
-          <a class="pillBtn" href="page.html?id=person&role=ceo">OPEN</a>
-        </div>
 
-        <div class="divider"></div>
+          <h4 class="section-title">Company List</h4>
+          <div class="list">
+            <a href="/companies/titancore/index.html">
+              <span>TitanCore Holdings</span><span class="hint">Open</span>
+            </a>
+            <a href="/companies/vaultara/index.html">
+              <span>Vaultara Capital</span><span class="hint">Open</span>
+            </a>
+            <a href="/companies/vitalpath/index.html">
+              <span>VitalPath Care Group</span><span class="hint">Open</span>
+            </a>
+            <a href="/companies/revmotion/index.html">
+              <span>RevMotion Auto & Marine Group</span><span class="hint">Open</span>
+            </a>
+            <a href="/companies/familyfirst/index.html">
+              <span>Family First Equity Group</span><span class="hint">Open</span>
+            </a>
+          </div>
 
-        <div class="personRow">
-          <div class="personName gold">President</div>
-          <a class="pillBtn" href="page.html?id=person&role=president">OPEN</a>
-        </div>
-        <div class="personRow">
-          <div class="personName gold">Vice President</div>
-          <a class="pillBtn" href="page.html?id=person&role=vp">OPEN</a>
-        </div>
-        <div class="personRow">
-          <div class="personName gold">Director</div>
-          <a class="pillBtn" href="page.html?id=person&role=director">OPEN</a>
-        </div>
-        <div class="personRow">
-          <div class="personName gold">Asst Director</div>
-          <a class="pillBtn" href="page.html?id=person&role=asst_director">OPEN</a>
-        </div>
-        <div class="personRow">
-          <div class="personName gold">Chief of Staff</div>
-          <a class="pillBtn" href="page.html?id=person&role=chief_of_staff">OPEN</a>
-        </div>
-        <div class="personRow">
-          <div class="personName gold">Executive Advisor</div>
-          <a class="pillBtn" href="page.html?id=person&role=exec_advisor">OPEN</a>
-        </div>
+          <div class="hr"></div>
 
-        <div class="divider"></div>
-
-        <div class="personRow">
-          <div class="personName gold">General Manager</div>
-          <a class="pillBtn" href="page.html?id=person&role=gm">OPEN</a>
-        </div>
-        <div class="personRow">
-          <div class="personName gold">General Asst Manager</div>
-          <a class="pillBtn" href="page.html?id=person&role=gam">OPEN</a>
-        </div>
-        <div class="personRow">
-          <div class="personName gold">General Administrator</div>
-          <a class="pillBtn" href="page.html?id=person&role=ga">OPEN</a>
+          <div class="card">
+            <h4 class="section-title">Purpose</h4>
+            <p>This control center is read-only. It collects visibility data from all company dashboards for executive review and signature authority flow.</p>
+          </div>
         </div>
       </div>
-    </section>
 
-  </main>
+      <!-- RIGHT: EXECUTIVE -->
+      <div class="panel">
+        <div class="panel-h">
+          <h3>Executive Leadership</h3>
+          <span class="badge">Mantle + Generals</span>
+        </div>
+        <div class="panel-b">
 
-  <!-- MINI MENU MODAL -->
-  <div class="modal" id="miniModal" aria-hidden="true">
-    <div class="modalBox">
-      <div class="modalHead">
-        <div class="modalTitle" id="miniTitle">Menu</div>
-        <button class="closeBtn" id="miniClose">Close</button>
+          <h4 class="section-title">Mantle of 7</h4>
+          <div class="list">
+            <a href="/leadership/ceo/index.html"><span>CEO</span><span class="hint">Open</span></a>
+            <a href="/leadership/president/index.html"><span>President</span><span class="hint">Open</span></a>
+            <a href="/leadership/vice-president/index.html"><span>Vice President</span><span class="hint">Open</span></a>
+            <a href="/leadership/director/index.html"><span>Director</span><span class="hint">Open</span></a>
+            <a href="/leadership/assistant-director/index.html"><span>Assistant Director</span><span class="hint">Open</span></a>
+            <a href="/leadership/chief-of-staff/index.html"><span>Chief of Staff</span><span class="hint">Open</span></a>
+            <a href="/leadership/executive-advisor/index.html"><span>Executive Advisor</span><span class="hint">Open</span></a>
+          </div>
+
+          <div class="hr"></div>
+
+          <h4 class="section-title">Generals</h4>
+          <div class="list">
+            <a href="/generals/general-manager/index.html"><span>General Manager</span><span class="hint">Open</span></a>
+            <a href="/generals/general-assistant-manager/index.html"><span>General Assistant Manager</span><span class="hint">Open</span></a>
+            <a href="/generals/general-administrator/index.html"><span>General Administrator</span><span class="hint">Open</span></a>
+          </div>
+
+          <div class="hr"></div>
+
+          <div class="card">
+            <h4 class="section-title">Meeting Rhythm (Visibility)</h4>
+            <ul>
+              <li>Sunday 9:00 AM — Reports delivered to Generals</li>
+              <li>Monday Afternoon — Generals meeting with Company Mgmt</li>
+              <li>Tuesday 9:00 AM — Generals deliver summary to Mantle</li>
+              <li>Wednesday Afternoon — Mantle strategic meeting</li>
+              <li>Friday Afternoon — Mantle briefing to Generals</li>
+            </ul>
+          </div>
+
+        </div>
       </div>
-      <div class="miniList" id="miniList"></div>
-      <div class="modalFoot">
-        <a class="pillBtn" id="miniFull" href="page.html">Open Full Page</a>
-      </div>
+
     </div>
   </div>
 
-  <footer class="foot">TitanCore internal executive view — read-only</footer>
-
-  <script src="assets/js/app.js"></script>
+  <script src="/app.js"></script>
 </body>
 </html>
