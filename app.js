@@ -1,61 +1,51 @@
-// app.js — TitanCore dashboard router (ROOT pages)
+// TitanCore Executive Control Center — Global JS
 
-const ROUTES = {
-  contact: "contact.html",
-  contract: "contract.html",
+function formatDateTime(d){
+  const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  const mon = months[d.getMonth()];
+  const day = d.getDate();
+  const year = d.getFullYear();
 
-  // Email Routing page in your repo is "routing.html"
-  email: "routing.html",
+  let h = d.getHours();
+  const m = String(d.getMinutes()).padStart(2,"0");
+  const ampm = h >= 12 ? "PM" : "AM";
+  h = h % 12; if(h === 0) h = 12;
 
-  report: "report.html",
-  approval: "approval.html",
-  omni: "omni-system.html",
-  tax: "tax-network.html",
+  return `${mon} ${day}, ${year} • ${h}:${m} ${ampm}`;
+}
 
-  // AI Suite in your repo is agent-suite.html
-  ai: "agent-suite.html",
+function tickClock(){
+  const el = document.querySelector("[data-datetime]");
+  if(!el) return;
+  el.textContent = formatDateTime(new Date());
+}
+setInterval(tickClock, 1000);
+window.addEventListener("DOMContentLoaded", tickClock);
 
-  public: "public-portal.html",
-  finance: "finance.html",
-};
+// Mini-menu behavior (Dashboard home)
+window.addEventListener("DOMContentLoaded", () => {
+  const triggers = document.querySelectorAll("[data-mini-trigger]");
+  const miniPanels = document.querySelectorAll("[data-mini-panel]");
 
-function openRoute(key) {
-  const target = ROUTES[key];
-
-  if (!target) {
-    alert(`Missing route for: ${key}`);
-    return;
+  function closeAll(){
+    miniPanels.forEach(p => p.classList.remove("active"));
   }
 
-  // Use relative path so it works on Azure Static Web Apps
-  window.location.href = `./${target}`;
-}
+  triggers.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.getAttribute("data-mini-trigger");
+      const panel = document.querySelector(`[data-mini-panel="${id}"]`);
+      if(!panel) return;
 
-document.addEventListener("DOMContentLoaded", () => {
-  // Main menu buttons
-  document.querySelectorAll(".itemBtn[data-open]").forEach((btn) => {
-    btn.addEventListener("click", () => openRoute(btn.dataset.open));
-  });
-
-  // "OPEN" buttons on company/leadership cards (if you used data-open too)
-  document.querySelectorAll("[data-open-page]").forEach((el) => {
-    el.addEventListener("click", () => {
-      const page = el.getAttribute("data-open-page");
-      if (!page) return;
-      window.location.href = `./${page}`;
+      const isOpen = panel.classList.contains("active");
+      closeAll();
+      if(!isOpen) panel.classList.add("active");
     });
   });
+
+  // click outside closes mini menus
+  document.addEventListener("click", (e) => {
+    const inside = e.target.closest("[data-mini-panel]") || e.target.closest("[data-mini-trigger]");
+    if(!inside) closeAll();
+  });
 });
-for (const m of (data.rows || [])) {
-  const tr = document.createElement("tr");
-  tr.innerHTML = `
-    <td>${esc(fmtTime(m.dateTime))}</td>
-    <td>${esc(m.direction)}</td>
-    <td>${esc(m.mailbox)}</td>
-    <td>${esc(m.from)}</td>
-    <td>${esc((m.to || []).join(", "))}</td>
-    <td>${esc(m.subject)}</td>
-    <td>${m.direction === "IN" ? (m.isRead ? "Read" : "Unread") : "-"}</td>
-  `;
-  tbody.appendChild(tr);
-}
