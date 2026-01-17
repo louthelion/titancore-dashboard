@@ -2,63 +2,83 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Contact Center • TitanCore</title>
-  <link rel="stylesheet" href="/style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact • TitanCore</title>
+  <link rel="stylesheet" href="styles.css?v=20260117" />
 </head>
 <body>
-  <div class="container">
-    <div class="topbar">
-      <div class="brand">
-        <div class="title">TitanCore Holdings</div>
-        <div class="subtitle">Contact Center • Executive Visibility</div>
-      </div>
-      <div class="datetime">
-        <strong>Date / Time</strong>
-        <div data-datetime>—</div>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">TC</div>
+      <div class="brandText">
+        <div class="title">Contact</div>
+        <div class="subtitle">Executive visibility • call volume • transfers • routing</div>
       </div>
     </div>
-
-    <div class="double-bg" style="margin-top:12px;">
-      <h3 class="section-title">What This Page Does</h3>
-      <div class="card">
-        <p>Contact Center is visibility-only. It tracks call volume, transfers, routing, and caller categories across all companies (including TitanCore).</p>
-        <ul>
-          <li>Call In / Call Out counts</li>
-          <li>Transfers (to which company + where)</li>
-          <li>Caller type (Client / Bank / Investor / Vendor)</li>
-          <li>Company routing visibility</li>
-        </ul>
-      </div>
-
-      <div class="hr"></div>
-
-      <h3 class="section-title">Quick Sections</h3>
-      <div class="list">
-        <a href="/contact/call-volume.html"><span>Call Volume (In/Out)</span><span class="hint">Open</span></a>
-        <a href="/contact/transfers.html"><span>Transfers & Routing</span><span class="hint">Open</span></a>
-        <a href="/contact/callers.html"><span>Caller Types</span><span class="hint">Open</span></a>
-        <a href="/contact/companies.html"><span>Company Breakdown</span><span class="hint">Open</span></a>
-      </div>
-
-      <div class="hr"></div>
-
-      <h3 class="section-title">RingCentral Integration</h3>
-      <div class="card">
-        <p>This dashboard is for data visibility. The live call answering + AI receptionist flow can be connected later. Here we prepare the structure so once RingCentral is connected, metrics populate automatically.</p>
-        <ul>
-          <li>Main line: single number, multi-company routing</li>
-          <li>Press 1 TitanCore • 2 Family First • 3 Vaultara • 4 VitalPath • 5 RevMotion</li>
-          <li>Transfer logs stored for executive view</li>
-        </ul>
-      </div>
-
-      <div class="footer-back">
-        <a href="/index.html">Back to Executive Control Center</a>
-      </div>
+    <div class="sysBox">
+      <div class="sysRow"><div class="sysLabel">Mode</div><div class="sysValue">CEO</div></div>
+      <div class="sysRow"><div class="sysLabel">Status</div><div class="sysValue statusActive">Active</div></div>
+      <div class="sysRow"><div class="sysLabel">System Time</div><div class="sysValue" id="sysTime">—</div></div>
     </div>
-  </div>
+  </header>
 
-  <script src="/app.js"></script>
+  <main class="wrap">
+    <section class="grid" style="grid-template-columns:1fr;">
+      <section class="card">
+        <div class="cardHead">
+          <div>
+            <div class="cardTitle green">Contact Center</div>
+            <div class="muted">Read-only executive dashboard (real logs connect later)</div>
+          </div>
+          <a class="pillBtn" href="index.html">Back to Dashboard</a>
+        </div>
+
+        <div class="list">
+          <div class="row" id="call-volume">
+            <div>
+              <div class="rowTitle">Call Volume (24h)</div>
+              <div class="muted">Calls In • Calls Out • totals across all companies</div>
+            </div>
+            <div class="muted">—</div>
+          </div>
+
+          <div class="row" id="transfers">
+            <div>
+              <div class="rowTitle">Transfers & Routing</div>
+              <div class="muted">TitanCore receives → AI routes → transfers to company</div>
+            </div>
+            <div class="muted">Ready</div>
+          </div>
+
+          <div class="row" id="caller-types">
+            <div>
+              <div class="rowTitle">Caller Types</div>
+              <div class="muted">Client • Bank/Institution • Investor • Vendor</div>
+            </div>
+            <div class="muted">Ready</div>
+          </div>
+
+          <div class="row" id="company-breakdown">
+            <div>
+              <div class="rowTitle">Company Breakdown</div>
+              <div class="muted">Which company they requested • where the call went</div>
+            </div>
+            <div class="muted">Ready</div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="muted">
+          RingCentral backend connection will fill real counts/logs.
+          This page stays executive read-only.
+        </div>
+      </section>
+    </section>
+
+    <footer class="footer">TitanCore • Contact Module — read-only</footer>
+  </main>
+
+  <script src="app.js?v=20260117"></script>
 </body>
 </html>
