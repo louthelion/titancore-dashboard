@@ -2,242 +2,438 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>TitanCore Executive Control Center</title>
-  <link rel="stylesheet" href="/style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TitanCore Dashboard</title>
+
+  <!-- IMPORTANT: this must match the file name exactly -->
+  <link rel="stylesheet" href="styles.css?v=20260117" />
 </head>
 <body>
-  <div class="container">
-    <div class="topbar">
-      <div class="brand">
-        <div class="title">TitanCore Holdings</div>
-        <div class="subtitle">Executive Control Center</div>
-      </div>
-
-      <div class="datetime">
-        <strong>Date / Time</strong>
-        <div data-datetime>—</div>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">TC</div>
+      <div class="brandText">
+        <div class="title">TitanCore Dashboard</div>
+        <div class="subtitle">TitanCore Holdings • Executive Control Center</div>
       </div>
     </div>
 
-    <div class="grid-3">
-
-      <!-- LEFT: MENU -->
-      <div class="panel">
-        <div class="panel-h">
-          <h3>Navigation</h3>
-          <span class="badge">Read-Only Control</span>
-        </div>
-        <div class="panel-b">
-          <div class="menu">
-            <div class="menu-title">DASHBOARD</div>
-            <small>Dashboard is a title (not clickable). Click below to open modules.</small>
-
-            <!-- Each button opens a mini menu (simple text links) -->
-            <button class="menu-item" data-mini-trigger="contact">CONTACT</button>
-            <div class="minimenu" data-mini-panel="contact">
-              <div class="mini-title">CONTACT — Quick View</div>
-              <a href="/contact/index.html">Open Contact Center</a>
-              <a href="/contact/call-volume.html">Call Volume (In/Out)</a>
-              <a href="/contact/transfers.html">Transfers & Routing</a>
-              <a href="/contact/callers.html">Caller Types (Client/Bank/Investor)</a>
-              <a href="/contact/companies.html">Company Breakdown</a>
-            </div>
-
-            <button class="menu-item" data-mini-trigger="contract">CONTRACT</button>
-            <div class="minimenu" data-mini-panel="contract">
-              <div class="mini-title">CONTRACT — Quick View</div>
-              <a href="/contract/index.html">Open Contract Tracking</a>
-              <a href="/contract/pipeline.html">Pipeline Status</a>
-              <a href="/contract/review-queue.html">TitanCore Review Queue</a>
-              <a href="/contract/approvals.html">Approval Chain Visibility</a>
-              <a href="/contract/history.html">History & Audit Trail</a>
-            </div>
-
-            <button class="menu-item" data-mini-trigger="email">EMAIL ROUTING</button>
-            <div class="minimenu" data-mini-panel="email">
-              <div class="mini-title">EMAIL ROUTING — Quick View</div>
-              <a href="/email-routing/index.html">Open Email Routing</a>
-              <a href="/email-routing/inboxes.html">Inboxes (Contact/Invest/Admin)</a>
-              <a href="/email-routing/rules.html">Routing Rules</a>
-              <a href="/email-routing/volume.html">Volume & Trends</a>
-              <a href="/email-routing/flags.html">Flags & Attention</a>
-            </div>
-
-            <button class="menu-item" data-mini-trigger="report">REPORT</button>
-            <div class="minimenu" data-mini-panel="report">
-              <div class="mini-title">REPORT — Quick View</div>
-              <a href="/report/index.html">Open Executive Reports</a>
-              <a href="/report/weekly.html">Weekly Summary</a>
-              <a href="/report/monthly.html">Monthly Summary</a>
-              <a href="/report/exceptions.html">Exceptions & Delays</a>
-              <a href="/report/cross-company.html">Cross-Company Intelligence</a>
-            </div>
-
-            <button class="menu-item" data-mini-trigger="approval">APPROVAL</button>
-            <div class="minimenu" data-mini-panel="approval">
-              <div class="mini-title">APPROVAL — Quick View</div>
-              <a href="/approval/index.html">Open Approval Center</a>
-              <a href="/approval/pending.html">Pending Approvals</a>
-              <a href="/approval/authority.html">Authority Chain</a>
-              <a href="/approval/signature.html">Signature Flow</a>
-              <a href="/approval/log.html">Approval Log</a>
-            </div>
-
-            <button class="menu-item" data-mini-trigger="omni">OMNI SYSTEM</button>
-            <div class="minimenu" data-mini-panel="omni">
-              <div class="mini-title">OMNI SYSTEM — Quick View</div>
-              <a href="/omni-system/index.html">Open Omni System</a>
-              <a href="/omni-system/orchestration.html">Orchestration Map</a>
-              <a href="/omni-system/health.html">System Health</a>
-              <a href="/omni-system/queues.html">Queues & Load</a>
-              <a href="/omni-system/changes.html">Change Log</a>
-            </div>
-
-            <button class="menu-item" data-mini-trigger="tax">TAX NETWORK</button>
-            <div class="minimenu" data-mini-panel="tax">
-              <div class="mini-title">TAX NETWORK — Quick View</div>
-              <a href="/tax-network/index.html">Open Tax Network</a>
-              <a href="/tax-network/deadlines.html">Deadlines Calendar</a>
-              <a href="/tax-network/compliance.html">Compliance Status</a>
-              <a href="/tax-network/risks.html">Audit Risks</a>
-              <a href="/tax-network/licenses.html">Licenses & States</a>
-            </div>
-
-            <button class="menu-item" data-mini-trigger="ai">AGENT AI SUITE</button>
-            <div class="minimenu" data-mini-panel="ai">
-              <div class="mini-title">AGENT AI SUITE — Quick View</div>
-              <a href="/agent-ai-suite/index.html">Open Agent AI Suite</a>
-              <a href="/agent-ai-suite/agents.html">All Agents</a>
-              <a href="/agent-ai-suite/systems.html">Agent Systems</a>
-              <a href="/agent-ai-suite/orchestration.html">Orchestration Visibility</a>
-              <a href="/agent-ai-suite/logs.html">Agent Logs</a>
-            </div>
-
-            <button class="menu-item" data-mini-trigger="portal">PUBLIC PORTAL</button>
-            <div class="minimenu" data-mini-panel="portal">
-              <div class="mini-title">PUBLIC PORTAL — Quick View</div>
-              <a href="/public-portal/index.html">Open Public Portal</a>
-              <a href="/public-portal/intake.html">Intake Forms</a>
-              <a href="/public-portal/traffic.html">Traffic Intelligence</a>
-              <a href="/public-portal/messages.html">Inbound Messages</a>
-              <a href="/public-portal/summary.html">Portal Summary</a>
-            </div>
-
-            <button class="menu-item" data-mini-trigger="finance">FINANCE</button>
-            <div class="minimenu" data-mini-panel="finance">
-              <div class="mini-title">FINANCE — Quick View</div>
-              <a href="/finance/index.html">Open Finance Visibility</a>
-              <a href="/finance/cashflow.html">Cash Flow</a>
-              <a href="/finance/budget.html">Budget vs Actual</a>
-              <a href="/finance/portfolio.html">Portfolio View</a>
-              <a href="/finance/audit.html">Audit Snapshot</a>
-            </div>
-          </div>
-        </div>
+    <div class="sysBox">
+      <div class="sysRow">
+        <div class="sysLabel">System Time</div>
+        <div class="sysValue" id="sysTime">—</div>
       </div>
-
-      <!-- MIDDLE: COMPANIES -->
-      <div class="panel">
-        <div class="panel-h">
-          <h3>Companies</h3>
-          <span class="badge">Click to Open</span>
-        </div>
-        <div class="panel-b">
-
-          <div class="kpis">
-            <div class="kpi">
-              <div class="k-title">Approvals Pending</div>
-              <div class="k-value">—</div>
-              <div class="k-sub">Executive visibility only</div>
-            </div>
-            <div class="kpi">
-              <div class="k-title">Contracts in Review</div>
-              <div class="k-value">—</div>
-              <div class="k-sub">TitanCore review queue</div>
-            </div>
-            <div class="kpi">
-              <div class="k-title">Compliance Alerts</div>
-              <div class="k-value">—</div>
-              <div class="k-sub">Tax Network deadlines</div>
-            </div>
-          </div>
-
-          <h4 class="section-title">Company List</h4>
-          <div class="list">
-            <a href="/companies/titancore/index.html">
-              <span>TitanCore Holdings</span><span class="hint">Open</span>
-            </a>
-            <a href="/companies/vaultara/index.html">
-              <span>Vaultara Capital</span><span class="hint">Open</span>
-            </a>
-            <a href="/companies/vitalpath/index.html">
-              <span>VitalPath Care Group</span><span class="hint">Open</span>
-            </a>
-            <a href="/companies/revmotion/index.html">
-              <span>RevMotion Auto & Marine Group</span><span class="hint">Open</span>
-            </a>
-            <a href="/companies/familyfirst/index.html">
-              <span>Family First Equity Group</span><span class="hint">Open</span>
-            </a>
-          </div>
-
-          <div class="hr"></div>
-
-          <div class="card">
-            <h4 class="section-title">Purpose</h4>
-            <p>This control center is read-only. It collects visibility data from all company dashboards for executive review and signature authority flow.</p>
-          </div>
-        </div>
+      <div class="sysRow">
+        <div class="sysLabel">Mode</div>
+        <div class="sysValue">CEO</div>
       </div>
-
-      <!-- RIGHT: EXECUTIVE -->
-      <div class="panel">
-        <div class="panel-h">
-          <h3>Executive Leadership</h3>
-          <span class="badge">Mantle + Generals</span>
-        </div>
-        <div class="panel-b">
-
-          <h4 class="section-title">Mantle of 7</h4>
-          <div class="list">
-            <a href="/leadership/ceo/index.html"><span>CEO</span><span class="hint">Open</span></a>
-            <a href="/leadership/president/index.html"><span>President</span><span class="hint">Open</span></a>
-            <a href="/leadership/vice-president/index.html"><span>Vice President</span><span class="hint">Open</span></a>
-            <a href="/leadership/director/index.html"><span>Director</span><span class="hint">Open</span></a>
-            <a href="/leadership/assistant-director/index.html"><span>Assistant Director</span><span class="hint">Open</span></a>
-            <a href="/leadership/chief-of-staff/index.html"><span>Chief of Staff</span><span class="hint">Open</span></a>
-            <a href="/leadership/executive-advisor/index.html"><span>Executive Advisor</span><span class="hint">Open</span></a>
-          </div>
-
-          <div class="hr"></div>
-
-          <h4 class="section-title">Generals</h4>
-          <div class="list">
-            <a href="/generals/general-manager/index.html"><span>General Manager</span><span class="hint">Open</span></a>
-            <a href="/generals/general-assistant-manager/index.html"><span>General Assistant Manager</span><span class="hint">Open</span></a>
-            <a href="/generals/general-administrator/index.html"><span>General Administrator</span><span class="hint">Open</span></a>
-          </div>
-
-          <div class="hr"></div>
-
-          <div class="card">
-            <h4 class="section-title">Meeting Rhythm (Visibility)</h4>
-            <ul>
-              <li>Sunday 9:00 AM — Reports delivered to Generals</li>
-              <li>Monday Afternoon — Generals meeting with Company Mgmt</li>
-              <li>Tuesday 9:00 AM — Generals deliver summary to Mantle</li>
-              <li>Wednesday Afternoon — Mantle strategic meeting</li>
-              <li>Friday Afternoon — Mantle briefing to Generals</li>
-            </ul>
-          </div>
-
-        </div>
+      <div class="sysRow">
+        <div class="sysLabel">Status</div>
+        <div class="sysValue statusActive">Active</div>
       </div>
-
     </div>
-  </div>
+  </header>
 
-  <script src="/app.js"></script>
+  <main class="wrap">
+    <section class="grid">
+
+      <!-- LEFT COLUMN -->
+      <section class="card">
+        <div class="cardHead">
+          <div>
+            <div class="cardTitle green">Navigation</div>
+            <div class="muted">Read-Only Control • Tap ▾ for mini-menu</div>
+          </div>
+        </div>
+
+        <!-- DASHBOARD (NOT CLICKABLE TITLE) -->
+        <div class="moduleBlock">
+          <div class="moduleRow">
+            <div class="moduleNameTitle">DASHBOARD</div>
+            <div class="tinyNote">Dashboard is a title (not clickable). Use modules below.</div>
+          </div>
+        </div>
+
+        <!-- MODULES (CLICKABLE) -->
+        <div class="moduleList">
+
+          <!-- CONTACT -->
+          <div class="moduleBlock">
+            <div class="moduleRow">
+              <a class="moduleLink" href="contact.html">Contact</a>
+              <button class="dropBtn" data-drop="drop-contact" aria-label="Open Contact mini menu">▾</button>
+            </div>
+            <div class="drop" id="drop-contact">
+              <a href="contact.html#call-volume">Call Volume (In/Out)</a>
+              <a href="contact.html#transfers">Transfers & Routing</a>
+              <a href="contact.html#caller-types">Caller Types</a>
+              <a href="contact.html#company-breakdown">Company Breakdown</a>
+              <a href="contact.html">Open Full Page →</a>
+            </div>
+          </div>
+
+          <!-- CONTRACT -->
+          <div class="moduleBlock">
+            <div class="moduleRow">
+              <a class="moduleLink" href="contract.html">Contract</a>
+              <button class="dropBtn" data-drop="drop-contract" aria-label="Open Contract mini menu">▾</button>
+            </div>
+            <div class="drop" id="drop-contract">
+              <a href="contract.html#pipeline">Tracking Pipeline</a>
+              <a href="contract.html#status">Status</a>
+              <a href="contract.html#titan-review">TitanCore Review Queue</a>
+              <a href="contract.html#audit">History & Audit Trail</a>
+              <a href="contract.html">Open Full Page →</a>
+            </div>
+          </div>
+
+          <!-- EMAIL ROUTING -->
+          <div class="moduleBlock">
+            <div class="moduleRow">
+              <a class="moduleLink" href="email.html">Email Routing</a>
+              <button class="dropBtn" data-drop="drop-email" aria-label="Open Email mini menu">▾</button>
+            </div>
+            <div class="drop" id="drop-email">
+              <a href="email.html#inboxes">Inboxes (Contact/Invest/Admin)</a>
+              <a href="email.html#rules">Routing Rules</a>
+              <a href="email.html#volume">Volume & Trends</a>
+              <a href="email.html#flags">Flags & Attention</a>
+              <a href="email.html">Open Full Page →</a>
+            </div>
+          </div>
+
+          <!-- REPORT -->
+          <div class="moduleBlock">
+            <div class="moduleRow">
+              <a class="moduleLink" href="report.html">Report</a>
+              <button class="dropBtn" data-drop="drop-report" aria-label="Open Report mini menu">▾</button>
+            </div>
+            <div class="drop" id="drop-report">
+              <a href="report.html#weekly">Weekly Summary</a>
+              <a href="report.html#monthly">Monthly Summary</a>
+              <a href="report.html#exceptions">Exceptions & Delays</a>
+              <a href="report.html#cross-company">Cross-Company Intelligence</a>
+              <a href="report.html">Open Full Page →</a>
+            </div>
+          </div>
+
+          <!-- APPROVAL -->
+          <div class="moduleBlock">
+            <div class="moduleRow">
+              <a class="moduleLink" href="approval.html">Approval</a>
+              <button class="dropBtn" data-drop="drop-approval" aria-label="Open Approval mini menu">▾</button>
+            </div>
+            <div class="drop" id="drop-approval">
+              <a href="approval.html#pending">Pending Approvals</a>
+              <a href="approval.html#authority">Authority Chain</a>
+              <a href="approval.html#signature">Signature Flow</a>
+              <a href="approval.html#history">Approval History</a>
+              <a href="approval.html">Open Full Page →</a>
+            </div>
+          </div>
+
+          <!-- OMNI -->
+          <div class="moduleBlock">
+            <div class="moduleRow">
+              <a class="moduleLink" href="omni-system.html">Omni System</a>
+              <button class="dropBtn" data-drop="drop-omni" aria-label="Open Omni mini menu">▾</button>
+            </div>
+            <div class="drop" id="drop-omni">
+              <a href="omni-system.html#health">System Health</a>
+              <a href="omni-system.html#orchestration">Orchestration Visibility</a>
+              <a href="omni-system.html#alerts">Global Alerts</a>
+              <a href="omni-system.html#stack">Stack / Services</a>
+              <a href="omni-system.html">Open Full Page →</a>
+            </div>
+          </div>
+
+          <!-- TAX -->
+          <div class="moduleBlock">
+            <div class="moduleRow">
+              <a class="moduleLink" href="tax-network.html">Tax Network</a>
+              <button class="dropBtn" data-drop="drop-tax" aria-label="Open Tax mini menu">▾</button>
+            </div>
+            <div class="drop" id="drop-tax">
+              <a href="tax-network.html#deadlines">Deadlines Calendar</a>
+              <a href="tax-network.html#compliance">Compliance Status</a>
+              <a href="tax-network.html#alerts">Alerts & Tasks</a>
+              <a href="tax-network.html#documents">Audit Documents</a>
+              <a href="tax-network.html">Open Full Page →</a>
+            </div>
+          </div>
+
+          <!-- AGENT AI -->
+          <div class="moduleBlock">
+            <div class="moduleRow">
+              <a class="moduleLink" href="agent-suite.html">Agent A.I. Suite</a>
+              <button class="dropBtn" data-drop="drop-ai" aria-label="Open Agent AI mini menu">▾</button>
+            </div>
+            <div class="drop" id="drop-ai">
+              <a href="agent-suite.html#agents">All Agents</a>
+              <a href="agent-suite.html#systems">Agent Systems</a>
+              <a href="agent-suite.html#orchestration">Orchestration</a>
+              <a href="agent-suite.html#logs">Agent Logs</a>
+              <a href="agent-suite.html">Open Full Page →</a>
+            </div>
+          </div>
+
+          <!-- PUBLIC PORTAL -->
+          <div class="moduleBlock">
+            <div class="moduleRow">
+              <a class="moduleLink" href="public-portal.html">Public Portal</a>
+              <button class="dropBtn" data-drop="drop-public" aria-label="Open Public Portal mini menu">▾</button>
+            </div>
+            <div class="drop" id="drop-public">
+              <a href="public-portal.html#intake">Intake Forms</a>
+              <a href="public-portal.html#traffic">Traffic Intelligence</a>
+              <a href="public-portal.html#messages">Inbound Messages</a>
+              <a href="public-portal.html#summary">Portal Summary</a>
+              <a href="public-portal.html">Open Full Page →</a>
+            </div>
+          </div>
+
+          <!-- FINANCE -->
+          <div class="moduleBlock">
+            <div class="moduleRow">
+              <a class="moduleLink" href="finance.html">Finance</a>
+              <button class="dropBtn" data-drop="drop-finance" aria-label="Open Finance mini menu">▾</button>
+            </div>
+            <div class="drop" id="drop-finance">
+              <a href="finance.html#visibility">Visibility (Read-Only)</a>
+              <a href="finance.html#cashflow">Cash Flow</a>
+              <a href="finance.html#budget">Budget vs Actual</a>
+              <a href="finance.html#snapshot">Audit Snapshot</a>
+              <a href="finance.html">Open Full Page →</a>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- MIDDLE COLUMN -->
+      <section class="card">
+        <div class="cardHead">
+          <div>
+            <div class="cardTitle green">Companies</div>
+            <div class="muted">Holding + subsidiaries • quick open</div>
+          </div>
+        </div>
+
+        <div class="list">
+          <div class="row">
+            <div>
+              <div class="rowTitle">TitanCore Holdings</div>
+              <div class="muted">Father company • governance</div>
+            </div>
+            <a class="pillBtn" href="titancore-holdings.html">Open</a>
+          </div>
+
+          <div class="row">
+            <div>
+              <div class="rowTitle">Vaultara Capital</div>
+              <div class="muted">Investments • funding</div>
+            </div>
+            <a class="pillBtn" href="vaultara-capital.html">Open</a>
+          </div>
+
+          <div class="row">
+            <div>
+              <div class="rowTitle">VitalPath Care Group</div>
+              <div class="muted">Healthcare • services</div>
+            </div>
+            <a class="pillBtn" href="vitalpath-care.html">Open</a>
+          </div>
+
+          <div class="row">
+            <div>
+              <div class="rowTitle">RevMotion Auto & Marine</div>
+              <div class="muted">Auto • marine • operations</div>
+            </div>
+            <a class="pillBtn" href="revmotion-auto-marine.html">Open</a>
+          </div>
+
+          <div class="row">
+            <div>
+              <div class="rowTitle">Family First Equity Group</div>
+              <div class="muted">Real estate • equity</div>
+            </div>
+            <a class="pillBtn" href="family-first-equity.html">Open</a>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+        <div class="muted small">
+          Company pages are executive visibility only (read-only). Each company can have its own system later.
+        </div>
+      </section>
+
+      <!-- RIGHT COLUMN -->
+      <section class="card">
+        <div class="cardHead">
+          <div>
+            <div class="cardTitle green">Leadership</div>
+            <div class="muted">Mantle of 7 + Generals • quick actions</div>
+          </div>
+        </div>
+
+        <div class="roleList">
+
+          <!-- Mantle of 7 -->
+          <div class="roleGroupTitle">Mantle of 7</div>
+
+          <div class="roleBlock">
+            <div class="moduleRow">
+              <a class="moduleLink" href="ceo.html">CEO</a>
+              <button class="dropBtn" data-drop="drop-ceo">▾</button>
+            </div>
+            <div class="drop" id="drop-ceo">
+              <a href="ceo.html#briefing">Briefing</a>
+              <a href="ceo.html#email">Email</a>
+              <a href="ceo.html#approvals">Approvals</a>
+              <a href="ceo.html#meetings">Meetings (Wed/Fri)</a>
+              <a href="ceo.html">Open Full Page →</a>
+            </div>
+          </div>
+
+          <div class="roleBlock">
+            <div class="moduleRow">
+              <a class="moduleLink" href="president.html">President</a>
+              <button class="dropBtn" data-drop="drop-president">▾</button>
+            </div>
+            <div class="drop" id="drop-president">
+              <a href="president.html#briefing">Briefing</a>
+              <a href="president.html#email">Email</a>
+              <a href="president.html#approvals">Approvals</a>
+              <a href="president.html#meetings">Meetings (Wed/Fri)</a>
+              <a href="president.html">Open Full Page →</a>
+            </div>
+          </div>
+
+          <div class="roleBlock">
+            <div class="moduleRow">
+              <a class="moduleLink" href="vice-president.html">Vice President</a>
+              <button class="dropBtn" data-drop="drop-vp">▾</button>
+            </div>
+            <div class="drop" id="drop-vp">
+              <a href="vice-president.html#briefing">Briefing</a>
+              <a href="vice-president.html#email">Email</a>
+              <a href="vice-president.html#approvals">Approvals</a>
+              <a href="vice-president.html#meetings">Meetings (Wed/Fri)</a>
+              <a href="vice-president.html">Open Full Page →</a>
+            </div>
+          </div>
+
+          <div class="roleBlock">
+            <div class="moduleRow">
+              <a class="moduleLink" href="director.html">Director</a>
+              <button class="dropBtn" data-drop="drop-director">▾</button>
+            </div>
+            <div class="drop" id="drop-director">
+              <a href="director.html#briefing">Briefing</a>
+              <a href="director.html#email">Email</a>
+              <a href="director.html#approvals">Approvals</a>
+              <a href="director.html#meetings">Meetings (Wed/Fri)</a>
+              <a href="director.html">Open Full Page →</a>
+            </div>
+          </div>
+
+          <div class="roleBlock">
+            <div class="moduleRow">
+              <a class="moduleLink" href="assistant-director.html">Assistant Director</a>
+              <button class="dropBtn" data-drop="drop-ad">▾</button>
+            </div>
+            <div class="drop" id="drop-ad">
+              <a href="assistant-director.html#briefing">Briefing</a>
+              <a href="assistant-director.html#email">Email</a>
+              <a href="assistant-director.html#approvals">Approvals</a>
+              <a href="assistant-director.html#meetings">Meetings (Wed/Fri)</a>
+              <a href="assistant-director.html">Open Full Page →</a>
+            </div>
+          </div>
+
+          <div class="roleBlock">
+            <div class="moduleRow">
+              <a class="moduleLink" href="chief-of-staff.html">Chief of Staff</a>
+              <button class="dropBtn" data-drop="drop-cos">▾</button>
+            </div>
+            <div class="drop" id="drop-cos">
+              <a href="chief-of-staff.html#briefing">Briefing</a>
+              <a href="chief-of-staff.html#team">10 Chiefs Team</a>
+              <a href="chief-of-staff.html#meetings">Meetings (Wed/Fri)</a>
+              <a href="chief-of-staff.html#ops">Ops Coordination</a>
+              <a href="chief-of-staff.html">Open Full Page →</a>
+            </div>
+          </div>
+
+          <div class="roleBlock">
+            <div class="moduleRow">
+              <a class="moduleLink" href="executive-advisor.html">Executive Advisor</a>
+              <button class="dropBtn" data-drop="drop-ea">▾</button>
+            </div>
+            <div class="drop" id="drop-ea">
+              <a href="executive-advisor.html#briefing">Briefing</a>
+              <a href="executive-advisor.html#email">Email</a>
+              <a href="executive-advisor.html#reviews">Reviews</a>
+              <a href="executive-advisor.html#meetings">Meetings (Wed/Fri)</a>
+              <a href="executive-advisor.html">Open Full Page →</a>
+            </div>
+          </div>
+
+          <!-- Generals -->
+          <div class="roleGroupTitle">Generals</div>
+
+          <div class="roleBlock">
+            <div class="moduleRow">
+              <a class="moduleLink" href="general-manager.html">General Manager</a>
+              <button class="dropBtn" data-drop="drop-gm">▾</button>
+            </div>
+            <div class="drop" id="drop-gm">
+              <a href="general-manager.html#overview">Overview</a>
+              <a href="general-manager.html#queues">Queues</a>
+              <a href="general-manager.html#meetings">Meetings (Fri)</a>
+              <a href="general-manager.html#reports">Reports</a>
+              <a href="general-manager.html">Open Full Page →</a>
+            </div>
+          </div>
+
+          <div class="roleBlock">
+            <div class="moduleRow">
+              <a class="moduleLink" href="general-assistant-manager.html">General Assistant Manager</a>
+              <button class="dropBtn" data-drop="drop-gam">▾</button>
+            </div>
+            <div class="drop" id="drop-gam">
+              <a href="general-assistant-manager.html#overview">Overview</a>
+              <a href="general-assistant-manager.html#queues">Queues</a>
+              <a href="general-assistant-manager.html#meetings">Meetings (Fri)</a>
+              <a href="general-assistant-manager.html#reports">Reports</a>
+              <a href="general-assistant-manager.html">Open Full Page →</a>
+            </div>
+          </div>
+
+          <div class="roleBlock">
+            <div class="moduleRow">
+              <a class="moduleLink" href="general-administrator.html">General Administrator</a>
+              <button class="dropBtn" data-drop="drop-ga">▾</button>
+            </div>
+            <div class="drop" id="drop-ga">
+              <a href="general-administrator.html#overview">Overview</a>
+              <a href="general-administrator.html#logs">Logs</a>
+              <a href="general-administrator.html#meetings">Meetings (Fri)</a>
+              <a href="general-administrator.html#compliance">Compliance</a>
+              <a href="general-administrator.html">Open Full Page →</a>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </section>
+
+    <footer class="footer">
+      TitanCore internal executive view — read-only
+    </footer>
+  </main>
+
+  <script src="app.js?v=20260117"></script>
 </body>
 </html>
