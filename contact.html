@@ -3,16 +3,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Contact • TitanCore</title>
-  <link rel="stylesheet" href="styles.css?v=20260117" />
+  <title>Contract • TitanCore</title>
+  <link rel="stylesheet" href="styles.css?v=20260117-2" />
 </head>
 <body>
   <header class="topbar">
     <div class="brand">
       <div class="logo">TC</div>
       <div class="brandText">
-        <div class="title">Contact</div>
-        <div class="subtitle">Executive visibility • call volume • transfers • routing</div>
+        <div class="title" id="pageTitle">Contract</div>
+        <div class="subtitle" id="pageSub">Data tracking • status • approvals • no editing</div>
       </div>
     </div>
     <div class="sysBox">
@@ -27,58 +27,119 @@
       <section class="card">
         <div class="cardHead">
           <div>
-            <div class="cardTitle green">Contact Center</div>
-            <div class="muted">Read-only executive dashboard (real logs connect later)</div>
+            <div class="cardTitle green" id="viewHeader">Contract Center</div>
+            <div class="muted" id="viewNote">Executive pipeline visibility (read-only)</div>
           </div>
-          <a class="pillBtn" href="index.html">Back to Dashboard</a>
+
+          <div style="display:flex; gap:10px; align-items:center;">
+            <a class="pillBtn" href="index.html">Back</a>
+            <a class="pillBtn" href="contract.html">Open Full Page</a>
+          </div>
+        </div>
+
+        <div class="moduleBlock" id="quickNav" style="margin-bottom:12px;">
+          <div class="moduleRow">
+            <div class="moduleNameTitle">Quick Jump</div>
+            <div class="tinyNote">Tap a view</div>
+          </div>
+          <div class="drop" style="display:block;">
+            <a href="contract.html?view=pipeline">Tracking Pipeline</a>
+            <a href="contract.html?view=status">Status</a>
+            <a href="contract.html?view=titan-review">TitanCore Review Queue</a>
+            <a href="contract.html?view=audit">History & Audit Trail</a>
+          </div>
         </div>
 
         <div class="list">
-          <div class="row" id="call-volume">
+          <div class="row" data-view="pipeline">
             <div>
-              <div class="rowTitle">Call Volume (24h)</div>
-              <div class="muted">Calls In • Calls Out • totals across all companies</div>
-            </div>
-            <div class="muted">—</div>
-          </div>
-
-          <div class="row" id="transfers">
-            <div>
-              <div class="rowTitle">Transfers & Routing</div>
-              <div class="muted">TitanCore receives → AI routes → transfers to company</div>
+              <div class="rowTitle">Tracking Pipeline</div>
+              <div class="muted">New • In Review • Pending Approval • Closed</div>
             </div>
             <div class="muted">Ready</div>
           </div>
 
-          <div class="row" id="caller-types">
+          <div class="row" data-view="status">
             <div>
-              <div class="rowTitle">Caller Types</div>
-              <div class="muted">Client • Bank/Institution • Investor • Vendor</div>
+              <div class="rowTitle">Status</div>
+              <div class="muted">Cross-company status view</div>
             </div>
             <div class="muted">Ready</div>
           </div>
 
-          <div class="row" id="company-breakdown">
+          <div class="row" data-view="titan-review">
             <div>
-              <div class="rowTitle">Company Breakdown</div>
-              <div class="muted">Which company they requested • where the call went</div>
+              <div class="rowTitle">TitanCore Review Queue</div>
+              <div class="muted">Packages waiting for TitanCore department review</div>
+            </div>
+            <div class="muted">Ready</div>
+          </div>
+
+          <div class="row" data-view="audit">
+            <div>
+              <div class="rowTitle">History & Audit Trail</div>
+              <div class="muted">Who touched what • when • decision notes</div>
             </div>
             <div class="muted">Ready</div>
           </div>
         </div>
 
         <div class="divider"></div>
-
-        <div class="muted">
-          RingCentral backend connection will fill real counts/logs.
-          This page stays executive read-only.
-        </div>
+        <div class="muted">Read-only. Real data connects after systems are wired.</div>
       </section>
     </section>
 
-    <footer class="footer">TitanCore • Contact Module — read-only</footer>
+    <footer class="footer">TitanCore • Contract Module — read-only</footer>
   </main>
 
-  <script src="app.js?v=20260117"></script>
+  <script>
+    (function(){
+      const el=document.getElementById("sysTime");
+      function tick(){
+        if(!el) return;
+        const d=new Date();
+        el.textContent=d.toLocaleString(undefined,{
+          weekday:"short", year:"numeric", month:"short", day:"2-digit",
+          hour:"2-digit", minute:"2-digit", second:"2-digit"
+        });
+      }
+      tick(); setInterval(tick,1000);
+    })();
+
+    (function(){
+      const params=new URLSearchParams(location.search);
+      const view=(params.get("view")||"").trim();
+
+      const quickNav=document.getElementById("quickNav");
+      const vh=document.getElementById("viewHeader");
+      const vn=document.getElementById("viewNote");
+      const panels=Array.from(document.querySelectorAll("[data-view]"));
+
+      const map={
+        "pipeline": {t:"Tracking Pipeline", s:"New • In Review • Pending Approval • Closed"},
+        "status": {t:"Status", s:"Cross-company status view"},
+        "titan-review": {t:"TitanCore Review Queue", s:"Packages waiting for TitanCore department review"},
+        "audit": {t:"History & Audit Trail", s:"Who touched what • when • decision notes"}
+      };
+
+      if(view && map[view]){
+        quickNav.style.display="none";
+        panels.forEach(p=>p.style.display=(p.getAttribute("data-view")===view)?"flex":"none");
+        vh.textContent=map[view].t;
+        vn.textContent=map[view].s;
+
+        const selected=document.querySelector('[data-view="'+view+'"]');
+        if(selected){
+          selected.style.padding="18px 14px";
+          selected.style.borderColor="rgba(39,216,108,.45)";
+          selected.style.background="rgba(39,216,108,.08)";
+          selected.scrollIntoView({behavior:"instant", block:"start"});
+        }
+      } else {
+        quickNav.style.display="block";
+        panels.forEach(p=>p.style.display="flex");
+      }
+    })();
+  </script>
 </body>
 </html>
