@@ -1,51 +1,44 @@
-// TitanCore Executive Control Center — Global JS
-
-function formatDateTime(d){
-  const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-  const mon = months[d.getMonth()];
-  const day = d.getDate();
-  const year = d.getFullYear();
-
-  let h = d.getHours();
-  const m = String(d.getMinutes()).padStart(2,"0");
-  const ampm = h >= 12 ? "PM" : "AM";
-  h = h % 12; if(h === 0) h = 12;
-
-  return `${mon} ${day}, ${year} • ${h}:${m} ${ampm}`;
-}
-
-function tickClock(){
-  const el = document.querySelector("[data-datetime]");
-  if(!el) return;
-  el.textContent = formatDateTime(new Date());
-}
-setInterval(tickClock, 1000);
-window.addEventListener("DOMContentLoaded", tickClock);
-
-// Mini-menu behavior (Dashboard home)
-window.addEventListener("DOMContentLoaded", () => {
-  const triggers = document.querySelectorAll("[data-mini-trigger]");
-  const miniPanels = document.querySelectorAll("[data-mini-panel]");
-
-  function closeAll(){
-    miniPanels.forEach(p => p.classList.remove("active"));
+// TitanCore Dashboard - menu + time
+(function () {
+  // Live time
+  const el = document.getElementById("sysTime");
+  function tick() {
+    if (!el) return;
+    const d = new Date();
+    el.textContent = d.toLocaleString(undefined, {
+      weekday: "short",
+      year: "numeric",
+      month: "short",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    });
   }
+  tick();
+  setInterval(tick, 1000);
 
-  triggers.forEach(btn => {
+  // Dropdown menus (simple, reliable)
+  const btns = document.querySelectorAll("[data-drop]");
+  btns.forEach((btn) => {
     btn.addEventListener("click", () => {
-      const id = btn.getAttribute("data-mini-trigger");
-      const panel = document.querySelector(`[data-mini-panel="${id}"]`);
-      if(!panel) return;
+      const id = btn.getAttribute("data-drop");
+      const panel = document.getElementById(id);
+      if (!panel) return;
 
-      const isOpen = panel.classList.contains("active");
-      closeAll();
-      if(!isOpen) panel.classList.add("active");
+      // close others (keeps it clean)
+      document.querySelectorAll(".drop").forEach((d) => {
+        if (d !== panel) d.style.display = "none";
+      });
+
+      panel.style.display = (panel.style.display === "block") ? "none" : "block";
     });
   });
 
-  // click outside closes mini menus
+  // Click outside to close dropdowns
   document.addEventListener("click", (e) => {
-    const inside = e.target.closest("[data-mini-panel]") || e.target.closest("[data-mini-trigger]");
-    if(!inside) closeAll();
+    const t = e.target;
+    if (t.closest(".moduleBlock") || t.closest(".roleBlock") || t.closest(".drop")) return;
+    document.querySelectorAll(".drop").forEach((d) => d.style.display = "none");
   });
-});
+})();
