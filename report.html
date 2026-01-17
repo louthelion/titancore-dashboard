@@ -2,79 +2,79 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>TitanCore — Report</title>
-  <link rel="stylesheet" href="/styles.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Report • TitanCore</title>
+  <link rel="stylesheet" href="styles.css?v=20260117" />
 </head>
-
 <body>
-  <!-- TOP MENU (same on every page) -->
-  <nav class="menu" aria-label="TitanCore Menu">
-  <a class="menu-btn" href="/index.html">Dashboard</a>
-  <a class="menu-btn" href="/contact.html">Contact</a>
-  <a class="menu-btn" href="/contract.html">Contract</a>
-  <a class="menu-btn" href="/email.html">Email Routing</a>
-  <a class="menu-btn" href="/report.html">Report</a>
-  <a class="menu-btn" href="/approval.html">Approval</a>
-  <a class="menu-btn" href="/omni-system.html">Omni System</a>
-  <a class="menu-btn" href="/tax-network.html">Tax Network</a>
-  <a class="menu-btn" href="/agent-suite.html">Agent A.I. Suite</a>
-  <a class="menu-btn" href="/public-portal.html">Public Portal</a>
-</nav>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">TC</div>
+      <div class="brandText">
+        <div class="title">Report</div>
+        <div class="subtitle">Global reporting • cross-company intelligence • executive visibility</div>
+      </div>
+    </div>
+    <div class="sysBox">
+      <div class="sysRow"><div class="sysLabel">Mode</div><div class="sysValue">CEO</div></div>
+      <div class="sysRow"><div class="sysLabel">Status</div><div class="sysValue statusActive">Active</div></div>
+      <div class="sysRow"><div class="sysLabel">System Time</div><div class="sysValue" id="sysTime">—</div></div>
+    </div>
+  </header>
 
   <main class="wrap">
-    <section class="panel">
-      <div class="panel-head">
-        <h1 class="panel-title">REPORT</h1>
-        <div class="panel-note">Build reports → send to Approval.</div>
-      </div>
+    <section class="grid" style="grid-template-columns:1fr;">
+      <section class="card">
+        <div class="cardHead">
+          <div>
+            <div class="cardTitle green">Executive Reporting</div>
+            <div class="muted">Read-only summaries</div>
+          </div>
+          <a class="pillBtn" href="index.html">Back to Dashboard</a>
+        </div>
 
-      <div class="cards4">
-        <div class="card"><div class="card-title">Drafts</div><div class="card-value">3</div></div>
-        <div class="card"><div class="card-title">Submitted</div><div class="card-value">1</div></div>
-        <div class="card"><div class="card-title">Returned</div><div class="card-value">1</div></div>
-        <div class="card"><div class="card-title">Approved</div><div class="card-value">0</div></div>
-      </div>
+        <div class="list">
+          <div class="row" id="weekly">
+            <div>
+              <div class="rowTitle">Weekly Summary</div>
+              <div class="muted">What moved across TitanCore + subsidiaries</div>
+            </div>
+            <div class="muted">Ready</div>
+          </div>
 
-      <div class="grid2">
-        <div class="card big">
-          <div class="card-title">Report Builder</div>
-          <p class="muted">Create a report package: title, company, category, summary, and attachments.</p>
+          <div class="row" id="monthly">
+            <div>
+              <div class="rowTitle">Monthly Summary</div>
+              <div class="muted">KPIs • trend lines • exceptions</div>
+            </div>
+            <div class="muted">Ready</div>
+          </div>
 
-          <label class="lbl">Report Title</label>
-          <input class="in" placeholder="e.g., Weekly Executive Summary" />
+          <div class="row" id="exceptions">
+            <div>
+              <div class="rowTitle">Exceptions & Delays</div>
+              <div class="muted">What needs Mantle attention</div>
+            </div>
+            <div class="muted">Ready</div>
+          </div>
 
-          <label class="lbl">Company</label>
-          <select class="in">
-            <option>TitanCore Holdings</option>
-            <option>Vaultara Capital</option>
-            <option>VitalPath Care Group</option>
-            <option>RevMotion Auto & Marine Group</option>
-            <option>Family First Equity Group</option>
-          </select>
-
-          <label class="lbl">Summary</label>
-          <textarea class="in" rows="4" placeholder="Write the report summary..."></textarea>
-
-          <div class="row">
-            <button class="pill pill-gold">Save Draft</button>
-            <a class="pill pill-green" href="/approval.html">Submit to Approval →</a>
+          <div class="row" id="cross-company">
+            <div>
+              <div class="rowTitle">Cross-Company Intelligence</div>
+              <div class="muted">Shared signals across companies</div>
+            </div>
+            <div class="muted">Ready</div>
           </div>
         </div>
 
-        <div class="card big">
-          <div class="card-title">Report Archive</div>
-          <p class="muted">Recent reports</p>
-          <div class="list">
-            <div class="list-item"><b>Exec Summary</b><span class="tag">Draft</span></div>
-            <div class="list-item"><b>Compliance Update</b><span class="tag">Returned</span></div>
-            <div class="list-item"><b>Tax Review</b><span class="tag">Submitted</span></div>
-          </div>
-        </div>
-      </div>
+        <div class="divider"></div>
+        <div class="muted">Read-only. Real reporting pipelines connect later.</div>
+      </section>
     </section>
+
+    <footer class="footer">TitanCore • Report — read-only</footer>
   </main>
 
-  <script src="/app.js"></script>
+  <script src="app.js?v=20260117"></script>
 </body>
 </html>
