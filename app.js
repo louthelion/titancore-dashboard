@@ -1,44 +1,46 @@
-// TitanCore Dashboard - menu + time
+// app.js
 (function () {
-  // Live time
-  const el = document.getElementById("sysTime");
-  function tick() {
-    if (!el) return;
+  // ====== Clock ======
+  function pad(n) { return String(n).padStart(2, "0"); }
+
+  function updateClock() {
     const d = new Date();
-    el.textContent = d.toLocaleString(undefined, {
-      weekday: "short",
-      year: "numeric",
-      month: "short",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    });
+    const dateStr = d.toLocaleDateString(undefined, { weekday: "short", year: "numeric", month: "short", day: "numeric" });
+    const timeStr = `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+
+    const elDate = document.getElementById("sysDate");
+    const elTime = document.getElementById("sysTime");
+    if (elDate) elDate.textContent = dateStr;
+    if (elTime) elTime.textContent = timeStr;
   }
-  tick();
-  setInterval(tick, 1000);
+  updateClock();
+  setInterval(updateClock, 1000);
 
-  // Dropdown menus (simple, reliable)
-  const btns = document.querySelectorAll("[data-drop]");
-  btns.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const id = btn.getAttribute("data-drop");
-      const panel = document.getElementById(id);
-      if (!panel) return;
+  // ====== Hash jump + highlight (THIS fixes your mini-menu problem) ======
+  function jumpToHash() {
+    const hash = window.location.hash;
+    if (!hash || hash.length < 2) return;
 
-      // close others (keeps it clean)
-      document.querySelectorAll(".drop").forEach((d) => {
-        if (d !== panel) d.style.display = "none";
-      });
+    const id = decodeURIComponent(hash.slice(1));
+    const el = document.getElementById(id);
+    if (!el) return;
 
-      panel.style.display = (panel.style.display === "block") ? "none" : "block";
-    });
-  });
+    // Wait a moment so iPhone Safari layout is ready
+    setTimeout(() => {
+      try {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      } catch (e) {
+        el.scrollIntoView();
+      }
 
-  // Click outside to close dropdowns
-  document.addEventListener("click", (e) => {
-    const t = e.target;
-    if (t.closest(".moduleBlock") || t.closest(".roleBlock") || t.closest(".drop")) return;
-    document.querySelectorAll(".drop").forEach((d) => d.style.display = "none");
-  });
+      // flash highlight
+      el.classList.remove("hashFlash");
+      void el.offsetWidth; // reflow
+      el.classList.add("hashFlash");
+      setTimeout(() => el.classList.remove("hashFlash"), 1400);
+    }, 120);
+  }
+
+  window.addEventListener("hashchange", jumpToHash);
+  window.addEventListener("load", jumpToHash);
 })();
