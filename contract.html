@@ -3,78 +3,152 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Contract • TitanCore</title>
-  <link rel="stylesheet" href="styles.css?v=20260117" />
+  <title>Contact • TitanCore</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="app.js"></script>
 </head>
 <body>
-  <header class="topbar">
+  <header class="top">
     <div class="brand">
       <div class="logo">TC</div>
       <div class="brandText">
-        <div class="title">Contract</div>
-        <div class="subtitle">Data tracking • status • approvals • no editing</div>
+        <div class="brandTitle">CONTACT CENTER</div>
+        <div class="brandSub">Call volume • transfers • routing • visibility only</div>
       </div>
     </div>
-    <div class="sysBox">
-      <div class="sysRow"><div class="sysLabel">Mode</div><div class="sysValue">CEO</div></div>
-      <div class="sysRow"><div class="sysLabel">Status</div><div class="sysValue statusActive">Active</div></div>
-      <div class="sysRow"><div class="sysLabel">System Time</div><div class="sysValue" id="sysTime">—</div></div>
+
+    <div class="statusPanel">
+      <div class="sysTitle">System Time</div>
+      <div class="sysDate" id="sysDate">—</div>
+      <div class="sysTime" id="sysTime">—</div>
+      <div class="sysRow"><div class="k">Mode</div><div class="v">CEO</div></div>
+      <div class="sysRow"><div class="k">Status</div><div class="v ok">Active</div></div>
     </div>
   </header>
 
-  <main class="wrap">
-    <section class="grid" style="grid-template-columns:1fr;">
-      <section class="card">
-        <div class="cardHead">
-          <div>
-            <div class="cardTitle green">Contract Center</div>
-            <div class="muted">Executive pipeline visibility</div>
-          </div>
-          <a class="pillBtn" href="index.html">Back to Dashboard</a>
-        </div>
+  <main class="gridOne">
+    <section class="card">
+      <div class="cardHeader">
+        <div class="dashLabel">Quick Jump</div>
+        <div class="pill">Tap a view</div>
+      </div>
 
-        <div class="list">
-          <div class="row" id="pipeline">
-            <div>
-              <div class="rowTitle">Tracking Pipeline</div>
-              <div class="muted">New • In Review • Pending Approval • Closed</div>
-            </div>
-            <div class="muted">Ready</div>
-          </div>
-
-          <div class="row" id="status">
-            <div>
-              <div class="rowTitle">Status</div>
-              <div class="muted">Cross-company status view</div>
-            </div>
-            <div class="muted">Ready</div>
-          </div>
-
-          <div class="row" id="titan-review">
-            <div>
-              <div class="rowTitle">TitanCore Review Queue</div>
-              <div class="muted">Packages waiting for TitanCore department review</div>
-            </div>
-            <div class="muted">Ready</div>
-          </div>
-
-          <div class="row" id="audit">
-            <div>
-              <div class="rowTitle">History & Audit Trail</div>
-              <div class="muted">Who touched what • when • decision notes</div>
-            </div>
-            <div class="muted">Ready</div>
-          </div>
-        </div>
-
-        <div class="divider"></div>
-        <div class="muted">Read-only. Real data connects after systems are wired.</div>
-      </section>
+      <div class="quickJump">
+        <a href="#call-volume">Call Volume (In/Out)</a>
+        <a href="#transfers-routing">Transfers & Routing</a>
+        <a href="#caller-types">Caller Types</a>
+        <a href="#company-breakdown">Company Breakdown</a>
+        <a href="index.html#nav">Back to Dashboard</a>
+      </div>
     </section>
 
-    <footer class="footer">TitanCore • Contract Module — read-only</footer>
+    <section class="card sectionBlock" id="call-volume">
+      <div class="cardHeader sectionTitle">
+        <div class="dashLabel">Call Volume (In/Out)</div>
+        <div class="tag">24h summary</div>
+      </div>
+      <div class="list">
+        <div class="listItem">
+          <div class="liTitle">Calls In (24h)</div>
+          <div class="liSub">Inbound totals across all companies</div>
+          <div class="liOpen">—</div>
+        </div>
+        <div class="listItem">
+          <div class="liTitle">Calls Out (24h)</div>
+          <div class="liSub">Outbound totals across all companies</div>
+          <div class="liOpen">—</div>
+        </div>
+        <div class="note">
+          Read-only. Real counts populate after RingCentral integration.
+        </div>
+      </div>
+    </section>
+
+    <section class="card sectionBlock" id="transfers-routing">
+      <div class="cardHeader sectionTitle">
+        <div class="dashLabel">Transfers & Routing</div>
+        <div class="tag">visibility</div>
+      </div>
+      <div class="list">
+        <div class="listItem">
+          <div class="liTitle">TitanCore → Company Transfers</div>
+          <div class="liSub">How many calls were routed to each company</div>
+          <div class="liOpen">—</div>
+        </div>
+        <div class="listItem">
+          <div class="liTitle">Escalations</div>
+          <div class="liSub">Bank / Institution / VIP escalations</div>
+          <div class="liOpen">—</div>
+        </div>
+        <div class="note">
+          This page collects data only. It does not place calls.
+        </div>
+      </div>
+    </section>
+
+    <section class="card sectionBlock" id="caller-types">
+      <div class="cardHeader sectionTitle">
+        <div class="dashLabel">Caller Types</div>
+        <div class="tag">classification</div>
+      </div>
+      <div class="list">
+        <div class="listItem">
+          <div class="liTitle">Client</div>
+          <div class="liSub">General service inquiries</div>
+          <div class="liOpen">—</div>
+        </div>
+        <div class="listItem">
+          <div class="liTitle">Bank / Institution</div>
+          <div class="liSub">Priority handling</div>
+          <div class="liOpen">—</div>
+        </div>
+        <div class="listItem">
+          <div class="liTitle">Investor</div>
+          <div class="liSub">Funding / equity / partnership</div>
+          <div class="liOpen">—</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card sectionBlock" id="company-breakdown">
+      <div class="cardHeader sectionTitle">
+        <div class="dashLabel">Company Breakdown</div>
+        <div class="tag">all companies</div>
+      </div>
+      <div class="list">
+        <div class="listItem">
+          <div class="liTitle">TitanCore Holdings</div>
+          <div class="liSub">Inbound / transfers / escalations</div>
+          <div class="liOpen">—</div>
+        </div>
+        <div class="listItem">
+          <div class="liTitle">Vaultara Capital</div>
+          <div class="liSub">Inbound / transfers / escalations</div>
+          <div class="liOpen">—</div>
+        </div>
+        <div class="listItem">
+          <div class="liTitle">VitalPath Care Group</div>
+          <div class="liSub">Inbound / transfers / escalations</div>
+          <div class="liOpen">—</div>
+        </div>
+        <div class="listItem">
+          <div class="liTitle">RevMotion Auto & Marine</div>
+          <div class="liSub">Inbound / transfers / escalations</div>
+          <div class="liOpen">—</div>
+        </div>
+        <div class="listItem">
+          <div class="liTitle">Family First Equity Group</div>
+          <div class="liSub">Inbound / transfers / escalations</div>
+          <div class="liOpen">—</div>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <script src="app.js?v=20260117"></script>
+  <footer class="foot">
+    <div class="footInner">
+      <div class="muted">TitanCore • Contact Module • read-only</div>
+    </div>
+  </footer>
 </body>
 </html>
