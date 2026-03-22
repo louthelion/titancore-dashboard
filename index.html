@@ -1,4 +1,5 @@
 <!DOCTYPE<!DOCTYPE html>
+<html<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -7,10 +8,14 @@
   <style>
     :root{
       --bg:#000000;
-      --green:#14b84a;
-      --yellow:#d4a900;
+      --panel:#060606;
+      --green:#17b84f;
+      --yellow:#d7ad12;
       --white:#ffffff;
-      --line:#1d1d1d;
+      --soft:#d8d8d8;
+      --line:#1f1f1f;
+      --shadow:0 0 0 1px rgba(255,255,255,0.03), 0 10px 28px rgba(0,0,0,.35);
+      --radius:18px;
     }
 
     *{box-sizing:border-box}
@@ -20,328 +25,646 @@
       margin:0;
       background:var(--bg);
       color:var(--white);
-      font-family: Georgia, "Times New Roman", serif;
+      font-family:Georgia, "Times New Roman", serif;
     }
 
     .wrap{
-      max-width:950px;
+      max-width:1100px;
       margin:0 auto;
-      padding:20px 18px 60px;
+      padding:20px 16px 80px;
     }
 
-    .mini-brand{
-      font-size:28px;
-      margin-bottom:8px;
+    .brand{
+      font-size:30px;
       color:#fff;
+      margin-bottom:8px;
     }
 
     .main-title{
       margin:0 0 8px;
-      font-size:54px;
+      font-size:58px;
       line-height:1;
       color:var(--green);
       font-weight:700;
     }
 
     .sub-title{
-      margin:0 0 18px;
+      margin:0 0 20px;
       font-size:28px;
       color:#fff;
+    }
+
+    .top-grid{
+      display:grid;
+      grid-template-columns:1.4fr .9fr;
+      gap:16px;
+      margin-bottom:24px;
+    }
+
+    .top-box{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:18px;
+      box-shadow:var(--shadow);
     }
 
     .label{
       color:var(--green);
       font-size:22px;
       font-weight:700;
-      margin:14px 0 4px;
+      margin:10px 0 4px;
     }
 
     .value{
       font-size:22px;
-      color:#fff;
       margin:0 0 4px;
-    }
-
-    .menu-row{
-      margin:18px 0 10px;
-    }
-
-    .menu-button{
-      display:inline-block;
-      background:var(--green);
-      color:#000;
-      font-weight:700;
-      border:none;
-      border-radius:14px;
-      padding:12px 18px;
-      font-size:22px;
-      cursor:pointer;
+      color:#fff;
     }
 
     .mini-menu{
       display:flex;
       flex-wrap:wrap;
       gap:10px;
-      margin:12px 0 24px;
+      margin-top:14px;
     }
 
-    .mini-link,
-    .open-link,
-    .command-link{
+    .menu-btn,
+    .action-btn,
+    .open-btn,
+    .small-btn{
       display:inline-block;
+      text-decoration:none;
       background:var(--yellow);
       color:#000;
-      text-decoration:none;
-      font-weight:700;
+      border:none;
       border-radius:14px;
-      padding:10px 16px;
+      padding:11px 16px;
       font-size:18px;
-      transition:0.2s ease;
+      font-weight:700;
+      cursor:pointer;
+      box-shadow:var(--shadow);
+      transition:.18s ease;
     }
 
-    .mini-link:hover,
-    .open-link:hover,
-    .command-link:hover{
+    .menu-btn:hover,
+    .menu-btn.active,
+    .action-btn:hover,
+    .action-btn.active,
+    .open-btn:hover,
+    .small-btn:hover{
       background:var(--green);
       color:#000;
     }
 
+    .section{
+      margin-top:26px;
+    }
+
     .section-title{
       color:var(--green);
-      font-size:44px;
-      margin:28px 0 8px;
+      font-size:42px;
+      margin:0 0 8px;
       font-weight:700;
     }
 
     .section-subtitle{
       color:#fff;
-      font-size:28px;
-      margin:0 0 18px;
-    }
-
-    .command-block{
-      margin:0 0 30px;
-    }
-
-    .command-row{
-      margin:0 0 12px;
-    }
-
-    .command-link{
-      min-width:260px;
-      text-align:left;
-      font-size:22px;
-      border-radius:16px;
-    }
-
-    .entry{
-      padding:0 0 22px;
-      margin:0 0 22px;
-      border-bottom:1px solid var(--line);
-    }
-
-    .entry-name{
-      font-size:34px;
-      font-weight:700;
-      color:#fff;
-      margin:0 0 8px;
-    }
-
-    .entry-desc{
       font-size:24px;
+      margin:0 0 16px;
+    }
+
+    .command-grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:14px;
+      margin-top:10px;
+    }
+
+    .command-card{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:14px;
+      box-shadow:var(--shadow);
+    }
+
+    .command-title{
+      font-size:26px;
+      margin:0 0 10px;
+      color:#fff;
+    }
+
+    .command-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .company-grid,
+    .role-grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:16px;
+    }
+
+    .card{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:18px;
+      box-shadow:var(--shadow);
+    }
+
+    .card-title{
+      font-size:34px;
+      margin:0 0 6px;
+      color:#fff;
+      font-weight:700;
+    }
+
+    .card-desc{
+      font-size:21px;
       color:#fff;
       margin:0 0 14px;
     }
 
-    .note-box{
-      margin-top:10px;
-      padding:18px;
-      border:1px solid var(--line);
-      border-radius:16px;
-      background:#050505;
+    .mini-dashboard{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:10px;
+      margin:14px 0 14px;
     }
 
-    .note-title{
-      margin:0 0 8px;
+    .stat{
+      background:#0c0c0c;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:12px;
+    }
+
+    .stat-label{
       color:var(--green);
-      font-size:32px;
+      font-size:17px;
+      font-weight:700;
+      margin-bottom:4px;
+    }
+
+    .stat-value{
+      color:#fff;
+      font-size:20px;
       font-weight:700;
     }
 
-    .note-text{
+    .card-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:8px;
+    }
+
+    .overview-box{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:18px;
+      box-shadow:var(--shadow);
+    }
+
+    .overview-title{
+      color:var(--green);
+      font-size:30px;
+      margin:0 0 8px;
+      font-weight:700;
+    }
+
+    .overview-text{
+      font-size:21px;
       margin:0;
       color:#fff;
-      font-size:21px;
+    }
+
+    .footer-space{height:24px}
+
+    @media (max-width:850px){
+      .top-grid,
+      .company-grid,
+      .role-grid,
+      .command-grid{
+        grid-template-columns:1fr;
+      }
     }
 
     @media (max-width:640px){
-      .main-title{font-size:38px}
+      .main-title{font-size:40px}
       .sub-title{font-size:21px}
-      .section-title{font-size:34px}
-      .section-subtitle{font-size:22px}
-      .entry-name{font-size:26px}
-      .entry-desc{font-size:20px}
-      .label,.value{font-size:20px}
-      .command-link{min-width:100%; font-size:20px}
+      .section-title{font-size:32px}
+      .section-subtitle{font-size:20px}
+      .card-title{font-size:27px}
+      .card-desc{font-size:19px}
+      .label,.value{font-size:19px}
+      .overview-title{font-size:25px}
+      .overview-text{font-size:18px}
+      .mini-dashboard{grid-template-columns:1fr}
     }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <div class="mini-brand">TC</div>
+    <div class="brand">TC</div>
     <h1 class="main-title">TitanCore Dashboard</h1>
     <div class="sub-title">TitanCore Holdings • Executive Control Center</div>
 
-    <div class="label">System Time</div>
-    <div class="value" id="currentDate">Wed, Mar 18, 2026</div>
-    <div class="value" id="currentTime">13:48:45</div>
+    <div class="top-grid">
+      <div class="top-box">
+        <div class="label">System Time</div>
+        <div class="value" id="currentDate">Sun, Mar 22, 2026</div>
+        <div class="value" id="currentTime">17:00:00</div>
 
-    <div class="label">Mode</div>
-    <div class="value">CEO</div>
+        <div class="label">Mode</div>
+        <div class="value">CEO</div>
 
-    <div class="label">Status</div>
-    <div class="value">Active</div>
+        <div class="label">Status</div>
+        <div class="value">Active</div>
 
-    <div class="label">Menu</div>
-    <div class="value">Tap ▼ for mini-menu</div>
+        <div class="label">Menu</div>
+        <div class="value">Tap below to jump straight into the right section.</div>
 
-    <div class="menu-row">
-      <button class="menu-button" id="toggleMiniMenu">▼ DASHBOARD ▼</button>
+        <div class="mini-menu">
+          <a class="menu-btn" href="#executive-overview">Executive Overview</a>
+          <a class="menu-btn" href="#companies">Companies</a>
+          <a class="menu-btn" href="#leadership">Leadership</a>
+          <a class="menu-btn" href="#system-sections">System Sections</a>
+        </div>
+      </div>
+
+      <div class="top-box">
+        <div class="label">TitanCore Master View</div>
+        <div class="value">5 Companies</div>
+        <div class="value">Mantle of 7 + Generals</div>
+        <div class="value">Chief Branch Ready</div>
+
+        <div class="label">Quick Actions</div>
+        <div class="mini-menu">
+          <a class="small-btn" href="ceo.html">CEO Dashboard</a>
+          <a class="small-btn" href="chief-of-staff.html">Chief of Staff</a>
+          <a class="small-btn" href="vaultara.html">Vaultara</a>
+          <a class="small-btn" href="familyfirst.html">Family First</a>
+        </div>
+      </div>
     </div>
 
-    <div class="mini-menu" id="miniMenu">
-      <a class="mini-link" href="#executive-overview">Executive overview</a>
-      <a class="mini-link" href="#companies">Companies</a>
-      <a class="mini-link" href="#leadership">Leadership</a>
-      <a class="mini-link" href="#system-status">System status</a>
-    </div>
+    <section class="section" id="system-sections">
+      <h2 class="section-title">System Sections</h2>
+      <div class="section-subtitle">Main command access from the big dashboard</div>
 
-    <div class="command-block">
-      <div class="command-row"><a class="command-link" href="#">▶ Contact ▼</a></div>
-      <div class="command-row"><a class="command-link" href="#">▶ Contract ▼</a></div>
-      <div class="command-row"><a class="command-link" href="#">▶ Email Routing ▼</a></div>
-      <div class="command-row"><a class="command-link" href="#">▶ Report ▼</a></div>
-      <div class="command-row"><a class="command-link" href="#">▶ Approval ▼</a></div>
-      <div class="command-row"><a class="command-link" href="#">▶ Omni System ▼</a></div>
-      <div class="command-row"><a class="command-link" href="#">▶ Tax Network ▼</a></div>
-      <div class="command-row"><a class="command-link" href="#">▶ Agent A.I. Suite ▼</a></div>
-      <div class="command-row"><a class="command-link" href="#">▶ Public Portal ▼</a></div>
-      <div class="command-row"><a class="command-link" href="#">▶ Finance ▼</a></div>
-    </div>
+      <div class="command-grid">
+        <div class="command-card">
+          <div class="command-title">Contact</div>
+          <div class="command-actions">
+            <a class="action-btn" href="contact.html">Open</a>
+          </div>
+        </div>
 
-    <section id="companies">
-      <h2 class="section-title">Companies</h2>
-      <div class="section-subtitle">Holding + subsidiaries</div>
+        <div class="command-card">
+          <div class="command-title">Contract</div>
+          <div class="command-actions">
+            <a class="action-btn" href="contract.html">Open</a>
+          </div>
+        </div>
 
-      <div class="entry">
-        <div class="entry-name">TitanCore Holdings</div>
-        <div class="entry-desc">Father company • governance</div>
-        <a class="open-link" href="titancore.html">Open</a>
-      </div>
+        <div class="command-card">
+          <div class="command-title">Email Routing</div>
+          <div class="command-actions">
+            <a class="action-btn" href="email-routing.html">Open</a>
+          </div>
+        </div>
 
-      <div class="entry">
-        <div class="entry-name">Vaultara Capital</div>
-        <div class="entry-desc">Investments • funding</div>
-        <a class="open-link" href="vaultara.html">Open</a>
-      </div>
+        <div class="command-card">
+          <div class="command-title">Report</div>
+          <div class="command-actions">
+            <a class="action-btn" href="report.html">Open</a>
+          </div>
+        </div>
 
-      <div class="entry">
-        <div class="entry-name">VitalPath Care Group</div>
-        <div class="entry-desc">Healthcare • care operations</div>
-        <a class="open-link" href="vitalpath.html">Open</a>
-      </div>
+        <div class="command-card">
+          <div class="command-title">Approval</div>
+          <div class="command-actions">
+            <a class="action-btn" href="approval.html">Open</a>
+          </div>
+        </div>
 
-      <div class="entry">
-        <div class="entry-name">RevMotion Auto &amp; Marine</div>
-        <div class="entry-desc">Auto • marine • service</div>
-        <a class="open-link" href="revmotion.html">Open</a>
-      </div>
+        <div class="command-card">
+          <div class="command-title">Omni System</div>
+          <div class="command-actions">
+            <a class="action-btn" href="omni-system.html">Open</a>
+          </div>
+        </div>
 
-      <div class="entry">
-        <div class="entry-name">Family First Equity Group</div>
-        <div class="entry-desc">Real estate • equity</div>
-        <a class="open-link" href="familyfirst.html">Open</a>
+        <div class="command-card">
+          <div class="command-title">Tax Network</div>
+          <div class="command-actions">
+            <a class="action-btn" href="tax-network.html">Open</a>
+          </div>
+        </div>
+
+        <div class="command-card">
+          <div class="command-title">Agent A.I. Suite</div>
+          <div class="command-actions">
+            <a class="action-btn" href="agent-ai-suite.html">Open</a>
+          </div>
+        </div>
+
+        <div class="command-card">
+          <div class="command-title">Public Portal</div>
+          <div class="command-actions">
+            <a class="action-btn" href="public-portal.html">Open</a>
+          </div>
+        </div>
+
+        <div class="command-card">
+          <div class="command-title">Finance</div>
+          <div class="command-actions">
+            <a class="action-btn" href="finance.html">Open</a>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section id="leadership">
+    <section class="section" id="companies">
+      <h2 class="section-title">Companies</h2>
+      <div class="section-subtitle">See what each company is doing here, then open the full company dashboard directly</div>
+
+      <div class="company-grid">
+        <div class="card">
+          <div class="card-title">TitanCore Holdings</div>
+          <div class="card-desc">Father company • governance • executive command</div>
+          <div class="mini-dashboard">
+            <div class="stat">
+              <div class="stat-label">Status</div>
+              <div class="stat-value">Active</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">Approvals</div>
+              <div class="stat-value">8 Pending</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">Meetings</div>
+              <div class="stat-value">2 Scheduled</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">Reports</div>
+              <div class="stat-value">5 Ready</div>
+            </div>
+          </div>
+          <div class="card-actions">
+            <a class="open-btn" href="titancore.html">Open Dashboard</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Vaultara Capital</div>
+          <div class="card-desc">Investments • funding • capital flow</div>
+          <div class="mini-dashboard">
+            <div class="stat">
+              <div class="stat-label">Applications</div>
+              <div class="stat-value">24 Active</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">Funding Queue</div>
+              <div class="stat-value">11 Pending</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">Institutions</div>
+              <div class="stat-value">6 Connected</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">Reviews</div>
+              <div class="stat-value">4 Due</div>
+            </div>
+          </div>
+          <div class="card-actions">
+            <a class="open-btn" href="vaultara.html">Open Dashboard</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">VitalPath Care Group</div>
+          <div class="card-desc">Healthcare • care operations • coordination</div>
+          <div class="mini-dashboard">
+            <div class="stat">
+              <div class="stat-label">Cases</div>
+              <div class="stat-value">17 Open</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">Staffing</div>
+              <div class="stat-value">3 Needed</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">Meetings</div>
+              <div class="stat-value">1 Today</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">Updates</div>
+              <div class="stat-value">7 Logged</div>
+            </div>
+          </div>
+          <div class="card-actions">
+            <a class="open-btn" href="vitalpath.html">Open Dashboard</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">RevMotion Auto &amp; Marine</div>
+          <div class="card-desc">Auto • marine • service operations</div>
+          <div class="mini-dashboard">
+            <div class="stat">
+              <div class="stat-label">Service Jobs</div>
+              <div class="stat-value">13 Active</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">Inspections</div>
+              <div class="stat-value">5 Due</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">Parts Orders</div>
+              <div class="stat-value">9 Open</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">Alerts</div>
+              <div class="stat-value">2 Critical</div>
+            </div>
+          </div>
+          <div class="card-actions">
+            <a class="open-btn" href="revmotion.html">Open Dashboard</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Family First Equity Group</div>
+          <div class="card-desc">Real estate • equity • property activity</div>
+          <div class="mini-dashboard">
+            <div class="stat">
+              <div class="stat-label">Buyers</div>
+              <div class="stat-value">14 Active</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">Sellers</div>
+              <div class="stat-value">9 Active</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">Closings</div>
+              <div class="stat-value">3 This Week</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">Properties</div>
+              <div class="stat-value">12 Listed</div>
+            </div>
+          </div>
+          <div class="card-actions">
+            <a class="open-btn" href="familyfirst.html">Open Dashboard</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="leadership">
       <h2 class="section-title">Leadership</h2>
       <div class="section-subtitle">Mantle of 7 + Generals</div>
 
-      <div class="entry">
-        <div class="entry-name">CEO</div>
-        <div class="entry-desc">Executive authority • final sign</div>
-        <a class="open-link" href="ceo.html">Open</a>
-      </div>
+      <div class="role-grid">
+        <div class="card">
+          <div class="card-title">CEO</div>
+          <div class="card-desc">Executive authority • final sign</div>
+          <div class="mini-dashboard">
+            <div class="stat"><div class="stat-label">Inbox</div><div class="stat-value">12 New</div></div>
+            <div class="stat"><div class="stat-label">Approvals</div><div class="stat-value">7 Pending</div></div>
+            <div class="stat"><div class="stat-label">Meetings</div><div class="stat-value">2 Today</div></div>
+            <div class="stat"><div class="stat-label">Signatures</div><div class="stat-value">5 Ready</div></div>
+          </div>
+          <div class="card-actions"><a class="open-btn" href="ceo.html">Open Dashboard</a></div>
+        </div>
 
-      <div class="entry">
-        <div class="entry-name">President</div>
-        <div class="entry-desc">Operations governance</div>
-        <a class="open-link" href="president.html">Open</a>
-      </div>
+        <div class="card">
+          <div class="card-title">President</div>
+          <div class="card-desc">Operations governance</div>
+          <div class="mini-dashboard">
+            <div class="stat"><div class="stat-label">Inbox</div><div class="stat-value">8 New</div></div>
+            <div class="stat"><div class="stat-label">Tasks</div><div class="stat-value">11 Active</div></div>
+            <div class="stat"><div class="stat-label">Meetings</div><div class="stat-value">1 Today</div></div>
+            <div class="stat"><div class="stat-label">Reports</div><div class="stat-value">4 Review</div></div>
+          </div>
+          <div class="card-actions"><a class="open-btn" href="president.html">Open Dashboard</a></div>
+        </div>
 
-      <div class="entry">
-        <div class="entry-name">Vice President</div>
-        <div class="entry-desc">Programs • execution</div>
-        <a class="open-link" href="vice-president.html">Open</a>
-      </div>
+        <div class="card">
+          <div class="card-title">Vice President</div>
+          <div class="card-desc">Programs • execution</div>
+          <div class="mini-dashboard">
+            <div class="stat"><div class="stat-label">Inbox</div><div class="stat-value">6 New</div></div>
+            <div class="stat"><div class="stat-label">Programs</div><div class="stat-value">9 Active</div></div>
+            <div class="stat"><div class="stat-label">Meetings</div><div class="stat-value">3 Scheduled</div></div>
+            <div class="stat"><div class="stat-label">Updates</div><div class="stat-value">5 Due</div></div>
+          </div>
+          <div class="card-actions"><a class="open-btn" href="vice-president.html">Open Dashboard</a></div>
+        </div>
 
-      <div class="entry">
-        <div class="entry-name">Director</div>
-        <div class="entry-desc">Department direction • enterprise oversight</div>
-        <a class="open-link" href="director.html">Open</a>
-      </div>
+        <div class="card">
+          <div class="card-title">Director</div>
+          <div class="card-desc">Department direction • enterprise oversight</div>
+          <div class="mini-dashboard">
+            <div class="stat"><div class="stat-label">Inbox</div><div class="stat-value">9 New</div></div>
+            <div class="stat"><div class="stat-label">Reviews</div><div class="stat-value">4 Pending</div></div>
+            <div class="stat"><div class="stat-label">Meetings</div><div class="stat-value">2 Scheduled</div></div>
+            <div class="stat"><div class="stat-label">Logs</div><div class="stat-value">13 Entries</div></div>
+          </div>
+          <div class="card-actions"><a class="open-btn" href="director.html">Open Dashboard</a></div>
+        </div>
 
-      <div class="entry">
-        <div class="entry-name">Assistant Director</div>
-        <div class="entry-desc">Deputy direction • department support</div>
-        <a class="open-link" href="assistant-director.html">Open</a>
-      </div>
+        <div class="card">
+          <div class="card-title">Assistant Director</div>
+          <div class="card-desc">Deputy direction • department support</div>
+          <div class="mini-dashboard">
+            <div class="stat"><div class="stat-label">Inbox</div><div class="stat-value">5 New</div></div>
+            <div class="stat"><div class="stat-label">Tasks</div><div class="stat-value">8 Active</div></div>
+            <div class="stat"><div class="stat-label">Meetings</div><div class="stat-value">1 Scheduled</div></div>
+            <div class="stat"><div class="stat-label">Support</div><div class="stat-value">6 Requests</div></div>
+          </div>
+          <div class="card-actions"><a class="open-btn" href="assistant-director.html">Open Dashboard</a></div>
+        </div>
 
-      <div class="entry">
-        <div class="entry-name">Chief of Staff</div>
-        <div class="entry-desc">Chief coordination • executive command support</div>
-        <a class="open-link" href="chief-of-staff.html">Open</a>
-      </div>
+        <div class="card">
+          <div class="card-title">Chief of Staff</div>
+          <div class="card-desc">Chief coordination • plus 10 chief branches</div>
+          <div class="mini-dashboard">
+            <div class="stat"><div class="stat-label">Inbox</div><div class="stat-value">14 New</div></div>
+            <div class="stat"><div class="stat-label">Chief Teams</div><div class="stat-value">10 Branches</div></div>
+            <div class="stat"><div class="stat-label">Meetings</div><div class="stat-value">4 Scheduled</div></div>
+            <div class="stat"><div class="stat-label">Approvals</div><div class="stat-value">6 Pending</div></div>
+          </div>
+          <div class="card-actions"><a class="open-btn" href="chief-of-staff.html">Open Dashboard</a></div>
+        </div>
 
-      <div class="entry">
-        <div class="entry-name">Executive Advisor</div>
-        <div class="entry-desc">Strategic counsel • executive advisory</div>
-        <a class="open-link" href="executive-advisor.html">Open</a>
-      </div>
+        <div class="card">
+          <div class="card-title">Executive Advisor</div>
+          <div class="card-desc">Strategic counsel • executive advisory</div>
+          <div class="mini-dashboard">
+            <div class="stat"><div class="stat-label">Inbox</div><div class="stat-value">4 New</div></div>
+            <div class="stat"><div class="stat-label">Advisories</div><div class="stat-value">7 Open</div></div>
+            <div class="stat"><div class="stat-label">Meetings</div><div class="stat-value">2 Scheduled</div></div>
+            <div class="stat"><div class="stat-label">Notes</div><div class="stat-value">10 Logged</div></div>
+          </div>
+          <div class="card-actions"><a class="open-btn" href="executive-advisor.html">Open Dashboard</a></div>
+        </div>
 
-      <div class="entry">
-        <div class="entry-name">General Manager</div>
-        <div class="entry-desc">Oversight • cross-company</div>
-        <a class="open-link" href="general-manager.html">Open</a>
-      </div>
+        <div class="card">
+          <div class="card-title">General Manager</div>
+          <div class="card-desc">Oversight • cross-company</div>
+          <div class="mini-dashboard">
+            <div class="stat"><div class="stat-label">Inbox</div><div class="stat-value">7 New</div></div>
+            <div class="stat"><div class="stat-label">Companies</div><div class="stat-value">5 Tracked</div></div>
+            <div class="stat"><div class="stat-label">Meetings</div><div class="stat-value">2 Today</div></div>
+            <div class="stat"><div class="stat-label">Logs</div><div class="stat-value">11 Entries</div></div>
+          </div>
+          <div class="card-actions"><a class="open-btn" href="general-manager.html">Open Dashboard</a></div>
+        </div>
 
-      <div class="entry">
-        <div class="entry-name">General Assistant Manager</div>
-        <div class="entry-desc">Support • execution</div>
-        <a class="open-link" href="general-assistant-manager.html">Open</a>
-      </div>
+        <div class="card">
+          <div class="card-title">General Assistant Manager</div>
+          <div class="card-desc">Support • execution</div>
+          <div class="mini-dashboard">
+            <div class="stat"><div class="stat-label">Inbox</div><div class="stat-value">5 New</div></div>
+            <div class="stat"><div class="stat-label">Tasks</div><div class="stat-value">9 Active</div></div>
+            <div class="stat"><div class="stat-label">Meetings</div><div class="stat-value">1 Today</div></div>
+            <div class="stat"><div class="stat-label">Support</div><div class="stat-value">8 Requests</div></div>
+          </div>
+          <div class="card-actions"><a class="open-btn" href="general-assistant-manager.html">Open Dashboard</a></div>
+        </div>
 
-      <div class="entry">
-        <div class="entry-name">General Administrator</div>
-        <div class="entry-desc">Admin • logging</div>
-        <a class="open-link" href="general-administrator.html">Open</a>
+        <div class="card">
+          <div class="card-title">General Administrator</div>
+          <div class="card-desc">Admin • logging • records</div>
+          <div class="mini-dashboard">
+            <div class="stat"><div class="stat-label">Inbox</div><div class="stat-value">6 New</div></div>
+            <div class="stat"><div class="stat-label">Records</div><div class="stat-value">17 Updated</div></div>
+            <div class="stat"><div class="stat-label">Meetings</div><div class="stat-value">1 Scheduled</div></div>
+            <div class="stat"><div class="stat-label">Signatures</div><div class="stat-value">3 Routed</div></div>
+          </div>
+          <div class="card-actions"><a class="open-btn" href="general-administrator.html">Open Dashboard</a></div>
+        </div>
       </div>
     </section>
 
-    <section id="executive-overview">
-      <div class="note-box">
-        <div class="note-title">Executive overview</div>
-        <p class="note-text">Read-only. Mini-menu jumps now open the exact section you tap.</p>
+    <section class="section" id="executive-overview">
+      <div class="overview-box">
+        <h3 class="overview-title">Executive Overview</h3>
+        <p class="overview-text">
+          This is the big TitanCore dashboard. From here, you can already see what the companies and leadership are doing, and every company or role button goes straight to that dashboard.
+        </p>
       </div>
     </section>
 
-    <section id="system-status">
-      <div class="note-box">
-        <div class="note-title">System status</div>
-        <p class="note-text">TitanCore command center online.</p>
-      </div>
-    </section>
+    <div class="footer-space"></div>
   </div>
 
   <script>
@@ -369,15 +692,13 @@
     updateClock();
     setInterval(updateClock, 1000);
 
-    const toggle = document.getElementById('toggleMiniMenu');
-    const menu = document.getElementById('miniMenu');
-
-    toggle.addEventListener('click', function () {
-      if (menu.style.display === 'none') {
-        menu.style.display = 'flex';
-      } else {
-        menu.style.display = 'none';
-      }
+    document.querySelectorAll('.menu-btn, .action-btn, .open-btn, .small-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.menu-btn.active, .action-btn.active').forEach(x => x.classList.remove('active'));
+        if (this.classList.contains('menu-btn') || this.classList.contains('action-btn')) {
+          this.classList.add('active');
+        }
+      });
     });
   </script>
 </body>
