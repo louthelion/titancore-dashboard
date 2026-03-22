@@ -7,6 +7,389 @@
   <style>
     :root{
       --bg:#000000;
+      --green:#14b84a;
+      --yellow:#d4a900;
+      --white:#ffffff;
+      --line:#1d1d1d;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--white);
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    .wrap{
+      max-width:950px;
+      margin:0 auto;
+      padding:20px 18px 60px;
+    }
+
+    .mini-brand{
+      font-size:28px;
+      margin-bottom:8px;
+      color:#fff;
+    }
+
+    .main-title{
+      margin:0 0 8px;
+      font-size:54px;
+      line-height:1;
+      color:var(--green);
+      font-weight:700;
+    }
+
+    .sub-title{
+      margin:0 0 18px;
+      font-size:28px;
+      color:#fff;
+    }
+
+    .label{
+      color:var(--green);
+      font-size:22px;
+      font-weight:700;
+      margin:14px 0 4px;
+    }
+
+    .value{
+      font-size:22px;
+      color:#fff;
+      margin:0 0 4px;
+    }
+
+    .menu-row{
+      margin:18px 0 10px;
+    }
+
+    .menu-button{
+      display:inline-block;
+      background:var(--green);
+      color:#000;
+      font-weight:700;
+      border:none;
+      border-radius:14px;
+      padding:12px 18px;
+      font-size:22px;
+      cursor:pointer;
+    }
+
+    .mini-menu{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin:12px 0 24px;
+    }
+
+    .mini-link,
+    .open-link,
+    .command-link{
+      display:inline-block;
+      background:var(--yellow);
+      color:#000;
+      text-decoration:none;
+      font-weight:700;
+      border-radius:14px;
+      padding:10px 16px;
+      font-size:18px;
+      transition:0.2s ease;
+    }
+
+    .mini-link:hover,
+    .open-link:hover,
+    .command-link:hover{
+      background:var(--green);
+      color:#000;
+    }
+
+    .section-title{
+      color:var(--green);
+      font-size:44px;
+      margin:28px 0 8px;
+      font-weight:700;
+    }
+
+    .section-subtitle{
+      color:#fff;
+      font-size:28px;
+      margin:0 0 18px;
+    }
+
+    .command-block{
+      margin:0 0 30px;
+    }
+
+    .command-row{
+      margin:0 0 12px;
+    }
+
+    .command-link{
+      min-width:260px;
+      text-align:left;
+      font-size:22px;
+      border-radius:16px;
+    }
+
+    .entry{
+      padding:0 0 22px;
+      margin:0 0 22px;
+      border-bottom:1px solid var(--line);
+    }
+
+    .entry-name{
+      font-size:34px;
+      font-weight:700;
+      color:#fff;
+      margin:0 0 8px;
+    }
+
+    .entry-desc{
+      font-size:24px;
+      color:#fff;
+      margin:0 0 14px;
+    }
+
+    .note-box{
+      margin-top:10px;
+      padding:18px;
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:#050505;
+    }
+
+    .note-title{
+      margin:0 0 8px;
+      color:var(--green);
+      font-size:32px;
+      font-weight:700;
+    }
+
+    .note-text{
+      margin:0;
+      color:#fff;
+      font-size:21px;
+    }
+
+    @media (max-width:640px){
+      .main-title{font-size:38px}
+      .sub-title{font-size:21px}
+      .section-title{font-size:34px}
+      .section-subtitle{font-size:22px}
+      .entry-name{font-size:26px}
+      .entry-desc{font-size:20px}
+      .label,.value{font-size:20px}
+      .command-link{min-width:100%; font-size:20px}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="mini-brand">TC</div>
+    <h1 class="main-title">TitanCore Dashboard</h1>
+    <div class="sub-title">TitanCore Holdings • Executive Control Center</div>
+
+    <div class="label">System Time</div>
+    <div class="value" id="currentDate">Wed, Mar 18, 2026</div>
+    <div class="value" id="currentTime">13:48:45</div>
+
+    <div class="label">Mode</div>
+    <div class="value">CEO</div>
+
+    <div class="label">Status</div>
+    <div class="value">Active</div>
+
+    <div class="label">Menu</div>
+    <div class="value">Tap ▼ for mini-menu</div>
+
+    <div class="menu-row">
+      <button class="menu-button" id="toggleMiniMenu">▼ DASHBOARD ▼</button>
+    </div>
+
+    <div class="mini-menu" id="miniMenu">
+      <a class="mini-link" href="#executive-overview">Executive overview</a>
+      <a class="mini-link" href="#companies">Companies</a>
+      <a class="mini-link" href="#leadership">Leadership</a>
+      <a class="mini-link" href="#system-status">System status</a>
+    </div>
+
+    <div class="command-block">
+      <div class="command-row"><a class="command-link" href="#">▶ Contact ▼</a></div>
+      <div class="command-row"><a class="command-link" href="#">▶ Contract ▼</a></div>
+      <div class="command-row"><a class="command-link" href="#">▶ Email Routing ▼</a></div>
+      <div class="command-row"><a class="command-link" href="#">▶ Report ▼</a></div>
+      <div class="command-row"><a class="command-link" href="#">▶ Approval ▼</a></div>
+      <div class="command-row"><a class="command-link" href="#">▶ Omni System ▼</a></div>
+      <div class="command-row"><a class="command-link" href="#">▶ Tax Network ▼</a></div>
+      <div class="command-row"><a class="command-link" href="#">▶ Agent A.I. Suite ▼</a></div>
+      <div class="command-row"><a class="command-link" href="#">▶ Public Portal ▼</a></div>
+      <div class="command-row"><a class="command-link" href="#">▶ Finance ▼</a></div>
+    </div>
+
+    <section id="companies">
+      <h2 class="section-title">Companies</h2>
+      <div class="section-subtitle">Holding + subsidiaries</div>
+
+      <div class="entry">
+        <div class="entry-name">TitanCore Holdings</div>
+        <div class="entry-desc">Father company • governance</div>
+        <a class="open-link" href="titancore.html">Open</a>
+      </div>
+
+      <div class="entry">
+        <div class="entry-name">Vaultara Capital</div>
+        <div class="entry-desc">Investments • funding</div>
+        <a class="open-link" href="vaultara.html">Open</a>
+      </div>
+
+      <div class="entry">
+        <div class="entry-name">VitalPath Care Group</div>
+        <div class="entry-desc">Healthcare • care operations</div>
+        <a class="open-link" href="vitalpath.html">Open</a>
+      </div>
+
+      <div class="entry">
+        <div class="entry-name">RevMotion Auto &amp; Marine</div>
+        <div class="entry-desc">Auto • marine • service</div>
+        <a class="open-link" href="revmotion.html">Open</a>
+      </div>
+
+      <div class="entry">
+        <div class="entry-name">Family First Equity Group</div>
+        <div class="entry-desc">Real estate • equity</div>
+        <a class="open-link" href="familyfirst.html">Open</a>
+      </div>
+    </section>
+
+    <section id="leadership">
+      <h2 class="section-title">Leadership</h2>
+      <div class="section-subtitle">Mantle of 7 + Generals</div>
+
+      <div class="entry">
+        <div class="entry-name">CEO</div>
+        <div class="entry-desc">Executive authority • final sign</div>
+        <a class="open-link" href="ceo.html">Open</a>
+      </div>
+
+      <div class="entry">
+        <div class="entry-name">President</div>
+        <div class="entry-desc">Operations governance</div>
+        <a class="open-link" href="president.html">Open</a>
+      </div>
+
+      <div class="entry">
+        <div class="entry-name">Vice President</div>
+        <div class="entry-desc">Programs • execution</div>
+        <a class="open-link" href="vice-president.html">Open</a>
+      </div>
+
+      <div class="entry">
+        <div class="entry-name">Director</div>
+        <div class="entry-desc">Department direction • enterprise oversight</div>
+        <a class="open-link" href="director.html">Open</a>
+      </div>
+
+      <div class="entry">
+        <div class="entry-name">Assistant Director</div>
+        <div class="entry-desc">Deputy direction • department support</div>
+        <a class="open-link" href="assistant-director.html">Open</a>
+      </div>
+
+      <div class="entry">
+        <div class="entry-name">Chief of Staff</div>
+        <div class="entry-desc">Chief coordination • executive command support</div>
+        <a class="open-link" href="chief-of-staff.html">Open</a>
+      </div>
+
+      <div class="entry">
+        <div class="entry-name">Executive Advisor</div>
+        <div class="entry-desc">Strategic counsel • executive advisory</div>
+        <a class="open-link" href="executive-advisor.html">Open</a>
+      </div>
+
+      <div class="entry">
+        <div class="entry-name">General Manager</div>
+        <div class="entry-desc">Oversight • cross-company</div>
+        <a class="open-link" href="general-manager.html">Open</a>
+      </div>
+
+      <div class="entry">
+        <div class="entry-name">General Assistant Manager</div>
+        <div class="entry-desc">Support • execution</div>
+        <a class="open-link" href="general-assistant-manager.html">Open</a>
+      </div>
+
+      <div class="entry">
+        <div class="entry-name">General Administrator</div>
+        <div class="entry-desc">Admin • logging</div>
+        <a class="open-link" href="general-administrator.html">Open</a>
+      </div>
+    </section>
+
+    <section id="executive-overview">
+      <div class="note-box">
+        <div class="note-title">Executive overview</div>
+        <p class="note-text">Read-only. Mini-menu jumps now open the exact section you tap.</p>
+      </div>
+    </section>
+
+    <section id="system-status">
+      <div class="note-box">
+        <div class="note-title">System status</div>
+        <p class="note-text">TitanCore command center online.</p>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+
+      const dateText = now.toLocaleDateString('en-US', {
+        weekday: 'short',
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+      });
+
+      const timeText = now.toLocaleTimeString('en-US', {
+        hour12: false,
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      });
+
+      document.getElementById('currentDate').textContent = dateText;
+      document.getElementById('currentTime').textContent = timeText;
+    }
+
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    const toggle = document.getElementById('toggleMiniMenu');
+    const menu = document.getElementById('miniMenu');
+
+    toggle.addEventListener('click', function () {
+      if (menu.style.display === 'none') {
+        menu.style.display = 'flex';
+      } else {
+        menu.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TitanCore Dashboard</title>
+  <style>
+    :root{
+      --bg:#000000;
       --panel:#050505;
       --green:#19c463;
       --yellow:#f2d74c;
