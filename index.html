@@ -6,17 +6,16 @@
   <title>TitanCore Holdings Dashboard</title>
   <style>
     :root{
-      --bg:#060606;
-      --panel:#121212;
+      --bg:#050505;
+      --panel:#111111;
       --panel2:#1a1a1a;
-      --gold:#c9a54c;
-      --green:#1f9d5a;
-      --red:#a52a2a;
+      --gold:#d0a84b;
+      --green:#1fa35d;
+      --red:#8e2b2b;
       --text:#f4f4f4;
       --muted:#bdbdbd;
-      --line:#3c2d10;
+      --line:#4d3811;
     }
-
     *{box-sizing:border-box}
     body{
       margin:0;
@@ -24,665 +23,401 @@
       background:var(--bg);
       color:var(--text);
     }
-
-    a{text-decoration:none;color:inherit}
-
-    .topbar{
-      position:sticky;
-      top:0;
-      z-index:1000;
-      background:#000;
-      border-bottom:2px solid var(--gold);
-      padding:14px 18px;
+    .wrap{
+      max-width:1200px;
+      margin:0 auto;
+      padding:18px;
     }
-
-    .topbar-wrap{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
+    .hero{
+      display:grid;
+      grid-template-columns:80px 1fr;
       gap:16px;
-      flex-wrap:wrap;
+      align-items:start;
+      margin-bottom:22px;
     }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:14px;
-    }
-
     .logo{
-      width:56px;
-      height:56px;
-      border:2px solid var(--gold);
-      border-radius:14px;
+      width:80px;height:160px;
+      border:3px solid var(--gold);
+      border-radius:28px;
+      color:var(--gold);
       display:flex;
       align-items:center;
       justify-content:center;
+      font-weight:800;
+      font-size:28px;
+      background:#0d0d0d;
+    }
+    .title{
+      font-size:40px;
+      line-height:1.04;
       color:var(--gold);
       font-weight:800;
-      font-size:22px;
-      background:var(--panel);
-    }
-
-    .title-wrap h1{
       margin:0;
+    }
+    .sub{
+      color:#d8d8d8;
+      font-size:20px;
+      line-height:1.45;
+      margin-top:10px;
+    }
+    .topInfo{
+      margin-top:22px;
+      max-width:520px;
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:28px;
+      padding:22px;
+    }
+    .infoRow{
+      display:grid;
+      grid-template-columns:140px 1fr;
+      gap:16px;
+      margin:10px 0;
+      font-size:28px;
+    }
+    .label{color:#cfcfcf}
+    .value{font-weight:700}
+    .green{color:var(--green)}
+    .section{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:32px;
+      padding:24px;
+      margin:22px 0;
+    }
+    .sectionTitle{
       color:var(--gold);
       font-size:32px;
-      line-height:1.05;
-    }
-
-    .title-wrap p{
-      margin:6px 0 0;
-      color:var(--muted);
-      font-size:14px;
-    }
-
-    .clock-box{
-      background:var(--panel);
-      border:1px solid var(--line);
-      border-radius:16px;
-      padding:12px 14px;
-      min-width:220px;
-    }
-
-    .clock-box div{
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      margin:5px 0;
-      font-size:14px;
-    }
-
-    .clock-box .k{color:var(--muted)}
-    .clock-box .v{font-weight:700}
-
-    .layout{
-      display:grid;
-      grid-template-columns:280px 1fr 340px;
-      gap:18px;
-      padding:18px;
-    }
-
-    .card{
-      background:var(--panel);
-      border:1px solid var(--line);
-      border-radius:20px;
-      padding:18px;
-    }
-
-    .section-title{
-      margin:0 0 14px;
-      color:var(--gold);
-      font-size:18px;
       font-weight:800;
-      text-transform:uppercase;
+      margin:0 0 20px;
       letter-spacing:.04em;
+      text-transform:uppercase;
     }
-
-    .nav-btn,
-    .action-btn{
+    .btnList{
+      display:grid;
+      gap:14px;
+    }
+    .navBtn,.actionBtn,.companyBtn,.backBtn{
       width:100%;
-      display:block;
-      border:none;
-      cursor:pointer;
       text-align:left;
-      padding:13px 14px;
-      border-radius:14px;
-      margin-bottom:10px;
+      border-radius:24px;
+      padding:22px 28px;
+      font-size:28px;
+      font-weight:800;
+      border:1px solid rgba(255,255,255,.08);
       background:var(--panel2);
       color:var(--text);
-      border:1px solid rgba(255,255,255,.08);
-      font-weight:700;
-      font-size:15px;
     }
-
-    .nav-btn:hover,
-    .action-btn:hover,
-    .nav-btn.active{
-      border-color:var(--gold);
+    .navBtn.active,.companyBtn.active{
+      border:2px solid var(--gold);
       color:var(--gold);
     }
-
+    .actionBtn{
+      text-align:center;
+    }
     .stats{
       display:grid;
-      grid-template-columns:repeat(4,minmax(140px,1fr));
-      gap:14px;
-      margin-bottom:18px;
+      grid-template-columns:1fr 1fr;
+      gap:20px;
+      margin-top:20px;
     }
-
     .stat{
       background:var(--panel);
       border:1px solid var(--line);
-      border-radius:16px;
-      padding:15px;
+      border-radius:28px;
+      padding:24px;
+      min-height:180px;
     }
-
-    .stat .label{
-      color:var(--muted);
-      font-size:12px;
+    .statLabel{
+      color:#c7c7c7;
+      font-size:24px;
       text-transform:uppercase;
-      letter-spacing:.05em;
+      letter-spacing:.04em;
     }
-
-    .stat .value{
-      margin-top:8px;
+    .statValue{
       color:var(--gold);
-      font-size:32px;
+      font-size:74px;
       font-weight:800;
+      margin-top:16px;
     }
-
-    .main-panels{
-      display:grid;
-      gap:18px;
-    }
-
-    .grid-2{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:18px;
-    }
-
-    .list{
-      display:grid;
-      gap:12px;
-    }
-
-    .item{
+    .card{
       background:var(--panel2);
       border:1px solid rgba(255,255,255,.08);
-      border-radius:16px;
-      padding:14px;
+      border-radius:28px;
+      padding:24px;
+      margin:18px 0;
     }
-
-    .item h4{
-      margin:0 0 6px;
-      font-size:18px;
-      color:var(--text);
-    }
-
-    .item p{
-      margin:0;
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.45;
-    }
-
-    .mini-open{
-      margin-top:10px;
-      display:inline-block;
-      color:var(--green);
-      font-weight:700;
-      cursor:pointer;
-    }
-
-    .right-stack{display:grid;gap:18px}
-
-    .badge{
-      display:inline-block;
-      padding:6px 10px;
-      border-radius:999px;
-      font-size:12px;
-      font-weight:800;
-      margin-right:6px;
-      margin-bottom:6px;
-    }
-
-    .gold{background:#32260e;color:#f2d089}
-    .green{background:#163322;color:#9ae2b9}
-    .red{background:#3a1616;color:#ffb3b3}
-
-    .panel-hidden{display:none}
-
-    .detail-box{
-      background:#101010;
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:16px;
-      padding:16px;
-      margin-top:12px;
-    }
-
-    .detail-box h3{
+    .card h3{
+      font-size:30px;
       margin:0 0 10px;
-      color:var(--gold);
     }
-
-    .detail-box p,
-    .detail-box li{
-      color:var(--text);
+    .card p{
+      margin:0;
+      color:#d0d0d0;
+      font-size:20px;
       line-height:1.5;
     }
-
-    .flow{
-      display:grid;
-      gap:10px;
+    .openLink{
+      display:inline-block;
+      margin-top:18px;
+      color:var(--green);
+      font-size:24px;
+      font-weight:800;
     }
-
-    .flow-step{
-      background:var(--panel2);
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:14px;
-      padding:12px;
+    .tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:16px;
     }
-
-    .footer-note{
+    .tag{
+      border-radius:999px;
+      padding:12px 18px;
+      font-size:18px;
+      font-weight:700;
+    }
+    .tag.gold{background:#3f2f10;color:#f4cf78}
+    .tag.red{background:#481919;color:#ffb4b4}
+    .tag.green{background:#103b25;color:#9ef0bf}
+    .panel{display:none}
+    .panel.active{display:block}
+    .small{
+      font-size:18px;
       color:var(--muted);
-      text-align:center;
-      padding:0 0 20px;
-      font-size:13px;
+      margin-top:10px;
     }
-
-    @media (max-width:1100px){
-      .layout{
-        grid-template-columns:1fr;
-      }
-      .grid-2{
-        grid-template-columns:1fr;
-      }
-      .stats{
-        grid-template-columns:repeat(2,minmax(140px,1fr));
-      }
-    }
-
-    @media (max-width:640px){
-      .stats{
-        grid-template-columns:1fr 1fr;
-      }
-      .title-wrap h1{
-        font-size:26px;
-      }
+    .backBtn{
+      margin-top:18px;
+      color:var(--gold);
     }
   </style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="topbar-wrap">
-      <div class="brand">
-        <div class="logo">TC</div>
-        <div class="title-wrap">
-          <h1>TitanCore Holdings Dashboard</h1>
-          <p>Main command dashboard • CEO control center • company oversight</p>
-        </div>
-      </div>
+  <div class="wrap">
+    <div class="hero">
+      <div class="logo">TC</div>
+      <div>
+        <h1 class="title">TitanCore Holdings Dashboard</h1>
+        <div class="sub">Main command dashboard • CEO control center • company oversight</div>
 
-      <div class="clock-box">
-        <div><span class="k">Date</span><span class="v" id="sysDate">--</span></div>
-        <div><span class="k">Time</span><span class="v" id="sysTime">--</span></div>
-        <div><span class="k">Role</span><span class="v">CEO</span></div>
-        <div><span class="k">Status</span><span class="v" style="color:var(--green)">Active</span></div>
+        <div class="topInfo">
+          <div class="infoRow"><div class="label">Date</div><div class="value" id="sysDate">--</div></div>
+          <div class="infoRow"><div class="label">Time</div><div class="value" id="sysTime">--</div></div>
+          <div class="infoRow"><div class="label">Role</div><div class="value">CEO</div></div>
+          <div class="infoRow"><div class="label">Status</div><div class="value green">Active</div></div>
+        </div>
       </div>
     </div>
-  </header>
 
-  <main class="layout">
-    <!-- LEFT -->
-    <aside class="card">
-      <h2 class="section-title">Main Navigation</h2>
+    <div class="section">
+      <div class="sectionTitle">Main Navigation</div>
+      <div class="btnList">
+        <button class="navBtn active" onclick="showPanel('overview', this)">Executive Overview</button>
+        <button class="navBtn" onclick="showPanel('companies', this)">Companies</button>
+        <button class="navBtn" onclick="showPanel('mantle', this)">Mantle of 7</button>
+        <button class="navBtn" onclick="showPanel('approval', this)">Approval Flow</button>
+        <button class="navBtn" onclick="showPanel('contracts', this)">Contracts & Packages</button>
+        <button class="navBtn" onclick="showPanel('reports', this)">Reports</button>
+        <button class="navBtn" onclick="showPanel('ai', this)">Agent A.I. Suite</button>
+      </div>
+    </div>
 
-      <button class="nav-btn active" data-panel="overviewPanel">Executive Overview</button>
-      <button class="nav-btn" data-panel="companiesPanel">Companies</button>
-      <button class="nav-btn" data-panel="mantlePanel">Mantle of 7</button>
-      <button class="nav-btn" data-panel="approvalPanel">Approval Flow</button>
-      <button class="nav-btn" data-panel="contractsPanel">Contracts & Packages</button>
-      <button class="nav-btn" data-panel="reportsPanel">Reports</button>
-      <button class="nav-btn" data-panel="financePanel">Finance</button>
-      <button class="nav-btn" data-panel="aiPanel">Agent A.I. Suite</button>
+    <div id="overview" class="panel active">
+      <div class="section">
+        <div class="sectionTitle">Quick Actions</div>
+        <div class="btnList">
+          <button class="actionBtn" onclick="showPanel('companies')">Open Company Monitoring</button>
+          <button class="actionBtn" onclick="showPanel('approval')">Open Approval Chain</button>
+          <button class="actionBtn" onclick="showPanel('contracts')">Open Contracts Queue</button>
+        </div>
+      </div>
 
-      <h2 class="section-title" style="margin-top:22px;">Quick Actions</h2>
-      <button class="action-btn" onclick="showPanel('companiesPanel')">Open Company Monitoring</button>
-      <button class="action-btn" onclick="showPanel('approvalPanel')">Open Approval Chain</button>
-      <button class="action-btn" onclick="showPanel('contractsPanel')">Open Contracts Queue</button>
-    </aside>
-
-    <!-- CENTER -->
-    <section>
       <div class="stats">
-        <div class="stat">
-          <div class="label">Companies</div>
-          <div class="value">5</div>
-        </div>
-        <div class="stat">
-          <div class="label">Pending Reviews</div>
-          <div class="value">14</div>
-        </div>
-        <div class="stat">
-          <div class="label">Contracts Active</div>
-          <div class="value">23</div>
-        </div>
-        <div class="stat">
-          <div class="label">AI Roles Active</div>
-          <div class="value">87</div>
+        <div class="stat"><div class="statLabel">Companies</div><div class="statValue">5</div></div>
+        <div class="stat"><div class="statLabel">Pending Reviews</div><div class="statValue">14</div></div>
+        <div class="stat"><div class="statLabel">Contracts Active</div><div class="statValue">23</div></div>
+        <div class="stat"><div class="statLabel">AI Roles Active</div><div class="statValue">87</div></div>
+      </div>
+
+      <div class="section">
+        <div class="sectionTitle">CEO Summary</div>
+        <div class="card">
+          <p>You are the only one with full visibility into all company work, all Mantle role work, all contract routing, and all final approvals.</p>
         </div>
       </div>
 
-      <div class="main-panels">
-        <!-- OVERVIEW -->
-        <div id="overviewPanel" class="card panel-content">
-          <h2 class="section-title">Executive Overview</h2>
-          <div class="grid-2">
-            <div class="list">
-              <div class="item">
-                <h4>CEO Access</h4>
-                <p>You see all companies, all contract flow, all company activity, and all final approvals.</p>
-              </div>
-              <div class="item">
-                <h4>Current Model</h4>
-                <p>Company departments work packages first, then company leadership reviews, then TitanCore reviews, then final CEO sign.</p>
-              </div>
-              <div class="item">
-                <h4>Temporary Rule</h4>
-                <p>Until the full TitanCore internal routing is finished, companies can still send final packages directly to you.</p>
-              </div>
-            </div>
-
-            <div class="list">
-              <div class="item">
-                <h4>Current Alerts</h4>
-                <p><span class="badge red">3 Returned</span><span class="badge gold">7 Waiting Review</span><span class="badge green">5 Ready for Signature</span></p>
-              </div>
-              <div class="item">
-                <h4>Main Purpose</h4>
-                <p>This main dashboard is for monitoring, not for getting lost in separate pages every time you tap.</p>
-              </div>
-              <div class="item">
-                <h4>Connected Behavior</h4>
-                <p>When you tap a company or a Mantle role below, it opens the detail view inside this dashboard.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- COMPANIES -->
-        <div id="companiesPanel" class="card panel-content panel-hidden">
-          <h2 class="section-title">Companies</h2>
-          <div class="list">
-            <div class="item">
-              <h4>TitanCore Holdings</h4>
-              <p>Parent company • final network review • executive approval control</p>
-              <span class="mini-open" onclick="openCompany('titancore')">Open TitanCore Details</span>
-            </div>
-            <div class="item">
-              <h4>Family First Equity Group</h4>
-              <p>Equity and real estate company • AI company roles • package preparation</p>
-              <span class="mini-open" onclick="openCompany('familyfirst')">Open Family First Details</span>
-            </div>
-            <div class="item">
-              <h4>Vaultara Capital</h4>
-              <p>Funding, capital, and financial packages</p>
-              <span class="mini-open" onclick="openCompany('vaultara')">Open Vaultara Details</span>
-            </div>
-            <div class="item">
-              <h4>VitalPath Care Group</h4>
-              <p>Healthcare and care-related operational review</p>
-              <span class="mini-open" onclick="openCompany('vitalpath')">Open VitalPath Details</span>
-            </div>
-            <div class="item">
-              <h4>RevMotion Auto & Marine Group</h4>
-              <p>Auto and marine operational company review</p>
-              <span class="mini-open" onclick="openCompany('revmotion')">Open RevMotion Details</span>
-            </div>
-          </div>
-
-          <div id="companyDetail" class="detail-box">
-            <h3>Company Detail View</h3>
-            <p>Tap a company above to load its dashboard summary here.</p>
-          </div>
-        </div>
-
-        <!-- MANTLE -->
-        <div id="mantlePanel" class="card panel-content panel-hidden">
-          <h2 class="section-title">Mantle of 7 Access View</h2>
-          <div class="list">
-            <div class="item">
-              <h4>CEO</h4>
-              <p>Full access to all companies, all roles, all contracts, all approvals, all final sign authority.</p>
-              <span class="mini-open" onclick="openRole('ceo')">Open CEO View</span>
-            </div>
-            <div class="item">
-              <h4>President</h4>
-              <p>Can monitor companies and work below President level, but not CEO private control space.</p>
-              <span class="mini-open" onclick="openRole('president')">Open President View</span>
-            </div>
-            <div class="item">
-              <h4>Vice President</h4>
-              <p>Can monitor company activity below Vice President level.</p>
-              <span class="mini-open" onclick="openRole('vp')">Open Vice President View</span>
-            </div>
-            <div class="item">
-              <h4>Director</h4>
-              <p>Sees downward into assigned structure, not into upper private layers.</p>
-              <span class="mini-open" onclick="openRole('director')">Open Director View</span>
-            </div>
-            <div class="item">
-              <h4>Assistant Director</h4>
-              <p>Can monitor assigned work below Assistant Director level.</p>
-              <span class="mini-open" onclick="openRole('assistantdirector')">Open Assistant Director View</span>
-            </div>
-            <div class="item">
-              <h4>Chief of Staff</h4>
-              <p>Can see all 10 chiefs working under Chief of Staff, plus assigned monitoring layers.</p>
-              <span class="mini-open" onclick="openRole('chiefofstaff')">Open Chief of Staff View</span>
-            </div>
-            <div class="item">
-              <h4>Executive Advisor</h4>
-              <p>Assigned executive advisory access only.</p>
-              <span class="mini-open" onclick="openRole('advisor')">Open Executive Advisor View</span>
-            </div>
-          </div>
-
-          <div id="roleDetail" class="detail-box">
-            <h3>Role Detail View</h3>
-            <p>Tap a role above to load the access detail here.</p>
-          </div>
-        </div>
-
-        <!-- APPROVAL -->
-        <div id="approvalPanel" class="card panel-content panel-hidden">
-          <h2 class="section-title">Approval Flow</h2>
-          <div class="flow">
-            <div class="flow-step">1. Company departments work the contract / package.</div>
-            <div class="flow-step">2. Company Manager + Assistant Manager + Administrator review and sign internally.</div>
-            <div class="flow-step">3. Package goes to TitanCore departments for full review.</div>
-            <div class="flow-step">4. If something is missing, TitanCore returns correction notes to the company.</div>
-            <div class="flow-step">5. Company departments fix the issue and resend it through company leadership.</div>
-            <div class="flow-step">6. TitanCore departments review again.</div>
-            <div class="flow-step">7. TitanCore Manager + Assistant Manager + Administrator sign internally.</div>
-            <div class="flow-step">8. TitanCore sends the approved package back to the company.</div>
-            <div class="flow-step">9. CEO performs the final sign.</div>
-            <div class="flow-step">10. Company sends the final signed package to the client.</div>
-          </div>
-        </div>
-
-        <!-- CONTRACTS -->
-        <div id="contractsPanel" class="card panel-content panel-hidden">
-          <h2 class="section-title">Contracts & Packages</h2>
-          <div class="list">
-            <div class="item">
-              <h4>Family First Contract Queue</h4>
-              <p>Ready for company review • ready for TitanCore routing • ready for CEO signature</p>
-            </div>
-            <div class="item">
-              <h4>Returned for Corrections</h4>
-              <p>Items that TitanCore departments sent back to company departments for fixes.</p>
-            </div>
-            <div class="item">
-              <h4>Ready for CEO Signature</h4>
-              <p>Final packages returned from TitanCore and ready for your signature.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- REPORTS -->
-        <div id="reportsPanel" class="card panel-content panel-hidden">
-          <h2 class="section-title">Reports</h2>
-          <div class="list">
-            <div class="item">
-              <h4>Company Performance Reports</h4>
-              <p>Shows progress, volume, review counts, and final package totals.</p>
-            </div>
-            <div class="item">
-              <h4>Approval Delay Reports</h4>
-              <p>Highlights which contracts are waiting too long in a stage.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- FINANCE -->
-        <div id="financePanel" class="card panel-content panel-hidden">
-          <h2 class="section-title">Finance</h2>
-          <div class="list">
-            <div class="item">
-              <h4>Network Financial Summary</h4>
-              <p>For later connection: payment status, billed packages, pending invoices, collected totals.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- AI -->
-        <div id="aiPanel" class="card panel-content panel-hidden">
-          <h2 class="section-title">Agent A.I. Suite</h2>
-          <div class="list">
-            <div class="item">
-              <h4>Company A.I. Roles</h4>
-              <p>Each company uses AI Manager, AI Assistant Manager, and AI Administrator roles.</p>
-            </div>
-            <div class="item">
-              <h4>Department A.I. Roles</h4>
-              <p>Each department uses AI Manager, AI Assistant Manager, and 6 AI workers.</p>
-            </div>
-            <div class="item">
-              <h4>CEO Final Human Authority</h4>
-              <p>You remain the final human sign-off layer.</p>
-            </div>
-          </div>
+      <div class="section">
+        <div class="sectionTitle">Current Workflow State</div>
+        <div class="tags">
+          <div class="tag gold">Company Review</div>
+          <div class="tag red">Returned for Fix</div>
+          <div class="tag green">Ready for CEO Sign</div>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- RIGHT -->
-    <aside class="right-stack">
-      <div class="card">
-        <h2 class="section-title">CEO Summary</h2>
-        <p>You are the only one with full visibility into all company work, all Mantle role work, all contract routing, and all final approvals.</p>
+    <div id="companies" class="panel">
+      <div class="section">
+        <div class="sectionTitle">Companies</div>
+
+        <div class="card">
+          <h3>TitanCore Holdings</h3>
+          <p>Parent company • final network review • executive approval control</p>
+          <a href="javascript:void(0)" class="openLink" onclick="openCompany('titancore')">Open TitanCore Details</a>
+        </div>
+
+        <div class="card">
+          <h3>Family First Equity Group</h3>
+          <p>Equity and real estate company • AI company roles • package preparation</p>
+          <a href="javascript:void(0)" class="openLink" onclick="openCompany('familyfirst')">Open Family First Details</a>
+        </div>
+
+        <div class="card">
+          <h3>Vaultara Capital</h3>
+          <p>Funding, capital, and financial packages</p>
+          <a href="javascript:void(0)" class="openLink" onclick="openCompany('vaultara')">Open Vaultara Details</a>
+        </div>
+
+        <div class="card">
+          <h3>VitalPath Care Group</h3>
+          <p>Healthcare and care-related operational review</p>
+          <a href="javascript:void(0)" class="openLink" onclick="openCompany('vitalpath')">Open VitalPath Details</a>
+        </div>
+
+        <div class="card">
+          <h3>RevMotion Auto & Marine Group</h3>
+          <p>Auto and marine operational company review</p>
+          <a href="javascript:void(0)" class="openLink" onclick="openCompany('revmotion')">Open RevMotion Details</a>
+        </div>
       </div>
+    </div>
 
-      <div class="card">
-        <h2 class="section-title">Current Workflow State</h2>
-        <p><span class="badge gold">Company Review</span><span class="badge red">Returned for Fix</span><span class="badge green">Ready for CEO Sign</span></p>
+    <div id="mantle" class="panel">
+      <div class="section">
+        <div class="sectionTitle">Mantle of 7</div>
+        <div class="card"><h3>CEO</h3><p>Full visibility into everything. Final sign authority.</p></div>
+        <div class="card"><h3>President</h3><p>Broad company visibility below CEO. No access to CEO private layer.</p></div>
+        <div class="card"><h3>Vice President</h3><p>Operational visibility below President level.</p></div>
+        <div class="card"><h3>Director</h3><p>Sees work below Director level.</p></div>
+        <div class="card"><h3>Assistant Director</h3><p>Sees work below Assistant Director level.</p></div>
+        <div class="card"><h3>Chief of Staff</h3><p>Sees assigned network work and the 10 chiefs under Chief of Staff.</p></div>
+        <div class="card"><h3>Executive Advisor</h3><p>Assigned executive review access only.</p></div>
       </div>
+    </div>
 
-      <div class="card">
-        <h2 class="section-title">Main Rule</h2>
-        <p>The dashboard should let you stay here, monitor everything here, and only open details inside this dashboard, not confuse you with random empty pages.</p>
+    <div id="approval" class="panel">
+      <div class="section">
+        <div class="sectionTitle">Approval Flow</div>
+        <div class="card">
+          <p>Company departments work the deal → company Manager / Assistant Manager / Administrator approve → send to TitanCore departments → if missing, return to company for fix → resend to TitanCore → TitanCore Manager / Assistant Manager / Administrator approve → return to company → CEO final sign → company sends to client.</p>
+        </div>
       </div>
-    </aside>
-  </main>
+    </div>
 
-  <div class="footer-note">TitanCore Holdings • Executive Company Dashboard</div>
+    <div id="contracts" class="panel">
+      <div class="section">
+        <div class="sectionTitle">Contracts & Packages</div>
+        <div class="card"><h3>Ready for Company Review</h3><p>6 active files</p></div>
+        <div class="card"><h3>Returned for Correction</h3><p>3 active files</p></div>
+        <div class="card"><h3>Ready for CEO Sign</h3><p>2 active files</p></div>
+      </div>
+    </div>
+
+    <div id="reports" class="panel">
+      <div class="section">
+        <div class="sectionTitle">Reports</div>
+        <div class="card"><h3>Weekly Summary</h3><p>Cross-company review, package count, approvals pending, and returned corrections.</p></div>
+        <div class="card"><h3>Monthly Summary</h3><p>Company volume, sign flow, and executive review totals.</p></div>
+      </div>
+    </div>
+
+    <div id="ai" class="panel">
+      <div class="section">
+        <div class="sectionTitle">Agent A.I. Suite</div>
+        <div class="card"><h3>AI Company Roles</h3><p>Manager AI • Assistant Manager AI • Administrator AI across companies.</p></div>
+        <div class="card"><h3>Department AI Roles</h3><p>Department Manager AI • Department Assistant Manager AI • 6 AI workers per department.</p></div>
+      </div>
+    </div>
+
+    <div id="company-detail" class="panel">
+      <div class="section">
+        <div class="sectionTitle" id="companyTitle">Company Detail</div>
+        <div class="card" id="companyContent"></div>
+        <button class="backBtn" onclick="backToCompanies()">← Back to Companies</button>
+      </div>
+    </div>
+  </div>
 
   <script>
     function updateClock(){
       const now = new Date();
-      document.getElementById("sysDate").textContent = now.toLocaleDateString("en-US", {
-        weekday:"short",
-        month:"short",
-        day:"numeric",
-        year:"numeric"
+      document.getElementById('sysDate').textContent = now.toLocaleDateString('en-US', {
+        weekday:'short', month:'short', day:'numeric', year:'numeric'
       });
-      document.getElementById("sysTime").textContent = now.toLocaleTimeString("en-US", {
-        hour:"numeric",
-        minute:"2-digit",
-        second:"2-digit"
+      document.getElementById('sysTime').textContent = now.toLocaleTimeString('en-US', {
+        hour:'numeric', minute:'2-digit', second:'2-digit'
       });
     }
     updateClock();
     setInterval(updateClock, 1000);
 
-    function showPanel(panelId){
-      document.querySelectorAll(".panel-content").forEach(p => p.classList.add("panel-hidden"));
-      document.getElementById(panelId).classList.remove("panel-hidden");
+    function showPanel(id, btn=null){
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      const target = document.getElementById(id);
+      if(target) target.classList.add('active');
 
-      document.querySelectorAll(".nav-btn").forEach(btn => btn.classList.remove("active"));
-      const activeBtn = document.querySelector(`.nav-btn[data-panel="${panelId}"]`);
-      if(activeBtn) activeBtn.classList.add("active");
+      document.querySelectorAll('.navBtn').forEach(b => b.classList.remove('active'));
+      if(btn) btn.classList.add('active');
+
+      if(!btn){
+        document.querySelectorAll('.navBtn').forEach(b => {
+          if(b.textContent.trim().toLowerCase().includes(id.replace('-', ' '))){
+            b.classList.add('active');
+          }
+        });
+      }
+      window.scrollTo({top:0, behavior:'smooth'});
     }
 
-    document.querySelectorAll(".nav-btn").forEach(btn=>{
-      btn.addEventListener("click", ()=>{
-        showPanel(btn.dataset.panel);
-      });
-    });
+    const companyData = {
+      titancore: `
+        <h3>TitanCore Holdings</h3>
+        <p><strong>Role:</strong> Parent company final review</p>
+        <p><strong>TitanCore leadership:</strong> Manager AI • Assistant Manager AI • Administrator AI</p>
+        <p><strong>Function:</strong> All concerned TitanCore departments review contracts and deals, return fixes if needed, then leadership signs and returns to the company for CEO final sign.</p>
+      `,
+      familyfirst: `
+        <h3>Family First Equity Group</h3>
+        <p><strong>Company AI leadership:</strong> Manager AI • Assistant Manager AI • Administrator AI</p>
+        <p><strong>Departments:</strong> 6 departments</p>
+        <p><strong>Each department has:</strong> Department Manager AI • Department Assistant Manager AI • 6 AI workers</p>
+        <p><strong>Current use:</strong> prepares equity, property, and contract packages before TitanCore review.</p>
+      `,
+      vaultara: `
+        <h3>Vaultara Capital</h3>
+        <p><strong>Company AI leadership:</strong> Manager AI • Assistant Manager AI • Administrator AI</p>
+        <p><strong>Use:</strong> funding, capital, and financial package routing.</p>
+      `,
+      vitalpath: `
+        <h3>VitalPath Care Group</h3>
+        <p><strong>Company AI leadership:</strong> Manager AI • Assistant Manager AI • Administrator AI</p>
+        <p><strong>Use:</strong> healthcare and care operations review.</p>
+      `,
+      revmotion: `
+        <h3>RevMotion Auto & Marine Group</h3>
+        <p><strong>Company AI leadership:</strong> Manager AI • Assistant Manager AI • Administrator AI</p>
+        <p><strong>Use:</strong> automotive and marine operations package review.</p>
+      `
+    };
 
     function openCompany(key){
-      const box = document.getElementById("companyDetail");
-      const map = {
-        titancore: `
-          <h3>TitanCore Holdings</h3>
-          <p>Main parent company. Handles full network oversight, final cross-company review, TitanCore department review, and TitanCore leadership sign before return to company.</p>
-          <ul>
-            <li>Purpose: final network review</li>
-            <li>Leadership: Manager AI, Assistant Manager AI, Administrator AI</li>
-            <li>Role: returns approved package back to company before CEO final sign</li>
-          </ul>
-        `,
-        familyfirst: `
-          <h3>Family First Equity Group</h3>
-          <p>Uses company-level AI Manager, AI Assistant Manager, and AI Administrator. Departments complete package work first, then company leadership signs internally, then sends to TitanCore.</p>
-          <ul>
-            <li>Company Head: Manager, Assistant Manager, Administrator</li>
-            <li>Departments: 6</li>
-            <li>Each department: Manager, Assistant Manager, 6 AI workers</li>
-            <li>Final path: Company → TitanCore → CEO → Client</li>
-          </ul>
-        `,
-        vaultara: `
-          <h3>Vaultara Capital</h3>
-          <p>Capital, funding, and business package routing. Same approval chain structure as the other companies.</p>
-        `,
-        vitalpath: `
-          <h3>VitalPath Care Group</h3>
-          <p>Healthcare operational workflow and package review under TitanCore network structure.</p>
-        `,
-        revmotion: `
-          <h3>RevMotion Auto & Marine Group</h3>
-          <p>Auto and marine service workflow under TitanCore network structure.</p>
-        `
-      };
-      box.innerHTML = map[key] || "<h3>Company Detail</h3><p>No detail loaded.</p>";
+      document.getElementById('companyTitle').textContent = 'Company Detail';
+      document.getElementById('companyContent').innerHTML = companyData[key] || '<p>No details yet.</p>';
+      showPanel('company-detail');
     }
 
-    function openRole(key){
-      const box = document.getElementById("roleDetail");
-      const map = {
-        ceo: `
-          <h3>CEO View</h3>
-          <p>You have full access to all companies, all Mantle roles, all departments, all AI workers, all contract states, and final signature authority.</p>
-        `,
-        president: `
-          <h3>President View</h3>
-          <p>Can monitor broad company work and lower layers, but does not access the CEO private control space.</p>
-        `,
-        vp: `
-          <h3>Vice President View</h3>
-          <p>Can monitor broad company work below Vice President level.</p>
-        `,
-        director: `
-          <h3>Director View</h3>
-          <p>Can see assigned network work below Director level.</p>
-        `,
-        assistantdirector: `
-          <h3>Assistant Director View</h3>
-          <p>Can see assigned network work below Assistant Director level.</p>
-        `,
-        chiefofstaff: `
-          <h3>Chief of Staff View</h3>
-          <p>Can see assigned network work and all 10 chiefs under Chief of Staff. The 10 chiefs only see their own assigned dashboards.</p>
-        `,
-        advisor: `
-          <h3>Executive Advisor View</h3>
-          <p>Advisory and assigned executive access only.</p>
-        `
-      };
-      box.innerHTML = map[key] || "<h3>Role Detail</h3><p>No detail loaded.</p>";
+    function backToCompanies(){
+      showPanel('companies');
     }
   </script>
 </body>
