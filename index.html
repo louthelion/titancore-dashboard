@@ -17,6 +17,8 @@
     }
 
     *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+
     body{
       margin:0;
       background:var(--bg);
@@ -73,13 +75,13 @@
     }
 
     .section{
-      margin-top:28px;
+      margin-top:30px;
     }
 
     .section-title{
       color:var(--green);
       font-size:42px;
-      margin:0 0 12px;
+      margin:0 0 14px;
       font-weight:700;
     }
 
@@ -107,34 +109,7 @@
     .card-desc{
       font-size:21px;
       color:#fff;
-      margin:0 0 14px;
-    }
-
-    .mini-stats{
-      display:grid;
-      grid-template-columns:repeat(2, minmax(0, 1fr));
-      gap:10px;
-      margin-bottom:14px;
-    }
-
-    .stat{
-      background:#0b0b0b;
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:12px;
-    }
-
-    .stat-label{
-      color:var(--green);
-      font-size:16px;
-      font-weight:700;
-      margin-bottom:4px;
-    }
-
-    .stat-value{
-      color:#fff;
-      font-size:19px;
-      font-weight:700;
+      margin:0 0 16px;
     }
 
     .open-btn{
@@ -155,6 +130,10 @@
       color:#000;
     }
 
+    .footer-space{
+      height:30px;
+    }
+
     @media (max-width:800px){
       .grid{
         grid-template-columns:1fr;
@@ -168,7 +147,6 @@
       .card-title{font-size:26px}
       .card-desc{font-size:19px}
       .label,.value{font-size:19px}
-      .mini-stats{grid-template-columns:1fr}
     }
   </style>
 </head>
@@ -199,84 +177,42 @@
         <div class="card">
           <div class="card-title">CEO</div>
           <div class="card-desc">Executive authority • final sign</div>
-          <div class="mini-stats">
-            <div class="stat"><div class="stat-label">Inbox</div><div class="stat-value">12 New</div></div>
-            <div class="stat"><div class="stat-label">Approvals</div><div class="stat-value">7 Pending</div></div>
-            <div class="stat"><div class="stat-label">Meetings</div><div class="stat-value">2 Today</div></div>
-            <div class="stat"><div class="stat-label">Signatures</div><div class="stat-value">5 Ready</div></div>
-          </div>
           <a class="open-btn" href="ceo.html">Open Dashboard</a>
         </div>
 
         <div class="card">
           <div class="card-title">President</div>
           <div class="card-desc">Operations governance</div>
-          <div class="mini-stats">
-            <div class="stat"><div class="stat-label">Inbox</div><div class="stat-value">8 New</div></div>
-            <div class="stat"><div class="stat-label">Tasks</div><div class="stat-value">11 Active</div></div>
-            <div class="stat"><div class="stat-label">Meetings</div><div class="stat-value">1 Today</div></div>
-            <div class="stat"><div class="stat-label">Reports</div><div class="stat-value">4 Review</div></div>
-          </div>
           <a class="open-btn" href="president.html">Open Dashboard</a>
         </div>
 
         <div class="card">
           <div class="card-title">Vice President</div>
           <div class="card-desc">Programs • execution</div>
-          <div class="mini-stats">
-            <div class="stat"><div class="stat-label">Inbox</div><div class="stat-value">6 New</div></div>
-            <div class="stat"><div class="stat-label">Programs</div><div class="stat-value">9 Active</div></div>
-            <div class="stat"><div class="stat-label">Meetings</div><div class="stat-value">3 Scheduled</div></div>
-            <div class="stat"><div class="stat-label">Updates</div><div class="stat-value">5 Due</div></div>
-          </div>
           <a class="open-btn" href="vice-president.html">Open Dashboard</a>
         </div>
 
         <div class="card">
           <div class="card-title">Director</div>
           <div class="card-desc">Department direction • enterprise oversight</div>
-          <div class="mini-stats">
-            <div class="stat"><div class="stat-label">Inbox</div><div class="stat-value">9 New</div></div>
-            <div class="stat"><div class="stat-label">Reviews</div><div class="stat-value">4 Pending</div></div>
-            <div class="stat"><div class="stat-label">Meetings</div><div class="stat-value">2 Scheduled</div></div>
-            <div class="stat"><div class="stat-label">Logs</div><div class="stat-value">13 Entries</div></div>
-          </div>
           <a class="open-btn" href="director.html">Open Dashboard</a>
         </div>
 
         <div class="card">
           <div class="card-title">Assistant Director</div>
           <div class="card-desc">Deputy direction • department support</div>
-          <div class="mini-stats">
-            <div class="stat"><div class="stat-label">Inbox</div><div class="stat-value">5 New</div></div>
-            <div class="stat"><div class="stat-label">Tasks</div><div class="stat-value">8 Active</div></div>
-            <div class="stat"><div class="stat-label">Meetings</div><div class="stat-value">1 Scheduled</div></div>
-            <div class="stat"><div class="stat-label">Support</div><div class="stat-value">6 Requests</div></div>
-          </div>
           <a class="open-btn" href="assistant-director.html">Open Dashboard</a>
         </div>
 
         <div class="card">
           <div class="card-title">Chief of Staff</div>
           <div class="card-desc">Chief coordination • 10 chief branches</div>
-          <div class="mini-stats">
-            <div class="stat"><div class="stat-label">Inbox</div><div class="stat-value">14 New</div></div>
-            <div class="stat"><div class="stat-label">Chief Teams</div><div class="stat-value">10 Branches</div></div>
-            <div class="stat"><div class="stat-label">Meetings</div><div class="stat-value">4 Scheduled</div></div>
-            <div class="stat"><div class="stat-label">Approvals</div><div class="stat-value">6 Pending</div></div>
-          </div>
           <a class="open-btn" href="chief-of-staff.html">Open Dashboard</a>
         </div>
 
         <div class="card">
           <div class="card-title">Executive Advisor</div>
           <div class="card-desc">Strategic counsel • executive advisory</div>
-          <div class="mini-stats">
-            <div class="stat"><div class="stat-label">Inbox</div><div class="stat-value">4 New</div></div>
-            <div class="stat"><div class="stat-label">Advisories</div><div class="stat-value">7 Open</div></div>
-            <div class="stat"><div class="stat-label">Meetings</div><div class="stat-value">2 Scheduled</div></div>
-            <div class="stat"><div class="stat-label">Notes</div><div class="stat-value">10 Logged</div></div>
-          </div>
           <a class="open-btn" href="executive-advisor.html">Open Dashboard</a>
         </div>
       </div>
@@ -288,36 +224,18 @@
         <div class="card">
           <div class="card-title">General Manager</div>
           <div class="card-desc">Oversight • cross-company</div>
-          <div class="mini-stats">
-            <div class="stat"><div class="stat-label">Inbox</div><div class="stat-value">7 New</div></div>
-            <div class="stat"><div class="stat-label">Companies</div><div class="stat-value">5 Tracked</div></div>
-            <div class="stat"><div class="stat-label">Meetings</div><div class="stat-value">2 Today</div></div>
-            <div class="stat"><div class="stat-label">Logs</div><div class="stat-value">11 Entries</div></div>
-          </div>
           <a class="open-btn" href="general-manager.html">Open Dashboard</a>
         </div>
 
         <div class="card">
           <div class="card-title">General Assistant Manager</div>
           <div class="card-desc">Support • execution</div>
-          <div class="mini-stats">
-            <div class="stat"><div class="stat-label">Inbox</div><div class="stat-value">5 New</div></div>
-            <div class="stat"><div class="stat-label">Tasks</div><div class="stat-value">9 Active</div></div>
-            <div class="stat"><div class="stat-label">Meetings</div><div class="stat-value">1 Today</div></div>
-            <div class="stat"><div class="stat-label">Support</div><div class="stat-value">8 Requests</div></div>
-          </div>
           <a class="open-btn" href="general-assistant-manager.html">Open Dashboard</a>
         </div>
 
         <div class="card">
           <div class="card-title">General Administrator</div>
           <div class="card-desc">Admin • logging • records</div>
-          <div class="mini-stats">
-            <div class="stat"><div class="stat-label">Inbox</div><div class="stat-value">6 New</div></div>
-            <div class="stat"><div class="stat-label">Records</div><div class="stat-value">17 Updated</div></div>
-            <div class="stat"><div class="stat-label">Meetings</div><div class="stat-value">1 Scheduled</div></div>
-            <div class="stat"><div class="stat-label">Signatures</div><div class="stat-value">3 Routed</div></div>
-          </div>
           <a class="open-btn" href="general-administrator.html">Open Dashboard</a>
         </div>
       </div>
@@ -326,16 +244,65 @@
     <section class="section" id="system">
       <h2 class="section-title">System</h2>
       <div class="grid">
-        <div class="card"><div class="card-title">Contact</div><div class="card-desc">Communication routing</div><a class="open-btn" href="contact.html">Open</a></div>
-        <div class="card"><div class="card-title">Contract</div><div class="card-desc">Contract command</div><a class="open-btn" href="contract.html">Open</a></div>
-        <div class="card"><div class="card-title">Email Routing</div><div class="card-desc">Mail direction • inbox flow</div><a class="open-btn" href="email-routing.html">Open</a></div>
-        <div class="card"><div class="card-title">Report</div><div class="card-desc">Reports • logs • summaries</div><a class="open-btn" href="report.html">Open</a></div>
-        <div class="card"><div class="card-title">Approval</div><div class="card-desc">Approval command</div><a class="open-btn" href="approval.html">Open</a></div>
-        <div class="card"><div class="card-title">Omni System</div><div class="card-desc">Master operations layer</div><a class="open-btn" href="omni-system.html">Open</a></div>
-        <div class="card"><div class="card-title">Tax Network</div><div class="card-desc">Tax activity and compliance</div><a class="open-btn" href="tax-network.html">Open</a></div>
-        <div class="card"><div class="card-title">Agent A.I. Suite</div><div class="card-desc">AI operations and task flow</div><a class="open-btn" href="agent-ai-suite.html">Open</a></div>
-        <div class="card"><div class="card-title">Public Portal</div><div class="card-desc">Public forms and access</div><a class="open-btn" href="public-portal.html">Open</a></div>
-        <div class="card"><div class="card-title">Finance</div><div class="card-desc">Financial command and tracking</div><a class="open-btn" href="finance.html">Open</a></div>
+        <div class="card">
+          <div class="card-title">Contact</div>
+          <div class="card-desc">Communication routing</div>
+          <a class="open-btn" href="contact.html">Open Dashboard</a>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Contract</div>
+          <div class="card-desc">Contract command</div>
+          <a class="open-btn" href="contract.html">Open Dashboard</a>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Email Routing</div>
+          <div class="card-desc">Mail direction • inbox flow</div>
+          <a class="open-btn" href="email-routing.html">Open Dashboard</a>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Report</div>
+          <div class="card-desc">Reports • logs • summaries</div>
+          <a class="open-btn" href="report.html">Open Dashboard</a>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Approval</div>
+          <div class="card-desc">Approval command</div>
+          <a class="open-btn" href="approval.html">Open Dashboard</a>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Omni System</div>
+          <div class="card-desc">Master operations layer</div>
+          <a class="open-btn" href="omni-system.html">Open Dashboard</a>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Tax Network</div>
+          <div class="card-desc">Tax activity and compliance</div>
+          <a class="open-btn" href="tax-network.html">Open Dashboard</a>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Agent A.I. Suite</div>
+          <div class="card-desc">AI operations and task flow</div>
+          <a class="open-btn" href="agent-ai-suite.html">Open Dashboard</a>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Public Portal</div>
+          <div class="card-desc">Public forms and access</div>
+          <a class="open-btn" href="public-portal.html">Open Dashboard</a>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Finance</div>
+          <div class="card-desc">Financial command and tracking</div>
+          <a class="open-btn" href="finance.html">Open Dashboard</a>
+        </div>
       </div>
     </section>
 
@@ -345,64 +312,36 @@
         <div class="card">
           <div class="card-title">TitanCore Holdings</div>
           <div class="card-desc">Father company • governance</div>
-          <div class="mini-stats">
-            <div class="stat"><div class="stat-label">Status</div><div class="stat-value">Active</div></div>
-            <div class="stat"><div class="stat-label">Approvals</div><div class="stat-value">8 Pending</div></div>
-            <div class="stat"><div class="stat-label">Meetings</div><div class="stat-value">2 Scheduled</div></div>
-            <div class="stat"><div class="stat-label">Reports</div><div class="stat-value">5 Ready</div></div>
-          </div>
           <a class="open-btn" href="titancore.html">Open Dashboard</a>
         </div>
 
         <div class="card">
           <div class="card-title">Vaultara Capital</div>
           <div class="card-desc">Investments • funding</div>
-          <div class="mini-stats">
-            <div class="stat"><div class="stat-label">Applications</div><div class="stat-value">24 Active</div></div>
-            <div class="stat"><div class="stat-label">Funding Queue</div><div class="stat-value">11 Pending</div></div>
-            <div class="stat"><div class="stat-label">Institutions</div><div class="stat-value">6 Connected</div></div>
-            <div class="stat"><div class="stat-label">Reviews</div><div class="stat-value">4 Due</div></div>
-          </div>
           <a class="open-btn" href="vaultara.html">Open Dashboard</a>
         </div>
 
         <div class="card">
           <div class="card-title">VitalPath Care Group</div>
           <div class="card-desc">Healthcare • care operations</div>
-          <div class="mini-stats">
-            <div class="stat"><div class="stat-label">Cases</div><div class="stat-value">17 Open</div></div>
-            <div class="stat"><div class="stat-label">Staffing</div><div class="stat-value">3 Needed</div></div>
-            <div class="stat"><div class="stat-label">Meetings</div><div class="stat-value">1 Today</div></div>
-            <div class="stat"><div class="stat-label">Updates</div><div class="stat-value">7 Logged</div></div>
-          </div>
           <a class="open-btn" href="vitalpath.html">Open Dashboard</a>
         </div>
 
         <div class="card">
           <div class="card-title">RevMotion Auto &amp; Marine</div>
           <div class="card-desc">Auto • marine • service</div>
-          <div class="mini-stats">
-            <div class="stat"><div class="stat-label">Service Jobs</div><div class="stat-value">13 Active</div></div>
-            <div class="stat"><div class="stat-label">Inspections</div><div class="stat-value">5 Due</div></div>
-            <div class="stat"><div class="stat-label">Parts Orders</div><div class="stat-value">9 Open</div></div>
-            <div class="stat"><div class="stat-label">Alerts</div><div class="stat-value">2 Critical</div></div>
-          </div>
           <a class="open-btn" href="revmotion.html">Open Dashboard</a>
         </div>
 
         <div class="card">
           <div class="card-title">Family First Equity Group</div>
           <div class="card-desc">Real estate • equity</div>
-          <div class="mini-stats">
-            <div class="stat"><div class="stat-label">Buyers</div><div class="stat-value">14 Active</div></div>
-            <div class="stat"><div class="stat-label">Sellers</div><div class="stat-value">9 Active</div></div>
-            <div class="stat"><div class="stat-label">Closings</div><div class="stat-value">3 This Week</div></div>
-            <div class="stat"><div class="stat-label">Properties</div><div class="stat-value">12 Listed</div></div>
-          </div>
           <a class="open-btn" href="familyfirst.html">Open Dashboard</a>
         </div>
       </div>
     </section>
+
+    <div class="footer-space"></div>
   </div>
 
   <script>
