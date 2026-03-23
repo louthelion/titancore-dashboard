@@ -22,13 +22,8 @@
       line-height: 1.45;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
     .topbar {
-      padding: 22px 20px 12px;
+      padding: 22px 20px 16px;
       border-bottom: 1px solid rgba(212, 175, 55, 0.22);
       background: #050505;
     }
@@ -43,28 +38,28 @@
 
     .brand-left h1 {
       color: #10c251;
-      font-size: 2.15rem;
+      font-size: 2.2rem;
       line-height: 1;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     .brand-left p {
       color: #f0e1a2;
       font-size: 1rem;
-      max-width: 760px;
+      max-width: 820px;
     }
 
     .clock-box {
-      min-width: 180px;
+      min-width: 210px;
       border: 1px solid rgba(212, 175, 55, 0.45);
-      border-radius: 14px;
+      border-radius: 16px;
       padding: 12px 14px;
       background: #0b0b0b;
     }
 
     .clock-label {
       color: #10c251;
-      font-size: 0.82rem;
+      font-size: 0.85rem;
       margin-bottom: 6px;
     }
 
@@ -74,45 +69,21 @@
       font-weight: bold;
     }
 
-    .menu {
-      padding: 14px 20px 18px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      border-bottom: 1px solid rgba(212, 175, 55, 0.15);
-      background: #060606;
-    }
-
-    .menu a {
-      border: 1px solid #d4af37;
-      border-radius: 999px;
-      padding: 10px 14px;
-      background: #111;
-      color: #d4af37;
-      font-size: 0.94rem;
-    }
-
-    .menu a:hover {
-      background: #10c251;
-      border-color: #10c251;
-      color: #fff;
-    }
-
     .hero {
-      padding: 22px 20px 8px;
+      padding: 22px 20px 12px;
     }
 
     .hero-card {
       border: 1px solid rgba(212, 175, 55, 0.3);
-      border-radius: 22px;
+      border-radius: 24px;
       background: #080808;
       padding: 22px 18px;
     }
 
     .hero-card h2 {
       color: #10c251;
-      font-size: 1.55rem;
-      margin-bottom: 8px;
+      font-size: 1.7rem;
+      margin-bottom: 10px;
     }
 
     .hero-card p {
@@ -152,7 +123,7 @@
 
     .card h3 {
       color: #fff;
-      font-size: 1.1rem;
+      font-size: 1.12rem;
       margin-bottom: 8px;
       line-height: 1.15;
     }
@@ -185,14 +156,139 @@
 
     .card button.pressed {
       transform: scale(0.97);
-      opacity: 0.82;
+      opacity: 0.84;
     }
 
-    .message {
-      margin-top: 12px;
-      font-size: 0.9rem;
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.82);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      z-index: 9999;
+    }
+
+    .overlay.active {
+      display: flex;
+    }
+
+    .panel {
+      width: min(980px, 100%);
+      max-height: 92vh;
+      overflow-y: auto;
+      background: #050505;
+      border: 2px solid rgba(212, 175, 55, 0.4);
+      border-radius: 26px;
+      padding: 22px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .panel-title h3 {
       color: #10c251;
-      min-height: 20px;
+      font-size: 1.9rem;
+      margin-bottom: 6px;
+    }
+
+    .panel-title p {
+      color: #f0df9e;
+      font-size: 1rem;
+    }
+
+    .close-btn {
+      border: none;
+      border-radius: 999px;
+      background: #d4af37;
+      color: #000;
+      font-weight: bold;
+      font-family: inherit;
+      padding: 10px 16px;
+      cursor: pointer;
+    }
+
+    .close-btn:hover {
+      background: #10c251;
+      color: #fff;
+    }
+
+    .panel-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .mini-card {
+      background: #0a0a0a;
+      border: 1px solid rgba(212, 175, 55, 0.28);
+      border-radius: 18px;
+      padding: 18px 14px;
+    }
+
+    .mini-card h4 {
+      color: #fff;
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+    }
+
+    .mini-card p {
+      color: #f1dc96;
+      font-size: 0.95rem;
+      min-height: 42px;
+      margin-bottom: 12px;
+    }
+
+    .mini-card button {
+      border: none;
+      border-radius: 999px;
+      background: #d4af37;
+      color: #000;
+      font-weight: bold;
+      font-family: inherit;
+      padding: 10px 14px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .mini-card button:hover {
+      background: #10c251;
+      color: #fff;
+    }
+
+    .mini-msg {
+      margin-top: 10px;
+      color: #10c251;
+      font-size: 0.9rem;
+      min-height: 18px;
+    }
+
+    .status-box {
+      margin-top: 18px;
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      border-radius: 18px;
+      padding: 16px;
+      background: #080808;
+    }
+
+    .status-box h4 {
+      color: #10c251;
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    .status-box p {
+      color: #f0df9e;
+      font-size: 0.98rem;
     }
 
     .footer {
@@ -204,7 +300,7 @@
 
     @media (max-width: 700px) {
       .brand-left h1 {
-        font-size: 1.85rem;
+        font-size: 1.9rem;
       }
 
       .section-title {
@@ -214,6 +310,10 @@
       .card button {
         width: 100%;
         min-width: 0;
+      }
+
+      .panel-title h3 {
+        font-size: 1.55rem;
       }
     }
   </style>
@@ -232,21 +332,13 @@
     </div>
   </header>
 
-  <nav class="menu">
-    <a href="#leadership">Leadership</a>
-    <a href="#executive">Executive</a>
-    <a href="#departments">Central Departments</a>
-    <a href="#systems">Operational Systems</a>
-    <a href="#companies">Companies</a>
-  </nav>
-
   <section class="hero">
     <div class="hero-card">
       <h2>Central Dashboard</h2>
       <p>
         This is the private central command layout for TitanCore Holdings.
-        The buttons below react for now, but the full Microsoft login and protected access
-        will be connected next.
+        Each main card below opens its own dashboard panel. The inside modules are visible now,
+        and each module will say not connected yet until Microsoft, email, calendar, and live data are connected.
       </p>
     </div>
   </section>
@@ -255,13 +347,13 @@
     <h2 class="section-title">Leadership</h2>
     <p class="section-desc">Mantle of 7 leadership layer.</p>
     <div class="cards">
-      <div class="card"><h3>CEO</h3><p>Executive authority • final decision • final sign</p><button onclick="comingSoon(this)">Open Dashboard</button><div class="message"></div></div>
-      <div class="card"><h3>President</h3><p>Strategic counsel • operations governance</p><button onclick="comingSoon(this)">Open Dashboard</button><div class="message"></div></div>
-      <div class="card"><h3>Vice President</h3><p>Programs • execution • support alignment</p><button onclick="comingSoon(this)">Open Dashboard</button><div class="message"></div></div>
-      <div class="card"><h3>Director</h3><p>Department direction • enterprise oversight</p><button onclick="comingSoon(this)">Open Dashboard</button><div class="message"></div></div>
-      <div class="card"><h3>Assistant Director</h3><p>Deputy direction • department support</p><button onclick="comingSoon(this)">Open Dashboard</button><div class="message"></div></div>
-      <div class="card"><h3>Chief of Staff</h3><p>Chief coordination • order • execution</p><button onclick="comingSoon(this)">Open Dashboard</button><div class="message"></div></div>
-      <div class="card"><h3>Executive Advisor</h3><p>Strategic counsel • executive advisory</p><button onclick="comingSoon(this)">Open Dashboard</button><div class="message"></div></div>
+      <div class="card"><h3>CEO</h3><p>Executive authority • final decision • final sign</p><button onclick="openDashboard(this, 'CEO', 'Executive authority • final decision • final sign')">Open Dashboard</button></div>
+      <div class="card"><h3>President</h3><p>Strategic counsel • operations governance</p><button onclick="openDashboard(this, 'President', 'Strategic counsel • operations governance')">Open Dashboard</button></div>
+      <div class="card"><h3>Vice President</h3><p>Programs • execution • support alignment</p><button onclick="openDashboard(this, 'Vice President', 'Programs • execution • support alignment')">Open Dashboard</button></div>
+      <div class="card"><h3>Director</h3><p>Department direction • enterprise oversight</p><button onclick="openDashboard(this, 'Director', 'Department direction • enterprise oversight')">Open Dashboard</button></div>
+      <div class="card"><h3>Assistant Director</h3><p>Deputy direction • department support</p><button onclick="openDashboard(this, 'Assistant Director', 'Deputy direction • department support')">Open Dashboard</button></div>
+      <div class="card"><h3>Chief of Staff</h3><p>Chief coordination • order • execution</p><button onclick="openDashboard(this, 'Chief of Staff', 'Chief coordination • order • execution')">Open Dashboard</button></div>
+      <div class="card"><h3>Executive Advisor</h3><p>Strategic counsel • executive advisory</p><button onclick="openDashboard(this, 'Executive Advisor', 'Strategic counsel • executive advisory')">Open Dashboard</button></div>
     </div>
   </section>
 
@@ -269,9 +361,9 @@
     <h2 class="section-title">Executive</h2>
     <p class="section-desc">General network-wide executive command roles.</p>
     <div class="cards">
-      <div class="card"><h3>General Manager</h3><p>Oversight • cross-company</p><button onclick="comingSoon(this)">Open Dashboard</button><div class="message"></div></div>
-      <div class="card"><h3>General Assistant Manager</h3><p>Support • execution • coordination</p><button onclick="comingSoon(this)">Open Dashboard</button><div class="message"></div></div>
-      <div class="card"><h3>General Administrator</h3><p>Admin • logging • records</p><button onclick="comingSoon(this)">Open Dashboard</button><div class="message"></div></div>
+      <div class="card"><h3>General Manager</h3><p>Oversight • cross-company</p><button onclick="openDashboard(this, 'General Manager', 'Oversight • cross-company')">Open Dashboard</button></div>
+      <div class="card"><h3>General Assistant Manager</h3><p>Support • execution • coordination</p><button onclick="openDashboard(this, 'General Assistant Manager', 'Support • execution • coordination')">Open Dashboard</button></div>
+      <div class="card"><h3>General Administrator</h3><p>Admin • logging • records</p><button onclick="openDashboard(this, 'General Administrator', 'Admin • logging • records')">Open Dashboard</button></div>
     </div>
   </section>
 
@@ -279,16 +371,16 @@
     <h2 class="section-title">Central Departments</h2>
     <p class="section-desc">Future human structure that can work with AI now and real staff later.</p>
     <div class="cards">
-      <div class="card"><h3>Contact Department</h3><p>Communication intake and contact handling structure</p><button onclick="comingSoon(this)">Open Dashboard</button><div class="message"></div></div>
-      <div class="card"><h3>Contract Department</h3><p>Contract preparation, review, and routing structure</p><button onclick="comingSoon(this)">Open Dashboard</button><div class="message"></div></div>
-      <div class="card"><h3>Email Routing Department</h3><p>Message flow, distribution, and inbox control structure</p><button onclick="comingSoon(this)">Open Dashboard</button><div class="message"></div></div>
-      <div class="card"><h3>Report Department</h3><p>Reports, summaries, logs, and update collection structure</p><button onclick="comingSoon(this)">Open Dashboard</button><div class="message"></div></div>
-      <div class="card"><h3>Approval Department</h3><p>Review flow, signoff checkpoints, and release structure</p><button onclick="comingSoon(this)">Open Dashboard</button><div class="message"></div></div>
-      <div class="card"><h3>Omni Operations Department</h3><p>Master operations support and network coordination structure</p><button onclick="comingSoon(this)">Open Dashboard</button><div class="message"></div></div>
-      <div class="card"><h3>Tax Network Department</h3><p>Tax work, compliance, scans, and jurisdiction structure</p><button onclick="comingSoon(this)">Open Dashboard</button><div class="message"></div></div>
-      <div class="card"><h3>AI Operations Department</h3><p>AI command, automation, and agent workflow structure</p><button onclick="comingSoon(this)">Open Dashboard</button><div class="message"></div></div>
-      <div class="card"><h3>Public Portal Department</h3><p>Public-facing structure, access, and presentation layer</p><button onclick="comingSoon(this)">Open Dashboard</button><div class="message"></div></div>
-      <div class="card"><h3>Finance Department</h3><p>Financial tracking, allocation, and reporting structure</p><button onclick="comingSoon(this)">Open Dashboard</button><div class="message"></div></div>
+      <div class="card"><h3>Contact Department</h3><p>Communication intake and contact handling structure</p><button onclick="openDepartment(this, 'Contact Department', 'Communication intake and contact handling structure')">Open Dashboard</button></div>
+      <div class="card"><h3>Contract Department</h3><p>Contract preparation, review, and routing structure</p><button onclick="openDepartment(this, 'Contract Department', 'Contract preparation, review, and routing structure')">Open Dashboard</button></div>
+      <div class="card"><h3>Email Routing Department</h3><p>Message flow, distribution, and inbox control structure</p><button onclick="openDepartment(this, 'Email Routing Department', 'Message flow, distribution, and inbox control structure')">Open Dashboard</button></div>
+      <div class="card"><h3>Report Department</h3><p>Reports, summaries, logs, and update collection structure</p><button onclick="openDepartment(this, 'Report Department', 'Reports, summaries, logs, and update collection structure')">Open Dashboard</button></div>
+      <div class="card"><h3>Approval Department</h3><p>Review flow, signoff checkpoints, and release structure</p><button onclick="openDepartment(this, 'Approval Department', 'Review flow, signoff checkpoints, and release structure')">Open Dashboard</button></div>
+      <div class="card"><h3>Omni Operations Department</h3><p>Master operations support and network coordination structure</p><button onclick="openDepartment(this, 'Omni Operations Department', 'Master operations support and network coordination structure')">Open Dashboard</button></div>
+      <div class="card"><h3>Tax Network Department</h3><p>Tax work, compliance, scans, and jurisdiction structure</p><button onclick="openDepartment(this, 'Tax Network Department', 'Tax work, compliance, scans, and jurisdiction structure')">Open Dashboard</button></div>
+      <div class="card"><h3>AI Operations Department</h3><p>AI command, automation, and agent workflow structure</p><button onclick="openDepartment(this, 'AI Operations Department', 'AI command, automation, and agent workflow structure')">Open Dashboard</button></div>
+      <div class="card"><h3>Public Portal Department</h3><p>Public-facing structure, access, and presentation layer</p><button onclick="openDepartment(this, 'Public Portal Department', 'Public-facing structure, access, and presentation layer')">Open Dashboard</button></div>
+      <div class="card"><h3>Finance Department</h3><p>Financial tracking, allocation, and reporting structure</p><button onclick="openDepartment(this, 'Finance Department', 'Financial tracking, allocation, and reporting structure')">Open Dashboard</button></div>
     </div>
   </section>
 
@@ -296,16 +388,16 @@
     <h2 class="section-title">Operational Systems</h2>
     <p class="section-desc">AI-powered systems and tools running the work behind the structure.</p>
     <div class="cards">
-      <div class="card"><h3>Contact</h3><p>Communication routing</p><button onclick="comingSoon(this)">Open Dashboard</button><div class="message"></div></div>
-      <div class="card"><h3>Contract</h3><p>Contract command</p><button onclick="comingSoon(this)">Open Dashboard</button><div class="message"></div></div>
-      <div class="card"><h3>Email Routing</h3><p>Mail direction • inbox flow</p><button onclick="comingSoon(this)">Open Dashboard</button><div class="message"></div></div>
-      <div class="card"><h3>Report</h3><p>Reports • logs • summaries</p><button onclick="comingSoon(this)">Open Dashboard</button><div class="message"></div></div>
-      <div class="card"><h3>Approval</h3><p>Approval command</p><button onclick="comingSoon(this)">Open Dashboard</button><div class="message"></div></div>
-      <div class="card"><h3>Omni System</h3><p>Master operations layer</p><button onclick="comingSoon(this)">Open Dashboard</button><div class="message"></div></div>
-      <div class="card"><h3>Tax Network</h3><p>Tax activity and compliance</p><button onclick="comingSoon(this)">Open Dashboard</button><div class="message"></div></div>
-      <div class="card"><h3>Agent A.I. Suite</h3><p>AI operations and task flow</p><button onclick="comingSoon(this)">Open Dashboard</button><div class="message"></div></div>
-      <div class="card"><h3>Public Portal</h3><p>Public forms and access</p><button onclick="comingSoon(this)">Open Dashboard</button><div class="message"></div></div>
-      <div class="card"><h3>Finance</h3><p>Financial command and tracking</p><button onclick="comingSoon(this)">Open Dashboard</button><div class="message"></div></div>
+      <div class="card"><h3>Contact</h3><p>Communication routing</p><button onclick="openSystem(this, 'Contact System', 'Communication routing')">Open Dashboard</button></div>
+      <div class="card"><h3>Contract</h3><p>Contract command</p><button onclick="openSystem(this, 'Contract System', 'Contract command')">Open Dashboard</button></div>
+      <div class="card"><h3>Email Routing</h3><p>Mail direction • inbox flow</p><button onclick="openSystem(this, 'Email Routing System', 'Mail direction • inbox flow')">Open Dashboard</button></div>
+      <div class="card"><h3>Report</h3><p>Reports • logs • summaries</p><button onclick="openSystem(this, 'Report System', 'Reports • logs • summaries')">Open Dashboard</button></div>
+      <div class="card"><h3>Approval</h3><p>Approval command</p><button onclick="openSystem(this, 'Approval System', 'Approval command')">Open Dashboard</button></div>
+      <div class="card"><h3>Omni System</h3><p>Master operations layer</p><button onclick="openSystem(this, 'Omni System', 'Master operations layer')">Open Dashboard</button></div>
+      <div class="card"><h3>Tax Network</h3><p>Tax activity and compliance</p><button onclick="openSystem(this, 'Tax Network System', 'Tax activity and compliance')">Open Dashboard</button></div>
+      <div class="card"><h3>Agent A.I. Suite</h3><p>AI operations and task flow</p><button onclick="openSystem(this, 'Agent A.I. Suite', 'AI operations and task flow')">Open Dashboard</button></div>
+      <div class="card"><h3>Public Portal</h3><p>Public forms and access</p><button onclick="openSystem(this, 'Public Portal System', 'Public forms and access')">Open Dashboard</button></div>
+      <div class="card"><h3>Finance</h3><p>Financial command and tracking</p><button onclick="openSystem(this, 'Finance System', 'Financial command and tracking')">Open Dashboard</button></div>
     </div>
   </section>
 
@@ -313,11 +405,11 @@
     <h2 class="section-title">Companies</h2>
     <p class="section-desc">Connected company dashboards inside the TitanCore ecosystem.</p>
     <div class="cards">
-      <div class="card"><h3>TitanCore Holdings</h3><p>Father company • governance</p><button onclick="comingSoon(this)">Open Dashboard</button><div class="message"></div></div>
-      <div class="card"><h3>Vaultara Capital</h3><p>Investments • funding</p><button onclick="comingSoon(this)">Open Dashboard</button><div class="message"></div></div>
-      <div class="card"><h3>Family First Equity Group</h3><p>Real estate • equity</p><button onclick="comingSoon(this)">Open Dashboard</button><div class="message"></div></div>
-      <div class="card"><h3>VitalPath Care Group</h3><p>Healthcare • care operations</p><button onclick="comingSoon(this)">Open Dashboard</button><div class="message"></div></div>
-      <div class="card"><h3>RevMotion Auto &amp; Marine</h3><p>Auto • marine • service</p><button onclick="comingSoon(this)">Open Dashboard</button><div class="message"></div></div>
+      <div class="card"><h3>TitanCore Holdings</h3><p>Father company • governance</p><button onclick="openCompany(this, 'TitanCore Holdings', 'Father company • governance')">Open Dashboard</button></div>
+      <div class="card"><h3>Vaultara Capital</h3><p>Investments • funding</p><button onclick="openCompany(this, 'Vaultara Capital', 'Investments • funding')">Open Dashboard</button></div>
+      <div class="card"><h3>Family First Equity Group</h3><p>Real estate • equity</p><button onclick="openCompany(this, 'Family First Equity Group', 'Real estate • equity')">Open Dashboard</button></div>
+      <div class="card"><h3>VitalPath Care Group</h3><p>Healthcare • care operations</p><button onclick="openCompany(this, 'VitalPath Care Group', 'Healthcare • care operations')">Open Dashboard</button></div>
+      <div class="card"><h3>RevMotion Auto &amp; Marine</h3><p>Auto • marine • service</p><button onclick="openCompany(this, 'RevMotion Auto & Marine', 'Auto • marine • service')">Open Dashboard</button></div>
     </div>
   </section>
 
@@ -325,25 +417,145 @@
     TitanCore Holdings Central Dashboard • Microsoft login comes next.
   </footer>
 
+  <div class="overlay" id="dashboardOverlay">
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">
+          <h3 id="panelName">Dashboard</h3>
+          <p id="panelDesc">Dashboard description</p>
+        </div>
+        <button class="close-btn" onclick="closeDashboard()">Close</button>
+      </div>
+
+      <div class="panel-grid" id="panelGrid"></div>
+
+      <div class="status-box">
+        <h4>Connection Status</h4>
+        <p>
+          The first dashboard level is open now. The inside modules are visible, but live email,
+          meetings, calendar, contracts, reports, approvals, and data feeds will show real information
+          only after Microsoft login and role connections are finished.
+        </p>
+      </div>
+    </div>
+  </div>
+
   <script>
     function updateClock() {
       const now = new Date();
       document.getElementById("clock").textContent = now.toLocaleString();
     }
-
     updateClock();
     setInterval(updateClock, 1000);
 
-    function comingSoon(button) {
+    const roleModules = [
+      ["Email", "Inbox, sent, internal role mail"],
+      ["Calendar / Meetings", "Meeting schedule and event view"],
+      ["Contracts", "Contract queue and document flow"],
+      ["Reports", "Role summaries and submitted updates"],
+      ["Approvals", "Approval checks and signoff flow"],
+      ["Activity", "Role activity and future live status"],
+      ["Access", "Allowed dashboards and permission view"]
+    ];
+
+    const departmentModules = [
+      ["Manager", "Department manager dashboard view"],
+      ["Assistant Manager", "Department assistant manager view"],
+      ["Employee Group", "Six employee dashboard slots"],
+      ["Email", "Department inbox and routing"],
+      ["Calendar / Meetings", "Department schedule and meeting flow"],
+      ["Reports", "Department reporting and logs"],
+      ["Activity", "Department work activity area"]
+    ];
+
+    const systemModules = [
+      ["Overview", "System summary and function status"],
+      ["Queue", "Pending items and routing queue"],
+      ["Logs", "System logs and tracked history"],
+      ["Reports", "System summaries and output"],
+      ["Approvals", "System approval stage"],
+      ["Activity", "System activity panel"],
+      ["Settings", "Future protected controls"]
+    ];
+
+    const companyModules = [
+      ["Overview", "Company dashboard summary"],
+      ["Leads / Intake", "Client or inquiry intake flow"],
+      ["Email", "Company email and routing"],
+      ["Calendar / Meetings", "Company meeting and schedule view"],
+      ["Reports", "Company reports and summaries"],
+      ["Approvals", "Company review and approval flow"],
+      ["Activity", "Company activity and status view"]
+    ];
+
+    function pressButton(button) {
       button.classList.add("pressed");
-
-      const messageBox = button.parentElement.querySelector(".message");
-      messageBox.textContent = "Not connected yet";
-
-      setTimeout(() => {
-        button.classList.remove("pressed");
-      }, 180);
+      setTimeout(() => button.classList.remove("pressed"), 180);
     }
+
+    function buildPanel(name, desc, modules) {
+      document.getElementById("panelName").textContent = name;
+      document.getElementById("panelDesc").textContent = desc;
+
+      const grid = document.getElementById("panelGrid");
+      grid.innerHTML = "";
+
+      modules.forEach(item => {
+        const [title, text] = item;
+        const card = document.createElement("div");
+        card.className = "mini-card";
+        card.innerHTML = `
+          <h4>${title}</h4>
+          <p>${text}</p>
+          <button type="button">Open ${title}</button>
+          <div class="mini-msg"></div>
+        `;
+        const btn = card.querySelector("button");
+        const msg = card.querySelector(".mini-msg");
+
+        btn.addEventListener("click", function() {
+          msg.textContent = "Not connected yet";
+          btn.style.transform = "scale(0.97)";
+          setTimeout(() => {
+            btn.style.transform = "scale(1)";
+          }, 150);
+        });
+
+        grid.appendChild(card);
+      });
+
+      document.getElementById("dashboardOverlay").classList.add("active");
+    }
+
+    function openDashboard(button, name, desc) {
+      pressButton(button);
+      buildPanel(name + " Dashboard", desc, roleModules);
+    }
+
+    function openDepartment(button, name, desc) {
+      pressButton(button);
+      buildPanel(name, desc, departmentModules);
+    }
+
+    function openSystem(button, name, desc) {
+      pressButton(button);
+      buildPanel(name, desc, systemModules);
+    }
+
+    function openCompany(button, name, desc) {
+      pressButton(button);
+      buildPanel(name + " Dashboard", desc, companyModules);
+    }
+
+    function closeDashboard() {
+      document.getElementById("dashboardOverlay").classList.remove("active");
+    }
+
+    document.getElementById("dashboardOverlay").addEventListener("click", function(e) {
+      if (e.target === this) {
+        closeDashboard();
+      }
+    });
   </script>
 </body>
 </html>
