@@ -5,23 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TitanCore Holdings | Central Dashboard</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
     body {
+      margin: 0;
       font-family: Arial, sans-serif;
-      background: #000000;
+      background: #000;
       color: #d4af37;
-      line-height: 1.5;
     }
 
     .topbar {
-      background: #080808;
-      border-bottom: 2px solid #1a8f49;
-      padding: 24px 20px;
+      background: #0a0a0a;
+      border-bottom: 2px solid #1ea85a;
+      padding: 22px 20px;
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
@@ -30,135 +24,132 @@
     }
 
     .brand h1 {
-      color: #18c25c;
-      font-size: 2rem;
-      margin-bottom: 8px;
+      margin: 0 0 8px 0;
+      color: #1ecf6c;
+      font-size: 32px;
     }
 
     .brand p {
-      color: #f1df9a;
-      max-width: 820px;
-      font-size: 1rem;
+      margin: 0;
+      color: #f0dfa0;
+      font-size: 16px;
+      max-width: 800px;
     }
 
     .timebox {
-      min-width: 220px;
-      background: #111111;
-      border: 1px solid rgba(212, 175, 55, 0.45);
-      border-radius: 16px;
+      background: #111;
+      border: 1px solid #d4af37;
+      border-radius: 14px;
       padding: 12px 14px;
+      min-width: 210px;
     }
 
     .timebox .label {
-      color: #18c25c;
-      font-size: 0.82rem;
+      color: #1ecf6c;
+      font-size: 12px;
       margin-bottom: 6px;
       text-transform: uppercase;
       letter-spacing: 1px;
     }
 
     .timebox .value {
-      color: #ffffff;
+      color: #fff;
       font-weight: bold;
-      font-size: 1rem;
+      font-size: 15px;
     }
 
     .hero {
-      padding: 22px 20px 10px;
+      padding: 20px;
     }
 
     .hero-card {
-      background: #0b0b0b;
-      border: 1px solid rgba(212, 175, 55, 0.28);
-      border-radius: 22px;
-      padding: 22px;
+      background: #0d0d0d;
+      border: 1px solid #d4af37;
+      border-radius: 18px;
+      padding: 20px;
     }
 
     .hero-card h2 {
-      color: #18c25c;
-      font-size: 1.5rem;
-      margin-bottom: 10px;
+      margin: 0 0 10px 0;
+      color: #1ecf6c;
+      font-size: 26px;
     }
 
     .hero-card p {
-      color: #f1df9a;
-      font-size: 1rem;
+      margin: 0;
+      color: #f0dfa0;
+      font-size: 16px;
     }
 
     .section {
-      padding: 18px 20px 8px;
+      padding: 20px;
     }
 
     .section h2 {
-      color: #18c25c;
-      font-size: 1.8rem;
-      margin-bottom: 8px;
+      margin: 0 0 8px 0;
+      color: #1ecf6c;
+      font-size: 28px;
     }
 
     .section-desc {
+      margin: 0 0 16px 0;
       color: #dfc969;
-      margin-bottom: 16px;
-      font-size: 0.98rem;
+      font-size: 15px;
     }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
       gap: 16px;
     }
 
     .card {
-      background: #0d0d0d;
-      border: 1px solid rgba(212, 175, 55, 0.35);
-      border-radius: 20px;
+      background: #111;
+      border: 1px solid #d4af37;
+      border-radius: 16px;
       padding: 18px;
     }
 
     .card h3 {
-      color: #ffffff;
-      font-size: 1.08rem;
-      margin-bottom: 8px;
+      margin: 0 0 8px 0;
+      color: #fff;
+      font-size: 18px;
     }
 
     .card p {
-      color: #f1df9a;
-      font-size: 0.95rem;
-      margin-bottom: 14px;
-      min-height: 60px;
+      margin: 0 0 14px 0;
+      color: #f0dfa0;
+      font-size: 14px;
+      min-height: 58px;
     }
 
-    .pill {
-      display: inline-block;
+    .btn {
       width: 100%;
-      text-align: center;
-      background: #d4af37;
-      color: #000000;
-      padding: 10px 14px;
+      border: none;
       border-radius: 999px;
+      background: #d4af37;
+      color: #000;
+      padding: 11px 14px;
       font-weight: bold;
-      font-size: 0.95rem;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: #1ecf6c;
+      color: #fff;
     }
 
     .footer {
       padding: 28px 20px 36px;
-      color: #a88b34;
       text-align: center;
-      font-size: 0.92rem;
-    }
-
-    @media (max-width: 700px) {
-      .brand h1 {
-        font-size: 1.7rem;
-      }
-
-      .section h2 {
-        font-size: 1.55rem;
-      }
+      color: #a88b34;
+      font-size: 14px;
     }
   </style>
 </head>
 <body>
-  <header class="topbar">
+  <div class="topbar">
     <div class="brand">
       <h1>TitanCore Holdings</h1>
       <p>Central Dashboard • Leadership • Executive • Central Departments • Operational Systems • Companies</p>
@@ -166,101 +157,104 @@
 
     <div class="timebox">
       <div class="label">System Time</div>
-      <div class="value">Private Dashboard</div>
+      <div class="value" id="clock">Loading...</div>
     </div>
-  </header>
+  </div>
 
-  <section class="hero">
+  <div class="hero">
     <div class="hero-card">
       <h2>Central Dashboard</h2>
       <p>
-        This is the private TitanCore central command layout. Mantle and general roles are for oversight,
-        meetings, recommendations, and tracking. Company leadership and TitanCore company leadership handle
-        the sign stages. CEO is the final human signer. Chief of Staff includes the 10 Chiefs branch.
+        This is the private Central Dashboard. First click opens the dashboard name.
+        Later, Microsoft login and full inside menus will be connected.
       </p>
     </div>
-  </section>
+  </div>
 
-  <section class="section">
+  <div class="section">
     <h2>Leadership</h2>
     <p class="section-desc">Mantle of 7 — oversight, meetings, recommendations, and review.</p>
     <div class="grid">
-      <div class="card"><h3>CEO</h3><p>Final authority, full oversight, and final human sign before client release.</p><div class="pill">Open Dashboard</div></div>
-      <div class="card"><h3>President</h3><p>Strategic counsel, review, meetings, and oversight only.</p><div class="pill">Open Dashboard</div></div>
-      <div class="card"><h3>Vice President</h3><p>Review, recommendations, and system-wide visibility only.</p><div class="pill">Open Dashboard</div></div>
-      <div class="card"><h3>Director</h3><p>Direction, internal oversight, and recommendations only.</p><div class="pill">Open Dashboard</div></div>
-      <div class="card"><h3>Assistant Director</h3><p>Support coordination, cross-checking, and oversight only.</p><div class="pill">Open Dashboard</div></div>
-      <div class="card"><h3>Chief of Staff</h3><p>Coordination, oversight, and management of the 10 Chiefs reporting branch.</p><div class="pill">Open Dashboard</div></div>
-      <div class="card"><h3>Executive Advisor</h3><p>High-level counsel and advisory review only.</p><div class="pill">Open Dashboard</div></div>
+      <div class="card"><h3>CEO</h3><p>Final authority, full oversight, and final human sign before client release.</p><button class="btn" onclick="openDash('CEO Dashboard')">Open Dashboard</button></div>
+      <div class="card"><h3>President</h3><p>Strategic counsel, review, meetings, and oversight only.</p><button class="btn" onclick="openDash('President Dashboard')">Open Dashboard</button></div>
+      <div class="card"><h3>Vice President</h3><p>Review, recommendations, and system-wide visibility only.</p><button class="btn" onclick="openDash('Vice President Dashboard')">Open Dashboard</button></div>
+      <div class="card"><h3>Director</h3><p>Direction, internal oversight, and recommendations only.</p><button class="btn" onclick="openDash('Director Dashboard')">Open Dashboard</button></div>
+      <div class="card"><h3>Assistant Director</h3><p>Support coordination, cross-checking, and oversight only.</p><button class="btn" onclick="openDash('Assistant Director Dashboard')">Open Dashboard</button></div>
+      <div class="card"><h3>Chief of Staff</h3><p>Coordination, oversight, and management of the 10 Chiefs reporting branch.</p><button class="btn" onclick="openDash('Chief of Staff Dashboard')">Open Dashboard</button></div>
+      <div class="card"><h3>Executive Advisor</h3><p>High-level counsel and advisory review only.</p><button class="btn" onclick="openDash('Executive Advisor Dashboard')">Open Dashboard</button></div>
     </div>
-  </section>
+  </div>
 
-  <section class="section">
+  <div class="section">
     <h2>Executive</h2>
-    <p class="section-desc">General leadership for reports, meetings, oversight, and recommendations — not signing.</p>
+    <p class="section-desc">General leadership for reports, meetings, oversight, and recommendations.</p>
     <div class="grid">
-      <div class="card"><h3>General Manager</h3><p>Receives reports, oversees company performance, and sends recommendations downward.</p><div class="pill">Open Dashboard</div></div>
-      <div class="card"><h3>General Assistant Manager</h3><p>Supports oversight, reporting review, and recommendation flow.</p><div class="pill">Open Dashboard</div></div>
-      <div class="card"><h3>General Administrator</h3><p>Tracks records, summaries, administration flow, and meeting support.</p><div class="pill">Open Dashboard</div></div>
+      <div class="card"><h3>General Manager</h3><p>Receives reports, oversees company performance, and sends recommendations downward.</p><button class="btn" onclick="openDash('General Manager Dashboard')">Open Dashboard</button></div>
+      <div class="card"><h3>General Assistant Manager</h3><p>Supports oversight, reporting review, and recommendation flow.</p><button class="btn" onclick="openDash('General Assistant Manager Dashboard')">Open Dashboard</button></div>
+      <div class="card"><h3>General Administrator</h3><p>Tracks records, summaries, administration flow, and meeting support.</p><button class="btn" onclick="openDash('General Administrator Dashboard')">Open Dashboard</button></div>
     </div>
-  </section>
+  </div>
 
-  <section class="section">
+  <div class="section">
     <h2>Central Departments</h2>
     <p class="section-desc">Future-ready structure for AI now and human staff later.</p>
     <div class="grid">
-      <div class="card"><h3>Contact Department</h3><p>Intake, inquiries, communication structure, and routing.</p><div class="pill">Open Dashboard</div></div>
-      <div class="card"><h3>Contract Department</h3><p>Contract intake, review structure, and correction flow.</p><div class="pill">Open Dashboard</div></div>
-      <div class="card"><h3>Email Routing Department</h3><p>Internal and external mail direction and control.</p><div class="pill">Open Dashboard</div></div>
-      <div class="card"><h3>Report Department</h3><p>Weekly reports, summaries, logs, and reporting structure.</p><div class="pill">Open Dashboard</div></div>
-      <div class="card"><h3>Approval Department</h3><p>Review checkpoints and readiness checks.</p><div class="pill">Open Dashboard</div></div>
-      <div class="card"><h3>Omni Operations Department</h3><p>Master coordination and operational control structure.</p><div class="pill">Open Dashboard</div></div>
-      <div class="card"><h3>Tax Network Department</h3><p>Tax work, proofs, lender packs, and jurisdiction support.</p><div class="pill">Open Dashboard</div></div>
-      <div class="card"><h3>AI Operations Department</h3><p>AI agent structure, automation flow, and future human integration.</p><div class="pill">Open Dashboard</div></div>
-      <div class="card"><h3>Public Portal Department</h3><p>Public-facing presentation, outside access, and content direction.</p><div class="pill">Open Dashboard</div></div>
-      <div class="card"><h3>Finance Department</h3><p>Tracking, allocation, financial logs, and reporting.</p><div class="pill">Open Dashboard</div></div>
+      <div class="card"><h3>Contact Department</h3><p>Intake, inquiries, communication structure, and routing.</p><button class="btn" onclick="openDash('Contact Department')">Open Dashboard</button></div>
+      <div class="card"><h3>Contract Department</h3><p>Contract intake, review structure, and correction flow.</p><button class="btn" onclick="openDash('Contract Department')">Open Dashboard</button></div>
+      <div class="card"><h3>Email Routing Department</h3><p>Internal and external mail direction and control.</p><button class="btn" onclick="openDash('Email Routing Department')">Open Dashboard</button></div>
+      <div class="card"><h3>Report Department</h3><p>Weekly reports, summaries, logs, and reporting structure.</p><button class="btn" onclick="openDash('Report Department')">Open Dashboard</button></div>
+      <div class="card"><h3>Approval Department</h3><p>Review checkpoints and readiness checks.</p><button class="btn" onclick="openDash('Approval Department')">Open Dashboard</button></div>
+      <div class="card"><h3>Omni Operations Department</h3><p>Master coordination and operational control structure.</p><button class="btn" onclick="openDash('Omni Operations Department')">Open Dashboard</button></div>
+      <div class="card"><h3>Tax Network Department</h3><p>Tax work, proofs, lender packs, and jurisdiction support.</p><button class="btn" onclick="openDash('Tax Network Department')">Open Dashboard</button></div>
+      <div class="card"><h3>AI Operations Department</h3><p>AI agent structure, automation flow, and future human integration.</p><button class="btn" onclick="openDash('AI Operations Department')">Open Dashboard</button></div>
+      <div class="card"><h3>Public Portal Department</h3><p>Public-facing presentation, outside access, and content direction.</p><button class="btn" onclick="openDash('Public Portal Department')">Open Dashboard</button></div>
+      <div class="card"><h3>Finance Department</h3><p>Tracking, allocation, financial logs, and reporting.</p><button class="btn" onclick="openDash('Finance Department')">Open Dashboard</button></div>
     </div>
-  </section>
+  </div>
 
-  <section class="section">
+  <div class="section">
     <h2>Operational Systems</h2>
     <p class="section-desc">AI-powered systems and tools running work behind the structure.</p>
     <div class="grid">
-      <div class="card"><h3>Contact</h3><p>Communication intake, routing, and tracked response tools.</p><div class="pill">Open Dashboard</div></div>
-      <div class="card"><h3>Contract</h3><p>Contract flow, readiness checks, and tracking tools.</p><div class="pill">Open Dashboard</div></div>
-      <div class="card"><h3>Email Routing</h3><p>Inbox direction, message routing, and distribution tools.</p><div class="pill">Open Dashboard</div></div>
-      <div class="card"><h3>Report</h3><p>Summaries, logs, weekly reporting, and status submissions.</p><div class="pill">Open Dashboard</div></div>
-      <div class="card"><h3>Approval</h3><p>Approval-stage tracking and correction loops.</p><div class="pill">Open Dashboard</div></div>
-      <div class="card"><h3>Omni System</h3><p>Master coordination tools and network-wide visibility.</p><div class="pill">Open Dashboard</div></div>
-      <div class="card"><h3>Tax Network</h3><p>Tax operations, scans, exports, and lender pack generation.</p><div class="pill">Open Dashboard</div></div>
-      <div class="card"><h3>Agent A.I. Suite</h3><p>AI automation modules and operational intelligence tools.</p><div class="pill">Open Dashboard</div></div>
-      <div class="card"><h3>Public Portal</h3><p>Public-side access, forms, and presentation controls.</p><div class="pill">Open Dashboard</div></div>
-      <div class="card"><h3>Finance</h3><p>Financial tracking, status panels, and reporting tools.</p><div class="pill">Open Dashboard</div></div>
+      <div class="card"><h3>Contact</h3><p>Communication intake, routing, and tracked response tools.</p><button class="btn" onclick="openDash('Contact System')">Open Dashboard</button></div>
+      <div class="card"><h3>Contract</h3><p>Contract flow, readiness checks, and tracking tools.</p><button class="btn" onclick="openDash('Contract System')">Open Dashboard</button></div>
+      <div class="card"><h3>Email Routing</h3><p>Inbox direction, message routing, and distribution tools.</p><button class="btn" onclick="openDash('Email Routing System')">Open Dashboard</button></div>
+      <div class="card"><h3>Report</h3><p>Summaries, logs, weekly reporting, and status submissions.</p><button class="btn" onclick="openDash('Report System')">Open Dashboard</button></div>
+      <div class="card"><h3>Approval</h3><p>Approval-stage tracking and correction loops.</p><button class="btn" onclick="openDash('Approval System')">Open Dashboard</button></div>
+      <div class="card"><h3>Omni System</h3><p>Master coordination tools and network-wide visibility.</p><button class="btn" onclick="openDash('Omni System')">Open Dashboard</button></div>
+      <div class="card"><h3>Tax Network</h3><p>Tax operations, scans, exports, and lender pack generation.</p><button class="btn" onclick="openDash('Tax Network System')">Open Dashboard</button></div>
+      <div class="card"><h3>Agent A.I. Suite</h3><p>AI automation modules and operational intelligence tools.</p><button class="btn" onclick="openDash('Agent A.I. Suite')">Open Dashboard</button></div>
+      <div class="card"><h3>Public Portal</h3><p>Public-side access, forms, and presentation controls.</p><button class="btn" onclick="openDash('Public Portal System')">Open Dashboard</button></div>
+      <div class="card"><h3>Finance</h3><p>Financial tracking, status panels, and reporting tools.</p><button class="btn" onclick="openDash('Finance System')">Open Dashboard</button></div>
     </div>
-  </section>
+  </div>
 
-  <section class="section">
+  <div class="section">
     <h2>Companies</h2>
     <p class="section-desc">Company-level workflow, submission, review, and signing stages.</p>
     <div class="grid">
-      <div class="card"><h3>TitanCore Holdings</h3><p>TitanCore company review layer, correction returns, signing stage, and send-to-CEO flow.</p><div class="pill">Open Dashboard</div></div>
-      <div class="card"><h3>Vaultara Capital</h3><p>Department completion, company sign stage, and send-to-TitanCore workflow.</p><div class="pill">Open Dashboard</div></div>
-      <div class="card"><h3>Family First Equity Group</h3><p>Department completion, company sign stage, and send-to-TitanCore workflow.</p><div class="pill">Open Dashboard</div></div>
-      <div class="card"><h3>VitalPath Care Group</h3><p>Department completion, company sign stage, and send-to-TitanCore workflow.</p><div class="pill">Open Dashboard</div></div>
-      <div class="card"><h3>RevMotion Auto &amp; Marine</h3><p>Department completion, company sign stage, and send-to-TitanCore workflow.</p><div class="pill">Open Dashboard</div></div>
+      <div class="card"><h3>TitanCore Holdings</h3><p>TitanCore company review layer, correction returns, signing stage, and send-to-CEO flow.</p><button class="btn" onclick="openDash('TitanCore Holdings Dashboard')">Open Dashboard</button></div>
+      <div class="card"><h3>Vaultara Capital</h3><p>Department completion, company sign stage, and send-to-TitanCore workflow.</p><button class="btn" onclick="openDash('Vaultara Capital Dashboard')">Open Dashboard</button></div>
+      <div class="card"><h3>Family First Equity Group</h3><p>Department completion, company sign stage, and send-to-TitanCore workflow.</p><button class="btn" onclick="openDash('Family First Equity Group Dashboard')">Open Dashboard</button></div>
+      <div class="card"><h3>VitalPath Care Group</h3><p>Department completion, company sign stage, and send-to-TitanCore workflow.</p><button class="btn" onclick="openDash('VitalPath Care Group Dashboard')">Open Dashboard</button></div>
+      <div class="card"><h3>RevMotion Auto &amp; Marine</h3><p>Department completion, company sign stage, and send-to-TitanCore workflow.</p><button class="btn" onclick="openDash('RevMotion Auto & Marine Dashboard')">Open Dashboard</button></div>
     </div>
-  </section>
+  </div>
 
-  <footer class="footer">
+  <div class="footer">
     TitanCore Holdings Central Dashboard
-  </footer>
+  </div>
 
   <script>
     function updateClock() {
-      document.getElementById("clock").textContent = new Date().toLocaleString();
+      document.getElementById('clock').textContent = new Date().toLocaleString();
     }
     updateClock();
     setInterval(updateClock, 1000);
+
+    function openDash(name) {
+      alert(name + "\n\nFirst level works.\n\nInside menus will say: Not connected yet.");
+    }
   </script>
 </body>
 </html>
