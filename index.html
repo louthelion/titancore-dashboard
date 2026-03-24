@@ -1,21 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TitanCore Holdings | Central Dashboard</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Central Dashboard</title>
   <style>
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
+      padding: 0;
+    }
+
+    body {
       font-family: Arial, sans-serif;
       background: #000;
       color: #d4af37;
+      line-height: 1.5;
     }
 
     .topbar {
-      background: #0a0a0a;
-      border-bottom: 2px solid #1ea85a;
-      padding: 22px 20px;
+      background: #080808;
+      border-bottom: 2px solid #1c9c53;
+      padding: 24px 20px;
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
@@ -24,29 +30,28 @@
     }
 
     .brand h1 {
-      margin: 0 0 8px 0;
-      color: #1ecf6c;
-      font-size: 32px;
+      color: #18c25c;
+      font-size: 2rem;
+      margin-bottom: 8px;
     }
 
     .brand p {
-      margin: 0;
-      color: #f0dfa0;
-      font-size: 16px;
-      max-width: 800px;
+      color: #f1df9a;
+      max-width: 850px;
+      font-size: 1rem;
     }
 
     .timebox {
+      min-width: 220px;
       background: #111;
-      border: 1px solid #d4af37;
-      border-radius: 14px;
+      border: 1px solid rgba(212, 175, 55, 0.45);
+      border-radius: 16px;
       padding: 12px 14px;
-      min-width: 210px;
     }
 
     .timebox .label {
-      color: #1ecf6c;
-      font-size: 12px;
+      color: #18c25c;
+      font-size: 0.82rem;
       margin-bottom: 6px;
       text-transform: uppercase;
       letter-spacing: 1px;
@@ -55,206 +60,665 @@
     .timebox .value {
       color: #fff;
       font-weight: bold;
-      font-size: 15px;
+      font-size: 1rem;
     }
 
     .hero {
-      padding: 20px;
+      padding: 22px 20px 10px;
     }
 
     .hero-card {
-      background: #0d0d0d;
-      border: 1px solid #d4af37;
-      border-radius: 18px;
-      padding: 20px;
+      background: #0b0b0b;
+      border: 1px solid rgba(212, 175, 55, 0.28);
+      border-radius: 22px;
+      padding: 22px;
     }
 
     .hero-card h2 {
-      margin: 0 0 10px 0;
-      color: #1ecf6c;
-      font-size: 26px;
+      color: #18c25c;
+      font-size: 1.5rem;
+      margin-bottom: 10px;
     }
 
     .hero-card p {
-      margin: 0;
-      color: #f0dfa0;
-      font-size: 16px;
+      color: #f1df9a;
+      font-size: 1rem;
     }
 
     .section {
-      padding: 20px;
+      padding: 18px 20px 8px;
     }
 
     .section h2 {
-      margin: 0 0 8px 0;
-      color: #1ecf6c;
-      font-size: 28px;
+      color: #18c25c;
+      font-size: 1.8rem;
+      margin-bottom: 8px;
     }
 
     .section-desc {
-      margin: 0 0 16px 0;
       color: #dfc969;
-      font-size: 15px;
+      margin-bottom: 16px;
+      font-size: 0.98rem;
     }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 16px;
     }
 
     .card {
-      background: #111;
-      border: 1px solid #d4af37;
-      border-radius: 16px;
+      background: #0d0d0d;
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      border-radius: 20px;
       padding: 18px;
     }
 
     .card h3 {
-      margin: 0 0 8px 0;
       color: #fff;
-      font-size: 18px;
+      font-size: 1.08rem;
+      margin-bottom: 8px;
     }
 
     .card p {
-      margin: 0 0 14px 0;
-      color: #f0dfa0;
-      font-size: 14px;
-      min-height: 58px;
+      color: #f1df9a;
+      font-size: 0.95rem;
+      margin-bottom: 14px;
+      min-height: 60px;
     }
 
     .btn {
+      display: inline-block;
       width: 100%;
       border: none;
       border-radius: 999px;
       background: #d4af37;
       color: #000;
-      padding: 11px 14px;
+      padding: 10px 14px;
       font-weight: bold;
-      font-size: 14px;
       cursor: pointer;
+      font-size: 0.95rem;
     }
 
     .btn:hover {
-      background: #1ecf6c;
+      background: #18c25c;
       color: #fff;
     }
 
     .footer {
       padding: 28px 20px 36px;
-      text-align: center;
       color: #a88b34;
-      font-size: 14px;
+      text-align: center;
+      font-size: 0.92rem;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.88);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 9999;
+    }
+
+    .overlay.show {
+      display: flex;
+    }
+
+    .modal {
+      width: min(1080px, 100%);
+      max-height: 92vh;
+      overflow-y: auto;
+      background: #090909;
+      border: 1px solid rgba(212, 175, 55, 0.45);
+      border-radius: 22px;
+      padding: 20px;
+    }
+
+    .modal-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .modal-top h3 {
+      color: #18c25c;
+      font-size: 1.6rem;
+      margin-bottom: 6px;
+    }
+
+    .modal-top p {
+      color: #f1df9a;
+      max-width: 760px;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .modal-actions .btn {
+      width: auto;
+      min-width: 110px;
+    }
+
+    .subheading {
+      color: #18c25c;
+      font-size: 1.15rem;
+      margin: 18px 0 12px;
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    .mini-card {
+      background: #111;
+      border: 1px solid rgba(212, 175, 55, 0.24);
+      border-radius: 16px;
+      padding: 16px;
+    }
+
+    .mini-card h4 {
+      color: #fff;
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+
+    .mini-card p {
+      color: #f1df9a;
+      margin-bottom: 12px;
+      min-height: 44px;
+      font-size: 0.93rem;
+    }
+
+    .mini-msg {
+      color: #18c25c;
+      margin-top: 8px;
+      font-size: 0.88rem;
+      min-height: 18px;
+    }
+
+    .status-box {
+      margin-top: 18px;
+      background: #111;
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      border-radius: 16px;
+      padding: 16px;
+    }
+
+    .status-box h4 {
+      color: #18c25c;
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+
+    .status-box p {
+      color: #f1df9a;
+      margin-bottom: 8px;
+      font-size: 0.94rem;
+    }
+
+    .status-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 700px) {
+      .brand h1 {
+        font-size: 1.7rem;
+      }
+
+      .section h2 {
+        font-size: 1.55rem;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="topbar">
+  <header class="topbar">
     <div class="brand">
-      <h1>TitanCore Holdings</h1>
-      <p>Central Dashboard • Leadership • Executive • Central Departments • Operational Systems • Companies</p>
+      <h1>Central Dashboard</h1>
+      <p>Leadership • Executive • Central Departments • Operational Systems • Companies</p>
     </div>
 
     <div class="timebox">
       <div class="label">System Time</div>
       <div class="value" id="clock">Loading...</div>
     </div>
-  </div>
+  </header>
 
-  <div class="hero">
+  <section class="hero">
     <div class="hero-card">
       <h2>Central Dashboard</h2>
       <p>
-        This is the private Central Dashboard. First click opens the dashboard name.
-        Later, Microsoft login and full inside menus will be connected.
+        First click opens the dashboard menu. Second click on the inside items will say
+        “Not connected yet” until email, calendar, contracts, files, and Microsoft access are connected.
       </p>
     </div>
-  </div>
+  </section>
 
-  <div class="section">
+  <section class="section">
     <h2>Leadership</h2>
     <p class="section-desc">Mantle of 7 — oversight, meetings, recommendations, and review.</p>
     <div class="grid">
-      <div class="card"><h3>CEO</h3><p>Final authority, full oversight, and final human sign before client release.</p><button class="btn" onclick="openDash('CEO Dashboard')">Open Dashboard</button></div>
-      <div class="card"><h3>President</h3><p>Strategic counsel, review, meetings, and oversight only.</p><button class="btn" onclick="openDash('President Dashboard')">Open Dashboard</button></div>
-      <div class="card"><h3>Vice President</h3><p>Review, recommendations, and system-wide visibility only.</p><button class="btn" onclick="openDash('Vice President Dashboard')">Open Dashboard</button></div>
-      <div class="card"><h3>Director</h3><p>Direction, internal oversight, and recommendations only.</p><button class="btn" onclick="openDash('Director Dashboard')">Open Dashboard</button></div>
-      <div class="card"><h3>Assistant Director</h3><p>Support coordination, cross-checking, and oversight only.</p><button class="btn" onclick="openDash('Assistant Director Dashboard')">Open Dashboard</button></div>
-      <div class="card"><h3>Chief of Staff</h3><p>Coordination, oversight, and management of the 10 Chiefs reporting branch.</p><button class="btn" onclick="openDash('Chief of Staff Dashboard')">Open Dashboard</button></div>
-      <div class="card"><h3>Executive Advisor</h3><p>High-level counsel and advisory review only.</p><button class="btn" onclick="openDash('Executive Advisor Dashboard')">Open Dashboard</button></div>
+      <div class="card"><h3>CEO</h3><p>Final authority, full oversight, and final human sign before client release.</p><button class="btn" onclick="openPanel('CEO Dashboard','Final authority, full oversight, and final sign queue.', ceoModules, ceoStatus)">Open Dashboard</button></div>
+      <div class="card"><h3>President</h3><p>Strategic counsel, review, meetings, and oversight only.</p><button class="btn" onclick="openPanel('President Dashboard','Advisory and oversight role only.', oversightModules, oversightStatus)">Open Dashboard</button></div>
+      <div class="card"><h3>Vice President</h3><p>Review, recommendations, and system-wide visibility only.</p><button class="btn" onclick="openPanel('Vice President Dashboard','Advisory and oversight role only.', oversightModules, oversightStatus)">Open Dashboard</button></div>
+      <div class="card"><h3>Director</h3><p>Direction, internal oversight, and recommendations only.</p><button class="btn" onclick="openPanel('Director Dashboard','Advisory and oversight role only.', oversightModules, oversightStatus)">Open Dashboard</button></div>
+      <div class="card"><h3>Assistant Director</h3><p>Support coordination, cross-checking, and oversight only.</p><button class="btn" onclick="openPanel('Assistant Director Dashboard','Advisory and oversight role only.', oversightModules, oversightStatus)">Open Dashboard</button></div>
+      <div class="card"><h3>Chief of Staff</h3><p>Coordination, oversight, and management of the 10 Chiefs reporting branch.</p><button class="btn" onclick="openChiefOfStaff()">Open Dashboard</button></div>
+      <div class="card"><h3>Executive Advisor</h3><p>High-level counsel and advisory review only.</p><button class="btn" onclick="openPanel('Executive Advisor Dashboard','Advisory and oversight role only.', oversightModules, oversightStatus)">Open Dashboard</button></div>
     </div>
-  </div>
+  </section>
 
-  <div class="section">
+  <section class="section">
     <h2>Executive</h2>
-    <p class="section-desc">General leadership for reports, meetings, oversight, and recommendations.</p>
+    <p class="section-desc">General leadership for reports, meetings, oversight, and recommendations — not signing.</p>
     <div class="grid">
-      <div class="card"><h3>General Manager</h3><p>Receives reports, oversees company performance, and sends recommendations downward.</p><button class="btn" onclick="openDash('General Manager Dashboard')">Open Dashboard</button></div>
-      <div class="card"><h3>General Assistant Manager</h3><p>Supports oversight, reporting review, and recommendation flow.</p><button class="btn" onclick="openDash('General Assistant Manager Dashboard')">Open Dashboard</button></div>
-      <div class="card"><h3>General Administrator</h3><p>Tracks records, summaries, administration flow, and meeting support.</p><button class="btn" onclick="openDash('General Administrator Dashboard')">Open Dashboard</button></div>
+      <div class="card"><h3>General Manager</h3><p>Receives reports, oversees company performance, and sends recommendations downward.</p><button class="btn" onclick="openPanel('General Manager Dashboard','Oversight, workflow tracking, and meetings only.', generalModules, generalStatus)">Open Dashboard</button></div>
+      <div class="card"><h3>General Assistant Manager</h3><p>Supports oversight, reporting review, and recommendation flow.</p><button class="btn" onclick="openPanel('General Assistant Manager Dashboard','Oversight, workflow tracking, and meetings only.', generalModules, generalStatus)">Open Dashboard</button></div>
+      <div class="card"><h3>General Administrator</h3><p>Tracks records, summaries, administration flow, and meeting support.</p><button class="btn" onclick="openPanel('General Administrator Dashboard','Oversight, workflow tracking, and meetings only.', generalModules, generalStatus)">Open Dashboard</button></div>
     </div>
-  </div>
+  </section>
 
-  <div class="section">
+  <section class="section">
     <h2>Central Departments</h2>
     <p class="section-desc">Future-ready structure for AI now and human staff later.</p>
     <div class="grid">
-      <div class="card"><h3>Contact Department</h3><p>Intake, inquiries, communication structure, and routing.</p><button class="btn" onclick="openDash('Contact Department')">Open Dashboard</button></div>
-      <div class="card"><h3>Contract Department</h3><p>Contract intake, review structure, and correction flow.</p><button class="btn" onclick="openDash('Contract Department')">Open Dashboard</button></div>
-      <div class="card"><h3>Email Routing Department</h3><p>Internal and external mail direction and control.</p><button class="btn" onclick="openDash('Email Routing Department')">Open Dashboard</button></div>
-      <div class="card"><h3>Report Department</h3><p>Weekly reports, summaries, logs, and reporting structure.</p><button class="btn" onclick="openDash('Report Department')">Open Dashboard</button></div>
-      <div class="card"><h3>Approval Department</h3><p>Review checkpoints and readiness checks.</p><button class="btn" onclick="openDash('Approval Department')">Open Dashboard</button></div>
-      <div class="card"><h3>Omni Operations Department</h3><p>Master coordination and operational control structure.</p><button class="btn" onclick="openDash('Omni Operations Department')">Open Dashboard</button></div>
-      <div class="card"><h3>Tax Network Department</h3><p>Tax work, proofs, lender packs, and jurisdiction support.</p><button class="btn" onclick="openDash('Tax Network Department')">Open Dashboard</button></div>
-      <div class="card"><h3>AI Operations Department</h3><p>AI agent structure, automation flow, and future human integration.</p><button class="btn" onclick="openDash('AI Operations Department')">Open Dashboard</button></div>
-      <div class="card"><h3>Public Portal Department</h3><p>Public-facing presentation, outside access, and content direction.</p><button class="btn" onclick="openDash('Public Portal Department')">Open Dashboard</button></div>
-      <div class="card"><h3>Finance Department</h3><p>Tracking, allocation, financial logs, and reporting.</p><button class="btn" onclick="openDash('Finance Department')">Open Dashboard</button></div>
+      <div class="card"><h3>Contact Department</h3><p>Intake, inquiries, communication structure, and routing.</p><button class="btn" onclick="openPanel('Contact Department','Department structure view.', departmentModules, departmentStatus)">Open Dashboard</button></div>
+      <div class="card"><h3>Contract Department</h3><p>Contract intake, review structure, and correction flow.</p><button class="btn" onclick="openPanel('Contract Department','Department structure view.', departmentModules, departmentStatus)">Open Dashboard</button></div>
+      <div class="card"><h3>Email Routing Department</h3><p>Internal and external mail direction and control.</p><button class="btn" onclick="openPanel('Email Routing Department','Department structure view.', departmentModules, departmentStatus)">Open Dashboard</button></div>
+      <div class="card"><h3>Report Department</h3><p>Weekly reports, summaries, logs, and reporting structure.</p><button class="btn" onclick="openPanel('Report Department','Department structure view.', departmentModules, departmentStatus)">Open Dashboard</button></div>
+      <div class="card"><h3>Approval Department</h3><p>Review checkpoints and readiness checks.</p><button class="btn" onclick="openPanel('Approval Department','Department structure view.', departmentModules, departmentStatus)">Open Dashboard</button></div>
+      <div class="card"><h3>Omni Operations Department</h3><p>Master coordination and operational control structure.</p><button class="btn" onclick="openPanel('Omni Operations Department','Department structure view.', departmentModules, departmentStatus)">Open Dashboard</button></div>
+      <div class="card"><h3>Tax Network Department</h3><p>Tax work, proofs, lender packs, and jurisdiction support.</p><button class="btn" onclick="openPanel('Tax Network Department','Department structure view.', departmentModules, departmentStatus)">Open Dashboard</button></div>
+      <div class="card"><h3>AI Operations Department</h3><p>AI agent structure, automation flow, and future human integration.</p><button class="btn" onclick="openPanel('AI Operations Department','Department structure view.', departmentModules, departmentStatus)">Open Dashboard</button></div>
+      <div class="card"><h3>Public Portal Department</h3><p>Public-facing presentation, outside access, and content direction.</p><button class="btn" onclick="openPanel('Public Portal Department','Department structure view.', departmentModules, departmentStatus)">Open Dashboard</button></div>
+      <div class="card"><h3>Finance Department</h3><p>Tracking, allocation, financial logs, and reporting.</p><button class="btn" onclick="openPanel('Finance Department','Department structure view.', departmentModules, departmentStatus)">Open Dashboard</button></div>
     </div>
-  </div>
+  </section>
 
-  <div class="section">
+  <section class="section">
     <h2>Operational Systems</h2>
     <p class="section-desc">AI-powered systems and tools running work behind the structure.</p>
     <div class="grid">
-      <div class="card"><h3>Contact</h3><p>Communication intake, routing, and tracked response tools.</p><button class="btn" onclick="openDash('Contact System')">Open Dashboard</button></div>
-      <div class="card"><h3>Contract</h3><p>Contract flow, readiness checks, and tracking tools.</p><button class="btn" onclick="openDash('Contract System')">Open Dashboard</button></div>
-      <div class="card"><h3>Email Routing</h3><p>Inbox direction, message routing, and distribution tools.</p><button class="btn" onclick="openDash('Email Routing System')">Open Dashboard</button></div>
-      <div class="card"><h3>Report</h3><p>Summaries, logs, weekly reporting, and status submissions.</p><button class="btn" onclick="openDash('Report System')">Open Dashboard</button></div>
-      <div class="card"><h3>Approval</h3><p>Approval-stage tracking and correction loops.</p><button class="btn" onclick="openDash('Approval System')">Open Dashboard</button></div>
-      <div class="card"><h3>Omni System</h3><p>Master coordination tools and network-wide visibility.</p><button class="btn" onclick="openDash('Omni System')">Open Dashboard</button></div>
-      <div class="card"><h3>Tax Network</h3><p>Tax operations, scans, exports, and lender pack generation.</p><button class="btn" onclick="openDash('Tax Network System')">Open Dashboard</button></div>
-      <div class="card"><h3>Agent A.I. Suite</h3><p>AI automation modules and operational intelligence tools.</p><button class="btn" onclick="openDash('Agent A.I. Suite')">Open Dashboard</button></div>
-      <div class="card"><h3>Public Portal</h3><p>Public-side access, forms, and presentation controls.</p><button class="btn" onclick="openDash('Public Portal System')">Open Dashboard</button></div>
-      <div class="card"><h3>Finance</h3><p>Financial tracking, status panels, and reporting tools.</p><button class="btn" onclick="openDash('Finance System')">Open Dashboard</button></div>
+      <div class="card"><h3>Contact</h3><p>Communication intake, routing, and tracked response tools.</p><button class="btn" onclick="openPanel('Contact System','System-level tools and modules.', systemModules, systemStatus)">Open Dashboard</button></div>
+      <div class="card"><h3>Contract</h3><p>Contract flow, readiness checks, and tracking tools.</p><button class="btn" onclick="openPanel('Contract System','System-level tools and modules.', systemModules, systemStatus)">Open Dashboard</button></div>
+      <div class="card"><h3>Email Routing</h3><p>Inbox direction, message routing, and distribution tools.</p><button class="btn" onclick="openPanel('Email Routing System','System-level tools and modules.', systemModules, systemStatus)">Open Dashboard</button></div>
+      <div class="card"><h3>Report</h3><p>Summaries, logs, weekly reporting, and status submissions.</p><button class="btn" onclick="openPanel('Report System','System-level tools and modules.', systemModules, systemStatus)">Open Dashboard</button></div>
+      <div class="card"><h3>Approval</h3><p>Approval-stage tracking and correction loops.</p><button class="btn" onclick="openPanel('Approval System','System-level tools and modules.', systemModules, systemStatus)">Open Dashboard</button></div>
+      <div class="card"><h3>Omni System</h3><p>Master coordination tools and network-wide visibility.</p><button class="btn" onclick="openPanel('Omni System','System-level tools and modules.', systemModules, systemStatus)">Open Dashboard</button></div>
+      <div class="card"><h3>Tax Network</h3><p>Tax operations, scans, exports, and lender pack generation.</p><button class="btn" onclick="openPanel('Tax Network System','System-level tools and modules.', systemModules, systemStatus)">Open Dashboard</button></div>
+      <div class="card"><h3>Agent A.I. Suite</h3><p>AI automation modules and operational intelligence tools.</p><button class="btn" onclick="openPanel('Agent A.I. Suite','System-level tools and modules.', systemModules, systemStatus)">Open Dashboard</button></div>
+      <div class="card"><h3>Public Portal</h3><p>Public-side access, forms, and presentation controls.</p><button class="btn" onclick="openPanel('Public Portal System','System-level tools and modules.', systemModules, systemStatus)">Open Dashboard</button></div>
+      <div class="card"><h3>Finance</h3><p>Financial tracking, status panels, and reporting tools.</p><button class="btn" onclick="openPanel('Finance System','System-level tools and modules.', systemModules, systemStatus)">Open Dashboard</button></div>
     </div>
-  </div>
+  </section>
 
-  <div class="section">
+  <section class="section">
     <h2>Companies</h2>
     <p class="section-desc">Company-level workflow, submission, review, and signing stages.</p>
     <div class="grid">
-      <div class="card"><h3>TitanCore Holdings</h3><p>TitanCore company review layer, correction returns, signing stage, and send-to-CEO flow.</p><button class="btn" onclick="openDash('TitanCore Holdings Dashboard')">Open Dashboard</button></div>
-      <div class="card"><h3>Vaultara Capital</h3><p>Department completion, company sign stage, and send-to-TitanCore workflow.</p><button class="btn" onclick="openDash('Vaultara Capital Dashboard')">Open Dashboard</button></div>
-      <div class="card"><h3>Family First Equity Group</h3><p>Department completion, company sign stage, and send-to-TitanCore workflow.</p><button class="btn" onclick="openDash('Family First Equity Group Dashboard')">Open Dashboard</button></div>
-      <div class="card"><h3>VitalPath Care Group</h3><p>Department completion, company sign stage, and send-to-TitanCore workflow.</p><button class="btn" onclick="openDash('VitalPath Care Group Dashboard')">Open Dashboard</button></div>
-      <div class="card"><h3>RevMotion Auto &amp; Marine</h3><p>Department completion, company sign stage, and send-to-TitanCore workflow.</p><button class="btn" onclick="openDash('RevMotion Auto & Marine Dashboard')">Open Dashboard</button></div>
+      <div class="card"><h3>TitanCore Holdings</h3><p>TitanCore company review layer, correction returns, signing stage, and send-to-CEO flow.</p><button class="btn" onclick="openPanel('TitanCore Holdings Dashboard','TitanCore company leadership reviews work received from subsidiaries.', titancoreCompanyModules, titancoreCompanyStatus)">Open Dashboard</button></div>
+      <div class="card"><h3>Vaultara Capital</h3><p>Department completion, company sign stage, and send-to-TitanCore workflow.</p><button class="btn" onclick="openPanel('Vaultara Capital Dashboard','Company leadership receives completed department work, signs, and sends to TitanCore.', companyWorkflowModules, companyWorkflowStatus)">Open Dashboard</button></div>
+      <div class="card"><h3>Family First Equity Group</h3><p>Department completion, company sign stage, and send-to-TitanCore workflow.</p><button class="btn" onclick="openPanel('Family First Equity Group Dashboard','Company leadership receives completed department work, signs, and sends to TitanCore.', companyWorkflowModules, companyWorkflowStatus)">Open Dashboard</button></div>
+      <div class="card"><h3>VitalPath Care Group</h3><p>Department completion, company sign stage, and send-to-TitanCore workflow.</p><button class="btn" onclick="openPanel('VitalPath Care Group Dashboard','Company leadership receives completed department work, signs, and sends to TitanCore.', companyWorkflowModules, companyWorkflowStatus)">Open Dashboard</button></div>
+      <div class="card"><h3>RevMotion Auto &amp; Marine</h3><p>Department completion, company sign stage, and send-to-TitanCore workflow.</p><button class="btn" onclick="openPanel('RevMotion Auto & Marine Dashboard','Company leadership receives completed department work, signs, and sends to TitanCore.', companyWorkflowModules, companyWorkflowStatus)">Open Dashboard</button></div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    Central Dashboard
+  </footer>
+
+  <div class="overlay" id="overlay">
+    <div class="modal">
+      <div class="modal-top">
+        <div>
+          <h3 id="modalTitle">Dashboard</h3>
+          <p id="modalDesc">Description</p>
+        </div>
+        <div class="modal-actions">
+          <button class="btn" id="backBtn" onclick="goBack()" style="display:none;">Back</button>
+          <button class="btn" onclick="closeModal()">Close</button>
+        </div>
+      </div>
+
+      <div id="modalBody"></div>
+
+      <div class="status-box" id="statusBox">
+        <h4>Connection Status</h4>
+      </div>
     </div>
   </div>
 
-  <div class="footer">
-    TitanCore Holdings Central Dashboard
-  </div>
-
   <script>
+    const oversightModules = [
+      ["Email", "Role inbox and oversight communication"],
+      ["Meetings", "Meeting schedule and session logs"],
+      ["Reports Received", "Reports sent upward for review"],
+      ["Recommendations", "Advice, notes, and recommendation work"],
+      ["Company Status", "High-level company performance view"],
+      ["Workflow Tracking", "See what stage work is in"],
+      ["Activity Review", "Oversight activity and monitoring"]
+    ];
+
+    const generalModules = [
+      ["Email", "General executive inbox and coordination"],
+      ["Meetings", "Weekly meeting cycle and schedule"],
+      ["Reports Intake", "Reports received from TitanCore"],
+      ["Oversight Logs", "Tracked company and system status"],
+      ["Recommendation Flow", "Recommendations sent downward"],
+      ["Workflow Tracking", "See package and report movement"],
+      ["Activity Review", "Executive observation and records"]
+    ];
+
+    const ceoModules = [
+      ["Email", "CEO inbox and final communications"],
+      ["Contracts", "Final sign queue and contract release stage"],
+      ["Sign Queue", "Items waiting for final CEO human sign"],
+      ["Payments", "Payment status and release review"],
+      ["Reports", "Top-level reporting and summaries"],
+      ["Meetings", "Executive and review meeting schedule"],
+      ["Activity", "System-wide visibility and oversight"]
+    ];
+
+    const departmentModules = [
+      ["Manager", "Department manager dashboard area"],
+      ["Assistant Manager", "Department assistant manager area"],
+      ["Employees", "Six employee dashboard slots"],
+      ["Email", "Department inbox and routing"],
+      ["Meetings", "Department meetings and schedule"],
+      ["Reports", "Department reports and submissions"],
+      ["Activity", "Department activity and work status"]
+    ];
+
+    const systemModules = [
+      ["Overview", "System summary and status panel"],
+      ["Queue", "Pending items and routing queue"],
+      ["Logs", "Tracked history and system records"],
+      ["Reports", "System reports and output area"],
+      ["Activity", "Current system activity panel"],
+      ["Settings", "Protected controls for later"],
+      ["Status", "Connection and health state"]
+    ];
+
+    const companyWorkflowModules = [
+      ["Department Intake", "Completed work received from departments"],
+      ["Department Approval Check", "Manager + assistant manager review stage"],
+      ["Company Sign Stage", "Manager + assistant manager + administrator stage"],
+      ["Correction Return", "Returned items sent back for fixes"],
+      ["Send to TitanCore", "Forward completed work to TitanCore"],
+      ["Workflow Tracking", "See package stage and movement"],
+      ["Status", "Company readiness and queue state"]
+    ];
+
+    const titancoreCompanyModules = [
+      ["Received From Companies", "Packages received from subsidiaries"],
+      ["TitanCore Department Review", "All TitanCore departments review work"],
+      ["Correction Return", "Send items back to company if needed"],
+      ["TitanCore Sign Stage", "TitanCore manager + assistant manager + administrator"],
+      ["Send to CEO", "Forward ready work for final CEO sign"],
+      ["Workflow Tracking", "See package stage and movement"],
+      ["Status", "TitanCore review and queue state"]
+    ];
+
+    const chiefOfStaffModules = [
+      ["Email", "Chief of Staff inbox and communication flow"],
+      ["Meetings", "Chief of Staff meeting schedule and logs"],
+      ["Reports", "Reports and updates received upward"],
+      ["Recommendations", "Advice and recommendations brought upward"],
+      ["Oversight", "Cross-checking and follow-through status"],
+      ["Activity", "Chief of Staff activity and coordination"]
+    ];
+
+    const chiefModules = [
+      ["Home Dashboard", "Chief home view and assigned branch summary"],
+      ["Work Area", "Main work area for this Chief branch"],
+      ["Reports", "Updates and reporting to Chief of Staff"],
+      ["Activity", "Tracked work activity and status"],
+      ["Notes", "Recorded notes and work observations"]
+    ];
+
+    const oversightStatus = [
+      "This dashboard is for advisory review, oversight, meetings, and recommendations.",
+      "This role does not sign contracts and does not approve final client release."
+    ];
+
+    const generalStatus = [
+      "This dashboard is for report intake, meetings, oversight, and recommendations.",
+      "General Manager, General Assistant Manager, and General Administrator do not sign client contracts."
+    ];
+
+    const ceoStatus = [
+      "CEO is the only final human signer before the company sends work to the client.",
+      "The inside CEO menu opens now. Live data will appear after connection is added."
+    ];
+
+    const departmentStatus = [
+      "Department Manager and Department Assistant Manager approve completed department work upward.",
+      "Live employee dashboards, meetings, and email will appear after Microsoft connection is added."
+    ];
+
+    const systemStatus = [
+      "This dashboard shows system structure and tool areas only.",
+      "Live data, queues, logs, and settings will appear after Microsoft and backend connections are added."
+    ];
+
+    const companyWorkflowStatus = [
+      "Company leadership sign rule: normal = all 3 sign. Exception = 2 of 3 only if 1 signer is officially unavailable.",
+      "After company sign stage, work is sent to TitanCore for review."
+    ];
+
+    const titancoreCompanyStatus = [
+      "TitanCore leadership sign rule: normal = all 3 sign. Exception = 2 of 3 only if 1 signer is officially unavailable.",
+      "After TitanCore sign stage, work goes to CEO for final sign."
+    ];
+
+    const chiefOfStaffStatus = [
+      "Chief of Staff manages the reporting branch of the 10 Chiefs.",
+      "The 10 Chiefs report under Chief of Staff and their work is visible here for review."
+    ];
+
+    const chiefStatus = [
+      "This Chief branch reports to the Chief of Staff only.",
+      "Live tasks, reports, and work activity will appear here after system connection is added."
+    ];
+
+    let historyStack = [];
+
     function updateClock() {
-      document.getElementById('clock').textContent = new Date().toLocaleString();
+      document.getElementById("clock").textContent = new Date().toLocaleString();
     }
     updateClock();
     setInterval(updateClock, 1000);
 
-    function openDash(name) {
-      alert(name + "\n\nFirst level works.\n\nInside menus will say: Not connected yet.");
+    function buildGrid(modules) {
+      const grid = document.createElement("div");
+      grid.className = "mini-grid";
+
+      modules.forEach(function(item) {
+        const card = document.createElement("div");
+        card.className = "mini-card";
+
+        const h4 = document.createElement("h4");
+        h4.textContent = item[0];
+
+        const p = document.createElement("p");
+        p.textContent = item[1];
+
+        const btn = document.createElement("button");
+        btn.className = "btn";
+        btn.textContent = "Open " + item[0];
+
+        const msg = document.createElement("div");
+        msg.className = "mini-msg";
+
+        btn.onclick = function() {
+          msg.textContent = "Not connected yet";
+        };
+
+        card.appendChild(h4);
+        card.appendChild(p);
+        card.appendChild(btn);
+        card.appendChild(msg);
+        grid.appendChild(card);
+      });
+
+      return grid;
     }
+
+    function setStatus(lines) {
+      const box = document.getElementById("statusBox");
+      box.innerHTML = "<h4>Connection Status</h4>";
+      lines.forEach(function(line) {
+        const p = document.createElement("p");
+        p.textContent = line;
+        box.appendChild(p);
+      });
+    }
+
+    function showModal(title, desc, contentNode, statusLines, showBack) {
+      document.getElementById("modalTitle").textContent = title;
+      document.getElementById("modalDesc").textContent = desc;
+
+      const body = document.getElementById("modalBody");
+      body.innerHTML = "";
+      body.appendChild(contentNode);
+
+      setStatus(statusLines);
+      document.getElementById("backBtn").style.display = showBack ? "inline-block" : "none";
+      document.getElementById("overlay").classList.add("show");
+    }
+
+    function openPanel(title, desc, modules, statusLines) {
+      historyStack = [];
+      showModal(title, desc, buildGrid(modules), statusLines, false);
+    }
+
+    function openChiefOfStaff() {
+      historyStack = [];
+
+      const wrapper = document.createElement("div");
+
+      const menuTitle = document.createElement("div");
+      menuTitle.className = "subheading";
+      menuTitle.textContent = "Chief of Staff Menu";
+      wrapper.appendChild(menuTitle);
+      wrapper.appendChild(buildGrid(chiefOfStaffModules));
+
+      const chiefsTitle = document.createElement("div");
+      chiefsTitle.className = "subheading";
+      chiefsTitle.textContent = "10 Chiefs";
+      wrapper.appendChild(chiefsTitle);
+
+      const chiefsGrid = document.createElement("div");
+      chiefsGrid.className = "mini-grid";
+
+      for (let i = 1; i <= 10; i++) {
+        const card = document.createElement("div");
+        card.className = "mini-card";
+
+        const h4 = document.createElement("h4");
+        h4.textContent = "Chief " + i;
+
+        const p = document.createElement("p");
+        p.textContent = "Reporting branch under Chief of Staff. Visible here for review and tracking.";
+
+        const btn = document.createElement("button");
+        btn.className = "btn";
+        btn.textContent = "Open Chief " + i;
+        btn.onclick = function() {
+          openChief(i);
+        };
+
+        const msg = document.createElement("div");
+        msg.className = "mini-msg";
+
+        card.appendChild(h4);
+        card.appendChild(p);
+        card.appendChild(btn);
+        card.appendChild(msg);
+        chiefsGrid.appendChild(card);
+      }
+
+      wrapper.appendChild(chiefsGrid);
+
+      showModal(
+        "Chief of Staff Dashboard",
+        "Chief of Staff oversight, coordination, and the 10 Chiefs reporting branch.",
+        wrapper,
+        chiefOfStaffStatus,
+        false
+      );
+    }
+
+    function openChief(number) {
+      historyStack.push({
+        title: document.getElementById("modalTitle").textContent,
+        desc: document.getElementById("modalDesc").textContent,
+        body: document.getElementById("modalBody").innerHTML,
+        status: document.getElementById("statusBox").innerHTML
+      });
+
+      showModal(
+        "Chief " + number + " Dashboard",
+        "Tracked reporting branch for Chief " + number + ", working under the Chief of Staff.",
+        buildGrid(chiefModules),
+        chiefStatus,
+        true
+      );
+    }
+
+    function goBack() {
+      if (!historyStack.length) return;
+
+      const prev = historyStack.pop();
+      document.getElementById("modalTitle").textContent = prev.title;
+      document.getElementById("modalDesc").textContent = prev.desc;
+      document.getElementById("modalBody").innerHTML = prev.body;
+      document.getElementById("statusBox").innerHTML = prev.status;
+      document.getElementById("backBtn").style.display = historyStack.length ? "inline-block" : "none";
+      rebindButtons();
+    }
+
+    function rebindButtons() {
+      const buttons = document.querySelectorAll("#modalBody .mini-card button");
+      buttons.forEach(function(btn) {
+        const text = btn.textContent || "";
+        const msg = btn.parentElement.querySelector(".mini-msg");
+
+        if (text.indexOf("Open Chief ") === 0) {
+          const number = parseInt(text.replace("Open Chief ", ""), 10);
+          btn.onclick = function() {
+            openChief(number);
+          };
+        } else {
+          btn.onclick = function() {
+            if (msg) msg.textContent = "Not connected yet";
+          };
+        }
+      });
+    }
+
+    function closeModal() {
+      document.getElementById("overlay").classList.remove("show");
+      historyStack = [];
+    }
+
+    document.getElementById("overlay").addEventListener("click", function(e) {
+      if (e.target === this) {
+        closeModal();
+      }
+    });
   </script>
 </body>
 </html>
