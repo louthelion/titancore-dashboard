@@ -185,13 +185,6 @@
       display: block;
     }
 
-    .good {
-      color: var(--green-soft);
-      font-weight: bold;
-      font-size: 1.1rem;
-      margin-top: 12px;
-    }
-
     .btn {
       width: 100%;
       border: none;
@@ -351,7 +344,7 @@
       <div class="topbar-inner">
         <div class="brand">
           <h1>Central Dashboard</h1>
-          <p>Manage Across Multiple Companies • Leadership • Executive • Tax Network • Omni System • Companies</p>
+          <p>Manage Across Multiple Companies • Leadership • Executive • Departments • Tax Network • Omni System • Companies</p>
         </div>
 
         <div class="timebox">
@@ -365,8 +358,8 @@
       <div class="hero-card">
         <h2>Central Command Layer</h2>
         <p>
-          This is the multi-company command center. First open the command area,
-          then open the role or section inside it, then open the tools inside that dashboard.
+          This is the multi-company command center. Open the command area first, then open
+          the role or department or system section inside it, then open the tools inside that dashboard.
           Live values stay blank until the real systems are connected.
         </p>
       </div>
@@ -415,25 +408,31 @@
         <div class="card">
           <h3>Leadership Command</h3>
           <p>Mantle of 7 visibility, advisory structure, meetings, review, and Chief of Staff branch access.</p>
-          <button class="btn" onclick="openLeadershipCommand()">Open Dashboard</button>
+          <button class="btn" onclick="renderLeadershipCommand(false)">Open Dashboard</button>
         </div>
 
         <div class="card">
           <h3>Executive Command</h3>
           <p>General Manager, General Assistant Manager, and General Administrator reporting and coordination.</p>
-          <button class="btn" onclick="openExecutiveCommand()">Open Dashboard</button>
+          <button class="btn" onclick="renderExecutiveCommand(false)">Open Dashboard</button>
+        </div>
+
+        <div class="card">
+          <h3>Department Command</h3>
+          <p>Open departments first, then open a department dashboard to see manager, assistant manager, and 6 A.I. employees.</p>
+          <button class="btn" onclick="renderDepartmentCommand(false)">Open Dashboard</button>
         </div>
 
         <div class="card">
           <h3>Omni System</h3>
-          <p>Multi-company system view, central operational visibility, alerts, routines, and shared workflow movement.</p>
-          <button class="btn" onclick="openPanel('Omni System','Open a system section first, then open the tools inside it.', omniModules, omniStatus)">Open Dashboard</button>
+          <p>Multi-company system view, central operational visibility, routines, Agent, and A.I. Agent sections.</p>
+          <button class="btn" onclick="renderOmniSystem(false)">Open Dashboard</button>
         </div>
 
         <div class="card">
           <h3>Tax Network / GTCIS</h3>
           <p>Tax and compliance command with filings, deadlines, jurisdictions, audits, and platform-style integrations.</p>
-          <button class="btn" onclick="openPanel('Tax Network / GTCIS','Open a tax section first, then open the tools inside it.', taxModules, taxStatus)">Open Dashboard</button>
+          <button class="btn" onclick="renderTaxNetwork(false)">Open Dashboard</button>
         </div>
       </div>
     </section>
@@ -500,7 +499,9 @@
   </div>
 
   <script>
-    const roleToolModules = {
+    const stateStack = [];
+
+    const roleTools = {
       ceo: [
         ["Email", "CEO inbox and communications"],
         ["Reports", "CEO report intake and review"],
@@ -564,6 +565,14 @@
         ["Records", "Administration and summaries"],
         ["Activity", "General Administrator dashboard activity"]
       ],
+      chiefOfStaff: [
+        ["Email", "Chief of Staff inbox and communication flow"],
+        ["Meetings", "Chief of Staff meeting schedule and logs"],
+        ["Reports", "Reports and updates received upward"],
+        ["Recommendations", "Advice and recommendations brought upward"],
+        ["Oversight", "Cross-checking and follow-through status"],
+        ["Activity", "Chief of Staff activity and coordination"]
+      ],
       chief: [
         ["Work Area", "Main work area for this Chief branch"],
         ["Reports", "Updates and reporting to Chief of Staff"],
@@ -572,16 +581,18 @@
       ]
     };
 
-    const omniModules = [
+    const omniSections = [
       ["Entity Selector", "Move between company entities"],
       ["System Alerts", "Warnings and issue flags"],
       ["Revenue Pulse", "Cross-company financial visibility"],
       ["Workflow", "Work in progress and movement status"],
       ["Secure Shield", "Protected operational oversight"],
-      ["Routine", "Central routines and process flow"]
+      ["Routine", "Central routines and process flow"],
+      ["Agent", "General agent operations section"],
+      ["A.I. Agent", "A.I. agent system section"]
     ];
 
-    const taxModules = [
+    const taxSections = [
       ["Entity Selector", "TitanCore and all companies tax view"],
       ["Filing Queue", "Upcoming filings and next deadlines"],
       ["Jurisdictions Matrix", "States, tax types, and status"],
@@ -592,41 +603,73 @@
       ["Primary Actions", "New filing, upload proof, export, compliance scan"]
     ];
 
-    const leadershipStatus = [
-      "Leadership Command opens roles first.",
-      "Open a role to see that role dashboard. Open the tools inside it after that."
+    const departmentList = [
+      "Contact Department",
+      "Contract Department",
+      "Email Routing Department",
+      "Report Department",
+      "Approval Department",
+      "Omni Operations Department",
+      "Tax Network Department",
+      "Agent Department",
+      "A.I. Agent Department",
+      "Finance Department"
     ];
-
-    const executiveStatus = [
-      "Executive Command opens executive roles first.",
-      "Open a role to see that role dashboard. Tools come after that."
-    ];
-
-    const omniStatus = [
-      "Omni System opens sections first.",
-      "No live numbers are shown until the system is connected."
-    ];
-
-    const taxStatus = [
-      "Tax Network / GTCIS opens tax sections first.",
-      "No live values are shown until the tax systems are connected."
-    ];
-
-    const chiefStatus = [
-      "This Chief branch reports to the Chief of Staff only.",
-      "Only work sections appear here."
-    ];
-
-    let historyStack = [];
 
     function updateClock() {
       document.getElementById("clock").textContent = new Date().toLocaleString();
     }
-
     updateClock();
     setInterval(updateClock, 1000);
 
-    function buildGrid(modules) {
+    function openOverlay() {
+      document.getElementById("overlay").classList.add("show");
+    }
+
+    function closeModal() {
+      document.getElementById("overlay").classList.remove("show");
+      stateStack.length = 0;
+    }
+
+    document.getElementById("overlay").addEventListener("click", function(e) {
+      if (e.target === this) closeModal();
+    });
+
+    function saveState(renderer) {
+      stateStack.push(renderer);
+      document.getElementById("backBtn").style.display = "inline-block";
+    }
+
+    function goBack() {
+      if (!stateStack.length) return;
+      const renderer = stateStack.pop();
+      renderer(true);
+      if (!stateStack.length) {
+        document.getElementById("backBtn").style.display = "none";
+      }
+    }
+
+    function setModal(title, desc, contentNode, statusLines, showBack) {
+      document.getElementById("modalTitle").textContent = title;
+      document.getElementById("modalDesc").textContent = desc;
+
+      const body = document.getElementById("modalBody");
+      body.innerHTML = "";
+      body.appendChild(contentNode);
+
+      const box = document.getElementById("statusBox");
+      box.innerHTML = "<h4>Connection Status</h4>";
+      statusLines.forEach(function(line) {
+        const p = document.createElement("p");
+        p.textContent = line;
+        box.appendChild(p);
+      });
+
+      document.getElementById("backBtn").style.display = showBack ? "inline-block" : "none";
+      openOverlay();
+    }
+
+    function buildToolGrid(modules) {
       const grid = document.createElement("div");
       grid.className = "mini-grid";
 
@@ -678,9 +721,7 @@
         const btn = document.createElement("button");
         btn.className = "btn";
         btn.textContent = role.title;
-        btn.onclick = function() {
-          role.action();
-        };
+        btn.onclick = role.action;
 
         card.appendChild(h4);
         card.appendChild(p);
@@ -691,135 +732,240 @@
       return grid;
     }
 
-    function setStatus(lines) {
-      const box = document.getElementById("statusBox");
-      box.innerHTML = "<h4>Connection Status</h4>";
+    function renderRoleDashboard(title, desc, modules, pushRenderer, parentRenderer) {
+      if (!pushRenderer && parentRenderer) saveState(parentRenderer);
 
-      lines.forEach(function(line) {
-        const p = document.createElement("p");
-        p.textContent = line;
-        box.appendChild(p);
-      });
-    }
-
-    function saveState() {
-      historyStack.push({
-        title: document.getElementById("modalTitle").textContent,
-        desc: document.getElementById("modalDesc").textContent,
-        body: document.getElementById("modalBody").innerHTML,
-        status: document.getElementById("statusBox").innerHTML
-      });
-    }
-
-    function showModal(title, desc, contentNode, statusLines, showBack) {
-      document.getElementById("modalTitle").textContent = title;
-      document.getElementById("modalDesc").textContent = desc;
-
-      const body = document.getElementById("modalBody");
-      body.innerHTML = "";
-      body.appendChild(contentNode);
-
-      setStatus(statusLines);
-      document.getElementById("backBtn").style.display = showBack ? "inline-block" : "none";
-      document.getElementById("overlay").classList.add("show");
-    }
-
-    function openPanel(title, desc, modules, statusLines) {
-      historyStack = [];
-      showModal(title, desc, buildGrid(modules), statusLines, false);
-    }
-
-    function openLeadershipCommand() {
-      historyStack = [];
-      const roles = [
-        {
-          title: "CEO",
-          desc: "Final authority and full oversight",
-          action: function() { openRoleDashboard("CEO Dashboard", "CEO command dashboard.", roleToolModules.ceo); }
-        },
-        {
-          title: "President",
-          desc: "Strategic review and advisory visibility",
-          action: function() { openRoleDashboard("President Dashboard", "President command dashboard.", roleToolModules.president); }
-        },
-        {
-          title: "Vice President",
-          desc: "Operations review and movement visibility",
-          action: function() { openRoleDashboard("Vice President Dashboard", "Vice President command dashboard.", roleToolModules.vicePresident); }
-        },
-        {
-          title: "Director",
-          desc: "Direction and oversight activity",
-          action: function() { openRoleDashboard("Director Dashboard", "Director command dashboard.", roleToolModules.director); }
-        },
-        {
-          title: "Assistant Director",
-          desc: "Support coordination and tracking",
-          action: function() { openRoleDashboard("Assistant Director Dashboard", "Assistant Director command dashboard.", roleToolModules.assistantDirector); }
-        },
-        {
-          title: "Chief of Staff",
-          desc: "Coordination and 10 Chiefs branch",
-          action: function() { openChiefOfStaff(); }
-        },
-        {
-          title: "Executive Advisor",
-          desc: "Advisory and counsel visibility",
-          action: function() { openRoleDashboard("Executive Advisor Dashboard", "Executive Advisor command dashboard.", roleToolModules.executiveAdvisor); }
-        }
-      ];
-
-      showModal(
-        "Leadership Command",
-        "Open a leadership role to see that role dashboard.",
-        buildRoleGrid(roles),
-        leadershipStatus,
-        false
-      );
-    }
-
-    function openExecutiveCommand() {
-      historyStack = [];
-      const roles = [
-        {
-          title: "General Manager",
-          desc: "Cross-company oversight and meetings",
-          action: function() { openRoleDashboard("General Manager Dashboard", "General Manager dashboard.", roleToolModules.generalManager); }
-        },
-        {
-          title: "General Assistant Manager",
-          desc: "Support and reporting review",
-          action: function() { openRoleDashboard("General Assistant Manager Dashboard", "General Assistant Manager dashboard.", roleToolModules.generalAssistantManager); }
-        },
-        {
-          title: "General Administrator",
-          desc: "Records, summaries, and admin support",
-          action: function() { openRoleDashboard("General Administrator Dashboard", "General Administrator dashboard.", roleToolModules.generalAdministrator); }
-        }
-      ];
-
-      showModal(
-        "Executive Command",
-        "Open an executive role to see that role dashboard.",
-        buildRoleGrid(roles),
-        executiveStatus,
-        false
-      );
-    }
-
-    function openRoleDashboard(title, desc, modules) {
-      saveState();
-      showModal(
+      setModal(
         title,
         desc,
-        buildGrid(modules),
+        buildToolGrid(modules),
         ["Open a tool inside this dashboard. It will show Not connected yet until live systems are attached."],
         true
       );
     }
 
-    function openChiefOfStaff() {
-      saveState();
+    function renderLeadershipCommand(pushRenderer) {
+      const roles = [
+        {
+          title: "CEO",
+          desc: "Final authority and full oversight",
+          action: function() {
+            renderRoleDashboard("CEO Dashboard", "CEO command dashboard.", roleTools.ceo, false, renderLeadershipCommand);
+          }
+        },
+        {
+          title: "President",
+          desc: "Strategic review and advisory visibility",
+          action: function() {
+            renderRoleDashboard("President Dashboard", "President command dashboard.", roleTools.president, false, renderLeadershipCommand);
+          }
+        },
+        {
+          title: "Vice President",
+          desc: "Operations review and movement visibility",
+          action: function() {
+            renderRoleDashboard("Vice President Dashboard", "Vice President command dashboard.", roleTools.vicePresident, false, renderLeadershipCommand);
+          }
+        },
+        {
+          title: "Director",
+          desc: "Direction and oversight activity",
+          action: function() {
+            renderRoleDashboard("Director Dashboard", "Director command dashboard.", roleTools.director, false, renderLeadershipCommand);
+          }
+        },
+        {
+          title: "Assistant Director",
+          desc: "Support coordination and tracking",
+          action: function() {
+            renderRoleDashboard("Assistant Director Dashboard", "Assistant Director command dashboard.", roleTools.assistantDirector, false, renderLeadershipCommand);
+          }
+        },
+        {
+          title: "Chief of Staff",
+          desc: "Coordination and 10 Chiefs branch",
+          action: function() {
+            renderChiefOfStaff(false, renderLeadershipCommand);
+          }
+        },
+        {
+          title: "Executive Advisor",
+          desc: "Advisory and counsel visibility",
+          action: function() {
+            renderRoleDashboard("Executive Advisor Dashboard", "Executive Advisor command dashboard.", roleTools.executiveAdvisor, false, renderLeadershipCommand);
+          }
+        }
+      ];
+
+      setModal(
+        "Leadership Command",
+        "Open a leadership role to see that role dashboard.",
+        buildRoleGrid(roles),
+        [
+          "Leadership Command opens roles first.",
+          "Open a role to see that role dashboard."
+        ],
+        pushRenderer && stateStack.length > 0
+      );
+    }
+
+    function renderExecutiveCommand(pushRenderer) {
+      const roles = [
+        {
+          title: "General Manager",
+          desc: "Cross-company oversight and meetings",
+          action: function() {
+            renderRoleDashboard("General Manager Dashboard", "General Manager dashboard.", roleTools.generalManager, false, renderExecutiveCommand);
+          }
+        },
+        {
+          title: "General Assistant Manager",
+          desc: "Support and reporting review",
+          action: function() {
+            renderRoleDashboard("General Assistant Manager Dashboard", "General Assistant Manager dashboard.", roleTools.generalAssistantManager, false, renderExecutiveCommand);
+          }
+        },
+        {
+          title: "General Administrator",
+          desc: "Records, summaries, and admin support",
+          action: function() {
+            renderRoleDashboard("General Administrator Dashboard", "General Administrator dashboard.", roleTools.generalAdministrator, false, renderExecutiveCommand);
+          }
+        }
+      ];
+
+      setModal(
+        "Executive Command",
+        "Open an executive role to see that role dashboard.",
+        buildRoleGrid(roles),
+        [
+          "Executive Command opens executive roles first.",
+          "Open a role to see that role dashboard."
+        ],
+        pushRenderer && stateStack.length > 0
+      );
+    }
+
+    function renderDepartmentCommand(pushRenderer) {
+      const roles = departmentList.map(function(name) {
+        return {
+          title: name,
+          desc: "Open this department to see Manager, Assistant Manager, and 6 A.I. employees.",
+          action: function() {
+            renderDepartmentDashboard(name, false, renderDepartmentCommand);
+          }
+        };
+      });
+
+      setModal(
+        "Department Command",
+        "Open a department to see its internal dashboard.",
+        buildRoleGrid(roles),
+        [
+          "Department Command opens departments first.",
+          "Open a department to see manager, assistant manager, and 6 A.I. employees."
+        ],
+        pushRenderer && stateStack.length > 0
+      );
+    }
+
+    function renderDepartmentDashboard(name, pushRenderer, parentRenderer) {
+      if (!pushRenderer && parentRenderer) saveState(parentRenderer);
+
+      const members = [
+        { title: "Manager", desc: "Department manager dashboard." },
+        { title: "Assistant Manager", desc: "Department assistant manager dashboard." },
+        { title: "A.I. Employee 1", desc: "Department A.I. employee slot." },
+        { title: "A.I. Employee 2", desc: "Department A.I. employee slot." },
+        { title: "A.I. Employee 3", desc: "Department A.I. employee slot." },
+        { title: "A.I. Employee 4", desc: "Department A.I. employee slot." },
+        { title: "A.I. Employee 5", desc: "Department A.I. employee slot." },
+        { title: "A.I. Employee 6", desc: "Department A.I. employee slot." }
+      ].map(function(member) {
+        return {
+          title: member.title,
+          desc: member.desc,
+          action: function() {
+            renderRoleDashboard(name + " • " + member.title, member.title + " dashboard inside " + name + ".", [
+              ["Email", "Inbox and communications"],
+              ["Reports", "Reports and work updates"],
+              ["Meetings", "Meetings and schedule"],
+              ["Activity", "Department work activity"]
+            ], false, function() { renderDepartmentDashboard(name, true); });
+          }
+        };
+      });
+
+      setModal(
+        name,
+        "Open the manager, assistant manager, or one of the 6 A.I. employees.",
+        buildRoleGrid(members),
+        [
+          "This department dashboard opens people first.",
+          "Open a person to see that dashboard tools."
+        ],
+        true
+      );
+    }
+
+    function renderOmniSystem(pushRenderer) {
+      const roles = omniSections.map(function(item) {
+        return {
+          title: item[0],
+          desc: item[1],
+          action: function() {
+            renderRoleDashboard("Omni System • " + item[0], item[1], [
+              ["Overview", "Overview for " + item[0]],
+              ["Activity", "Current activity for " + item[0]],
+              ["Logs", "Tracked logs for " + item[0]],
+              ["Status", "Status area for " + item[0]]
+            ], false, renderOmniSystem);
+          }
+        };
+      });
+
+      setModal(
+        "Omni System",
+        "Open a system section first, then open the tools inside it.",
+        buildRoleGrid(roles),
+        [
+          "Omni System opens sections first.",
+          "Agent and A.I. Agent are included here."
+        ],
+        pushRenderer && stateStack.length > 0
+      );
+    }
+
+    function renderTaxNetwork(pushRenderer) {
+      const roles = taxSections.map(function(item) {
+        return {
+          title: item[0],
+          desc: item[1],
+          action: function() {
+            renderRoleDashboard("Tax Network / GTCIS • " + item[0], item[1], [
+              ["View", "Main view for " + item[0]],
+              ["Queue", "Queue and movement for " + item[0]],
+              ["Status", "Status area for " + item[0]],
+              ["Export", "Export and output area for " + item[0]]
+            ], false, renderTaxNetwork);
+          }
+        };
+      });
+
+      setModal(
+        "Tax Network / GTCIS",
+        "Open a tax section first, then open the tools inside it.",
+        buildRoleGrid(roles),
+        [
+          "Tax Network opens sections first.",
+          "Live tax values stay blank until the systems are connected."
+        ],
+        pushRenderer && stateStack.length > 0
+      );
+    }
+
+    function renderChiefOfStaff(pushRenderer, parentRenderer) {
+      if (!pushRenderer && parentRenderer) saveState(parentRenderer);
 
       const wrapper = document.createElement("div");
 
@@ -827,106 +973,53 @@
       menuTitle.className = "subheading";
       menuTitle.textContent = "Chief of Staff Dashboard";
       wrapper.appendChild(menuTitle);
-      wrapper.appendChild(buildGrid([
-        ["Email", "Chief of Staff inbox and communication flow"],
-        ["Meetings", "Chief of Staff meeting schedule and logs"],
-        ["Reports", "Reports and updates received upward"],
-        ["Recommendations", "Advice and recommendations brought upward"],
-        ["Oversight", "Cross-checking and follow-through status"],
-        ["Activity", "Chief of Staff activity and coordination"]
-      ]));
+      wrapper.appendChild(buildToolGrid(roleTools.chiefOfStaff));
 
       const chiefsTitle = document.createElement("div");
       chiefsTitle.className = "subheading";
       chiefsTitle.textContent = "10 Chiefs";
       wrapper.appendChild(chiefsTitle);
 
-      const chiefsGrid = document.createElement("div");
-      chiefsGrid.className = "mini-grid";
-
+      const chiefs = [];
       for (let i = 1; i <= 10; i++) {
-        const card = document.createElement("div");
-        card.className = "mini-card";
-
-        const h4 = document.createElement("h4");
-        h4.textContent = "Chief " + i;
-
-        const p = document.createElement("p");
-        p.textContent = "Reporting branch under Chief of Staff. Open this Chief to see the work sections.";
-
-        const btn = document.createElement("button");
-        btn.className = "btn";
-        btn.textContent = "Chief " + i;
-        btn.onclick = function() {
-          openChief(i);
-        };
-
-        card.appendChild(h4);
-        card.appendChild(p);
-        card.appendChild(btn);
-        chiefsGrid.appendChild(card);
+        chiefs.push({
+          title: "Chief " + i,
+          desc: "Reporting branch under Chief of Staff. Open this Chief to see the work sections.",
+          action: function(index) {
+            return function() {
+              renderChief(index, false, function() { renderChiefOfStaff(true); });
+            };
+          }(i)
+        });
       }
 
-      wrapper.appendChild(chiefsGrid);
+      wrapper.appendChild(buildRoleGrid(chiefs));
 
-      showModal(
+      setModal(
         "Chief of Staff Dashboard",
         "Chief of Staff overview and 10 Chiefs branch.",
         wrapper,
-        ["Open a Chief to see that Chief dashboard."],
+        [
+          "Open a Chief to see that Chief dashboard."
+        ],
         true
       );
     }
 
-    function openChief(number) {
-      saveState();
-      showModal(
+    function renderChief(number, pushRenderer, parentRenderer) {
+      if (!pushRenderer && parentRenderer) saveState(parentRenderer);
+
+      setModal(
         "Chief " + number + " Dashboard",
         "Tracked reporting branch for Chief " + number + ", working under the Chief of Staff.",
-        buildGrid(roleToolModules.chief),
-        chiefStatus,
+        buildToolGrid(roleTools.chief),
+        [
+          "This Chief branch reports to the Chief of Staff only.",
+          "Only work sections appear here."
+        ],
         true
       );
     }
-
-    function goBack() {
-      if (!historyStack.length) return;
-      const prev = historyStack.pop();
-      document.getElementById("modalTitle").textContent = prev.title;
-      document.getElementById("modalDesc").textContent = prev.desc;
-      document.getElementById("modalBody").innerHTML = prev.body;
-      document.getElementById("statusBox").innerHTML = prev.status;
-      document.getElementById("backBtn").style.display = historyStack.length ? "inline-block" : "none";
-      rebindButtons();
-    }
-
-    function rebindButtons() {
-      const buttons = document.querySelectorAll("#modalBody .mini-card button");
-      buttons.forEach(function(btn) {
-        const text = btn.textContent || "";
-        const msg = btn.parentElement.querySelector(".mini-msg");
-
-        if (text.indexOf("Chief ") === 0) {
-          const number = parseInt(text.replace("Chief ", ""), 10);
-          btn.onclick = function() {
-            openChief(number);
-          };
-        } else if (msg) {
-          btn.onclick = function() {
-            msg.textContent = "Not connected yet";
-          };
-        }
-      });
-    }
-
-    function closeModal() {
-      document.getElementById("overlay").classList.remove("show");
-      historyStack = [];
-    }
-
-    document.getElementById("overlay").addEventListener("click", function(e) {
-      if (e.target === this) closeModal();
-    });
   </script>
 </body>
 </html>
