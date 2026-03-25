@@ -14,32 +14,32 @@
     :root {
       --bg: #000000;
       --panel: #0b0b0b;
-      --panel-2: #101010;
-      --border: rgba(212, 175, 55, 0.42);
+      --panel-2: #111111;
       --gold: #d4af37;
-      --green: #19c15c;
+      --gold-soft: #f1df9a;
+      --green: #18c25c;
       --green-soft: #27d96b;
-      --text: #f2df9e;
       --white: #ffffff;
-      --muted: #b89a39;
+      --border: rgba(212, 175, 55, 0.45);
     }
 
     body {
       font-family: Arial, sans-serif;
-      background: radial-gradient(circle at top, #08140c 0%, #000 28%, #000 100%);
+      background: #000;
       color: var(--gold);
       line-height: 1.5;
     }
 
-    .wrap {
+    .page {
       max-width: 1280px;
       margin: 0 auto;
       padding-bottom: 40px;
     }
 
     .topbar {
-      padding: 24px 18px 18px;
-      border-bottom: 2px solid rgba(25, 193, 92, 0.55);
+      padding: 22px 18px 18px;
+      border-bottom: 2px solid rgba(24, 194, 92, 0.45);
+      background: #050505;
     }
 
     .topbar-inner {
@@ -51,122 +51,59 @@
     }
 
     .brand h1 {
-      color: var(--green-soft);
+      color: var(--green);
       font-size: 2.1rem;
-      margin-bottom: 6px;
-      letter-spacing: 0.3px;
+      margin-bottom: 8px;
     }
 
     .brand p {
-      color: var(--text);
+      color: var(--gold-soft);
       font-size: 1rem;
-      max-width: 900px;
+      max-width: 850px;
     }
 
     .timebox {
-      min-width: 230px;
-      background: rgba(8, 8, 8, 0.96);
+      min-width: 220px;
+      background: #0d0d0d;
       border: 1px solid var(--border);
       border-radius: 18px;
       padding: 12px 14px;
-      box-shadow: 0 0 18px rgba(25, 193, 92, 0.08);
     }
 
     .timebox .label {
       color: var(--green-soft);
-      font-size: 0.8rem;
-      text-transform: uppercase;
+      font-size: 0.82rem;
       letter-spacing: 1px;
+      text-transform: uppercase;
       margin-bottom: 6px;
     }
 
     .timebox .value {
       color: var(--white);
-      font-weight: bold;
       font-size: 1rem;
+      font-weight: bold;
     }
 
     .hero {
-      padding: 20px 18px 10px;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 16px;
-    }
-
-    .hero-card,
-    .overview-card,
-    .section-card,
-    .company-card,
-    .quick-card {
-      background: linear-gradient(180deg, rgba(14,14,14,0.98), rgba(7,7,7,0.98));
-      border: 1px solid var(--border);
-      border-radius: 22px;
-      box-shadow: 0 0 18px rgba(25, 193, 92, 0.06);
+      padding: 18px;
     }
 
     .hero-card {
-      padding: 24px;
+      background: linear-gradient(180deg, #0d0d0d, #070707);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 22px;
     }
 
     .hero-card h2 {
-      color: var(--green-soft);
-      font-size: 1.8rem;
+      color: var(--green);
+      font-size: 1.7rem;
       margin-bottom: 10px;
     }
 
     .hero-card p {
-      color: var(--text);
+      color: var(--gold-soft);
       font-size: 1rem;
-    }
-
-    .overview-card {
-      padding: 20px;
-    }
-
-    .overview-title {
-      color: var(--green-soft);
-      font-size: 1.15rem;
-      margin-bottom: 14px;
-      font-weight: bold;
-    }
-
-    .overview-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .overview-mini {
-      background: rgba(255,255,255,0.02);
-      border: 1px solid rgba(212,175,55,0.2);
-      border-radius: 16px;
-      padding: 14px;
-    }
-
-    .overview-mini h4 {
-      color: var(--white);
-      margin-bottom: 6px;
-      font-size: 0.98rem;
-    }
-
-    .overview-mini p {
-      color: var(--text);
-      font-size: 0.9rem;
-      margin-bottom: 8px;
-    }
-
-    .metric {
-      color: var(--white);
-      font-size: 1.55rem;
-      font-weight: bold;
-    }
-
-    .status-good {
-      color: #72e59c;
-      font-weight: bold;
     }
 
     .section {
@@ -174,84 +111,67 @@
     }
 
     .section h2 {
-      color: var(--green-soft);
-      font-size: 1.7rem;
+      color: var(--green);
+      font-size: 1.8rem;
       margin-bottom: 8px;
     }
 
     .section-desc {
-      color: var(--text);
+      color: var(--gold-soft);
       margin-bottom: 14px;
       font-size: 0.98rem;
     }
 
-    .command-grid {
+    .overview-grid,
+    .command-grid,
+    .companies-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
       gap: 16px;
     }
 
-    .section-card {
-      padding: 18px;
-    }
-
-    .section-card h3 {
-      color: var(--white);
-      margin-bottom: 8px;
-      font-size: 1.1rem;
-    }
-
-    .section-card p {
-      color: var(--text);
-      margin-bottom: 14px;
-      font-size: 0.95rem;
-    }
-
-    .quick-grid {
-      display: grid;
+    .overview-grid {
       grid-template-columns: repeat(4, 1fr);
-      gap: 14px;
-      margin-top: 14px;
     }
 
-    .quick-card {
-      padding: 16px;
-    }
-
-    .quick-card h4 {
-      color: var(--white);
-      margin-bottom: 8px;
-      font-size: 1rem;
-    }
-
-    .quick-card p {
-      color: var(--text);
-      font-size: 0.9rem;
-      margin-bottom: 12px;
-      min-height: 54px;
+    .command-grid {
+      grid-template-columns: repeat(2, 1fr);
     }
 
     .companies-grid {
-      display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 14px;
     }
 
-    .company-card {
-      padding: 16px;
+    .card {
+      background: linear-gradient(180deg, #101010, #090909);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 18px;
     }
 
-    .company-card h3 {
+    .card h3 {
       color: var(--white);
+      font-size: 1.08rem;
       margin-bottom: 8px;
-      font-size: 1rem;
     }
 
-    .company-card p {
-      color: var(--text);
-      font-size: 0.9rem;
-      margin-bottom: 12px;
-      min-height: 60px;
+    .card p {
+      color: var(--gold-soft);
+      font-size: 0.95rem;
+      margin-bottom: 14px;
+      min-height: 58px;
+    }
+
+    .metric {
+      color: var(--white);
+      font-weight: bold;
+      font-size: 2rem;
+      line-height: 1.1;
+    }
+
+    .good {
+      color: var(--green-soft);
+      font-weight: bold;
+      font-size: 1.1rem;
     }
 
     .btn {
@@ -262,19 +182,19 @@
       color: #000;
       padding: 11px 14px;
       font-weight: bold;
-      cursor: pointer;
       font-size: 0.95rem;
+      cursor: pointer;
     }
 
     .btn:hover {
-      background: var(--green-soft);
+      background: var(--green);
       color: var(--white);
     }
 
     .footer {
-      padding: 28px 18px 40px;
+      padding: 28px 18px 36px;
       text-align: center;
-      color: var(--muted);
+      color: #9f8733;
       font-size: 0.92rem;
     }
 
@@ -301,26 +221,25 @@
       border: 1px solid var(--border);
       border-radius: 22px;
       padding: 20px;
-      box-shadow: 0 0 24px rgba(25,193,92,0.08);
     }
 
     .modal-top {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      gap: 16px;
+      gap: 14px;
       flex-wrap: wrap;
       margin-bottom: 18px;
     }
 
     .modal-top h3 {
-      color: var(--green-soft);
+      color: var(--green);
       font-size: 1.55rem;
       margin-bottom: 6px;
     }
 
     .modal-top p {
-      color: var(--text);
+      color: var(--gold-soft);
       max-width: 760px;
     }
 
@@ -333,6 +252,13 @@
     .modal-actions .btn {
       width: auto;
       min-width: 110px;
+    }
+
+    .subheading {
+      color: var(--green);
+      font-size: 1.12rem;
+      margin: 18px 0 12px;
+      font-weight: bold;
     }
 
     .mini-grid {
@@ -355,7 +281,7 @@
     }
 
     .mini-card p {
-      color: var(--text);
+      color: var(--gold-soft);
       margin-bottom: 12px;
       min-height: 44px;
       font-size: 0.93rem;
@@ -368,28 +294,21 @@
       min-height: 18px;
     }
 
-    .subheading {
-      color: var(--green-soft);
-      font-size: 1.1rem;
-      margin: 18px 0 12px;
-      font-weight: bold;
-    }
-
     .status-box {
       margin-top: 18px;
       background: #111;
-      border: 1px solid rgba(212,175,55,0.25);
+      border: 1px solid rgba(212,175,55,0.24);
       border-radius: 16px;
       padding: 16px;
     }
 
     .status-box h4 {
-      color: var(--green-soft);
+      color: var(--green);
       margin-bottom: 8px;
     }
 
     .status-box p {
-      color: var(--text);
+      color: var(--gold-soft);
       margin-bottom: 8px;
       font-size: 0.94rem;
     }
@@ -399,16 +318,15 @@
     }
 
     @media (max-width: 1100px) {
-      .hero-grid,
+      .overview-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
       .command-grid {
         grid-template-columns: 1fr;
       }
 
       .companies-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .quick-grid {
         grid-template-columns: repeat(2, 1fr);
       }
     }
@@ -418,16 +336,19 @@
         font-size: 1.7rem;
       }
 
-      .companies-grid,
-      .quick-grid,
-      .overview-grid {
+      .overview-grid,
+      .companies-grid {
         grid-template-columns: 1fr;
+      }
+
+      .section h2 {
+        font-size: 1.55rem;
       }
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
+  <div class="page">
     <header class="topbar">
       <div class="topbar-inner">
         <div class="brand">
@@ -443,151 +364,109 @@
     </header>
 
     <section class="hero">
-      <div class="hero-grid">
-        <div class="hero-card">
-          <h2>Central Command Layer</h2>
-          <p>
-            This dashboard is the multi-company command center. It gives you one place to
-            oversee leadership, executive activity, operational systems, tax/compliance,
-            and company-level movement. First click opens a dashboard menu. Inside items
-            will show “Not connected yet” until live systems are attached.
-          </p>
+      <div class="hero-card">
+        <h2>Central Command Layer</h2>
+        <p>
+          This is the multi-company command center. Use it to move across leadership,
+          executive review, Omni System, Tax Network, and company dashboards. First click
+          opens a dashboard menu. Inside items will say “Not connected yet” until live
+          systems are attached.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Central Overview</h2>
+      <p class="section-desc">Fast cross-company view from one place.</p>
+
+      <div class="overview-grid">
+        <div class="card">
+          <h3>System Alerts</h3>
+          <p>Cross-company warnings and tracked issues.</p>
+          <div class="metric">8</div>
         </div>
 
-        <div class="overview-card">
-          <div class="overview-title">Central Overview</div>
-          <div class="overview-grid">
-            <div class="overview-mini">
-              <h4>System Alerts</h4>
-              <p>Cross-company warnings and tracked issues</p>
-              <div class="metric">8</div>
-            </div>
-            <div class="overview-mini">
-              <h4>Secure Shield</h4>
-              <p>Protected environment and oversight layer</p>
-              <div class="status-good">System Secure</div>
-            </div>
-            <div class="overview-mini">
-              <h4>Revenue Pulse</h4>
-              <p>Cross-company financial visibility</p>
-              <div class="metric">$125.390</div>
-            </div>
-            <div class="overview-mini">
-              <h4>Jobs / Workflow</h4>
-              <p>Combined task and pipeline movement</p>
-              <div class="metric">24</div>
-            </div>
-          </div>
+        <div class="card">
+          <h3>Secure Shield</h3>
+          <p>Protected environment and oversight layer.</p>
+          <div class="good">System Secure</div>
+        </div>
+
+        <div class="card">
+          <h3>Revenue Pulse</h3>
+          <p>Cross-company financial visibility.</p>
+          <div class="metric">$125.390</div>
+        </div>
+
+        <div class="card">
+          <h3>Jobs / Workflow</h3>
+          <p>Combined task and pipeline movement.</p>
+          <div class="metric">24</div>
         </div>
       </div>
     </section>
 
     <section class="section">
       <h2>Command Areas</h2>
-      <p class="section-desc">These are the main control layers of the Central Dashboard.</p>
+      <p class="section-desc">The main control layers of the Central Dashboard.</p>
+
       <div class="command-grid">
-        <div class="section-card">
+        <div class="card">
           <h3>Leadership Command</h3>
           <p>Mantle of 7 visibility, advisory structure, meetings, review, and Chief of Staff branch access.</p>
-          <button class="btn" onclick="openPanel('Leadership Command','Leadership, oversight, and Mantle control area.', leadershipModules, leadershipStatus)">Open Dashboard</button>
+          <button class="btn" onclick="openPanel('Leadership Command','Leadership overview and Mantle access.', leadershipModules, leadershipStatus)">Open Dashboard</button>
         </div>
 
-        <div class="section-card">
+        <div class="card">
           <h3>Executive Command</h3>
           <p>General Manager, General Assistant Manager, and General Administrator reporting and coordination.</p>
-          <button class="btn" onclick="openPanel('Executive Command','Executive reporting, meeting, and recommendation area.', executiveModules, executiveStatus)">Open Dashboard</button>
+          <button class="btn" onclick="openPanel('Executive Command','Executive reporting and recommendation area.', executiveModules, executiveStatus)">Open Dashboard</button>
         </div>
 
-        <div class="section-card">
+        <div class="card">
           <h3>Omni System</h3>
-          <p>Multi-company system view, central operational visibility, alerts, and coordinated movement across entities.</p>
+          <p>Multi-company system view, central operational visibility, alerts, routines, and shared workflow movement.</p>
           <button class="btn" onclick="openPanel('Omni System','Central multi-company operations layer.', omniModules, omniStatus)">Open Dashboard</button>
         </div>
 
-        <div class="section-card">
+        <div class="card">
           <h3>Tax Network / GTCIS</h3>
-          <p>Tax and compliance command with platform-style integrations, filings, deadlines, audits, and entity monitoring.</p>
+          <p>Tax and compliance command with filings, deadlines, jurisdictions, audits, and platform-style integrations.</p>
           <button class="btn" onclick="openPanel('Tax Network / GTCIS','Tax and compliance command layer.', taxModules, taxStatus)">Open Dashboard</button>
         </div>
       </div>
     </section>
 
     <section class="section">
-      <h2>Quick Access Systems</h2>
-      <p class="section-desc">Core dashboard systems available from the Central layer.</p>
-      <div class="quick-grid">
-        <div class="quick-card">
-          <h4>Contact</h4>
-          <p>Communication intake, direction, and response flow.</p>
-          <button class="btn" onclick="window.location.href='contact.html'">Open Dashboard</button>
-        </div>
-        <div class="quick-card">
-          <h4>Contract</h4>
-          <p>Contract intake, review structure, and correction flow.</p>
-          <button class="btn" onclick="window.location.href='contract.html'">Open Dashboard</button>
-        </div>
-        <div class="quick-card">
-          <h4>Report</h4>
-          <p>Reports, summaries, logs, and tracked flow.</p>
-          <button class="btn" onclick="window.location.href='report.html'">Open Dashboard</button>
-        </div>
-        <div class="quick-card">
-          <h4>Finance</h4>
-          <p>Tracking, financial visibility, and money command.</p>
-          <button class="btn" onclick="window.location.href='finance.html'">Open Dashboard</button>
-        </div>
-        <div class="quick-card">
-          <h4>Approval</h4>
-          <p>Review checkpoints and approval-stage visibility.</p>
-          <button class="btn" onclick="window.location.href='approval.html'">Open Dashboard</button>
-        </div>
-        <div class="quick-card">
-          <h4>Email Routing</h4>
-          <p>Mail direction, flow logic, and internal routing.</p>
-          <button class="btn" onclick="window.location.href='email.html'">Open Dashboard</button>
-        </div>
-        <div class="quick-card">
-          <h4>Public Portal</h4>
-          <p>External-facing forms, portal view, and public access.</p>
-          <button class="btn" onclick="window.location.href='public-portal.html'">Open Dashboard</button>
-        </div>
-        <div class="quick-card">
-          <h4>Agent A.I. Suite</h4>
-          <p>AI agent operations, task flow, and system support.</p>
-          <button class="btn" onclick="window.location.href='agent-suite.html'">Open Dashboard</button>
-        </div>
-      </div>
-    </section>
+      <h2>Company Dashboards</h2>
+      <p class="section-desc">Direct jump from Central Dashboard into the company dashboards.</p>
 
-    <section class="section">
-      <h2>Companies</h2>
-      <p class="section-desc">Company dashboards open directly from the Central Dashboard.</p>
       <div class="companies-grid">
-        <div class="company-card">
+        <div class="card">
           <h3>TitanCore Holdings</h3>
-          <p>Father company dashboard, internal governance, group oversight, and direct links into child companies.</p>
+          <p>Father company dashboard, internal governance, and company oversight.</p>
           <button class="btn" onclick="window.location.href='titancore.html'">Open Dashboard</button>
         </div>
 
-        <div class="company-card">
+        <div class="card">
           <h3>Vaultara Capital</h3>
           <p>Funding, capital, and finance-facing company dashboard.</p>
           <button class="btn" onclick="window.location.href='vaultaracapital.html'">Open Dashboard</button>
         </div>
 
-        <div class="company-card">
+        <div class="card">
           <h3>Family First Equity Group</h3>
-          <p>Real estate, acquisitions, and company operations dashboard.</p>
+          <p>Real estate, acquisitions, and company workflow dashboard.</p>
           <button class="btn" onclick="window.location.href='familyfirst.html'">Open Dashboard</button>
         </div>
 
-        <div class="company-card">
+        <div class="card">
           <h3>VitalPath Care Group</h3>
           <p>Healthcare and care operations dashboard.</p>
           <button class="btn" onclick="window.location.href='vitalpath.html'">Open Dashboard</button>
         </div>
 
-        <div class="company-card">
+        <div class="card">
           <h3>RevMotion Auto &amp; Marine</h3>
           <p>Auto, marine, and service operations dashboard.</p>
           <button class="btn" onclick="window.location.href='revmotion.html'">Open Dashboard</button>
@@ -621,9 +500,9 @@
 
   <script>
     const leadershipModules = [
-      ["CEO", "Final authority, full oversight, and final human sign visibility"],
+      ["CEO", "Final authority and full oversight"],
       ["President", "Strategic review and advisory visibility"],
-      ["Vice President", "System-wide operations review"],
+      ["Vice President", "Operations review and movement visibility"],
       ["Director", "Direction and oversight activity"],
       ["Assistant Director", "Support coordination and tracking"],
       ["Chief of Staff", "Coordination and 10 Chiefs branch"],
@@ -631,36 +510,36 @@
     ];
 
     const executiveModules = [
-      ["General Manager", "Cross-company oversight and meeting flow"],
+      ["General Manager", "Cross-company oversight and meetings"],
       ["General Assistant Manager", "Support and reporting review"],
-      ["General Administrator", "Records, summaries, and administration"],
+      ["General Administrator", "Records, summaries, and admin support"],
       ["Reports", "Executive report intake"],
       ["Meetings", "Meeting cycle visibility"],
       ["Recommendations", "Recommendation flow downward"]
     ];
 
     const omniModules = [
-      ["Entity Selector", "View and move between company entities"],
-      ["System Alerts", "Warnings, issue flags, and monitored items"],
+      ["Entity Selector", "Move between company entities"],
+      ["System Alerts", "Warnings and issue flags"],
       ["Revenue Pulse", "Cross-company financial visibility"],
-      ["Jobs / Workflow", "Work in progress and movement status"],
-      ["Secure Shield", "Oversight of protected operational state"],
-      ["Routine", "Central operational routines and flows"]
+      ["Workflow", "Work in progress and movement status"],
+      ["Secure Shield", "Protected operational oversight"],
+      ["Routine", "Central routines and process flow"]
     ];
 
     const taxModules = [
-      ["Entity / Company Selector", "TitanCore and all companies tax view"],
+      ["Entity Selector", "TitanCore and all companies tax view"],
       ["Filing Queue", "Upcoming filings and next deadlines"],
       ["Jurisdictions Matrix", "States, tax types, and status"],
       ["Compliance Status", "Summary of filing and issue position"],
-      ["Deadline Calendar", "Month view for filing schedule"],
+      ["Deadline Calendar", "Calendar month view"],
       ["Audit Shield", "Documents, letters, and confirmations"],
-      ["Integrations", "Platform-style tax integration layer"],
+      ["Integrations", "Platform-style tax integrations"],
       ["Primary Actions", "New filing, upload proof, export, compliance scan"]
     ];
 
     const leadershipStatus = [
-      "Leadership dashboard menu opens from the Central layer.",
+      "Leadership menu opens from the Central layer.",
       "Inner items are placeholders until permissions and live data are connected."
     ];
 
@@ -675,20 +554,8 @@
     ];
 
     const taxStatus = [
-      "Tax Network / GTCIS is the compliance and platform-style tax layer.",
-      "Integrations and filings are placeholders until live tax tooling is attached."
-    ];
-
-    const chiefModules = [
-      ["Work Area", "Main work area for this Chief branch"],
-      ["Reports", "Updates and reporting to Chief of Staff"],
-      ["Activity", "Tracked work activity and status"],
-      ["Notes", "Recorded notes and work observations"]
-    ];
-
-    const chiefStatus = [
-      "This Chief branch reports to the Chief of Staff only.",
-      "Home is removed. Only work sections remain."
+      "Tax Network / GTCIS is the tax and compliance layer.",
+      "The platform-style tax look belongs here, not on every dashboard."
     ];
 
     let historyStack = [];
@@ -696,6 +563,7 @@
     function updateClock() {
       document.getElementById("clock").textContent = new Date().toLocaleString();
     }
+
     updateClock();
     setInterval(updateClock, 1000);
 
@@ -728,6 +596,7 @@
         card.appendChild(p);
         card.appendChild(btn);
         card.appendChild(msg);
+
         grid.appendChild(card);
       });
 
@@ -737,6 +606,7 @@
     function setStatus(lines) {
       const box = document.getElementById("statusBox");
       box.innerHTML = "<h4>Connection Status</h4>";
+
       lines.forEach(function(line) {
         const p = document.createElement("p");
         p.textContent = line;
@@ -762,26 +632,8 @@
       showModal(title, desc, buildGrid(modules), statusLines, false);
     }
 
-    function openChief(number) {
-      historyStack.push({
-        title: document.getElementById("modalTitle").textContent,
-        desc: document.getElementById("modalDesc").textContent,
-        body: document.getElementById("modalBody").innerHTML,
-        status: document.getElementById("statusBox").innerHTML
-      });
-
-      showModal(
-        "Chief " + number + " Dashboard",
-        "Tracked reporting branch for Chief " + number + ", working under the Chief of Staff.",
-        buildGrid(chiefModules),
-        chiefStatus,
-        true
-      );
-    }
-
     function goBack() {
       if (!historyStack.length) return;
-
       const prev = historyStack.pop();
       document.getElementById("modalTitle").textContent = prev.title;
       document.getElementById("modalDesc").textContent = prev.desc;
@@ -794,19 +646,10 @@
     function rebindButtons() {
       const buttons = document.querySelectorAll("#modalBody .mini-card button");
       buttons.forEach(function(btn) {
-        const text = btn.textContent || "";
         const msg = btn.parentElement.querySelector(".mini-msg");
-
-        if (text.indexOf("Chief ") === 0) {
-          const number = parseInt(text.replace("Chief ", ""), 10);
-          btn.onclick = function() {
-            openChief(number);
-          };
-        } else {
-          btn.onclick = function() {
-            if (msg) msg.textContent = "Not connected yet";
-          };
-        }
+        btn.onclick = function() {
+          if (msg) msg.textContent = "Not connected yet";
+        };
       });
     }
 
