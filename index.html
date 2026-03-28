@@ -1,88 +1,427 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title><!-- COMPANY --> Dashboard Login</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Central Dashboard Login</title>
+  <style>
+    :root{
+      --bg:#000000;
+      --panel:#060606;
+      --green:#18c25c;
+      --gold:#d4af37;
+      --white:#ffffff;
+      --muted:#b8b8b8;
+      --border:rgba(24,194,92,0.9);
+    }
 
-<style>
-/* ─── brand palette – change once per company ─────────────── */
-:root{
-  --accent: #18c25c;          /* green outline / form border   */
-  --button: #d4af37;          /* gold button                   */
-  --button-txt: #000;         /* text on button                */
-  --bg: #000;                 /* page background               */
-  --txt: #fff;                /* normal text colour            */
-}
-/* ─── reset & layout ───────────────────────────────────────── */
-*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,sans-serif}
-body{background:var(--bg);color:var(--txt)}
-.wrapper  {max-width:1024px;margin:0 auto;border:3px solid var(--accent);display:flex;min-height:100vh}
-.left,.right{flex:1;padding:4rem 2rem}
-.left {border-right:3px solid var(--accent);display:flex;flex-direction:column;gap:1.2rem}
-h1      {font-size:clamp(2.1rem,5vw,3.5rem);line-height:1.05}
-h2      {font-size:1.3rem;color:var(--button);}
-input   {width:100%;padding:.9rem 1rem;border:2px solid var(--accent);border-radius:.4rem;background:transparent;color:var(--txt)}
-input::placeholder{color:#666}
-button  {width:100%;padding:1rem;border:none;border-radius:2rem;background:var(--button);color:var(--button-txt);font-weight:600;font-size:1.1rem;cursor:pointer}
-button:hover{opacity:.9}
-.hint   {font-size:.85rem;margin-top:.3rem}
-.hint a {color:var(--button);text-decoration:none}
-.hint a:hover{text-decoration:underline}
-.right p{font-size:1.05rem;line-height:1.5;margin-bottom:1.3rem}
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      font-family:Arial, Helvetica, sans-serif;
+    }
 
-/* ─── mobile: panes stack ─────────────────────────────────── */
-@media(max-width:680px){
- .wrapper{flex-direction:column}
- .left  {border-right:none;border-bottom:3px solid var(--accent)}
-}
-</style>
+    body{
+      background:var(--bg);
+      color:var(--white);
+      min-height:100vh;
+    }
+
+    .page{
+      width:min(1200px, 94%);
+      margin:24px auto;
+      border:3px solid var(--green);
+      background:var(--panel);
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+      padding:20px 24px;
+      border-bottom:2px solid var(--green);
+      flex-wrap:wrap;
+    }
+
+    .brand-side{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      min-width:280px;
+    }
+
+    .logo-slot{
+      width:72px;
+      height:72px;
+      border:2px solid var(--green);
+      border-radius:14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      background:#0a0a0a;
+      flex-shrink:0;
+    }
+
+    .logo-slot img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+    }
+
+    .logo-fallback{
+      color:var(--gold);
+      font-size:1.8rem;
+      font-weight:bold;
+    }
+
+    .main-title{
+      font-size:clamp(2rem, 4vw, 3.2rem);
+      font-weight:800;
+      color:var(--white);
+      line-height:1;
+    }
+
+    .nav-links{
+      display:flex;
+      flex-wrap:wrap;
+      gap:14px;
+      justify-content:flex-end;
+      align-items:center;
+      min-width:280px;
+    }
+
+    .nav-links button{
+      background:none;
+      border:none;
+      color:var(--green);
+      font-size:1rem;
+      cursor:pointer;
+      padding:2px 0;
+      text-decoration:none;
+    }
+
+    .nav-links button:hover,
+    .nav-links button.active{
+      color:var(--gold);
+      text-decoration:underline;
+    }
+
+    .content{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      min-height:560px;
+    }
+
+    .left-pane{
+      padding:40px 28px 30px;
+      border-right:2px solid var(--green);
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+
+    .left-subtitle{
+      color:var(--gold);
+      font-size:1.2rem;
+      font-weight:700;
+      margin-bottom:34px;
+      text-transform:uppercase;
+      letter-spacing:.5px;
+    }
+
+    .field{
+      margin-bottom:22px;
+    }
+
+    .field label{
+      display:block;
+      font-size:1rem;
+      font-weight:700;
+      margin-bottom:8px;
+      color:var(--white);
+    }
+
+    .field input{
+      width:100%;
+      border:2px solid var(--green);
+      border-radius:14px;
+      background:#000;
+      color:var(--white);
+      padding:18px 16px;
+      font-size:1rem;
+      outline:none;
+    }
+
+    .field input::placeholder{
+      color:#8b8b8b;
+    }
+
+    .field input:focus{
+      border-color:var(--gold);
+    }
+
+    .login-btn{
+      width:100%;
+      margin-top:18px;
+      padding:20px 18px;
+      border:none;
+      border-radius:40px;
+      background:var(--gold);
+      color:#000;
+      font-size:1.15rem;
+      font-weight:800;
+      cursor:pointer;
+    }
+
+    .login-btn:hover{
+      background:var(--green);
+      color:#000;
+    }
+
+    .helper-links{
+      margin-top:22px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      font-size:.98rem;
+    }
+
+    .helper-links a{
+      color:var(--gold);
+      text-decoration:none;
+    }
+
+    .helper-links a:hover{
+      text-decoration:underline;
+    }
+
+    .dot{
+      color:var(--gold);
+    }
+
+    .message{
+      min-height:24px;
+      margin-top:16px;
+      color:var(--green);
+      font-size:.95rem;
+    }
+
+    .right-pane{
+      padding:34px 28px 30px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      gap:20px;
+    }
+
+    .selected-label{
+      color:var(--gold);
+      font-size:.95rem;
+      text-transform:uppercase;
+      letter-spacing:.4px;
+    }
+
+    .selected-name{
+      font-size:clamp(2rem, 3.4vw, 3rem);
+      font-weight:800;
+      line-height:1.05;
+      margin-top:8px;
+    }
+
+    .description-box{
+      margin-top:auto;
+    }
+
+    .description-box p{
+      font-size:1.08rem;
+      line-height:1.65;
+      color:var(--white);
+      max-width:520px;
+    }
+
+    .note{
+      margin-top:22px;
+      color:var(--muted);
+      font-size:.92rem;
+      line-height:1.5;
+    }
+
+    @media (max-width: 860px){
+      .content{
+        grid-template-columns:1fr;
+      }
+      .left-pane{
+        border-right:none;
+        border-bottom:2px solid var(--green);
+      }
+      .topbar{
+        align-items:flex-start;
+      }
+      .nav-links{
+        justify-content:flex-start;
+      }
+    }
+  </style>
 </head>
 <body>
-
-<!-- top banner (optional) -->
-<!-- <div style="background:#111;color:#ccc;text-align:center;padding:.4rem">System notice …</div> -->
-
-<div class="wrapper">
-
-  <!-- left pane – form -->
-  <section class="left">
-     <h1><!-- COMPANY --> Dashboard</h1>
-     <h2>SECURE LOGIN</h2>
-
-     <form id="logForm">
-        <label>Email</label>
-        <input id="email"  type="email" placeholder="name@<!-- DOMAIN -->" required>
-
-        <label style="margin-top:1rem">Password</label>
-        <input id="pwd" type="password" placeholder="Password" required>
-
-        <button>Login</button>
-
-        <div class="hint">
-          <a href="#">Forgot password?</a> • 
-          <a href="#">Forgot email?</a>
+  <div class="page">
+    <div class="topbar">
+      <div class="brand-side">
+        <div class="logo-slot">
+          <!-- replace with your real central / titancore logo -->
+          <!-- example: <img src="titancore-logo.png" alt="TitanCore Logo"> -->
+          <div class="logo-fallback">T</div>
         </div>
-     </form>
-  </section>
+        <div class="main-title">Central Dashboard</div>
+      </div>
 
-  <!-- right pane – company blurb -->
-  <section class="right">
-      <h1><!-- COMPANY LONG --></h1>
-      <p><!-- 1-3 sentence description of the business / mission. --></p>
-      <p style="font-size:.9rem;color:#bbb">Access is restricted to authorised staff and system administrators.</p>
-  </section>
+      <div class="nav-links">
+        <button class="company-link active" data-company="central">Central</button>
+        <button class="company-link" data-company="titancore">TitanCore</button>
+        <button class="company-link" data-company="vaultara">Vaultara</button>
+        <button class="company-link" data-company="familyfirst">Family First</button>
+        <button class="company-link" data-company="vitalpath">VitalPath</button>
+        <button class="company-link" data-company="revmotion">RevMotion</button>
+      </div>
+    </div>
 
-</div>
+    <div class="content">
+      <div class="left-pane">
+        <div class="left-subtitle">Secure Login</div>
 
-<!-- ─── temporary client-side redirect (replace later with MS-SSO) -->
-<script>
-document.getElementById('logForm').addEventListener('submit', e=>{
-  e.preventDefault();
-  const em = email.value.trim().toLowerCase();
-  if(!em.endsWith('@<!-- DOMAIN -->')){alert('Use your company e-mail.');return;}
-  window.location.href = '/<!-- REAL-DASHBOARD-FOLDER -->/index.html';
-});
-</script>
+        <form id="loginForm">
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" type="email" placeholder="name@titancoreholdings.com" required />
+          </div>
+
+          <div class="field">
+            <label for="password">Password</label>
+            <input id="password" type="password" placeholder="Password" required />
+          </div>
+
+          <button type="submit" class="login-btn">Login</button>
+
+          <div class="helper-links">
+            <a href="https://passwordreset.microsoftonline.com/" target="_blank" rel="noopener">Forgot password?</a>
+            <span class="dot">•</span>
+            <a href="mailto:helpdesk@titancoreholdings.com?subject=Need%20help%20with%20dashboard%20email">Forgot email?</a>
+          </div>
+
+          <div class="message" id="message"></div>
+        </form>
+      </div>
+
+      <div class="right-pane">
+        <div>
+          <div class="selected-label">Selected Dashboard</div>
+          <div class="selected-name" id="selectedName">Central Dashboard</div>
+        </div>
+
+        <div class="description-box">
+          <p id="selectedDescription">
+            Multi-company command center for cross-entity finance, reporting, tax oversight, operational review, and executive visibility across the full TitanCore structure.
+          </p>
+
+          <div class="note" id="selectedNote">
+            Sign in to continue to the selected dashboard.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const dashboards = {
+      central: {
+        name: "Central Dashboard",
+        placeholder: "name@titancoreholdings.com",
+        redirect: "central-dashboard.html",
+        description: "Multi-company command center for cross-entity finance, reporting, tax oversight, operational review, and executive visibility across the full TitanCore structure.",
+        note: "Sign in to continue to the selected dashboard."
+      },
+      titancore: {
+        name: "TitanCore Dashboard",
+        placeholder: "name@titancoreholdings.com",
+        redirect: "titancore-dashboard.html",
+        description: "Parent-company dashboard for TitanCore Holdings, used for company-level control, operational approvals, reporting review, and oversight across all internal systems.",
+        note: "Use your company account to enter the TitanCore dashboard."
+      },
+      vaultara: {
+        name: "Vaultara Capital Dashboard",
+        placeholder: "name@vaultaracapital.com",
+        redirect: "vaultara-dashboard.html",
+        description: "Capital and finance dashboard for lending, funding flow, client intake, credit operations, and executive review for Vaultara Capital.",
+        note: "Use your account to enter the Vaultara dashboard."
+      },
+      familyfirst: {
+        name: "Family First Equity Group Dashboard",
+        placeholder: "name@familyfirstequitygroup.com",
+        redirect: "familyfirst-dashboard.html",
+        description: "Real-estate and property operations dashboard for acquisitions, funding, management flow, internal review, and Family First company activity.",
+        note: "Use your account to enter the Family First dashboard."
+      },
+      vitalpath: {
+        name: "VitalPath Care Group Dashboard",
+        placeholder: "name@vitalpathcaregroup.com",
+        redirect: "vitalpath-dashboard.html",
+        description: "Healthcare operations dashboard for VitalPath Care Group, supporting internal oversight, team coordination, reporting, and service management.",
+        note: "Use your account to enter the VitalPath dashboard."
+      },
+      revmotion: {
+        name: "RevMotion Auto & Marine Dashboard",
+        placeholder: "name@revmotionautomarine.com",
+        redirect: "revmotion-dashboard.html",
+        description: "Automotive and marine operations dashboard for RevMotion, focused on workflow, intake, service tracking, reporting, and internal company control.",
+        note: "Use your account to enter the RevMotion dashboard."
+      }
+    };
+
+    let currentCompany = "central";
+
+    const companyLinks = document.querySelectorAll(".company-link");
+    const selectedName = document.getElementById("selectedName");
+    const selectedDescription = document.getElementById("selectedDescription");
+    const selectedNote = document.getElementById("selectedNote");
+    const emailInput = document.getElementById("email");
+    const messageBox = document.getElementById("message");
+
+    companyLinks.forEach(btn => {
+      btn.addEventListener("click", () => {
+        companyLinks.forEach(link => link.classList.remove("active"));
+        btn.classList.add("active");
+
+        currentCompany = btn.dataset.company;
+        const current = dashboards[currentCompany];
+
+        selectedName.textContent = current.name;
+        selectedDescription.textContent = current.description;
+        selectedNote.textContent = current.note;
+        emailInput.placeholder = current.placeholder;
+        messageBox.textContent = "";
+      });
+    });
+
+    document.getElementById("loginForm").addEventListener("submit", function(e){
+      e.preventDefault();
+
+      const email = emailInput.value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if(!email || !password){
+        messageBox.textContent = "Enter your email and password.";
+        return;
+      }
+
+      messageBox.textContent = "Opening " + dashboards[currentCompany].name + "...";
+
+      setTimeout(() => {
+        window.location.href = dashboards[currentCompany].redirect;
+      }, 500);
+    });
+  </script>
 </body>
 </html>
