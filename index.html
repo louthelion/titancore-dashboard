@@ -25,30 +25,30 @@
       background:var(--bg);
       color:var(--white);
       min-height:100vh;
-      padding:24px 18px;
+      padding:16px 10px;
     }
 
     .page-title{
-      width:min(1200px, 96%);
-      margin:0 auto 18px;
-      font-size:clamp(2.2rem, 5vw, 4rem);
+      width:min(1180px, 98%);
+      margin:0 auto 14px;
+      font-size:clamp(1.8rem, 4vw, 3.2rem);
       font-weight:800;
       color:var(--white);
       text-align:left;
     }
 
     .wrap{
-      width:min(1200px, 96%);
+      width:min(1180px, 98%);
       margin:0 auto;
       border:2px solid var(--green);
       background:var(--panel);
       display:grid;
-      grid-template-columns:1fr 1fr;
-      min-height:680px;
+      grid-template-columns:44% 56%;
+      min-height:420px;
     }
 
     .left{
-      padding:46px 34px 34px;
+      padding:24px 18px 20px;
       border-right:2px solid var(--green);
       display:flex;
       flex-direction:column;
@@ -56,33 +56,33 @@
     }
 
     .login-title{
-      font-size:clamp(2rem, 3.5vw, 3rem);
+      font-size:clamp(1.4rem, 3vw, 2.2rem);
       font-weight:800;
       color:var(--gold);
-      margin-bottom:34px;
+      margin-bottom:18px;
       line-height:1;
     }
 
     .field{
-      margin-bottom:24px;
+      margin-bottom:16px;
     }
 
     .field label{
       display:block;
-      font-size:1.05rem;
+      font-size:.95rem;
       font-weight:700;
       color:var(--white);
-      margin-bottom:10px;
+      margin-bottom:7px;
     }
 
     .field input{
       width:100%;
-      padding:19px 17px;
+      padding:14px 14px;
       border:2px solid var(--green);
-      border-radius:16px;
+      border-radius:14px;
       background:#000000;
       color:var(--white);
-      font-size:1rem;
+      font-size:.95rem;
       outline:none;
     }
 
@@ -96,13 +96,13 @@
 
     .login-btn{
       width:100%;
-      margin-top:8px;
-      padding:20px 16px;
+      margin-top:4px;
+      padding:15px 14px;
       border:none;
-      border-radius:42px;
+      border-radius:36px;
       background:var(--gold);
       color:#000000;
-      font-size:1.15rem;
+      font-size:1rem;
       font-weight:800;
       cursor:pointer;
     }
@@ -113,11 +113,12 @@
     }
 
     .helper{
-      margin-top:20px;
+      margin-top:14px;
       display:flex;
       flex-wrap:wrap;
       gap:8px;
-      font-size:1rem;
+      font-size:.92rem;
+      line-height:1.4;
     }
 
     .helper a{
@@ -130,38 +131,99 @@
     }
 
     .right{
-      padding:46px 34px 34px;
+      padding:24px 18px 20px;
       display:flex;
       align-items:center;
     }
 
     .desc{
-      max-width:560px;
-      font-size:1.18rem;
-      line-height:1.8;
+      max-width:100%;
+      font-size:1rem;
+      line-height:1.7;
       color:var(--white);
     }
 
     .desc .small-note{
       display:block;
-      margin-top:24px;
+      margin-top:18px;
       color:var(--muted);
-      font-size:1rem;
-      line-height:1.6;
+      font-size:.92rem;
+      line-height:1.5;
     }
 
+    /* keep 2 columns on phone */
     @media (max-width:900px){
       .wrap{
-        grid-template-columns:1fr;
+        grid-template-columns:46% 54%;
+        min-height:auto;
       }
 
       .left{
-        border-right:none;
-        border-bottom:2px solid var(--green);
+        border-right:2px solid var(--green);
+        border-bottom:none;
+        padding:18px 12px 16px;
       }
 
       .right{
-        align-items:flex-start;
+        padding:18px 12px 16px;
+      }
+
+      .page-title{
+        font-size:2rem;
+      }
+
+      .login-title{
+        font-size:1.8rem;
+        margin-bottom:14px;
+      }
+
+      .field label{
+        font-size:.9rem;
+      }
+
+      .field input{
+        padding:12px 12px;
+        font-size:.9rem;
+      }
+
+      .login-btn{
+        padding:13px 12px;
+        font-size:.95rem;
+      }
+
+      .desc{
+        font-size:.92rem;
+        line-height:1.55;
+      }
+
+      .helper{
+        font-size:.84rem;
+      }
+    }
+
+    @media (max-width:560px){
+      .wrap{
+        grid-template-columns:48% 52%;
+      }
+
+      .page-title{
+        font-size:1.65rem;
+      }
+
+      .login-title{
+        font-size:1.55rem;
+      }
+
+      .field input{
+        border-radius:12px;
+      }
+
+      .login-btn{
+        border-radius:30px;
+      }
+
+      .desc{
+        font-size:.88rem;
       }
     }
   </style>
