@@ -7,7 +7,7 @@
   <style>
     :root{
       --bg:#000000;
-      --panel:#070707;
+      --panel:#050505;
       --green:#18c25c;
       --gold:#d4af37;
       --white:#ffffff;
@@ -25,81 +25,69 @@
       background:var(--bg);
       color:var(--white);
       min-height:100vh;
+      padding:24px 18px;
     }
 
-    .top-title{
-      text-align:center;
-      font-size:clamp(2rem,4vw,3rem);
+    .page-title{
+      width:min(1200px, 96%);
+      margin:0 auto 18px;
+      font-size:clamp(2.2rem, 5vw, 4rem);
       font-weight:800;
-      padding:22px 16px 10px;
       color:var(--white);
+      text-align:left;
     }
 
     .wrap{
-      width:min(1200px,94%);
-      margin:0 auto 24px;
-      background:var(--panel);
+      width:min(1200px, 96%);
+      margin:0 auto;
       border:2px solid var(--green);
+      background:var(--panel);
       display:grid;
       grid-template-columns:1fr 1fr;
-      min-height:650px;
+      min-height:680px;
     }
 
     .left{
-      padding:32px 26px;
+      padding:46px 34px 34px;
       border-right:2px solid var(--green);
       display:flex;
       flex-direction:column;
-      justify-content:flex-end;
-    }
-
-    .logo-box{
-      width:86px;
-      height:86px;
-      border:2px solid var(--green);
-      border-radius:16px;
-      display:flex;
-      align-items:center;
       justify-content:center;
-      margin-bottom:18px;
-      color:var(--gold);
-      font-size:2rem;
-      font-weight:800;
-      background:#0b0b0b;
     }
 
-    .login-sub{
-      font-size:1.15rem;
+    .login-title{
+      font-size:clamp(2rem, 3.5vw, 3rem);
+      font-weight:800;
       color:var(--gold);
-      font-weight:700;
-      margin-bottom:24px;
-      text-transform:uppercase;
+      margin-bottom:34px;
+      line-height:1;
     }
 
     .field{
-      margin-bottom:20px;
+      margin-bottom:24px;
     }
 
     .field label{
       display:block;
-      margin-bottom:8px;
+      font-size:1.05rem;
       font-weight:700;
-      font-size:1rem;
+      color:var(--white);
+      margin-bottom:10px;
     }
 
     .field input{
       width:100%;
-      padding:17px 15px;
+      padding:19px 17px;
       border:2px solid var(--green);
-      border-radius:14px;
-      background:#000;
-      color:#fff;
+      border-radius:16px;
+      background:#000000;
+      color:var(--white);
       font-size:1rem;
       outline:none;
     }
 
     .field input::placeholder{
-      color:#7d7d7d;
+      color:#7f7f7f;
     }
 
     .field input:focus{
@@ -108,27 +96,28 @@
 
     .login-btn{
       width:100%;
-      margin-top:10px;
-      padding:18px 15px;
+      margin-top:8px;
+      padding:20px 16px;
       border:none;
-      border-radius:40px;
+      border-radius:42px;
       background:var(--gold);
-      color:#000;
-      font-size:1.05rem;
+      color:#000000;
+      font-size:1.15rem;
       font-weight:800;
       cursor:pointer;
     }
 
     .login-btn:hover{
       background:var(--green);
+      color:#000;
     }
 
     .helper{
-      margin-top:18px;
-      font-size:.95rem;
+      margin-top:20px;
       display:flex;
-      gap:8px;
       flex-wrap:wrap;
+      gap:8px;
+      font-size:1rem;
     }
 
     .helper a{
@@ -141,32 +130,27 @@
     }
 
     .right{
-      padding:32px 26px;
+      padding:46px 34px 34px;
       display:flex;
-      flex-direction:column;
-      justify-content:space-between;
+      align-items:center;
     }
 
-    .right h2{
-      font-size:clamp(2rem,3.4vw,3rem);
-      line-height:1.08;
-      margin-bottom:18px;
+    .desc{
+      max-width:560px;
+      font-size:1.18rem;
+      line-height:1.8;
+      color:var(--white);
     }
 
-    .right p{
-      font-size:1.05rem;
-      line-height:1.7;
-      max-width:520px;
-    }
-
-    .note{
+    .desc .small-note{
+      display:block;
+      margin-top:24px;
       color:var(--muted);
-      font-size:.92rem;
-      line-height:1.5;
-      margin-top:18px;
+      font-size:1rem;
+      line-height:1.6;
     }
 
-    @media (max-width:860px){
+    @media (max-width:900px){
       .wrap{
         grid-template-columns:1fr;
       }
@@ -175,16 +159,19 @@
         border-right:none;
         border-bottom:2px solid var(--green);
       }
+
+      .right{
+        align-items:flex-start;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="top-title">Central Dashboard</div>
+  <div class="page-title">Central Dashboard</div>
 
   <div class="wrap">
     <div class="left">
-      <div class="logo-box">T</div>
-      <div class="login-sub">Secure Login</div>
+      <div class="login-title">Login</div>
 
       <form id="loginForm">
         <div class="field">
@@ -208,17 +195,14 @@
     </div>
 
     <div class="right">
-      <div>
-        <h2>Central Dashboard</h2>
-        <p>
-          Multi-company command center for reporting, oversight, tax review,
-          operational review, finance visibility, and executive access across
-          the full TitanCore network.
-        </p>
-      </div>
+      <div class="desc">
+        Multi-company command center for reporting, oversight, tax review,
+        operational review, finance visibility, and executive access across
+        the full TitanCore network.
 
-      <div class="note">
-        Sign in to continue to the Central Dashboard.
+        <span class="small-note">
+          Sign in to continue to the Central Dashboard.
+        </span>
       </div>
     </div>
   </div>
@@ -226,6 +210,7 @@
   <script>
     document.getElementById("loginForm").addEventListener("submit", function(e){
       e.preventDefault();
+
       const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value.trim();
 
