@@ -7,7 +7,7 @@
   <style>
     :root{
       --bg:#000000;
-      --panel:#070707;
+      --panel:#060606;
       --green:#18c25c;
       --gold:#d4af37;
       --white:#ffffff;
@@ -25,42 +25,47 @@
       background:var(--bg);
       color:var(--white);
       min-height:100vh;
-      padding:18px 12px;
+      padding:20px 14px;
+    }
+
+    .page{
+      width:min(1220px, 100%);
+      margin:0 auto;
     }
 
     .page-title{
-      width:min(1200px, 98%);
-      margin:0 auto 16px;
       font-size:clamp(2rem, 4vw, 3.4rem);
       font-weight:800;
       color:var(--green);
-      text-align:left;
+      margin-bottom:18px;
     }
 
-    .wrap{
-      width:min(1200px, 98%);
-      margin:0 auto;
+    .shell{
       border:2px solid var(--green);
+      border-radius:22px;
       background:var(--panel);
+      overflow-x:auto;
+    }
+
+    .shell-inner{
+      min-width:820px;
       display:grid;
-      grid-template-columns:46% 54%;
-      min-height:560px;
-      border-radius:18px;
-      overflow:hidden;
+      grid-template-columns:360px 1fr;
+      gap:36px;
+      padding:30px 28px;
+      align-items:center;
     }
 
     .left{
-      padding:28px 22px 24px;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
+      padding:8px 4px;
     }
 
     .login-title{
-      font-size:clamp(1.8rem, 3vw, 2.6rem);
+      font-size:2.5rem;
       font-weight:800;
       color:var(--gold);
-      margin-bottom:22px;
+      margin-bottom:24px;
+      line-height:1;
     }
 
     .field{
@@ -71,13 +76,13 @@
       display:block;
       font-size:1rem;
       font-weight:700;
-      margin-bottom:8px;
       color:var(--white);
+      margin-bottom:8px;
     }
 
     .field input{
       width:100%;
-      padding:15px 14px;
+      padding:16px 14px;
       border:2px solid var(--green);
       border-radius:16px;
       background:#000;
@@ -87,7 +92,7 @@
     }
 
     .field input::placeholder{
-      color:#777777;
+      color:#7b7b7b;
     }
 
     .field input:focus{
@@ -97,12 +102,12 @@
     .login-btn{
       width:100%;
       margin-top:8px;
-      padding:16px 14px;
+      padding:17px 14px;
       border:none;
-      border-radius:40px;
+      border-radius:999px;
       background:var(--gold);
       color:#000;
-      font-size:1.05rem;
+      font-size:1.08rem;
       font-weight:800;
       cursor:pointer;
     }
@@ -113,12 +118,11 @@
     }
 
     .helper{
-      margin-top:18px;
+      margin-top:16px;
       display:flex;
       flex-wrap:wrap;
       gap:8px;
-      font-size:.96rem;
-      line-height:1.4;
+      font-size:.95rem;
     }
 
     .helper a{
@@ -132,86 +136,74 @@
 
     .status{
       min-height:22px;
-      margin-top:10px;
+      margin-top:12px;
       color:var(--green);
       font-size:.92rem;
     }
 
     .right{
-      padding:28px 24px 24px;
-      display:flex;
-      align-items:center;
+      padding:8px 4px;
     }
 
     .desc{
-      max-width:100%;
-      font-size:1.04rem;
-      line-height:1.75;
+      font-size:1.12rem;
+      line-height:1.8;
       color:var(--white);
+      max-width:620px;
     }
 
     .desc .note{
       display:block;
       margin-top:20px;
       color:var(--muted);
-      font-size:.96rem;
-      line-height:1.5;
-    }
-
-    @media (max-width:700px){
-      .wrap{
-        grid-template-columns:1fr;
-      }
-
-      .left{
-        padding-bottom:10px;
-      }
-
-      .right{
-        padding-top:8px;
-      }
+      font-size:.98rem;
+      line-height:1.6;
     }
   </style>
 </head>
 <body>
-  <div class="page-title">Central Dashboard</div>
+  <div class="page">
+    <div class="page-title">Central Dashboard</div>
 
-  <div class="wrap">
-    <div class="left">
-      <div class="login-title">Login</div>
+    <div class="shell">
+      <div class="shell-inner">
+        <div class="left">
+          <div class="login-title">Login</div>
 
-      <form id="loginForm">
-        <div class="field">
-          <label for="email">Email</label>
-          <input id="email" type="email" placeholder="name@titancoreholdings.com" required>
+          <form id="loginForm">
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" type="email" placeholder="name@titancoreholdings.com" required>
+            </div>
+
+            <div class="field">
+              <label for="password">Password</label>
+              <input id="password" type="password" placeholder="Password" required>
+            </div>
+
+            <button type="submit" class="login-btn">Login</button>
+
+            <div class="helper">
+              <a href="https://passwordreset.microsoftonline.com/" target="_blank" rel="noopener">Forgot password?</a>
+              <span>•</span>
+              <a href="mailto:helpdesk@titancoreholdings.com?subject=Need%20help%20with%20dashboard%20email">Forgot email?</a>
+            </div>
+
+            <div class="status" id="status"></div>
+          </form>
         </div>
 
-        <div class="field">
-          <label for="password">Password</label>
-          <input id="password" type="password" placeholder="Password" required>
+        <div class="right">
+          <div class="desc">
+            Multi-company command center for reporting, oversight, tax review,
+            operational review, finance visibility, and executive access across
+            the full TitanCore network.
+
+            <span class="note">
+              Sign in to continue to the Central Dashboard.
+            </span>
+          </div>
         </div>
-
-        <button type="submit" class="login-btn">Login</button>
-
-        <div class="helper">
-          <a href="https://passwordreset.microsoftonline.com/" target="_blank" rel="noopener">Forgot password?</a>
-          <span>•</span>
-          <a href="mailto:helpdesk@titancoreholdings.com?subject=Need%20help%20with%20dashboard%20email">Forgot email?</a>
-        </div>
-
-        <div class="status" id="status"></div>
-      </form>
-    </div>
-
-    <div class="right">
-      <div class="desc">
-        Multi-company command center for reporting, oversight, tax review,
-        operational review, finance visibility, and executive access across
-        the full TitanCore network.
-
-        <span class="note">
-          Sign in to continue to the Central Dashboard.
-        </span>
       </div>
     </div>
   </div>
@@ -232,7 +224,7 @@
       status.textContent = "Opening dashboard...";
 
       setTimeout(function(){
-        window.location.href = "index.html";
+        window.location.href = "central-dashboard.html";
       }, 300);
     });
   </script>
