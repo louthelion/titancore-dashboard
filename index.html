@@ -1,115 +1,172 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <title>Central Dashboard – TitanCore</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <style>
- :root{
-   --bg:#0b0d0b;--panel:#121512;--brand:#18c25c;
-   --gold:#d0a23a;--fg:#e9e9e9;--radius:6px;
-   font-family:system-ui,Segoe UI,Arial,sans-serif;
- }
- *{box-sizing:border-box;margin:0;padding:0}
- body{background:var(--bg);color:var(--fg);line-height:1.35;min-height:100vh;display:flex;flex-direction:column}
- header{display:flex;align-items:center;gap:.9rem;background:#143014;padding:1rem}
- header img{width:56px;height:auto}
- header h1{font-size:1.8rem;font-weight:700}
- #clock{font-weight:600;font-size:.9rem;margin-left:auto}
- nav{display:flex;flex-wrap:wrap;gap:.6rem .9rem;padding:1rem;justify-content:center;background:#101410}
- nav button{
-   background:var(--gold);color:#000;padding:.5rem .9rem;
-   border:none;border-radius:var(--radius);font-weight:600;
-   font-size:.86rem;cursor:pointer;transition:.2s filter
- }
- nav button:hover{filter:brightness(1.15)}
- section{display:none;padding:1.6rem;max-width:900px;width:100%;margin:0 auto}
- section.active{display:block}
- section h2{color:var(--brand);margin-bottom:.7rem}
- footer{margin-top:auto;padding:1rem;text-align:center;font-size:.75rem;color:#777}
+:root{
+  --bg:#050805;--panel:#0f130f;--brand:#18c25c;--gold:#d0a23a;--fg:#e9e9e9;
+  --radius:6px;font-family:system-ui,Segoe UI,Arial,sans-serif
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);min-height:100vh;display:flex;flex-direction:column}
+header{display:flex;align-items:center;gap:.9rem;background:#143014;padding:1rem}
+header img{width:56px;height:auto}
+h1{font-size:1.8rem;font-weight:700}
+#clock{margin-left:auto;font-size:.9rem;font-weight:600}
+nav{display:flex;flex-wrap:wrap;gap:.6rem .9rem;padding:1rem;background:#101410;justify-content:center}
+nav button{
+  background:var(--gold);color:#000;padding:.55rem .95rem;border:none;
+  border-radius:var(--radius);font-weight:600;font-size:.86rem;cursor:pointer;transition:.2s filter
+}
+nav button:hover{filter:brightness(1.18)}
+section{display:none;padding:1.6rem;max-width:1200px;width:100%;margin:0 auto}
+section.active{display:block}
+.board{display:grid;gap:.8rem}
+.board button{
+  background:rgba(255,255,255,.06);padding:.85rem 1.1rem;border:1px solid #1f291f;
+  border-radius:var(--radius);text-align:left;color:var(--brand);font-size:1rem;font-weight:700;
+  cursor:pointer;transition:background .2s,transform .1s
+}
+.board button:hover{background:rgba(255,255,255,.1);transform:translateY(-2px)}
+.detail{display:none;margin-top:1.2rem;background:var(--panel);padding:1.4rem;border-radius:var(--radius)}
+.detail h3{color:var(--gold);margin-bottom:.7rem}
+footer{margin-top:auto;padding:1rem;text-align:center;font-size:.75rem;color:#777}
 </style>
 </head>
 <body>
 
 <header>
-  <img src="assets/titancore-logo.png" alt="TitanCore logo">
-  <h1>Central Dashboard</h1>
-  <div id="clock"></div>
+  <!-- logo optional – remove img if you don’t have one yet -->
+  <img src="assets/titancore-logo.png" alt="logo">
+  <h1>Central&nbsp;Dashboard</h1><div id="clock"></div>
 </header>
 
 <nav>
-  <button data-target="home">Home</button>
-  <button data-target="portfolio">Portfolio Radar</button>
-  <button data-target="tax">Tax Status</button>
-  <button data-target="public">Public Portal</button>
-  <button data-target="agent">Agent Suite</button>
-  <button data-target="vaultara">Vaultara Capital</button>
-  <button data-target="contracts">Contracts</button>
-  <button data-target="omni">Omni System</button>
-  <button data-target="assets">Asset Register</button>
+  <button data-top="home">Home</button>
+  <button data-top="portfolio">Portfolio Radar</button>
+  <button data-top="tax">Tax Status</button>
+  <button data-top="public">Public Portal</button>
+  <button data-top="agent">Agent Suite</button>
+  <button data-top="vaultara">Vaultara Capital</button>
+  <button data-top="contracts">Contracts</button>
+  <button data-top="omni">Omni System</button>
+  <button data-top="assets">Asset Register</button>
 </nav>
 
-<!----- PANELS ----->
+<!-- ========== FIRST-LAYER PANELS ========== -->
 
 <section id="home" class="active">
-  <h2>Welcome</h2>
-  <p>Select a module above to open it.<br>
-     When each module is finished, its tools will appear here.</p>
+  <h2>Welcome</h2><p>Select a module above.</p>
 </section>
 
 <section id="portfolio">
-  <h2>Portfolio Radar</h2>
-  <p>TODO – charts &amp; KPIs for every company.</p>
+   <h2>Portfolio Radar</h2>
+   <div class="board">
+     <button data-detail="port-kpi">Overall KPI</button>
+     <button data-detail="port-trend">Trend Charts</button>
+   </div>
+   <!-- detail cards -->
+   <div id="port-kpi" class="detail"><h3>Overall KPI</h3><p>TODO – summary cards.</p></div>
+   <div id="port-trend" class="detail"><h3>Trend Charts</h3><p>TODO – revenue &amp; cost graphs.</p></div>
 </section>
 
 <section id="tax">
-  <h2>Tax Status</h2>
-  <p>TODO – compliance dashboard &amp; filing calendar.</p>
+   <h2>Tax Status</h2>
+   <div class="board">
+     <button data-detail="tax-matrix">Jurisdictions Matrix</button>
+     <button data-detail="tax-calendar">Deadline Calendar</button>
+     <button data-detail="tax-docs">Audit-shield Docs</button>
+   </div>
+   <div id="tax-matrix"  class="detail"><h3>Jurisdictions Matrix</h3><p>Placeholder table.</p></div>
+   <div id="tax-calendar" class="detail"><h3>Deadline Calendar</h3><p>Placeholder monthly grid.</p></div>
+   <div id="tax-docs"     class="detail"><h3>Audit-shield Docs</h3><p>Upload &amp; receipts area.</p></div>
 </section>
 
 <section id="public">
-  <h2>Public Portal</h2>
-  <p>TODO – press releases &amp; investor info.</p>
+   <h2>Public Portal</h2>
+   <div class="board">
+     <button data-detail="pub-press">Press Releases</button>
+     <button data-detail="pub-ceo">CEO Message</button>
+   </div>
+   <div id="pub-press" class="detail"><h3>Press Releases</h3><p>List of releases.</p></div>
+   <div id="pub-ceo"   class="detail"><h3>CEO Monthly Message</h3><p>Message preview area.</p></div>
 </section>
 
 <section id="agent">
-  <h2>Agent Suite</h2>
-  <p>TODO – AI assistant tools for staff.</p>
+   <h2>Agent Suite</h2>
+   <div class="board">
+     <button data-detail="agent-tasks">Agent Tasks</button>
+     <button data-detail="agent-ai">AI Assistant Tools</button>
+   </div>
+   <div id="agent-tasks" class="detail"><h3>Agent Tasks</h3><p>Kanban coming soon.</p></div>
+   <div id="agent-ai"    class="detail"><h3>AI Assistant Tools</h3><p>Chat / scripts hub.</p></div>
 </section>
 
 <section id="vaultara">
-  <h2>Vaultara Capital</h2>
-  <p>TODO – loan / credit-repair intake forms &amp; status tracker.</p>
+   <h2>Vaultara Capital</h2>
+   <div class="board">
+     <button data-detail="vc-intake">Credit / Loan Intake</button>
+     <button data-detail="vc-fees">Fee Schedule</button>
+   </div>
+   <div id="vc-intake" class="detail"><h3>Client Intake</h3><p>Embedded form placeholder.</p></div>
+   <div id="vc-fees"   class="detail"><h3>Fee Schedule</h3><p>$249 credit-repair start fee …</p></div>
 </section>
 
 <section id="contracts">
-  <h2>Contracts</h2>
-  <p>TODO – contract list &amp; e-signer.</p>
+   <h2>Contracts</h2>
+   <div class="board">
+     <button data-detail="ctr-list">Contract List</button>
+     <button data-detail="ctr-signer">Signer Console</button>
+   </div>
+   <div id="ctr-list"   class="detail"><h3>Contract List</h3><p>Table placeholder.</p></div>
+   <div id="ctr-signer" class="detail"><h3>Signer Console</h3><p>e-signature placeholder.</p></div>
 </section>
 
 <section id="omni">
-  <h2>Omni System</h2>
-  <p>TODO – operations board &amp; alerts.</p>
+   <h2>Omni System</h2>
+   <div class="board">
+     <button data-detail="omni-ops">Ops Board</button>
+     <button data-detail="omni-alerts">Alerts &amp; Tasks</button>
+   </div>
+   <div id="omni-ops"    class="detail"><h3>Ops Board</h3><p>Route board placeholder.</p></div>
+   <div id="omni-alerts" class="detail"><h3>Alerts &amp; Tasks</h3><p>Live alerts list.</p></div>
 </section>
 
 <section id="assets">
-  <h2>Asset Register</h2>
-  <p>TODO – company-wide fixed-asset inventory.</p>
+   <h2>Asset Register</h2>
+   <div class="board">
+     <button data-detail="asset-list">Asset List</button>
+     <button data-detail="asset-add">Add Asset</button>
+   </div>
+   <div id="asset-list" class="detail"><h3>Asset List</h3><p>Inventory table placeholder.</p></div>
+   <div id="asset-add"  class="detail"><h3>Add Asset</h3><p>Form coming soon.</p></div>
 </section>
 
-<footer>© 2026 [TitanCore Holdings](chatgpt://generic-entity?number=0) – internal use only</footer>
+<footer>© 2026 TitanCore Holdings – internal use only</footer>
 
 <script>
 /* live clock */
 const clk=()=>{document.getElementById('clock').textContent=
   new Date().toLocaleString();};clk();setInterval(clk,1e3);
 
-/* nav switching */
+/* first-layer nav */
 document.querySelectorAll('nav button').forEach(btn=>{
-  btn.addEventListener('click',e=>{
+  btn.addEventListener('click',()=>{
     document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
-    document.getElementById(btn.dataset.target).classList.add('active');
+    document.getElementById(btn.dataset.top).classList.add('active');
     window.scrollTo(0,0);
+  });
+});
+
+/* second-layer detail open/close */
+document.querySelectorAll('.board button').forEach(b=>{
+  b.addEventListener('click',()=>{
+    const sec=b.closest('section');
+    sec.querySelectorAll('.detail').forEach(d=>d.style.display='none');
+    const panel=sec.querySelector('#'+b.dataset.detail);
+    if(panel) panel.style.display='block';
   });
 });
 </script>
