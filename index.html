@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TitanCore Dashboard</title>
+  <title>Central Dashboard</title>
   <style>
     * {
       box-sizing: border-box;
@@ -13,19 +13,20 @@
 
     :root {
       --bg: #000000;
-      --panel: #060606;
-      --line: #b9962f;
+      --panel: #0b0b0b;
       --gold: #d4af37;
-      --gold-soft: #d9c27a;
-      --green: #18c457;
-      --white: #f5f5f5;
+      --gold-soft: #f1df9a;
+      --green: #18c25c;
+      --green-soft: #27d96b;
+      --white: #ffffff;
+      --border: rgba(212, 175, 55, 0.45);
     }
 
     body {
-      background: var(--bg);
-      color: var(--white);
       font-family: Arial, sans-serif;
-      padding: 14px;
+      background: #000;
+      color: var(--gold);
+      line-height: 1.5;
     }
 
     .page {
@@ -34,332 +35,991 @@
       padding-bottom: 40px;
     }
 
-    .hero-title {
-      color: var(--green);
-      font-size: clamp(34px, 6vw, 72px);
-      font-weight: 800;
-      line-height: 1.05;
-      margin-bottom: 22px;
+    .topbar {
+      padding: 22px 18px 18px;
+      border-bottom: 2px solid rgba(24, 194, 92, 0.45);
+      background: #050505;
     }
 
-    .hero-sub {
+    .topbar-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .brand h1 {
+      color: var(--green);
+      font-size: 2.1rem;
+      margin-bottom: 8px;
+    }
+
+    .brand p {
       color: var(--gold-soft);
-      font-size: clamp(18px, 2.4vw, 28px);
-      line-height: 1.7;
-      margin-bottom: 26px;
-      max-width: 1100px;
+      font-size: 1rem;
+      max-width: 850px;
     }
 
-    .time-box {
-      width: 100%;
-      max-width: 500px;
-      border: 2px solid rgba(185, 150, 47, 0.8);
-      border-radius: 34px;
-      background: #080808;
-      padding: 28px 30px;
-      margin-bottom: 34px;
+    .timebox {
+      min-width: 220px;
+      background: #0d0d0d;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 12px 14px;
     }
 
-    .time-label {
-      color: var(--green);
-      font-size: 22px;
-      letter-spacing: 2px;
-      margin-bottom: 18px;
+    .timebox .label {
+      color: var(--green-soft);
+      font-size: 0.82rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
     }
 
-    .time-value {
+    .timebox .value {
       color: var(--white);
-      font-size: clamp(28px, 4vw, 48px);
-      font-weight: 800;
-      line-height: 1.2;
+      font-size: 1rem;
+      font-weight: bold;
     }
 
-    .divider {
-      height: 4px;
-      background: #0c8f3f;
-      margin: 28px 0 40px;
+    .hero,
+    .section {
+      padding: 18px;
     }
 
-    .section-title {
+    .hero-card,
+    .card,
+    .mini-card,
+    .modal,
+    .status-box {
+      background: linear-gradient(180deg, #101010, #090909);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+    }
+
+    .hero-card {
+      padding: 22px;
+    }
+
+    .hero-card h2,
+    .section h2,
+    .modal-top h3,
+    .subheading {
       color: var(--green);
-      font-size: clamp(28px, 4.8vw, 64px);
-      font-weight: 800;
-      line-height: 1.08;
-      margin-bottom: 20px;
     }
 
-    .section-text {
+    .hero-card h2 {
+      font-size: 1.7rem;
+      margin-bottom: 10px;
+    }
+
+    .hero-card p,
+    .section-desc,
+    .card p,
+    .mini-card p,
+    .modal-top p,
+    .status-box p {
       color: var(--gold-soft);
-      font-size: clamp(18px, 2.2vw, 28px);
-      line-height: 1.7;
-      margin-bottom: 28px;
-      max-width: 1120px;
+    }
+
+    .section h2 {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+    }
+
+    .section-desc {
+      margin-bottom: 14px;
+      font-size: 0.98rem;
+    }
+
+    .overview-grid,
+    .command-grid,
+    .companies-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .overview-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .command-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .companies-grid {
+      grid-template-columns: repeat(5, 1fr);
     }
 
     .card {
-      background: var(--panel);
-      border: 2px solid rgba(185, 150, 47, 0.75);
-      border-radius: 34px;
-      padding: 34px 28px;
-      margin-bottom: 30px;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+      padding: 18px;
+    }
+
+    .card h3,
+    .mini-card h4 {
+      color: var(--white);
+      margin-bottom: 8px;
     }
 
     .card h3 {
-      color: var(--white);
-      font-size: clamp(28px, 3.5vw, 44px);
-      line-height: 1.15;
-      margin-bottom: 20px;
-      font-weight: 800;
+      font-size: 1.08rem;
     }
 
     .card p {
-      color: var(--gold-soft);
-      font-size: clamp(18px, 2.1vw, 26px);
-      line-height: 1.75;
-      margin-bottom: 24px;
+      font-size: 0.95rem;
+      margin-bottom: 14px;
+      min-height: 58px;
     }
 
-    .blank-line {
-      border-top: 2px solid rgba(185, 150, 47, 0.18);
-      margin: 26px 0 24px;
+    .blank-box {
+      height: 58px;
+      border-top: 1px solid rgba(212,175,55,0.10);
+      margin-top: 8px;
     }
 
     .blank-text {
-      color: rgba(217, 194, 122, 0.75);
-      font-size: clamp(18px, 2vw, 24px);
+      color: rgba(241,223,154,0.55);
       font-style: italic;
-    }
-
-    .open-btn {
+      margin-top: 10px;
       display: block;
+    }
+
+    .btn {
       width: 100%;
-      max-width: 760px;
-      text-align: center;
-      text-decoration: none;
-      background: var(--gold);
-      color: #000000;
-      font-size: clamp(22px, 3vw, 34px);
-      font-weight: 800;
-      padding: 24px 24px;
+      border: none;
       border-radius: 999px;
-      margin-top: 26px;
+      background: var(--gold);
+      color: #000;
+      padding: 11px 14px;
+      font-weight: bold;
+      font-size: 0.95rem;
+      cursor: pointer;
     }
 
-    .open-btn:hover {
+    .btn:hover {
       background: var(--green);
-      color: #ffffff;
+      color: var(--white);
     }
 
-    .footer-tag {
+    .footer {
+      padding: 28px 18px 36px;
       text-align: center;
-      color: rgba(217, 194, 122, 0.85);
-      font-size: 18px;
-      margin-top: 16px;
-      padding-bottom: 10px;
+      color: #9f8733;
+      font-size: 0.92rem;
     }
 
-    @media (max-width: 900px) {
-      body {
-        padding: 10px;
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.9);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 9999;
+    }
+
+    .overlay.show {
+      display: flex;
+    }
+
+    .modal {
+      width: min(1100px, 100%);
+      max-height: 92vh;
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+    .modal-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .modal-top h3 {
+      font-size: 1.55rem;
+      margin-bottom: 6px;
+    }
+
+    .modal-top p {
+      max-width: 760px;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .modal-actions .btn {
+      width: auto;
+      min-width: 110px;
+    }
+
+    .subheading {
+      font-size: 1.12rem;
+      margin: 18px 0 12px;
+      font-weight: bold;
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    .mini-card {
+      padding: 16px;
+    }
+
+    .mini-card p {
+      margin-bottom: 12px;
+      min-height: 44px;
+      font-size: 0.93rem;
+    }
+
+    .mini-msg {
+      color: var(--green-soft);
+      margin-top: 8px;
+      font-size: 0.88rem;
+      min-height: 18px;
+    }
+
+    .status-box {
+      margin-top: 18px;
+      padding: 16px;
+    }
+
+    .status-box h4 {
+      color: var(--green);
+      margin-bottom: 8px;
+    }
+
+    .status-box p {
+      margin-bottom: 8px;
+      font-size: 0.94rem;
+    }
+
+    .status-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 1100px) {
+      .overview-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
 
-      .hero-title {
-        margin-bottom: 16px;
+      .command-grid {
+        grid-template-columns: 1fr;
       }
 
-      .hero-sub {
-        margin-bottom: 20px;
+      .companies-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 700px) {
+      .brand h1 {
+        font-size: 1.7rem;
       }
 
-      .time-box {
-        border-radius: 24px;
-        padding: 22px 20px;
-        margin-bottom: 26px;
+      .overview-grid,
+      .companies-grid {
+        grid-template-columns: 1fr;
       }
 
-      .time-label {
-        font-size: 16px;
-        margin-bottom: 12px;
-      }
-
-      .divider {
-        margin: 22px 0 28px;
-      }
-
-      .card {
-        border-radius: 24px;
-        padding: 24px 18px;
-        margin-bottom: 20px;
-      }
-
-      .card h3 {
-        margin-bottom: 14px;
-      }
-
-      .card p {
-        margin-bottom: 16px;
-      }
-
-      .open-btn {
-        max-width: 100%;
-        padding: 18px 16px;
-      }
-
-      .footer-tag {
-        font-size: 14px;
+      .section h2 {
+        font-size: 1.55rem;
       }
     }
   </style>
 </head>
 <body>
   <div class="page">
-    <h1 class="hero-title">TitanCore Dashboard</h1>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <h1>Central Dashboard</h1>
+          <p>Manage Across Multiple Companies • Leadership • Executive • Departments • Tax Network • Omni System • Companies</p>
+        </div>
 
-    <div class="hero-sub">
-      Parent company oversight • Leadership • Departments • Systems • Contracts •
-      Reporting • Finance • Company Visibility
+        <div class="timebox">
+          <div class="label">System Time</div>
+          <div class="value" id="clock">Loading...</div>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-card">
+        <h2>Central Command Layer</h2>
+        <p>
+          This is the multi-company command center. Open the command area first, then open
+          the role or department or system section inside it, then open the tools inside that dashboard.
+          Live values stay blank until the real systems are connected.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Central Overview</h2>
+      <p class="section-desc">Fast cross-company view from one place.</p>
+
+      <div class="overview-grid">
+        <div class="card">
+          <h3>System Alerts</h3>
+          <p>Cross-company warnings and tracked issues.</p>
+          <div class="blank-box"></div>
+          <span class="blank-text">Blank until connected</span>
+        </div>
+
+        <div class="card">
+          <h3>Secure Shield</h3>
+          <p>Protected environment and oversight layer.</p>
+          <div class="blank-box"></div>
+          <span class="blank-text">Blank until connected</span>
+        </div>
+
+        <div class="card">
+          <h3>Revenue Pulse</h3>
+          <p>Cross-company financial visibility.</p>
+          <div class="blank-box"></div>
+          <span class="blank-text">Blank until connected</span>
+        </div>
+
+        <div class="card">
+          <h3>Jobs / Workflow</h3>
+          <p>Combined task and pipeline movement.</p>
+          <div class="blank-box"></div>
+          <span class="blank-text">Blank until connected</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Command Areas</h2>
+      <p class="section-desc">Open the command area first. Then open the role or section inside it.</p>
+
+      <div class="command-grid">
+        <div class="card">
+          <h3>Leadership Command</h3>
+          <p>Mantle of 7 visibility, advisory structure, meetings, review, and Chief of Staff branch access.</p>
+          <button class="btn" onclick="renderLeadershipCommand(false)">Open Dashboard</button>
+        </div>
+
+        <div class="card">
+          <h3>Executive Command</h3>
+          <p>General Manager, General Assistant Manager, and General Administrator reporting and coordination.</p>
+          <button class="btn" onclick="renderExecutiveCommand(false)">Open Dashboard</button>
+        </div>
+
+        <div class="card">
+          <h3>Department Command</h3>
+          <p>Open departments first, then open a department dashboard to see manager, assistant manager, and 6 A.I. employees.</p>
+          <button class="btn" onclick="renderDepartmentCommand(false)">Open Dashboard</button>
+        </div>
+
+        <div class="card">
+          <h3>Omni System</h3>
+          <p>Multi-company system view, central operational visibility, routines, Agent, and A.I. Agent sections.</p>
+          <button class="btn" onclick="renderOmniSystem(false)">Open Dashboard</button>
+        </div>
+
+        <div class="card">
+          <h3>Tax Network / GTCIS</h3>
+          <p>Tax and compliance command with filings, deadlines, jurisdictions, audits, and platform-style integrations.</p>
+          <button class="btn" onclick="renderTaxNetwork(false)">Open Dashboard</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Company Dashboards</h2>
+      <p class="section-desc">Direct jump from Central Dashboard into the company dashboards.</p>
+
+      <div class="companies-grid">
+        <div class="card">
+          <h3>TitanCore Holdings</h3>
+          <p>Father company dashboard, internal governance, and company oversight.</p>
+          <button class="btn" onclick="window.location.href='titancore.html'">Open Dashboard</button>
+        </div>
+
+        <div class="card">
+          <h3>Vaultara Capital</h3>
+          <p>Funding, capital, and finance-facing company dashboard.</p>
+          <button class="btn" onclick="window.location.href='vaultaracapital.html'">Open Dashboard</button>
+        </div>
+
+        <div class="card">
+          <h3>Family First Equity Group</h3>
+          <p>Real estate, acquisitions, and company workflow dashboard.</p>
+          <button class="btn" onclick="window.location.href='familyfirst.html'">Open Dashboard</button>
+        </div>
+
+        <div class="card">
+          <h3>VitalPath Care Group</h3>
+          <p>Healthcare and care operations dashboard.</p>
+          <button class="btn" onclick="window.location.href='vitalpath.html'">Open Dashboard</button>
+        </div>
+
+        <div class="card">
+          <h3>RevMotion Auto &amp; Marine</h3>
+          <p>Auto, marine, and service operations dashboard.</p>
+          <button class="btn" onclick="window.location.href='revmotion.html'">Open Dashboard</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">Central Dashboard</div>
+  </div>
+
+  <div class="overlay" id="overlay">
+    <div class="modal">
+      <div class="modal-top">
+        <div>
+          <h3 id="modalTitle">Dashboard</h3>
+          <p id="modalDesc">Description</p>
+        </div>
+        <div class="modal-actions">
+          <button class="btn" id="backBtn" onclick="goBack()" style="display:none;">Back</button>
+          <button class="btn" onclick="closeModal()">Close</button>
+        </div>
+      </div>
+
+      <div id="modalBody"></div>
+
+      <div class="status-box" id="statusBox">
+        <h4>Connection Status</h4>
+      </div>
     </div>
-
-    <div class="time-box">
-      <div class="time-label">SYSTEM TIME</div>
-      <div class="time-value" id="systemTime">Loading...</div>
-    </div>
-
-    <div class="divider"></div>
-
-    <section>
-      <h2 class="section-title">TitanCore Command Layer</h2>
-      <div class="section-text">
-        This is the TitanCore parent company dashboard. Open the command area first,
-        then open the role, department, system, or connected company inside it.
-        Live values stay blank until the real systems are connected.
-      </div>
-    </section>
-
-    <section>
-      <h2 class="section-title">TitanCore Overview</h2>
-      <div class="section-text">
-        Fast parent-company view from one place.
-      </div>
-
-      <div class="card">
-        <h3>System Alerts</h3>
-        <p>Parent-level warnings and tracked issues across TitanCore and connected companies.</p>
-        <div class="blank-line"></div>
-        <div class="blank-text">Blank until connected</div>
-      </div>
-
-      <div class="card">
-        <h3>Secure Shield</h3>
-        <p>Protected environment and oversight layer for TitanCore operations.</p>
-        <div class="blank-line"></div>
-        <div class="blank-text">Blank until connected</div>
-      </div>
-
-      <div class="card">
-        <h3>Revenue Pulse</h3>
-        <p>Parent-company financial visibility and internal funding direction.</p>
-        <div class="blank-line"></div>
-        <div class="blank-text">Blank until connected</div>
-      </div>
-
-      <div class="card">
-        <h3>Jobs / Workflow</h3>
-        <p>Combined task, assignment, and pipeline movement for TitanCore work.</p>
-        <div class="blank-line"></div>
-        <div class="blank-text">Blank until connected</div>
-      </div>
-    </section>
-
-    <section>
-      <h2 class="section-title">Command Areas</h2>
-      <div class="section-text">
-        Open the command area first. Then open the role or section inside it.
-      </div>
-
-      <div class="card">
-        <h3>TitanCore Leadership</h3>
-        <p>
-          Manager, Assistant Manager, and Administrator visibility. Open leadership first,
-          then open the role dashboard to see email, reports, meetings, contracts,
-          approvals, signatures, pending work, and completed work.
-        </p>
-        <a class="open-btn" href="./titancore-leadership.html">Open Dashboard</a>
-      </div>
-
-      <div class="card">
-        <h3>Department Command</h3>
-        <p>
-          Open departments first, then open a department dashboard to see manager,
-          assistant manager, and 6 A.I. employees. Department leadership can review
-          employee work, activity, and progress.
-        </p>
-        <a class="open-btn" href="./titancore-departments.html">Open Dashboard</a>
-      </div>
-
-      <div class="card">
-        <h3>Systems</h3>
-        <p>
-          TitanCore system view for Contract, Email Routing, Report &amp; Approval,
-          Omni System, Finance, Tax Network, and other connected tools.
-        </p>
-        <a class="open-btn" href="./titancore-systems.html">Open Dashboard</a>
-      </div>
-    </section>
-
-    <section>
-      <h2 class="section-title">Company Dashboards</h2>
-      <div class="section-text">
-        Direct jump from TitanCore Dashboard into the connected company dashboards.
-        TitanCore leadership can view these dashboards, but not change them.
-      </div>
-
-      <div class="card">
-        <h3>Vaultara Capital</h3>
-        <p>Funding, capital, and finance-facing company dashboard.</p>
-        <a class="open-btn" href="./vaultara-dashboard.html">Open Dashboard</a>
-      </div>
-
-      <div class="card">
-        <h3>Family First Equity Group</h3>
-        <p>Real estate, acquisitions, and company workflow dashboard.</p>
-        <a class="open-btn" href="./familyfirst-dashboard.html">Open Dashboard</a>
-      </div>
-
-      <div class="card">
-        <h3>VitalPath Care Group</h3>
-        <p>Healthcare and care operations dashboard.</p>
-        <a class="open-btn" href="./vitalpath-dashboard.html">Open Dashboard</a>
-      </div>
-
-      <div class="card">
-        <h3>RevMotion Auto &amp; Marine Group</h3>
-        <p>Auto, marine, and service operations dashboard.</p>
-        <a class="open-btn" href="./revmotion-dashboard.html">Open Dashboard</a>
-      </div>
-    </section>
-
-    <div class="footer-tag">TitanCore Dashboard</div>
   </div>
 
   <script>
-    function updateSystemTime() {
-      const now = new Date();
-      const options = {
-        year: "numeric",
-        month: "numeric",
-        day: "numeric",
-        hour: "numeric",
-        minute: "2-digit",
-        second: "2-digit"
-      };
-      document.getElementById("systemTime").textContent =
-        now.toLocaleString("en-US", options);
+    const stateStack = [];
+
+    const roleTools = {
+      ceo: [
+        ["Email", "CEO inbox and communications"],
+        ["Reports", "CEO report intake and review"],
+        ["Meetings", "CEO meeting schedule and notes"],
+        ["Sign Queue", "Final human sign queue"],
+        ["Activity", "CEO dashboard activity"]
+      ],
+      president: [
+        ["Email", "President inbox and communications"],
+        ["Reports", "President report review"],
+        ["Meetings", "President meeting schedule"],
+        ["Recommendations", "Strategic recommendations"],
+        ["Activity", "President dashboard activity"]
+      ],
+      vicePresident: [
+        ["Email", "Vice President inbox and communications"],
+        ["Reports", "Vice President report review"],
+        ["Meetings", "Vice President meeting schedule"],
+        ["Recommendations", "Operations recommendations"],
+        ["Activity", "Vice President dashboard activity"]
+      ],
+      director: [
+        ["Email", "Director inbox and communications"],
+        ["Reports", "Director report review"],
+        ["Meetings", "Director meeting schedule"],
+        ["Oversight", "Department direction and oversight"],
+        ["Activity", "Director dashboard activity"]
+      ],
+      assistantDirector: [
+        ["Email", "Assistant Director inbox and communications"],
+        ["Reports", "Assistant Director report review"],
+        ["Meetings", "Assistant Director meeting schedule"],
+        ["Support", "Support coordination and tracking"],
+        ["Activity", "Assistant Director dashboard activity"]
+      ],
+      executiveAdvisor: [
+        ["Email", "Executive Advisor inbox and communications"],
+        ["Reports", "Executive Advisor review"],
+        ["Meetings", "Executive Advisor meeting schedule"],
+        ["Advice", "Strategic and legacy counsel"],
+        ["Activity", "Executive Advisor dashboard activity"]
+      ],
+      generalManager: [
+        ["Email", "General Manager inbox and communications"],
+        ["Reports", "General Manager report intake"],
+        ["Meetings", "General Manager meeting schedule"],
+        ["Recommendations", "Recommendations downward"],
+        ["Activity", "General Manager dashboard activity"]
+      ],
+      generalAssistantManager: [
+        ["Email", "General Assistant Manager inbox and communications"],
+        ["Reports", "General Assistant Manager report review"],
+        ["Meetings", "General Assistant Manager meeting schedule"],
+        ["Support", "Workflow and support review"],
+        ["Activity", "General Assistant Manager dashboard activity"]
+      ],
+      generalAdministrator: [
+        ["Email", "General Administrator inbox and communications"],
+        ["Reports", "General Administrator report records"],
+        ["Meetings", "General Administrator meeting schedule"],
+        ["Records", "Administration and summaries"],
+        ["Activity", "General Administrator dashboard activity"]
+      ],
+      chiefOfStaff: [
+        ["Email", "Chief of Staff inbox and communication flow"],
+        ["Meetings", "Chief of Staff meeting schedule and logs"],
+        ["Reports", "Reports and updates received upward"],
+        ["Recommendations", "Advice and recommendations brought upward"],
+        ["Oversight", "Cross-checking and follow-through status"],
+        ["Activity", "Chief of Staff activity and coordination"]
+      ],
+      chief: [
+        ["Work Area", "Main work area for this Chief branch"],
+        ["Reports", "Updates and reporting to Chief of Staff"],
+        ["Activity", "Tracked work activity and status"],
+        ["Notes", "Recorded notes and work observations"]
+      ]
+    };
+
+    const omniSections = [
+      ["Entity Selector", "Move between company entities"],
+      ["System Alerts", "Warnings and issue flags"],
+      ["Revenue Pulse", "Cross-company financial visibility"],
+      ["Workflow", "Work in progress and movement status"],
+      ["Secure Shield", "Protected operational oversight"],
+      ["Routine", "Central routines and process flow"],
+      ["Agent", "General agent operations section"],
+      ["A.I. Agent", "A.I. agent system section"]
+    ];
+
+    const taxSections = [
+      ["Entity Selector", "TitanCore and all companies tax view"],
+      ["Filing Queue", "Upcoming filings and next deadlines"],
+      ["Jurisdictions Matrix", "States, tax types, and status"],
+      ["Compliance Status", "Summary of filing and issue position"],
+      ["Deadline Calendar", "Calendar month view"],
+      ["Audit Shield", "Documents, letters, and confirmations"],
+      ["Integrations", "Platform-style tax integrations"],
+      ["Primary Actions", "New filing, upload proof, export, compliance scan"]
+    ];
+
+    const departmentList = [
+      "Contact Department",
+      "Contract Department",
+      "Email Routing Department",
+      "Report Department",
+      "Approval Department",
+      "Omni Operations Department",
+      "Tax Network Department",
+      "Agent Department",
+      "A.I. Agent Department",
+      "Finance Department"
+    ];
+
+    function updateClock() {
+      document.getElementById("clock").textContent = new Date().toLocaleString();
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    function openOverlay() {
+      document.getElementById("overlay").classList.add("show");
     }
 
-    updateSystemTime();
-    setInterval(updateSystemTime, 1000);
+    function closeModal() {
+      document.getElementById("overlay").classList.remove("show");
+      stateStack.length = 0;
+    }
+
+    document.getElementById("overlay").addEventListener("click", function(e) {
+      if (e.target === this) closeModal();
+    });
+
+    function saveState(renderer) {
+      stateStack.push(renderer);
+      document.getElementById("backBtn").style.display = "inline-block";
+    }
+
+    function goBack() {
+      if (!stateStack.length) return;
+      const renderer = stateStack.pop();
+      renderer(true);
+      if (!stateStack.length) {
+        document.getElementById("backBtn").style.display = "none";
+      }
+    }
+
+    function setModal(title, desc, contentNode, statusLines, showBack) {
+      document.getElementById("modalTitle").textContent = title;
+      document.getElementById("modalDesc").textContent = desc;
+
+      const body = document.getElementById("modalBody");
+      body.innerHTML = "";
+      body.appendChild(contentNode);
+
+      const box = document.getElementById("statusBox");
+      box.innerHTML = "<h4>Connection Status</h4>";
+      statusLines.forEach(function(line) {
+        const p = document.createElement("p");
+        p.textContent = line;
+        box.appendChild(p);
+      });
+
+      document.getElementById("backBtn").style.display = showBack ? "inline-block" : "none";
+      openOverlay();
+    }
+
+    function buildToolGrid(modules) {
+      const grid = document.createElement("div");
+      grid.className = "mini-grid";
+
+      modules.forEach(function(item) {
+        const card = document.createElement("div");
+        card.className = "mini-card";
+
+        const h4 = document.createElement("h4");
+        h4.textContent = item[0];
+
+        const p = document.createElement("p");
+        p.textContent = item[1];
+
+        const btn = document.createElement("button");
+        btn.className = "btn";
+        btn.textContent = item[0];
+
+        const msg = document.createElement("div");
+        msg.className = "mini-msg";
+
+        btn.onclick = function() {
+          msg.textContent = "Not connected yet";
+        };
+
+        card.appendChild(h4);
+        card.appendChild(p);
+        card.appendChild(btn);
+        card.appendChild(msg);
+        grid.appendChild(card);
+      });
+
+      return grid;
+    }
+
+    function buildRoleGrid(roles) {
+      const grid = document.createElement("div");
+      grid.className = "mini-grid";
+
+      roles.forEach(function(role) {
+        const card = document.createElement("div");
+        card.className = "mini-card";
+
+        const h4 = document.createElement("h4");
+        h4.textContent = role.title;
+
+        const p = document.createElement("p");
+        p.textContent = role.desc;
+
+        const btn = document.createElement("button");
+        btn.className = "btn";
+        btn.textContent = role.title;
+        btn.onclick = role.action;
+
+        card.appendChild(h4);
+        card.appendChild(p);
+        card.appendChild(btn);
+        grid.appendChild(card);
+      });
+
+      return grid;
+    }
+
+    function renderRoleDashboard(title, desc, modules, pushRenderer, parentRenderer) {
+      if (!pushRenderer && parentRenderer) saveState(parentRenderer);
+
+      setModal(
+        title,
+        desc,
+        buildToolGrid(modules),
+        ["Open a tool inside this dashboard. It will show Not connected yet until live systems are attached."],
+        true
+      );
+    }
+
+    function renderLeadershipCommand(pushRenderer) {
+      const roles = [
+        {
+          title: "CEO",
+          desc: "Final authority and full oversight",
+          action: function() {
+            renderRoleDashboard("CEO Dashboard", "CEO command dashboard.", roleTools.ceo, false, renderLeadershipCommand);
+          }
+        },
+        {
+          title: "President",
+          desc: "Strategic review and advisory visibility",
+          action: function() {
+            renderRoleDashboard("President Dashboard", "President command dashboard.", roleTools.president, false, renderLeadershipCommand);
+          }
+        },
+        {
+          title: "Vice President",
+          desc: "Operations review and movement visibility",
+          action: function() {
+            renderRoleDashboard("Vice President Dashboard", "Vice President command dashboard.", roleTools.vicePresident, false, renderLeadershipCommand);
+          }
+        },
+        {
+          title: "Director",
+          desc: "Direction and oversight activity",
+          action: function() {
+            renderRoleDashboard("Director Dashboard", "Director command dashboard.", roleTools.director, false, renderLeadershipCommand);
+          }
+        },
+        {
+          title: "Assistant Director",
+          desc: "Support coordination and tracking",
+          action: function() {
+            renderRoleDashboard("Assistant Director Dashboard", "Assistant Director command dashboard.", roleTools.assistantDirector, false, renderLeadershipCommand);
+          }
+        },
+        {
+          title: "Chief of Staff",
+          desc: "Coordination and 10 Chiefs branch",
+          action: function() {
+            renderChiefOfStaff(false, renderLeadershipCommand);
+          }
+        },
+        {
+          title: "Executive Advisor",
+          desc: "Advisory and counsel visibility",
+          action: function() {
+            renderRoleDashboard("Executive Advisor Dashboard", "Executive Advisor command dashboard.", roleTools.executiveAdvisor, false, renderLeadershipCommand);
+          }
+        }
+      ];
+
+      setModal(
+        "Leadership Command",
+        "Open a leadership role to see that role dashboard.",
+        buildRoleGrid(roles),
+        [
+          "Leadership Command opens roles first.",
+          "Open a role to see that role dashboard."
+        ],
+        pushRenderer && stateStack.length > 0
+      );
+    }
+
+    function renderExecutiveCommand(pushRenderer) {
+      const roles = [
+        {
+          title: "General Manager",
+          desc: "Cross-company oversight and meetings",
+          action: function() {
+            renderRoleDashboard("General Manager Dashboard", "General Manager dashboard.", roleTools.generalManager, false, renderExecutiveCommand);
+          }
+        },
+        {
+          title: "General Assistant Manager",
+          desc: "Support and reporting review",
+          action: function() {
+            renderRoleDashboard("General Assistant Manager Dashboard", "General Assistant Manager dashboard.", roleTools.generalAssistantManager, false, renderExecutiveCommand);
+          }
+        },
+        {
+          title: "General Administrator",
+          desc: "Records, summaries, and admin support",
+          action: function() {
+            renderRoleDashboard("General Administrator Dashboard", "General Administrator dashboard.", roleTools.generalAdministrator, false, renderExecutiveCommand);
+          }
+        }
+      ];
+
+      setModal(
+        "Executive Command",
+        "Open an executive role to see that role dashboard.",
+        buildRoleGrid(roles),
+        [
+          "Executive Command opens executive roles first.",
+          "Open a role to see that role dashboard."
+        ],
+        pushRenderer && stateStack.length > 0
+      );
+    }
+
+    function renderDepartmentCommand(pushRenderer) {
+      const roles = departmentList.map(function(name) {
+        return {
+          title: name,
+          desc: "Open this department to see Manager, Assistant Manager, and 6 A.I. employees.",
+          action: function() {
+            renderDepartmentDashboard(name, false, renderDepartmentCommand);
+          }
+        };
+      });
+
+      setModal(
+        "Department Command",
+        "Open a department to see its internal dashboard.",
+        buildRoleGrid(roles),
+        [
+          "Department Command opens departments first.",
+          "Open a department to see manager, assistant manager, and 6 A.I. employees."
+        ],
+        pushRenderer && stateStack.length > 0
+      );
+    }
+
+    function renderDepartmentDashboard(name, pushRenderer, parentRenderer) {
+      if (!pushRenderer && parentRenderer) saveState(parentRenderer);
+
+      const members = [
+        { title: "Manager", desc: "Department manager dashboard." },
+        { title: "Assistant Manager", desc: "Department assistant manager dashboard." },
+        { title: "A.I. Employee 1", desc: "Department A.I. employee slot." },
+        { title: "A.I. Employee 2", desc: "Department A.I. employee slot." },
+        { title: "A.I. Employee 3", desc: "Department A.I. employee slot." },
+        { title: "A.I. Employee 4", desc: "Department A.I. employee slot." },
+        { title: "A.I. Employee 5", desc: "Department A.I. employee slot." },
+        { title: "A.I. Employee 6", desc: "Department A.I. employee slot." }
+      ].map(function(member) {
+        return {
+          title: member.title,
+          desc: member.desc,
+          action: function() {
+            renderRoleDashboard(name + " • " + member.title, member.title + " dashboard inside " + name + ".", [
+              ["Email", "Inbox and communications"],
+              ["Reports", "Reports and work updates"],
+              ["Meetings", "Meetings and schedule"],
+              ["Activity", "Department work activity"]
+            ], false, function() { renderDepartmentDashboard(name, true); });
+          }
+        };
+      });
+
+      setModal(
+        name,
+        "Open the manager, assistant manager, or one of the 6 A.I. employees.",
+        buildRoleGrid(members),
+        [
+          "This department dashboard opens people first.",
+          "Open a person to see that dashboard tools."
+        ],
+        true
+      );
+    }
+
+    function renderOmniSystem(pushRenderer) {
+      const roles = omniSections.map(function(item) {
+        return {
+          title: item[0],
+          desc: item[1],
+          action: function() {
+            renderRoleDashboard("Omni System • " + item[0], item[1], [
+              ["Overview", "Overview for " + item[0]],
+              ["Activity", "Current activity for " + item[0]],
+              ["Logs", "Tracked logs for " + item[0]],
+              ["Status", "Status area for " + item[0]]
+            ], false, renderOmniSystem);
+          }
+        };
+      });
+
+      setModal(
+        "Omni System",
+        "Open a system section first, then open the tools inside it.",
+        buildRoleGrid(roles),
+        [
+          "Omni System opens sections first.",
+          "Agent and A.I. Agent are included here."
+        ],
+        pushRenderer && stateStack.length > 0
+      );
+    }
+
+    function renderTaxNetwork(pushRenderer) {
+      const roles = taxSections.map(function(item) {
+        return {
+          title: item[0],
+          desc: item[1],
+          action: function() {
+            renderRoleDashboard("Tax Network / GTCIS • " + item[0], item[1], [
+              ["View", "Main view for " + item[0]],
+              ["Queue", "Queue and movement for " + item[0]],
+              ["Status", "Status area for " + item[0]],
+              ["Export", "Export and output area for " + item[0]]
+            ], false, renderTaxNetwork);
+          }
+        };
+      });
+
+      setModal(
+        "Tax Network / GTCIS",
+        "Open a tax section first, then open the tools inside it.",
+        buildRoleGrid(roles),
+        [
+          "Tax Network opens sections first.",
+          "Live tax values stay blank until the systems are connected."
+        ],
+        pushRenderer && stateStack.length > 0
+      );
+    }
+
+    function renderChiefOfStaff(pushRenderer, parentRenderer) {
+      if (!pushRenderer && parentRenderer) saveState(parentRenderer);
+
+      const wrapper = document.createElement("div");
+
+      const menuTitle = document.createElement("div");
+      menuTitle.className = "subheading";
+      menuTitle.textContent = "Chief of Staff Dashboard";
+      wrapper.appendChild(menuTitle);
+      wrapper.appendChild(buildToolGrid(roleTools.chiefOfStaff));
+
+      const chiefsTitle = document.createElement("div");
+      chiefsTitle.className = "subheading";
+      chiefsTitle.textContent = "10 Chiefs";
+      wrapper.appendChild(chiefsTitle);
+
+      const chiefs = [];
+      for (let i = 1; i <= 10; i++) {
+        chiefs.push({
+          title: "Chief " + i,
+          desc: "Reporting branch under Chief of Staff. Open this Chief to see the work sections.",
+          action: function(index) {
+            return function() {
+              renderChief(index, false, function() { renderChiefOfStaff(true); });
+            };
+          }(i)
+        });
+      }
+
+      wrapper.appendChild(buildRoleGrid(chiefs));
+
+      setModal(
+        "Chief of Staff Dashboard",
+        "Chief of Staff overview and 10 Chiefs branch.",
+        wrapper,
+        [
+          "Open a Chief to see that Chief dashboard."
+        ],
+        true
+      );
+    }
+
+    function renderChief(number, pushRenderer, parentRenderer) {
+      if (!pushRenderer && parentRenderer) saveState(parentRenderer);
+
+      setModal(
+        "Chief " + number + " Dashboard",
+        "Tracked reporting branch for Chief " + number + ", working under the Chief of Staff.",
+        buildToolGrid(roleTools.chief),
+        [
+          "This Chief branch reports to the Chief of Staff only.",
+          "Only work sections appear here."
+        ],
+        true
+      );
+    }
   </script>
 </body>
 </html>
